@@ -1,0 +1,62 @@
+name: build and test
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-10.14, windows-2019, ubuntu-18.04]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2.3.1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 14
+
+      - name: yarn install --frozen-lockfile
+        run: |
+          yarn install --frozen-lockfile
+
+      # following step does code signing when `electron-builder --publish always` (look in package.json)
+      - name: yarn package-ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn package-ci
+
+      - name: yarn build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn build
+
+      - name: yarn lint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn lint
+
+      - name: yarn tsc
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn tsc
+
+      - name: yarn test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn test
+
+      - name: yarn build-e2e
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn build-e2e
+
+      - name: yarn test-e2e
+        uses: GabrielBB/xvfb-action@v1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          run: yarn test-e2e

@@ -1,0 +1,65 @@
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: release all os -- no code signing
+
+jobs:
+  create-release:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.3.1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+  release:
+    name: Release
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-18.04
+            artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
+          - os: windows-2019
+            artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
+          - os: macos-10.14
+            artifact_name: 'release/{*.zip,*.dmg,*.blockmap,*.yml}'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.3.1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 14
+
+      - name: yarn install --frozen-lockfile
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: yarn package-ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn package-ci
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
+          file: ${{ matrix.artifact_name }}
+          overwrite: true
+          file_glob: true
