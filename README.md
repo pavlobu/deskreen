@@ -1,7 +1,7 @@
-[![codecov](https://codecov.io/gh/pavlobu/test-electron-boilerplate-ci/branch/master/graph/badge.svg)](https://codecov.io/gh/pavlobu/deskrin)
-![build and test](https://github.com/pavlobu/deskrin/workflows/build%20and%20test/badge.svg)
-![release all os -- no code signing](https://github.com/pavlobu/deskrin/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
-![codecov generate](https://github.com/pavlobu/deskrin/workflows/codecov%20generate/badge.svg)
+[![codecov](https://codecov.io/gh/pavlobu/test-electron-boilerplate-ci/branch/master/graph/badge.svg)](https://codecov.io/gh/pavlobu/deskreen)
+![build and test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)
+![release all os -- no code signing](https://github.com/pavlobu/deskreen/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
+![codecov generate](https://github.com/pavlobu/deskreen/workflows/codecov%20generate/badge.svg)
 
 ## Howto:
 
@@ -38,7 +38,7 @@ sonar.login=d0c254aaff5ebd89dd5c6f0663238ab6ad5fddea
 
 ## License
 
-MIT © [Deskrin](https://github.com/pavlobu/deskrin)
+MIT © [Deskreen](https://github.com/pavlobu/deskreen)
 
 ## Copyright
 

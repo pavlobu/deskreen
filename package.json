@@ -1,6 +1,6 @@
 {
-  "name": "deskrin",
-  "productName": "Deskrin",
+  "name": "deskreen",
+  "productName": "Deskreen",
   "version": "0.0.1",
   "description": "TODO: write description of this app",
   "scripts": {
@@ -53,8 +53,8 @@
     ]
   },
   "build": {
-    "productName": "Deskrin",
-    "appId": "com.pavlobu.Deskrin",
+    "productName": "Deskreen",
+    "appId": "com.pavlobu.Deskreen",
     "files": [
       "dist/",
       "node_modules/",
@@ -98,29 +98,29 @@
     "publish": {
       "provider": "github",
       "owner": "pavlobu",
-      "repo": "deskrin",
+      "repo": "deskreen",
       "private": false
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pavlobu/deskrin.git"
+    "url": "git+https://github.com/pavlobu/deskreen.git"
   },
   "author": {
     "name": "Pavlo (Paul) Buidenkov",
     "email": "pavlobu@gmail.com",
-    "url": "https://github.com/pavlobu/deskrin"
+    "url": "https://github.com/pavlobu"
   },
   "contributors": [
     {
       "name": "Pavlo (Paul) Buidenkov",
       "email": "pavlobu@gmail.com",
-      "url": "https://github.com/pavlobu/deskrin"
+      "url": "https://github.com/pavlobu"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pavlobu/deskrin"
+    "url": "https://github.com/pavlobu/deskreen/issues"
   },
   "keywords": [
     "electron",
@@ -133,7 +133,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/pavlobu/deskrin#readme",
+  "homepage": "https://github.com/pavlobu/deskreen#readme",
   "jest": {
     "testURL": "http://localhost/",
     "moduleNameMapper": {

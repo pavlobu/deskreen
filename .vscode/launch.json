@@ -11,7 +11,7 @@
       "preLaunchTask": "Start Webpack Dev"
     },
     {
-      "name": "Deskrin: Renderer",
+      "name": "Deskreen: Renderer",
       "type": "chrome",
       "request": "attach",
       "port": 9223,
@@ -21,8 +21,8 @@
   ],
   "compounds": [
     {
-      "name": "Deskrin: All",
-      "configurations": ["Deskrin: Main", "Deskrin: Renderer"]
+      "name": "Deskreen: All",
+      "configurations": ["Deskreen: Main", "Deskreen: Renderer"]
     }
   ]
 }
