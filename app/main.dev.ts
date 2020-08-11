@@ -11,7 +11,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import signalingServer from './server/signalingServer';
@@ -126,4 +126,14 @@ app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow();
+});
+
+// TODO: get locale of app and load appropriate menu texts and app texts( ISO 3166 COUNTRY CODES )
+console.log('\n\n\n\n\n\n GETTING OS LOCALE: ');
+console.log(app.getLocaleCountryCode());
+
+ipcMain.handle('get-signaling-server-port', () => {
+  console.log('printing port');
+  console.log(signalingServer.port);
+  mainWindow.webContents.send('sending-port-from-main', signalingServer.port);
 });
