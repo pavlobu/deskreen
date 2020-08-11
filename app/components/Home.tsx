@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -30,7 +31,7 @@ export default function Home(): JSX.Element {
     <div className={styles.container} data-tid="container">
       <h2>Home</h2>
       <Link to={routes.COUNTER}>to Counter</Link>
-      <h3>{`Signaling server is running on port: ${signalingServerPort}`}</h3>
+      <h3>{`${t('Signaling server is running on port')}: ${signalingServerPort}`}</h3>
       <h3>{`Locales test ${t('Language')}`}</h3>
       <button type="button" onClick={onButtonClick}>
         CLICK ME!
