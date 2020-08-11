@@ -9,13 +9,15 @@ import styles from './Home.css';
 
 export default function Home(): JSX.Element {
   const [signalingServerPort, setSignalingServerPort] = useState('0000');
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  // const { t, i18n } = useTranslation();
 
   // Example of how to get signaling server port from main process in renderer process
   // following this practice, you can also get local server ip address
   useEffect(() => {
-    ipcRenderer.on('sending-port-from-main', (event, message) => {
-      setSignalingServerPort(message);
+    ipcRenderer.on('sending-port-from-main', (_, message) => {
+      // ipcRenderer.on('sending-port-from-main', (event, message) => {
+      setSignalingServerPort(`${message}`);
     });
     ipcRenderer.invoke('get-signaling-server-port');
   }, []);

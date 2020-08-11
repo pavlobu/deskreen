@@ -8,6 +8,7 @@
     "noEmit": true,
     "jsx": "react",
     "strict": true,
+    // "strictNullChecks": false,
     "pretty": true,
     "sourceMap": true,
     /* Additional Checks */

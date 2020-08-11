@@ -144,6 +144,14 @@ export default class MenuBuilder {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           },
         },
+        // TODO: remove this toggle dev menu in production!!!!!!!
+        {
+          label: 'Toggle Developer Tools',
+          accelerator: 'Alt+Command+I',
+          click: () => {
+            this.mainWindow.webContents.toggleDevTools();
+          },
+        },
       ],
     };
     const subMenuWindow: DarwinMenuItemConstructorOptions = {
@@ -210,11 +218,8 @@ export default class MenuBuilder {
 
     const languageMenu: MenuItemConstructorOptions = {
       label: this.i18n.t('Language'),
-      submenu: languageSubmenu,
+      submenu: languageSubmenu as MenuItemConstructorOptions[],
     };
-
-    console.log('\n\n\n\n\nprinting stufff!!!!!');
-    console.log(this.i18n.t('Language'));
 
     return [
       subMenuAbout,

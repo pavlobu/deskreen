@@ -18,11 +18,11 @@ const i18nextOptions = {
     // path where resources get loaded from
     loadPath: isDev
       ? join(__dirname, '../locales/{{lng}}/{{ns}}.json')
-      : 'locales/{{lng}}/{{ns}}.json',
+      : join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
     // path to post missing resources
     addPath: isDev
       ? join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json')
-      : 'locales/{{lng}}/{{ns}}.json',
+      : join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
     // jsonIndent to use when storing json files
     jsonIndent: 2,
   },
@@ -36,23 +36,9 @@ const i18nextOptions = {
   },
 };
 i18n.use(i18nextBackend);
-// initialize if not already initialized
+
 if (!i18n.isInitialized) {
   i18n.init(i18nextOptions);
-  // i18n.init({
-  //   lng: 'en',
-  //   debug: true,
-  //   resources: {
-  //     en: {
-  //       translation: {
-  //         Language: 'Jjdjjdjd',
-  //       },
-  //     },
-  //   },
-  // });
-  console.log('\n\n\n\n INTITIALIZING I18N ----');
 }
-
-console.log(i18n.t('Language'));
 
 export default i18n;
