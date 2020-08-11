@@ -6,6 +6,8 @@ import {
   MenuItemConstructorOptions,
 } from 'electron';
 
+import config from './configs/app.config';
+
 import signalingServer from './server/signalingServer';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -16,8 +18,11 @@ interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
 
-  constructor(mainWindow: BrowserWindow) {
+  i18n: any;
+
+  constructor(mainWindow: BrowserWindow, i18n: any) {
     this.mainWindow = mainWindow;
+    this.i18n = i18n;
   }
 
   buildMenu(): Menu {
@@ -192,7 +197,33 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    const languageSubmenu = config.languages.map((languageCode) => {
+      return {
+        label: this.i18n.t(languageCode),
+        type: 'radio',
+        checked: this.i18n.language === languageCode,
+        click: () => {
+          this.i18n.changeLanguage(languageCode);
+        },
+      };
+    });
+
+    const languageMenu: MenuItemConstructorOptions = {
+      label: this.i18n.t('Language'),
+      submenu: languageSubmenu,
+    };
+
+    console.log('\n\n\n\n\nprinting stufff!!!!!');
+    console.log(this.i18n.t('Language'));
+
+    return [
+      subMenuAbout,
+      subMenuEdit,
+      subMenuView,
+      subMenuWindow,
+      subMenuHelp,
+      languageMenu,
+    ];
   }
 
   buildDefaultTemplate() {

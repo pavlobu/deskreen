@@ -11,13 +11,18 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import config from './configs/app.config';
+import i18n from './configs/i18next.config';
 import signalingServer from './server/signalingServer';
 import MenuBuilder from './menu';
 
 signalingServer.start();
+
+console.log('\n\n\n\n\n APP PATH');
+console.log(app.getPath('app/locales'));
 
 export default class AppUpdater {
   constructor() {
@@ -28,6 +33,7 @@ export default class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let menuBuilder: MenuBuilder | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -95,8 +101,19 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder = new MenuBuilder(mainWindow, i18n);
   menuBuilder.buildMenu();
+
+  i18n.on('loaded', (loaded) => {
+    i18n.changeLanguage('en');
+    i18n.off('loaded');
+  });
+
+  i18n.on('languageChanged', (lng) => {
+    menuBuilder = new MenuBuilder(mainWindow, i18n);
+    menuBuilder.buildMenu();
+    console.log(`Language changed! ${lng}`);
+  });
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
@@ -130,10 +147,21 @@ app.on('activate', () => {
 
 // TODO: get locale of app and load appropriate menu texts and app texts( ISO 3166 COUNTRY CODES )
 console.log('\n\n\n\n\n\n GETTING OS LOCALE: ');
-console.log(app.getLocaleCountryCode());
+console.log(app.getLocale());
 
 ipcMain.handle('get-signaling-server-port', () => {
   console.log('printing port');
   console.log(signalingServer.port);
   mainWindow.webContents.send('sending-port-from-main', signalingServer.port);
+});
+
+ipcMain.on('get-initial-translations', (event, arg) => {
+  i18n.loadLanguages('en', (err, t) => {
+    const initial = {
+      en: {
+        translation: i18n.getResourceBundle('en', config.namespace),
+      },
+    };
+    event.returnValue = initial;
+  });
 });
