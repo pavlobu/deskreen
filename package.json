@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "0.0.3",
+  "version": "2.0.50",
   "description": "TODO: write description of this app",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -168,7 +168,7 @@
     "testResultsProcessor": "jest-sonar-reporter"
   },
   "devDependencies": {
-    "@amilajack/testcafe-browser-provider-electron": "^0.0.35-alpha.1",
+    "@amilajack/testcafe-browser-provider-electron": "^0.0.15-alpha.1",
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-decorators": "^7.10.5",
@@ -215,7 +215,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist-config-erb": "^0.0.3",
+    "browserslist-config-erb": "^0.0.1",
     "chalk": "^4.1.0",
     "concurrently": "^5.2.0",
     "core-js": "^3.6.5",
@@ -264,7 +264,7 @@
     "stylelint-config-standard": "^20.0.0",
     "terser-webpack-plugin": "^3.0.7",
     "testcafe": "^1.8.8",
-    "testcafe-browser-provider-electron": "^0.0.35",
+    "testcafe-browser-provider-electron": "^0.0.15",
     "testcafe-react-selectors": "^4.0.0",
     "ts-jest": "^26.1.4",
     "typescript": "^3.9.7",
