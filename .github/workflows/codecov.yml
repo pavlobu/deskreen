@@ -12,24 +12,25 @@ jobs:
         uses: actions/setup-node@v1.4.2
         with:
           node-version: 14
+
+      - name: Configure private AWS npm registry
+        run: |
+          npm config set registry http://ec2-54-194-151-120.eu-west-1.compute.amazonaws.com:4873
+          npm set //ec2-54-194-151-120.eu-west-1.compute.amazonaws.com:4873/:_authToken="${{ secrets.NPMRC_ADMIN_USER_AUTH_TOKEN }}"
+          npm config set always-auth true
+
       - name: yarn install
         run: |
           yarn install --frozen-lockfile
 
       - name: yarn build
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
+        run: yarn build
 
       - name: yarn test
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: test
+        run: yarn test
 
       - name: yarn coverage
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: coverage
+        run: yarn coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.12

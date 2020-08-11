@@ -324,6 +324,24 @@ export default class MenuBuilder {
       },
     ];
 
+    const languageSubmenu = config.languages.map((languageCode) => {
+      return {
+        label: this.i18n.t(languageCode),
+        type: 'radio',
+        checked: this.i18n.language === languageCode,
+        click: () => {
+          this.i18n.changeLanguage(languageCode);
+        },
+      };
+    });
+
+    const languageMenu = {
+      label: this.i18n.t('Language'),
+      submenu: languageSubmenu,
+    };
+
+    templateDefault.push(languageMenu);
+
     return templateDefault;
   }
 }
