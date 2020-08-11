@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import SyncBackend from 'i18next-node-fs-backend';
@@ -38,5 +38,9 @@ i18n.use(initReactI18next);
 if (!i18n.isInitialized) {
   i18n.init(i18nextOptions);
 }
+
+ipcRenderer.on('sending-language-from-main', (_, message) => {
+  i18n.changeLanguage(`${message}`);
+});
 
 export default i18n;

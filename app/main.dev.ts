@@ -114,6 +114,7 @@ const createWindow = async () => {
     if (mainWindow === null) return;
     menuBuilder = new MenuBuilder(mainWindow, i18n);
     menuBuilder.buildMenu();
+    mainWindow.webContents.send('sending-language-from-main', lng);
     console.log(`Language changed! ${lng}`);
   });
 
