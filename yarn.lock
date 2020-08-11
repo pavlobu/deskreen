@@ -12,7 +12,7 @@
   resolved "https://registry.npm.taobao.org/7zip/download/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
   integrity sha1-nK+xca+CMpSQNTtIFvAzR6oVCjA=
 
-"@amilajack/testcafe-browser-provider-electron@^0.0.15-alpha.1":
+"@amilajack/testcafe-browser-provider-electron@^0.0.35-alpha.1":
   version "0.0.15-alpha.1"
   resolved "https://registry.npm.taobao.org/@amilajack/testcafe-browser-provider-electron/download/@amilajack/testcafe-browser-provider-electron-0.0.15-alpha.1.tgz#506080ec623c1509fae489b13cb2a2894ec6fbb9"
   integrity sha1-UGCA7GI8FQn65ImxPLKiiU7G+7k=
@@ -3719,7 +3719,7 @@ browserify-zlib@^0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserslist-config-erb@^0.0.1:
+browserslist-config-erb@^0.0.3:
   version "0.0.1"
   resolved "https://registry.npm.taobao.org/browserslist-config-erb/download/browserslist-config-erb-0.0.1.tgz#0a93648bbe11fac5b9fe555bf061f31980db64db"
   integrity sha1-CpNki74R+sW5/lVb8GHzGYDbZNs=
@@ -13051,7 +13051,7 @@ test-exclude@^6.0.0:
     glob "^7.1.4"
     minimatch "^3.0.4"
 
-testcafe-browser-provider-electron@^0.0.15:
+testcafe-browser-provider-electron@^0.0.35:
   version "0.0.15"
   resolved "https://registry.npm.taobao.org/testcafe-browser-provider-electron/download/testcafe-browser-provider-electron-0.0.15.tgz#4c0d084222349501cf2eb400ccac50029cb454ae"
   integrity sha1-TA0IQiI0lQHPLrQAzKxQApy0VK4=
