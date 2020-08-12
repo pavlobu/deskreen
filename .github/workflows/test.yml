@@ -2,6 +2,8 @@ name: build and test
 
 on: [push, pull_request]
 
+# NPMRC_ADMIN_USER_AUTH_TOKEN
+
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -18,6 +20,12 @@ jobs:
         uses: actions/setup-node@v1.4.2
         with:
           node-version: 14
+
+      - name: Configure private AWS npm registry
+        run: |
+          npm config set registry http://ec2-54-194-151-120.eu-west-1.compute.amazonaws.com:4874
+          npm set //ec2-54-194-151-120.eu-west-1.compute.amazonaws.com:4874/:_authToken="${{ NPMRC_ADMIN_USER_AUTH_TOKEN }}"
+          npm config set always-auth true
 
       - name: yarn install --frozen-lockfile
         run: |
