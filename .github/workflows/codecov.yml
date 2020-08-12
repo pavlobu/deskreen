@@ -23,19 +23,13 @@ jobs:
           npm config set always-auth true
 
       - name: yarn build
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
+        run: yarn build
 
       - name: yarn test
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: test
+        run: yarn test
 
       - name: yarn coverage
-        uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: coverage
+        run: yarn coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.12
