@@ -3,12 +3,12 @@
 }
 
 .counter {
-  position: absolute;
-  top: 30%;
-  left: 45%;
-  font-size: 10rem;
-  font-weight: bold;
-  letter-spacing: -0.025em;
+  position: absolute !important;
+  top: 30% !important;
+  left: 45% !important;
+  font-size: 10rem !important;
+  font-weight: bold !important;
+  letter-spacing: -0.025em !important;
 }
 
 .btnGroup {

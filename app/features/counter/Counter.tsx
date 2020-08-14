@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Button } from '@blueprintjs/core';
 import styles from './Counter.css';
 import routes from '../../constants/routes.json';
 import {
@@ -17,15 +18,19 @@ export default function Counter() {
   return (
     <div>
       <div className={styles.backButton} data-tid="backButton">
+        <br />
         <Link to={routes.HOME}>
-          <i className="fa fa-arrow-left fa-3x" />
+          <Button icon="arrow-left" />
         </Link>
       </div>
-      <div className={`counter ${styles.counter}`} data-tid="counter">
+      <h1
+        className={`bp3-heading counter ${styles.counter}`}
+        data-tid="counter"
+      >
         {value}
-      </div>
+      </h1>
       <div className={styles.btnGroup}>
-        <button
+        <Button
           className={styles.btn}
           onClick={() => {
             dispatch(increment());
@@ -34,8 +39,8 @@ export default function Counter() {
           type="button"
         >
           <i className="fa fa-plus" />
-        </button>
-        <button
+        </Button>
+        <Button
           className={styles.btn}
           onClick={() => {
             dispatch(decrement());
@@ -44,8 +49,8 @@ export default function Counter() {
           type="button"
         >
           <i className="fa fa-minus" />
-        </button>
-        <button
+        </Button>
+        <Button
           className={styles.btn}
           onClick={() => {
             dispatch(incrementIfOdd());
@@ -54,8 +59,8 @@ export default function Counter() {
           type="button"
         >
           odd
-        </button>
-        <button
+        </Button>
+        <Button
           className={styles.btn}
           onClick={() => {
             dispatch(incrementAsync());
@@ -64,7 +69,7 @@ export default function Counter() {
           type="button"
         >
           async
-        </button>
+        </Button>
       </div>
     </div>
   );
