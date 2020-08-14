@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
+import {
+  Button,
+} from '@blueprintjs/core';
 import routes from '../constants/routes.json';
 import styles from './Home.css';
-
-// import signalingServer from '../server/signalingServer';
 
 export default function Home(): JSX.Element {
   const [signalingServerPort, setSignalingServerPort] = useState('0000');
@@ -29,13 +30,20 @@ export default function Home(): JSX.Element {
 
   return (
     <div className={styles.container} data-tid="container">
-      <h2>Home</h2>
-      <Link to={routes.COUNTER}>to Counter</Link>
-      <h3>{`${t('Signaling server is running on port')}: ${signalingServerPort}`}</h3>
-      <h3>{`Locales test ${t('Language')}`}</h3>
-      <button type="button" onClick={onButtonClick}>
+      <h2 className="bp3-heading">Home</h2>
+      <br />
+      <Link to={routes.COUNTER}>
+        {' '}
+        <Button text="To Counter" />
+      </Link>
+      <br />
+      <h3 className="bp3-heading">{`${t('Signaling server is running on port')}: ${signalingServerPort}`}</h3>
+      <br />
+      <h3 className="bp3-heading">{`Locales test ${t('Language')}`}</h3>
+      <br />
+      <Button type="button" onClick={onButtonClick}>
         CLICK ME!
-      </button>
+      </Button>
     </div>
   );
 }

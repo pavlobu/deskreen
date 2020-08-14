@@ -277,6 +277,7 @@
     "webpack-merge": "^5.0.9"
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.31.0",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@reduxjs/toolkit": "^1.4.0",
@@ -302,6 +303,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
+    "sass": "^1.26.10",
     "source-map-support": "^0.5.19"
   },
   "devEngines": {
