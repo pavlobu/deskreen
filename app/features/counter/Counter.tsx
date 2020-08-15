@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
+import { Grid } from 'react-flexbox-grid';
 import styles from './Counter.css';
 import routes from '../../constants/routes.json';
 import {
@@ -16,11 +17,11 @@ export default function Counter() {
   const dispatch = useDispatch();
   const value = useSelector(selectCount);
   return (
-    <div>
+    <Grid fluid>
       <div className={styles.backButton} data-tid="backButton">
         <br />
         <Link to={routes.HOME}>
-          <Button icon="arrow-left" />
+          <Button icon="arrow-left" style={{ height: '50px', width: '50px' }} />
         </Link>
       </div>
       <h1
@@ -71,6 +72,6 @@ export default function Counter() {
           async
         </Button>
       </div>
-    </div>
+    </Grid>
   );
 }
