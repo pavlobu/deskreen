@@ -6,7 +6,7 @@ const getPageTitle = ClientFunction(() => document.title);
 const counterSelector = Selector('[data-tid="counter"]');
 const buttonsSelector = Selector('[data-tclass="btn"]');
 const clickToCounterLink = (t) =>
-  t.click(Selector('a').withExactText('to Counter'));
+  t.click(Selector('button').withExactText('to Counter'));
 const incrementButton = buttonsSelector.nth(0);
 const decrementButton = buttonsSelector.nth(1);
 const oddButton = buttonsSelector.nth(2);
@@ -33,11 +33,11 @@ test(
 );
 
 test('should navigate to Counter with click on the "to Counter" link', async (t) => {
-  await t.click('[data-tid=container] > a').expect(getCounterText()).eql('0');
+  await t.click('#to-counter').expect(getCounterText()).eql('0');
 });
 
 test('should navigate to /counter', async (t) => {
-  await t.click('a').expect(getPageUrl()).contains('/counter');
+  await t.click('#to-counter').expect(getPageUrl()).contains('/counter');
 });
 
 fixture`Counter Tests`

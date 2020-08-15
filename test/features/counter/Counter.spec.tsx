@@ -43,11 +43,11 @@ describe('Counter component', () => {
     expect(p.text()).toMatch(/^1$/);
   });
 
-  it('should first button should call increment', () => {
+  it('should 2 button should call increment', () => {
     const { buttons } = setup();
     const incrementSpy = jest.spyOn(counterSlice, 'increment');
 
-    buttons.at(0).simulate('click');
+    buttons.at(1).simulate('click');
     expect(incrementSpy).toBeCalled();
     incrementSpy.mockRestore();
   });
@@ -67,26 +67,26 @@ describe('Counter component', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should second button should call decrement', () => {
+  it('should 3 button should call decrement', () => {
     const { buttons } = setup();
     const decrementSyp = jest.spyOn(counterSlice, 'decrement');
-    buttons.at(1).simulate('click');
+    buttons.at(2).simulate('click');
     expect(decrementSyp).toBeCalled();
     decrementSyp.mockRestore();
   });
 
-  it('should third button should call incrementIfOdd', () => {
+  it('should 3 button should call incrementIfOdd', () => {
     const { buttons } = setup();
     const incrementIfOdd = jest.spyOn(counterSlice, 'incrementIfOdd');
-    buttons.at(2).simulate('click');
+    buttons.at(3).simulate('click');
     expect(incrementIfOdd).toBeCalled();
     incrementIfOdd.mockRestore();
   });
 
-  it('should fourth button should call incrementAsync', () => {
+  it('should 4 button should call incrementAsync', () => {
     const { buttons } = setup();
     const incrementAsync = jest.spyOn(counterSlice, 'incrementAsync');
-    buttons.at(3).simulate('click');
+    buttons.at(4).simulate('click');
     expect(incrementAsync).toBeCalled();
     incrementAsync.mockRestore();
   });

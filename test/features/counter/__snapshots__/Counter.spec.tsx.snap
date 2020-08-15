@@ -1,64 +1,120 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Counter component should match exact snapshot 1`] = `
-<div>
+<div
+  className="container-fluid"
+>
   <div
     className="backButton"
     data-tid="backButton"
   >
+    <br />
     <a
       href="/"
       onClick={[Function]}
     >
-      <i
-        className="fa fa-arrow-left fa-3x"
-      />
+      <button
+        className="bp3-button"
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        style={
+          Object {
+            "height": "50px",
+            "width": "50px",
+          }
+        }
+        type="button"
+      >
+        <span
+          className="bp3-icon bp3-icon-arrow-left"
+          icon="arrow-left"
+        >
+          <svg
+            data-icon="arrow-left"
+            height={16}
+            viewBox="0 0 16 16"
+            width={16}
+          >
+            <desc>
+              arrow-left
+            </desc>
+            <path
+              d="M13.99 6.99H4.41L7.7 3.7a1.003 1.003 0 00-1.42-1.42l-5 5a1.014 1.014 0 000 1.42l5 5a1.003 1.003 0 001.42-1.42L4.41 8.99H14c.55 0 1-.45 1-1s-.46-1-1.01-1z"
+              fillRule="evenodd"
+            />
+          </svg>
+        </span>
+      </button>
     </a>
   </div>
-  <div
-    className="counter counter"
+  <h1
+    className="bp3-heading counter counter"
     data-tid="counter"
   >
     1
-  </div>
+  </h1>
   <div
     className="btnGroup"
   >
     <button
-      className="btn"
+      className="bp3-button btn"
       data-tclass="btn"
       onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
       type="button"
     >
-      <i
-        className="fa fa-plus"
-      />
+      <span
+        className="bp3-button-text"
+      >
+        <i
+          className="fa fa-plus"
+        />
+      </span>
     </button>
     <button
-      className="btn"
+      className="bp3-button btn"
       data-tclass="btn"
       onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
       type="button"
     >
-      <i
-        className="fa fa-minus"
-      />
+      <span
+        className="bp3-button-text"
+      >
+        <i
+          className="fa fa-minus"
+        />
+      </span>
     </button>
     <button
-      className="btn"
+      className="bp3-button btn"
       data-tclass="btn"
       onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
       type="button"
     >
-      odd
+      <span
+        className="bp3-button-text"
+      >
+        odd
+      </span>
     </button>
     <button
-      className="btn"
+      className="bp3-button btn"
       data-tclass="btn"
       onClick={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
       type="button"
     >
-      async
+      <span
+        className="bp3-button-text"
+      >
+        async
+      </span>
     </button>
   </div>
 </div>
