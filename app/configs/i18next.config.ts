@@ -6,8 +6,16 @@
 import i18n from 'i18next';
 import i18nextBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
-import isDev from 'electron-is-dev';
+// import isDev from 'electron-is-dev';
 import config from './app.config';
+
+let isDev;
+try {
+  // eslint-disable-next-line global-require
+  isDev = require('electron-is-dev');
+} catch (e) {
+  isDev = true;
+}
 
 const i18nextOptions = {
   fallbackLng: config.fallbackLng,

@@ -54,3 +54,7 @@ package.json
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
+
+
+# Entire app/client directory
+app/client/*

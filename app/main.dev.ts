@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint global-require: off, no-console: off */
 
 /**
@@ -154,7 +155,7 @@ ipcMain.handle('get-signaling-server-port', () => {
 });
 
 // ipcMain.on('get-initial-translations', (event, arg) => {
-ipcMain.on('get-initial-translations', (event, _) => {
+ipcMain.on('get-initial-translations', (event) => {
   // i18n.loadLanguages('en', (err, t) => {
   i18n.loadLanguages('en', () => {
     const initial = {

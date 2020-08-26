@@ -4,12 +4,13 @@
   "version": "2.0.53",
   "description": "TODO: write description of this app",
   "scripts": {
-    "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
+    "build": "concurrently \"yarn build-main\" \"yarn build-renderer\" \"yarn build-client\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-e2e": "cross-env E2E_BUILD=true yarn build",
     "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
-    "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && cross-env START_HOT=1 yarn start-renderer-dev",
+    "build-client": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn install && cross-env SKIP_PREFLIGHT_CHECK=true yarn build",
+    "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && concurrently \"cross-env START_HOT=1 yarn start-renderer-dev\" \"yarn start-client-dev\"",
     "coverage": "cross-env BABEL_DISABLE_CACHE=1 jest --coverage",
     "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
     "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
@@ -31,7 +32,9 @@
     "start-main-debug": "yarn start-main-dev --inspect=5858 --remote-debugging-port=9223",
     "start-main-dev": "cross-env START_HOT=1 NODE_ENV=development electron -r ./internals/scripts/BabelRegister ./app/main.dev.ts",
     "start-renderer-dev": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
-    "test": "cross-env BABEL_DISABLE_CACHE=1 jest",
+    "start-client-dev": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn start",
+    "test": "cross-env BABEL_DISABLE_CACHE=1 jest && yarn test-client",
+    "test-client": "cd app/client && SKIP_PREFLIGHT_CHECK=true cross-env BABEL_DISABLE_CACHE=1 yarn test:nowatch",
     "test-all": "yarn lint && yarn tsc && yarn build && yarn test",
     "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe electron:./app ./test/e2e/HomePage.e2e.ts",
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
@@ -45,7 +48,7 @@
       "prettier --ignore-path .eslintignore --parser json --write"
     ],
     "*.{css,scss}": [
-      "stylelint --ignore-path .eslintignore --syntax scss --fix",
+      "stylelint --allow-empty-input --ignore-path .eslintignore --syntax scss --fix",
       "prettier --ignore-path .eslintignore --single-quote --write"
     ],
     "*.{html,md,yml}": [
@@ -62,7 +65,8 @@
       "main.prod.js",
       "main.prod.js.map",
       "package.json",
-      "locales/"
+      "locales/",
+      "client/build"
     ],
     "dmg": {
       "contents": [
@@ -137,6 +141,8 @@
   "homepage": "https://github.com/pavlobu/deskreen#readme",
   "jest": {
     "testURL": "http://localhost/",
+    "coveragePathIgnorePatterns": ["/node_modules/", "app/client"],
+    "testPathIgnorePatterns": ["/node_modules/", "app/client"],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
@@ -198,7 +204,13 @@
     "@types/history": "^4.7.6",
     "@types/i18next-node-fs-backend": "^2.1.0",
     "@types/jest": "^26.0.5",
+    "@types/kcors": "^2.2.3",
+    "@types/koa": "^2.11.4",
+    "@types/koa-router": "^7.4.1",
+    "@types/koa-send": "^4.1.2",
+    "@types/koa-static": "^4.0.1",
     "@types/node": "12",
+    "@types/node-forge": "^0.9.5",
     "@types/react": "^16.9.44",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
@@ -206,6 +218,9 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-test-renderer": "^16.9.2",
     "@types/redux-logger": "^3.0.8",
+    "@types/shortid": "^0.0.29",
+    "@types/socket.io": "^2.1.11",
+    "@types/socket.io-client": "^1.4.33",
     "@types/webpack": "^4.41.21",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^3.6.1",
@@ -294,6 +309,12 @@
     "i18next-fs-backend": "^1.0.7",
     "i18next-node-fs-backend": "^2.1.3",
     "i18next-sync-fs-backend": "^1.1.1",
+    "kcors": "^2.2.2",
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "koa-send": "^5.0.1",
+    "koa-static": "^5.0.0",
+    "node-forge": "^0.9.1",
     "react": "^16.13.1",
     "react-dom": "^16.12.0",
     "react-flexbox-grid": "^2.1.2",
@@ -305,6 +326,9 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
     "sass": "^1.26.10",
+    "shortid": "^2.2.15",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "source-map-support": "^0.5.19"
   },
   "devEngines": {

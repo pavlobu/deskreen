@@ -3,6 +3,9 @@
 test-reports/
 test-reporter.xml
 
+app/client/node_modules
+app/client/build
+
 # Logs
 logs
 *.log

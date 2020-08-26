@@ -1,3 +1,8 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState, useEffect } from 'react';
@@ -8,6 +13,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Button } from '@blueprintjs/core';
 import routes from '../constants/routes.json';
 import styles from './Home.css';
+
 
 export default function Home(): JSX.Element {
   const [signalingServerPort, setSignalingServerPort] = useState('0000');
@@ -42,8 +48,8 @@ export default function Home(): JSX.Element {
             <br />
             <h3 className="bp3-heading">
               {`${t(
-              'Signaling server is running on port'
-            )}: ${signalingServerPort}`}
+                'Signaling server is running on port'
+              )}: ${signalingServerPort}`}
             </h3>
             <br />
             <h3 className="bp3-heading">{`Locales test ${t('Language')}`}</h3>

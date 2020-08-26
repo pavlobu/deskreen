@@ -6,8 +6,8 @@ import App from './containers/App';
 import HomePage from './containers/HomePage';
 
 // Lazily load routes and code split with webpacck
-const LazyCounterPage = React.lazy(() =>
-  import(/* webpackChunkName: "CounterPage" */ './containers/CounterPage')
+const LazyCounterPage = React.lazy(
+  () => import(/* webpackChunkName: "CounterPage" */ './containers/CounterPage')
 );
 
 const CounterPage = (props: Record<string, any>) => (
