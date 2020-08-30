@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import Io from 'socket.io';
 // eslint-disable-next-line import/no-cycle
-import { getIO } from './signalingServer';
+import { getIO } from '.';
 import getStore from './store';
 
 interface User {
@@ -82,24 +82,12 @@ export default class Socket implements SocketOPTS {
   // eslint-disable-next-line class-methods-use-this
   joinRoom(roomId: string, socket: Io.Socket) {
     return new Promise((resolve, reject) => {
-      if (getStore().hasSocketAdapter) {
-        // TODO: what is this?
-        // getIO()
-        //   .of('/')
-        //   .adapter.remoteJoin(socket.id, roomId, (err: Error) => {
-        //     if (err) {
-        //       reject();
-        //     }
-        //     resolve();
-        //   });
-      } else {
-        socket.join(roomId, (err) => {
-          if (err) {
-            reject();
-          }
-          resolve();
-        });
-      }
+      socket.join(roomId, (err) => {
+        if (err) {
+          reject();
+        }
+        resolve();
+      });
     });
   }
 

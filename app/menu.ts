@@ -9,7 +9,7 @@ import {
 
 import config from './configs/app.config';
 
-import signalingServer from './server/signalingServer';
+import signalingServer from './server';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
