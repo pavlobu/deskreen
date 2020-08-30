@@ -17,7 +17,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import config from './configs/app.config';
 import i18n from './configs/i18next.config';
-import signalingServer from './server/signalingServer';
+import signalingServer from './server';
 import MenuBuilder from './menu';
 
 const globalAny: any = global;
