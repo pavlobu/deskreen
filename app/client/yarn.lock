@@ -6202,6 +6202,13 @@ jest-snapshot@^24.9.0:
     pretty-format "^24.9.0"
     semver "^6.2.0"
 
+jest-sonar-reporter@^2.0.0:
+  version "2.0.0"
+  resolved "https://packages.deskreen.com/jest-sonar-reporter/-/jest-sonar-reporter-2.0.0.tgz#faa54a7d2af7198767ee246a82b78c576789cf08"
+  integrity sha512-ZervDCgEX5gdUbdtWsjdipLN3bKJwpxbvhkYNXTAYvAckCihobSLr9OT/IuyNIRT1EZMDDwR6DroWtrq+IL64w==
+  dependencies:
+    xml "^1.0.1"
+
 jest-util@^24.0.0, jest-util@^24.9.0:
   version "24.9.0"
   resolved "https://packages.deskreen.com/jest-util/-/jest-util-24.9.0.tgz#7396814e48536d2e85a37de3e4c431d7cb140162"
@@ -10888,6 +10895,11 @@ xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://packages.deskreen.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
+
+xml@^1.0.1:
+  version "1.0.1"
+  resolved "https://packages.deskreen.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
 xmlchars@^2.1.1:
   version "2.2.0"

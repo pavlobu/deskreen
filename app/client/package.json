@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "jest-sonar-reporter": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
@@ -20,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:nowatch": "react-scripts test --watchAll=false"
+    "test:nowatch": "react-scripts test --watchAll=false",
+    "coverage": "yarn test -- --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,6 +37,27 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/src/serviceWorker.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 10,
+        "functions": 10,
+        "lines": 10,
+        "statements": 10
+      }
+    },
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
     ]
   }
 }

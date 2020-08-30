@@ -213,6 +213,12 @@ export default class MenuBuilder {
         checked: this.i18n.language === languageCode,
         click: () => {
           this.i18n.changeLanguage(languageCode);
+          setTimeout(() => {
+            // to fix for MacOS bug, not picking up new language on first click
+            if (this.i18n.language !== languageCode) {
+              this.i18n.changeLanguage(languageCode);
+            }
+          }, 500);
         },
       };
     });

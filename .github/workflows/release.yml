@@ -49,6 +49,7 @@ jobs:
       - name: yarn install from npmjs registry
         run: |
           yarn install --no-lockfile
+          yarn install-client:nolockfile
 
       - name: Configure private AWS npm registry and install packages from it
         if: ${{ failure() }}
@@ -57,6 +58,7 @@ jobs:
           npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
           npm config set always-auth true
           yarn install --frozen-lockfile
+          yarn install-client:frozenlockfile
 
       - name: yarn package-ci
         env:
