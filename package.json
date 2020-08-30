@@ -41,7 +41,8 @@
     "test-all": "yarn lint && yarn tsc && yarn build && yarn test",
     "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe electron:./app ./test/e2e/HomePage.e2e.ts",
     "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
-    "test-watch": "yarn test --watch"
+    "test-watch": "yarn test --watch",
+    "sonar": "concurrently \"sonar-scanner\" \"cd app/client && sonar-scanner\" "
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

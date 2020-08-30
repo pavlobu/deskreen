@@ -22,11 +22,11 @@ export const process = (payload: any, privateKeyString: string) =>
     await new Promise((resolvePayload) => {
       payload.keys.forEach(async (key: any) => {
         try {
-          sessionAESKeyUnencrypted = await crypto.unwrapKey(
+          sessionAESKeyUnencrypted = crypto.unwrapKey(
             privateKey,
             key.sessionKey
           );
-          signingHMACKey = await crypto.unwrapKey(privateKey, key.signingKey);
+          signingHMACKey = crypto.unwrapKey(privateKey, key.signingKey);
           resolvePayload();
         } catch (e) {
           console.error(e);
