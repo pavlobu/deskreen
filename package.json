@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "2.0.53",
+  "version": "0.0.2-alpha",
   "description": "TODO: write description of this app",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\" \"yarn build-client\"",
