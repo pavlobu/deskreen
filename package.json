@@ -145,8 +145,14 @@
   "homepage": "https://github.com/pavlobu/deskreen#readme",
   "jest": {
     "testURL": "http://localhost/",
-    "coveragePathIgnorePatterns": ["/node_modules/", "app/client"],
-    "testPathIgnorePatterns": ["/node_modules/", "app/client"],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "app/client"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "app/client"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
@@ -198,6 +204,7 @@
     "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/plugin-transform-react-constant-elements": "^7.10.4",
     "@babel/plugin-transform-react-inline-elements": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.0",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
@@ -333,7 +340,8 @@
     "shortid": "^2.2.15",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "winston": "^3.3.3"
   },
   "devEngines": {
     "node": ">=7.x",
@@ -373,7 +381,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "post-commit": "yarn coverage &> /dev/null && yarn sonar &> /dev/null &"
     }
   },
   "jestSonar": {

@@ -1,4 +1,5 @@
 /* eslint-disable no-async-promise-executor */
+import regeneratorRuntime from 'regenerator-runtime';
 import _ from 'lodash';
 import Io from 'socket.io';
 // eslint-disable-next-line import/no-cycle
