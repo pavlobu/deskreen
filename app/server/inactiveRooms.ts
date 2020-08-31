@@ -3,10 +3,7 @@ import getStore from './store';
 
 export default async function pollForInactiveRooms() {
   const store = getStore();
-
-  console.log('Checking for inactive rooms...');
   const rooms = (await store.getAll('rooms')) || {};
-  console.log(`${Object.keys(rooms).length} rooms found`);
 
   Object.keys(rooms).forEach(async (roomId) => {
     const room = JSON.parse(rooms[roomId]);
@@ -15,9 +12,6 @@ export default async function pollForInactiveRooms() {
       timeSinceUpdatedInSeconds / 60 / 60 / 24
     );
     if (timeSinceUpdatedInDays > 7) {
-      console.log(
-        `Deleting roomId ${roomId} which hasn't been used in ${timeSinceUpdatedInDays} days`
-      );
       await store.del('rooms', roomId);
     }
   });

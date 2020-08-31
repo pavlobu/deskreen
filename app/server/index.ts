@@ -11,8 +11,12 @@ import koaSend from 'koa-send';
 import getPort from 'get-port';
 // eslint-disable-next-line import/no-cycle
 import Socket from './socket';
-import pollForInactiveRooms from './inactive_rooms';
+import pollForInactiveRooms from './inactiveRooms';
 import getStore from './store';
+
+import Logger from '../utils/logger';
+
+const log = new Logger('app/server/index.ts');
 
 let isDev;
 try {
@@ -101,7 +105,7 @@ const init = async (PORT: number) => {
   pollForInactiveRooms();
 
   return server.listen(PORT, () => {
-    console.log(`Signaling server is online at port ${PORT}`);
+    log.info(`Signaling server is online at port ${PORT}`);
   });
 };
 
@@ -123,7 +127,7 @@ class SignalingServer {
   public async start(): Promise<Server> {
     this.port = await getPort({ port: 3131 });
     this.server = await init(this.port);
-    console.log(`\n\nDeskreen signaling server started at port: ${this.port}`);
+    log.info(`Deskreen signaling server started at port: ${this.port}`);
     return this.server;
   }
 
