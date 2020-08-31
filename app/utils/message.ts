@@ -7,8 +7,25 @@ import Crypto from './crypto';
 
 const crypto = new Crypto();
 
+interface EncryptedPayloadToSend {
+  payload: string;
+  signature: string;
+  iv: string;
+  keys: EncryptedKeys[];
+}
+
+interface EncryptedKeys {
+  sessionKey: string;
+  signingKey: string;
+}
+
+interface ProcessedPayload {
+  toSend: EncryptedPayloadToSend;
+  original: any;
+}
+
 export const process = (payload: any, privateKeyString: string) =>
-  new Promise(async (resolve, reject) => {
+  new Promise(async (resolve) => {
     const privateKey = (await crypto.importEncryptDecryptKey(
       privateKeyString
     )) as forge.pki.rsa.PrivateKey;
@@ -41,9 +58,9 @@ export const process = (payload: any, privateKeyString: string) =>
     );
 
     if (!verified) {
-      console.error("recreated signature doesn't match with payload.signature");
-      reject();
-      return;
+      throw new Error(
+        "recreated signature doesn't match with payload.signature"
+      );
     }
 
     const decryptedPayload = await crypto.decryptMessage(
@@ -57,7 +74,7 @@ export const process = (payload: any, privateKeyString: string) =>
   });
 
 export const prepare = (payload: any, user: any, partner: any) =>
-  new Promise(async (resolve) => {
+  new Promise<ProcessedPayload>(async (resolve) => {
     const myUsername = user.username;
     const myId = user.id;
     const members = [partner];
@@ -92,8 +109,8 @@ export const prepare = (payload: any, user: any, partner: any) =>
           member.publicKey
         )) as forge.pki.rsa.PublicKey;
         const enc = await Promise.all([
-          crypto.wrapKeyWithForge(secretKeyRandomAES, memberPublicKey),
-          crypto.wrapKeyWithForge(secretKeyRandomHMAC, memberPublicKey),
+          crypto.wrapKey(secretKeyRandomAES, memberPublicKey),
+          crypto.wrapKey(secretKeyRandomHMAC, memberPublicKey),
         ]);
 
         return {

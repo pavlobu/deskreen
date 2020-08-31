@@ -1,3 +1,8 @@
+/*
+ * original JS code from darkwire.io
+ * translated to typescript for Deskreen app
+ * */
+
 /* eslint-disable no-async-promise-executor */
 import _ from 'lodash';
 import Io from 'socket.io';

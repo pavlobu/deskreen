@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*
- * got original code from darkwire.io
- * translated code to typescript for Deskreen
+ * original JS code from darkwire.io
+ * translated to typescript for Deskreen app
  * */
 
 interface MemoryStoreParams {

@@ -1,3 +1,8 @@
+/*
+ * original JS code from darkwire.io
+ * translated to typescript for Deskreen app
+ * */
+
 /* eslint-disable no-console */
 import http, { Server } from 'http';
 import express from 'express';
@@ -10,7 +15,7 @@ import koaStatic from 'koa-static';
 import koaSend from 'koa-send';
 import getPort from 'get-port';
 // eslint-disable-next-line import/no-cycle
-import Socket from './socket';
+import DarkwireSocket from './darkwireSocket';
 import pollForInactiveRooms from './inactiveRooms';
 import getStore from './store';
 
@@ -25,8 +30,6 @@ try {
 } catch (e) {
   isDev = true;
 }
-
-require('dotenv').config();
 
 const app = new Koa();
 
@@ -93,7 +96,7 @@ io.on('connection', async (socket) => {
   room = JSON.parse(room || '{}');
 
   // eslint-disable-next-line no-new
-  new Socket({
+  new DarkwireSocket({
     roomIdOriginal: roomId,
     roomId: roomIdHash,
     socket,
