@@ -6,7 +6,7 @@ log.transports.file.level = 'warn';
 if (process.env.NODE_ENV !== 'production') {
   log.transports.console.level = 'silly';
 } else {
-  log.transports.console.level = 'silly'; // TODO: make false when doing release
+  log.transports.console.level = 'debug'; // TODO: make false when doing release
 }
 
 export default class LoggerWithFilePrefix {
