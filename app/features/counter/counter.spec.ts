@@ -1,8 +1,5 @@
 import { AnyAction } from 'redux';
-import counterReducer, {
-  increment,
-  decrement,
-} from '../../app/features/counter/counterSlice';
+import counterReducer, { increment, decrement } from './counterSlice';
 
 describe('reducers', () => {
   describe('counter', () => {
