@@ -11,16 +11,12 @@ import koaSend from 'koa-send';
 import getPort from 'get-port';
 // eslint-disable-next-line import/no-cycle
 import Socket from './socket';
-import pollForInactiveRooms from './inactive_rooms';
+import pollForInactiveRooms from './inactiveRooms';
 import getStore from './store';
 
 import Logger from '../utils/logger';
 
 const log = new Logger('app/server/index.ts');
-
-// const log = (...args) => {
-//   logger.
-// };
 
 let isDev;
 try {

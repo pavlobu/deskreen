@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * Memory store more for testing purpose than production use.
- */
+
+/*
+ * got original code from darkwire.io
+ * translated code to typescript for Deskreen
+ * */
 
 interface MemoryStoreParams {
-  store: any;
-  hasSocketAdapter: boolean;
+  store: unknown;
 }
 
 class MemoryStore implements MemoryStoreParams {
   store: any;
 
-  hasSocketAdapter: boolean;
-
   constructor() {
     this.store = {};
-    this.hasSocketAdapter = false;
   }
 
   async get(key: string, field: any) {
