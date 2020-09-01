@@ -9,18 +9,8 @@ export default class Crypto {
     for (let i = 0; i < str.length; i++) {
       bytes[i] = str.charCodeAt(i);
     }
-
     return bytes;
   }
-
-  // convertArrayBufferViewToString(buffer) {
-  //   let str = '';
-  //   for (let i = 0; i < buffer.byteLength; i++) {
-  //     str += String.fromCharCode(buffer[i]);
-  //   }
-
-  //   return str;
-  // }
 
   createEncryptDecryptKeys() {
     return new Promise<forge.pki.rsa.KeyPair>((resolve) => {
@@ -109,10 +99,7 @@ export default class Crypto {
     });
   }
 
-  wrapKeyWithForge(
-    keyToWrap: string,
-    publicKeyToWrapWith: forge.pki.rsa.PublicKey
-  ) {
+  wrapKey(keyToWrap: string, publicKeyToWrapWith: forge.pki.rsa.PublicKey) {
     return publicKeyToWrapWith.encrypt(keyToWrap, 'RSA-OAEP');
   }
 
