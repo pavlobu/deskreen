@@ -1,36 +1,26 @@
-// const i18n = require('i18next');
-// const i18nextBackend = require('i18next-fs-backend');
-// const { join } = require('path');
-// const config = require('./app.config');
-
 import i18n from 'i18next';
 import i18nextBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
-// import isDev from 'electron-is-dev';
-import config from './app.config';
-
-let isDev;
-try {
-  // eslint-disable-next-line global-require
-  isDev = require('electron-is-dev');
-} catch (e) {
-  isDev = true;
-}
+import settings from 'electron-settings';
+import config from './app.lang.config';
+import isProduction from '../utils/isProduction';
 
 const i18nextOptions = {
   fallbackLng: config.fallbackLng,
-  lng: 'en',
+  lng: (settings.hasSync('appLanguage')
+    ? settings.getSync('appLanguage')
+    : 'en') as string,
   ns: 'translation',
   defaultNS: 'translation',
   backend: {
     // path where resources get loaded from
-    loadPath: isDev
-      ? join(__dirname, '../locales/{{lng}}/{{ns}}.json')
-      : join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
+    loadPath: isProduction()
+      ? join(__dirname, 'locales/{{lng}}/{{ns}}.json')
+      : join(__dirname, '../locales/{{lng}}/{{ns}}.json'),
     // path to post missing resources
-    addPath: isDev
-      ? join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json')
-      : join(__dirname, 'locales/{{lng}}/{{ns}}.json'),
+    addPath: isProduction()
+      ? join(__dirname, 'locales/{{lng}}/{{ns}}.json')
+      : join(__dirname, '../locales/{{lng}}/{{ns}}.missing.json'),
     // jsonIndent to use when storing json files
     jsonIndent: 2,
   },

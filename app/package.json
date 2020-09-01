@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "deskreen",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "description": "TODO: write description about this project",
   "main": "./main.prod.js",
   "author": {

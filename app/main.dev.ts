@@ -15,7 +15,7 @@ import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-import config from './configs/app.config';
+import settings from 'electron-settings';
 import i18n from './configs/i18next.config';
 import signalingServer from './server';
 import MenuBuilder from './menu';
@@ -24,6 +24,8 @@ const globalAny: any = global;
 globalAny.appPath = __dirname;
 
 signalingServer.start();
+
+log.error(process.platform);
 
 export default class AppUpdater {
   constructor() {
@@ -68,8 +70,13 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 820,
+    height: 480,
+    // maxWidth: 820,
+    // maxHeight: 480,
+    minHeight: 400,
+    minWidth: 600,
+    titleBarStyle: 'hiddenInset',
     webPreferences:
       (process.env.NODE_ENV === 'development' ||
         process.env.E2E_BUILD === 'true') &&
@@ -115,8 +122,12 @@ const createWindow = async () => {
     if (mainWindow === null) return;
     menuBuilder = new MenuBuilder(mainWindow, i18n);
     menuBuilder.buildMenu();
-    mainWindow.webContents.send('sending-language-from-main', lng);
-    console.log(`Language changed! ${lng}`);
+    setTimeout(async () => {
+      if (lng !== 'en' && i18n.language !== lng) {
+        i18n.changeLanguage(lng);
+        await settings.set('appLanguage', lng);
+      }
+    }, 400);
   });
 
   // Remove this if your app does not use auto updates
@@ -154,15 +165,7 @@ ipcMain.handle('get-signaling-server-port', () => {
   mainWindow.webContents.send('sending-port-from-main', signalingServer.port);
 });
 
-// ipcMain.on('get-initial-translations', (event, arg) => {
-ipcMain.on('get-initial-translations', (event) => {
-  // i18n.loadLanguages('en', (err, t) => {
-  i18n.loadLanguages('en', () => {
-    const initial = {
-      en: {
-        translation: i18n.getResourceBundle('en', config.namespace),
-      },
-    };
-    event.returnValue = initial;
-  });
+ipcMain.on('client-changed-language', async (_, newLangCode) => {
+  i18n.changeLanguage(newLangCode);
+  await settings.set('appLanguage', newLangCode);
 });

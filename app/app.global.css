@@ -6,27 +6,383 @@
 @import '~normalize.css/normalize.css';
 @import '~@blueprintjs/core/lib/css/blueprint.css';
 @import '~react-flexbox-grid/dist/react-flexbox-grid.css';
+@import '~fontsource-lexend-peta/index.css';
+
+:root {
+  --dark-bg-color: #293742;
+  --light-bg-color: rgba(240, 248, 250, 1);
+  --light-btn-no-intent-color: rgb(218, 238, 243);
+  --dark-btn-no-intent-color: #394b59;
+  --custom-scrollbar-webkit-scrollbar-thumb-border-radius: 10px;
+  --custom-scrollbar-webkit-scrollbar-thumb-background-color: #8a9ba8;
+  --custom-scrollbar-webkit-scrollbar_background-color: rgba(0, 0, 0, 0);
+  --custom-scrollbar-webkit-scrollbar-width: 12px;
+  --custom-scrollbar-webkit-scrollbar-track-border-radius: 10px;
+  --custom-scrollbar-webkit-scrollbar-track-background-color: rgba(0, 0, 0, 0);
+}
 
 body {
   position: relative;
-  color: white;
   height: 100vh;
-  background-color: whitesmoke;
   font-family: Arial, Helvetica, Helvetica Neue, serif;
-  overflow-y: hidden;
+  overflow: hidden;
+  background-color: var(--light-bg-color);
+}
+
+/* UI colors FOR LIGHT AND DARK THEME START */
+.bp3-button:not([class*='bp3-intent-']) {
+  background-color: var(--light-btn-no-intent-color);
 }
 
 body.bp3-dark {
-  background-color: #293742;
+  background-color: var(--dark-bg-color) !important;
 }
 
-/* .bp3-button {
-  outline: none !important;
+.bp3-dialog {
+  background-color: var(--light-bg-color) !important;
 }
 
-.bp3-control {
-  outline: none !important;
+.bp3-dark .bp3-dialog {
+  background-color: var(--dark-bg-color) !important;
+}
+
+.bp3-popover .bp3-popover-arrow-fill {
+  fill: var(--light-bg-color);
+}
+
+.bp3-popover .bp3-popover-content {
+  background-color: var(--light-bg-color);
+  color: black;
+}
+
+.bp3-html-select > select {
+  background-color: var(--light-btn-no-intent-color);
+}
+
+.bp3-drawer {
+  background-color: var(--light-bg-color);
+}
+
+.bp3-card {
+  background-color: var(--light-bg-color);
+}
+
+/* for really small screen sizes (ex. Raspberry PI display etc. */
+@media screen and (max-height: 419px) {
+  body {
+    overflow-y: scroll;
+  }
+}
+
+.react-toast-notifications__container {
+  overflow: hidden !important;
+}
+
+/* Connected Devices List button pulse START */
+#top-panel-connected-devices-list-button.pulsing {
+  transform: scale(1);
+  animation: pulse-black-devices-list-button 0.75s infinite;
+}
+
+#top-panel-connected-devices-list-button.pulse-not-infinite {
+  transform: scale(1);
+  animation: pulse-black-devices-list-button 0.75s 4;
+}
+
+@keyframes pulse-black-devices-list-button {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(115, 134, 148, 0.7);
+  }
+
+  60% {
+    transform: scale(0.85);
+    box-shadow: 0 0 0 15px rgba(115, 134, 148, 0.3);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0);
+  }
+}
+
+/* Connected Devices List button pulse END */
+
+/* For choose app or screen overlay popup without scrollbars! */
+.bp3-overlay-scroll-container {
+  overflow-y: hidden !important;
+}
+
+/* help cursor when text hovered Connected Devices List */
+#connected-devices-list-text-success:hover {
+  cursor: help;
+}
+
+/* react-toast-notifications progress bar more obvious look */
+body
+  > div.react-toast-notifications__container
+  > div
+  > div
+  > div.react-toast-notifications__toast__icon-wrapper
+  > div {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.hide-toaster-progress {
+  height: 5px;
+  width: calc(100% + 87px) !important;
+  bottom: -11px !important;
+  left: -40px !important;
+}
+
+/* ALLOW CONNECTION ALERT BLINK ANIMATION START */
+div.class-allow-device-to-connect-alert
+  > div.bp3-alert-body
+  > span
+  > svg
+  > path {
+  color: #a82a2a !important;
+  -webkit-animation: blink 0.75s infinite alternate; /* to blink 3 times instead of infinite write just 3 */
+  -moz-animation: blink 0.75s infinite alternate;
+  -ms-animation: blink 0.75s infinite alternate;
+  -o-animation: blink 0.75s infinite alternate;
+  animation: blink 0.75s infinite alternate;
+}
+
+@-webkit-keyframes blink {
+  from {
+    color: #a82a2a;
+  }
+  to {
+    color: #f55656;
+  }
+}
+@-moz-keyframes blink {
+  from {
+    color: #a82a2a;
+  }
+  to {
+    color: #f55656;
+  }
+}
+@-ms-keyframes blink {
+  from {
+    color: #a82a2a;
+  }
+  to {
+    color: #f55656;
+  }
+}
+@-o-keyframes blink {
+  from {
+    color: #a82a2a;
+  }
+  to {
+    color: #f55656;
+  }
+}
+@keyframes blink {
+  from {
+    color: #a82a2a;
+  }
+  to {
+    color: #f55656;
+  }
+}
+
+/* ALLOW CONNECTION ALERT BLINK ANIMATION END */
+
+/* Connected Device Info Button pulse animation START */
+
+#connected-device-info-stepper-button {
+  transform: scale(1);
+  animation: pulse-black-connected-device 0.75s 3;
+}
+
+@keyframes pulse-black-connected-device {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(61, 204, 145, 0.7);
+  }
+
+  60% {
+    transform: scale(0.75);
+    box-shadow: 0 0 0 15px rgba(61, 204, 145, 0.3);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0);
+  }
+}
+
+/* Connected Device Info Button pulse animation END */
+
+#settings-overlay-inner > div > div.bp3-tab-panel {
+  width: 100% !important;
+}
+
+/* settings panel tabs button left styles */
+#settings-overlay-inner > div > div.bp3-tab-list {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 8px;
+
+  /* height: 100%; */
+}
+
+/* settings inner 100% height regardless tab content height */
+#settings-overlay-inner > div {
+  height: 100%;
+}
+
+.bp3-overlay-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .bp3-overlay-settings.bp3-overlay-content {
+  display: flex;
 } */
+
+/* TODO: move to appropriate style file in ShareEntireScreenOrAppWindowControlGroup */
+#share-screen-or-app-btn-group > button > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* #root>div.MuiPaper-root.MuiStepper-root.MuiStepper-horizontal.MuiStepper-alternativeLabel.MuiPaper-elevation0>div:nth-child(1)>span>span.MuiStepLabel-iconContainer.MuiStepLabel-alternativeLabel>div {
+  transform: scale(1);
+  animation: pulse-black 2s infinite;
+} */
+
+.active-stepper-pulse-icon {
+  transform: scale(1);
+  animation: pulse-black 3s infinite;
+}
+
+@keyframes pulse-black {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(191, 115, 38, 0.7);
+  }
+
+  60% {
+    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(255, 179, 102, 0.3);
+  }
+
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+}
+
+/* TODO: move it to DeskreenStepper.css ! */
+#step-label-deskreen > span.MuiStepLabel-labelContainer > span {
+  margin-top: 8px;
+}
+
+#share-screen-or-app-btn-group > button:nth-child(1):hover {
+  border-width: 10px;
+}
+
+.bp3-overlay::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-track-border-radius);
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-track-background-color
+  );
+}
+
+.bp3-overlay::-webkit-scrollbar {
+  width: var(--custom-scrollbar-webkit-scrollbar-width);
+  background-color: var(--custom-scrollbar-webkit-scrollbar_background-color);
+}
+
+.bp3-overlay::-webkit-scrollbar-thumb {
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-thumb-border-radius);
+
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-thumb-background-color
+  );
+}
+
+.bp3-drawer::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-track-border-radius);
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-track-background-color
+  );
+}
+
+.bp3-drawer::-webkit-scrollbar {
+  width: var(--custom-scrollbar-webkit-scrollbar-width);
+  background-color: var(--custom-scrollbar-webkit-scrollbar_background-color);
+}
+
+.bp3-drawer::-webkit-scrollbar-thumb {
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-thumb-border-radius);
+
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-thumb-background-color
+  );
+}
+
+body::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-track-border-radius);
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-track-background-color
+  );
+}
+
+body::-webkit-scrollbar {
+  width: var(--custom-scrollbar-webkit-scrollbar-width);
+  background-color: var(--custom-scrollbar-webkit-scrollbar_background-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-thumb-border-radius);
+
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-thumb-background-color
+  );
+}
+
+.choose-app-or-screen-dialog::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-track-border-radius);
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-track-background-color
+  );
+}
+
+.choose-app-or-screen-dialog::-webkit-scrollbar {
+  width: var(--custom-scrollbar-webkit-scrollbar-width);
+  background-color: var(--custom-scrollbar-webkit-scrollbar_background-color);
+}
+
+.choose-app-or-screen-dialog::-webkit-scrollbar-thumb {
+  border-radius: var(--custom-scrollbar-webkit-scrollbar-thumb-border-radius);
+
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); */
+  background-color: var(
+    --custom-scrollbar-webkit-scrollbar-thumb-background-color
+  );
+}
+
+/* --custom-scrollbar-webkit-scrollbar-thumb-border-radius: 10px;
+--custom-scrollbar-webkit-scrollbar-thumb-background-color: #8A9BA8;
+--custom-scrollbar-webkit-scrollbar_background-color: rgba(0,0,0,0);
+--custom-scrollbar-webkit-scrollbar-width: 12px;
+--custom-scrollbar-webkit-scrollbar-track-border-radius: 10px;
+--custom-scrollbar-webkit-scrollbar-track-background-color: rgba(0,0,0,0); */
 
 h2 {
   margin: 0;

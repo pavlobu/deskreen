@@ -7,7 +7,7 @@ import {
   MenuItemConstructorOptions,
 } from 'electron';
 
-import config from './configs/app.config';
+import config from './configs/app.lang.config';
 
 import signalingServer from './server';
 
@@ -26,7 +26,7 @@ export default class MenuBuilder {
     this.i18n = i18n;
   }
 
-  buildMenu(): Menu {
+  buildMenu() {
     if (
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
@@ -34,15 +34,16 @@ export default class MenuBuilder {
       this.setupDevelopmentEnvironment();
     }
 
-    const template =
-      process.platform === 'darwin'
-        ? this.buildDarwinTemplate()
-        : this.buildDefaultTemplate();
-
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-
-    return menu;
+    if (process.platform === 'darwin') {
+      const menu = Menu.buildFromTemplate(this.buildDarwinTemplate());
+      Menu.setApplicationMenu(menu);
+    } else if (process.env.NODE_ENV === 'development') {
+      const menu = Menu.buildFromTemplate(this.buildDefaultTemplate());
+      Menu.setApplicationMenu(menu);
+    } else {
+      // for production, no menu for non MacOS app
+      Menu.setApplicationMenu(null);
+    }
   }
 
   setupDevelopmentEnvironment(): void {

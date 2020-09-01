@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Button } from '@blueprintjs/core';
+import {
+  Button,
+} from '@blueprintjs/core';
 import routes from '../constants/routes.json';
 import styles from './Home.css';
-
 
 export default function Home(): JSX.Element {
   const [signalingServerPort, setSignalingServerPort] = useState('0000');
