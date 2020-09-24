@@ -78,12 +78,12 @@ export default function IntermediateStep(props: IntermediateStepProps) {
       )}
 
       {
-        /* TODO: (REMOVE: process.env.NODE_ENV === 'production') !!!!!!!!!)
-        Connect Test Device button, displayed only when RUN_MODE is 'dev' or 'test' */
-        props.activeStep === 0 &&
-        (process.env.RUN_MODE === 'dev' ||
-          process.env.RUN_MODE === 'test' ||
-          process.env.NODE_ENV === 'production') ? (
+        // eslint-disable-next-line no-nested-ternary
+        process.env.NODE_ENV === 'production' &&
+        process.env.RUN_MODE !== 'dev' &&
+        process.env.RUN_MODE !== 'test' ? (
+          <></>
+        ) : props.activeStep === 0 ? (
           // eslint-disable-next-line react/jsx-indent
           <Button
             onClick={() => {

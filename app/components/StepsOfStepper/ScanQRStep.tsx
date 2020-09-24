@@ -10,7 +10,10 @@ import { SettingsContext } from '../../containers/SettingsProvider';
 import isProduction from '../../utils/isProduction';
 import CloseOverlayButton from '../CloseOverlayButton';
 
-const internalIp = require('internal-ip');
+const LOCAL_LAN_IP =
+  process.env.RUN_MODE === 'dev' || process.env.NODE_ENV === 'production'
+    ? require('internal-ip').v4.sync()
+    : '255.255.255.255';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -60,7 +63,7 @@ const ScanQRStep: React.FC = () => {
             onClick={() => setIsQRCodeMagnified(true)}
           >
             <QRCode
-              value={`http://${internalIp.v4.sync()}:65000/99999`}
+              value={`http://${LOCAL_LAN_IP}:65000/99999`}
               level="H"
               renderAs="svg"
               // bgColor={isDarkTheme ? '#293742' : '#ffffff'}
@@ -90,7 +93,7 @@ const ScanQRStep: React.FC = () => {
           icon="duplicate"
           style={{ borderRadius: '100px' }}
         >
-          http://255.255.255.255:65000/99999
+          {`http://${LOCAL_LAN_IP}:65000/99999`}
         </Button>
       </Tooltip>
 
@@ -132,7 +135,7 @@ const ScanQRStep: React.FC = () => {
           <Row center="xs">
             <div className={classes.dialogQRWrapper}>
               <QRCode
-                value={`http://${internalIp.v4.sync()}:65000/99999`}
+                value={`http://${LOCAL_LAN_IP}:65000/99999`}
                 level="H"
                 renderAs="svg"
                 imageSettings={{

@@ -25,7 +25,8 @@ jobs:
           npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
           npm config set always-auth true
           yarn install --frozen-lockfile
-          yarn install-client:frozenlockfile
+          cd app/client
+          yarn install --frozen-lockfile
 
       - name: yarn build
         run: yarn build

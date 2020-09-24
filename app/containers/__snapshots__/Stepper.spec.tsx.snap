@@ -1123,7 +1123,7 @@ exports[`should match exact snapshot 1`] = `
                                                     level="H"
                                                     renderAs="svg"
                                                     size={128}
-                                                    value="http://192.168.31.214:65000/99999"
+                                                    value="http://255.255.255.255:65000/99999"
                                                   >
                                                     <QRCodeSVG
                                                       bgColor="rgba(0,0,0,0.0)"
@@ -1138,7 +1138,7 @@ exports[`should match exact snapshot 1`] = `
                                                       includeMargin={false}
                                                       level="H"
                                                       size={128}
-                                                      value="http://192.168.31.214:65000/99999"
+                                                      value="http://255.255.255.255:65000/99999"
                                                     >
                                                       <svg
                                                         height={128}
@@ -1151,7 +1151,7 @@ exports[`should match exact snapshot 1`] = `
                                                           fill="rgba(0,0,0,0.0)"
                                                         />
                                                         <path
-                                                          d="M0 0h7v1H0zM8 0h1v1H8zM10 0h1v1H10zM12 0h6v1H12zM19 0h2v1H19zM23 0h2v1H23zM26,0 h7v1H26zM0 1h1v1H0zM6 1h1v1H6zM8 1h2v1H8zM15 1h1v1H15zM17 1h2v1H17zM22 1h1v1H22zM26 1h1v1H26zM32,1 h1v1H32zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM8 2h1v1H8zM11 2h1v1H11zM13 2h1v1H13zM15 2h1v1H15zM17 2h2v1H17zM20 2h2v1H20zM23 2h1v1H23zM26 2h1v1H26zM28 2h3v1H28zM32,2 h1v1H32zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM10 3h4v1H10zM23 3h1v1H23zM26 3h1v1H26zM28 3h3v1H28zM32,3 h1v1H32zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h1v1H9zM11 4h1v1H11zM13 4h1v1H13zM15 4h1v1H15zM17 4h2v1H17zM21 4h4v1H21zM26 4h1v1H26zM28 4h3v1H28zM32,4 h1v1H32zM0 5h1v1H0zM6 5h1v1H6zM8 5h1v1H8zM10 5h1v1H10zM14 5h1v1H14zM16 5h1v1H16zM20 5h3v1H20zM26 5h1v1H26zM32,5 h1v1H32zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h1v1H22zM24 6h1v1H24zM26,6 h7v1H26zM8 7h6v1H8zM15 7h2v1H15zM18 7h1v1H18zM20 7h3v1H20zM24 7h1v1H24zM2 8h3v1H2zM6 8h1v1H6zM8 8h1v1H8zM11 8h4v1H11zM16 8h1v1H16zM19 8h1v1H19zM23 8h1v1H23zM25 8h3v1H25zM30,8 h3v1H30zM0 9h2v1H0zM3 9h1v1H3zM5 9h1v1H5zM7 9h1v1H7zM9 9h1v1H9zM12 9h2v1H12zM16 9h2v1H16zM20 9h1v1H20zM22 9h5v1H22zM29 9h1v1H29zM31,9 h2v1H31zM0 10h2v1H0zM5 10h6v1H5zM13 10h2v1H13zM17 10h5v1H17zM24 10h1v1H24zM27 10h1v1H27zM0 11h2v1H0zM4 11h2v1H4zM8 11h3v1H8zM15 11h1v1H15zM21 11h3v1H21zM25 11h1v1H25zM30 11h2v1H30zM0 12h7v1H0zM11 12h2v1H11zM15 12h1v1H15zM19 12h1v1H19zM21 12h1v1H21zM24 12h1v1H24zM28 12h2v1H28zM32,12 h1v1H32zM8 13h1v1H8zM10 13h1v1H10zM14 13h1v1H14zM16 13h2v1H16zM19 13h2v1H19zM23 13h5v1H23zM30 13h1v1H30zM32,13 h1v1H32zM0 14h2v1H0zM3 14h1v1H3zM6 14h1v1H6zM11 14h5v1H11zM17 14h2v1H17zM20 14h1v1H20zM22 14h1v1H22zM24 14h2v1H24zM30 14h2v1H30zM0 15h2v1H0zM7 15h1v1H7zM11 15h1v1H11zM13 15h1v1H13zM15 15h1v1H15zM18 15h1v1H18zM20 15h3v1H20zM24 15h1v1H24zM27 15h2v1H27zM30 15h2v1H30zM0 16h1v1H0zM2 16h1v1H2zM4 16h4v1H4zM9 16h1v1H9zM11 16h1v1H11zM18 16h3v1H18zM23 16h2v1H23zM28 16h1v1H28zM0 17h2v1H0zM3 17h1v1H3zM5 17h1v1H5zM13 17h3v1H13zM17 17h2v1H17zM21 17h7v1H21zM31,17 h2v1H31zM0 18h2v1H0zM4 18h4v1H4zM9 18h3v1H9zM14 18h1v1H14zM18 18h1v1H18zM20 18h1v1H20zM24 18h1v1H24zM26 18h1v1H26zM30 18h1v1H30zM2 19h1v1H2zM4 19h1v1H4zM9 19h1v1H9zM11 19h2v1H11zM14 19h1v1H14zM20 19h6v1H20zM27 19h1v1H27zM29 19h2v1H29zM4 20h1v1H4zM6 20h1v1H6zM8 20h1v1H8zM10 20h1v1H10zM13 20h2v1H13zM16 20h1v1H16zM18 20h1v1H18zM20 20h1v1H20zM23 20h1v1H23zM28 20h2v1H28zM0 21h1v1H0zM3 21h3v1H3zM10 21h1v1H10zM12 21h3v1H12zM16 21h1v1H16zM19 21h1v1H19zM21 21h7v1H21zM30 21h1v1H30zM32,21 h1v1H32zM0 22h1v1H0zM2 22h3v1H2zM6 22h3v1H6zM13 22h1v1H13zM15 22h7v1H15zM27 22h2v1H27zM0 23h1v1H0zM2 23h2v1H2zM7 23h2v1H7zM10 23h2v1H10zM14 23h2v1H14zM17 23h3v1H17zM21 23h1v1H21zM24 23h1v1H24zM28 23h1v1H28zM30 23h2v1H30zM0 24h1v1H0zM6 24h1v1H6zM8 24h1v1H8zM10 24h1v1H10zM12 24h1v1H12zM17 24h1v1H17zM19 24h1v1H19zM23 24h6v1H23zM8 25h1v1H8zM10 25h1v1H10zM17 25h2v1H17zM22 25h3v1H22zM28 25h1v1H28zM30,25 h3v1H30zM0 26h7v1H0zM10 26h1v1H10zM14 26h3v1H14zM18 26h1v1H18zM22 26h3v1H22zM26 26h1v1H26zM28 26h1v1H28zM0 27h1v1H0zM6 27h1v1H6zM9 27h1v1H9zM11 27h2v1H11zM15 27h4v1H15zM20 27h1v1H20zM24 27h1v1H24zM28 27h1v1H28zM30 27h2v1H30zM0 28h1v1H0zM2 28h3v1H2zM6 28h1v1H6zM8 28h2v1H8zM11 28h2v1H11zM14 28h2v1H14zM17 28h1v1H17zM21 28h2v1H21zM24 28h6v1H24zM0 29h1v1H0zM2 29h3v1H2zM6 29h1v1H6zM8 29h2v1H8zM11 29h1v1H11zM14 29h3v1H14zM18 29h3v1H18zM28 29h2v1H28zM32,29 h1v1H32zM0 30h1v1H0zM2 30h3v1H2zM6 30h1v1H6zM8 30h1v1H8zM10 30h5v1H10zM16 30h5v1H16zM22 30h1v1H22zM25 30h2v1H25zM29 30h1v1H29zM0 31h1v1H0zM6 31h1v1H6zM12 31h3v1H12zM16 31h1v1H16zM20 31h1v1H20zM23 31h1v1H23zM25 31h1v1H25zM27 31h1v1H27zM30 31h1v1H30zM0 32h7v1H0zM9 32h1v1H9zM11 32h1v1H11zM13 32h1v1H13zM19 32h1v1H19zM21 32h1v1H21zM24 32h1v1H24zM26 32h1v1H26zM29 32h1v1H29zM31 32h1v1H31z"
+                                                          d="M0 0h7v1H0zM10 0h1v1H10zM13 0h2v1H13zM16 0h1v1H16zM19 0h1v1H19zM23 0h2v1H23zM26,0 h7v1H26zM0 1h1v1H0zM6 1h1v1H6zM11 1h2v1H11zM14 1h2v1H14zM19 1h6v1H19zM26 1h1v1H26zM32,1 h1v1H32zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM9 2h1v1H9zM12 2h3v1H12zM17 2h1v1H17zM19 2h1v1H19zM22 2h3v1H22zM26 2h1v1H26zM28 2h3v1H28zM32,2 h1v1H32zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM9 3h1v1H9zM11 3h2v1H11zM14 3h1v1H14zM16 3h5v1H16zM23 3h1v1H23zM26 3h1v1H26zM28 3h3v1H28zM32,3 h1v1H32zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h1v1H8zM12 4h3v1H12zM16 4h5v1H16zM22 4h1v1H22zM26 4h1v1H26zM28 4h3v1H28zM32,4 h1v1H32zM0 5h1v1H0zM6 5h1v1H6zM11 5h1v1H11zM13 5h1v1H13zM17 5h5v1H17zM24 5h1v1H24zM26 5h1v1H26zM32,5 h1v1H32zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h1v1H22zM24 6h1v1H24zM26,6 h7v1H26zM8 7h1v1H8zM11 7h1v1H11zM14 7h1v1H14zM19 7h1v1H19zM23 7h1v1H23zM2 8h2v1H2zM6 8h3v1H6zM11 8h2v1H11zM14 8h1v1H14zM16 8h1v1H16zM20 8h7v1H20zM28 8h1v1H28zM0 9h4v1H0zM5 9h1v1H5zM7 9h1v1H7zM10 9h1v1H10zM12 9h1v1H12zM14 9h1v1H14zM16 9h4v1H16zM22 9h5v1H22zM29,9 h4v1H29zM1 10h1v1H1zM3 10h1v1H3zM6 10h1v1H6zM13 10h1v1H13zM18 10h1v1H18zM23 10h1v1H23zM26 10h1v1H26zM32,10 h1v1H32zM0 11h1v1H0zM2 11h3v1H2zM7 11h1v1H7zM9 11h1v1H9zM18 11h1v1H18zM20 11h1v1H20zM23 11h1v1H23zM25 11h4v1H25zM1 12h3v1H1zM6 12h1v1H6zM8 12h1v1H8zM11 12h2v1H11zM15 12h2v1H15zM19 12h2v1H19zM23 12h2v1H23zM28 12h1v1H28zM31 12h1v1H31zM7 13h2v1H7zM11 13h2v1H11zM15 13h1v1H15zM19 13h4v1H19zM25 13h1v1H25zM29 13h1v1H29zM1 14h1v1H1zM3 14h2v1H3zM6 14h3v1H6zM13 14h1v1H13zM15 14h1v1H15zM17 14h2v1H17zM21 14h1v1H21zM24 14h1v1H24zM27 14h1v1H27zM0 15h2v1H0zM3 15h1v1H3zM5 15h1v1H5zM9 15h1v1H9zM12 15h1v1H12zM14 15h2v1H14zM17 15h6v1H17zM25 15h1v1H25zM28 15h1v1H28zM30 15h1v1H30zM32,15 h1v1H32zM4 16h3v1H4zM9 16h1v1H9zM11 16h1v1H11zM19 16h1v1H19zM21 16h1v1H21zM23 16h1v1H23zM26 16h3v1H26zM30 16h1v1H30zM32,16 h1v1H32zM3 17h3v1H3zM10 17h4v1H10zM19 17h1v1H19zM23 17h1v1H23zM26 17h1v1H26zM28 17h1v1H28zM30 17h1v1H30zM32,17 h1v1H32zM2 18h1v1H2zM4 18h1v1H4zM6 18h4v1H6zM12 18h1v1H12zM14 18h3v1H14zM18 18h3v1H18zM24 18h1v1H24zM26 18h3v1H26zM30 18h1v1H30zM1 19h1v1H1zM4 19h2v1H4zM7 19h2v1H7zM10 19h1v1H10zM13 19h1v1H13zM18 19h3v1H18zM25 19h2v1H25zM32,19 h1v1H32zM2 20h1v1H2zM4 20h1v1H4zM6 20h1v1H6zM8 20h1v1H8zM11 20h1v1H11zM14 20h1v1H14zM16 20h1v1H16zM19 20h7v1H19zM27 20h1v1H27zM29 20h3v1H29zM0 21h1v1H0zM2 21h2v1H2zM8 21h2v1H8zM11 21h3v1H11zM17 21h2v1H17zM20 21h8v1H20zM29,21 h4v1H29zM2 22h3v1H2zM6 22h1v1H6zM11 22h2v1H11zM16 22h1v1H16zM18 22h1v1H18zM20 22h1v1H20zM22 22h3v1H22zM26 22h1v1H26zM28 22h1v1H28zM32,22 h1v1H32zM1 23h3v1H1zM5 23h1v1H5zM9 23h1v1H9zM12 23h1v1H12zM14 23h4v1H14zM19 23h2v1H19zM25 23h1v1H25zM27 23h1v1H27zM0 24h1v1H0zM2 24h2v1H2zM6 24h4v1H6zM13 24h2v1H13zM16 24h4v1H16zM23 24h6v1H23zM31 24h1v1H31zM8 25h8v1H8zM19 25h4v1H19zM24 25h1v1H24zM28 25h1v1H28zM30 25h2v1H30zM0 26h7v1H0zM8 26h2v1H8zM12 26h4v1H12zM19 26h1v1H19zM22 26h3v1H22zM26 26h1v1H26zM28 26h1v1H28zM30 26h2v1H30zM0 27h1v1H0zM6 27h1v1H6zM9 27h1v1H9zM11 27h3v1H11zM16 27h2v1H16zM19 27h1v1H19zM21 27h2v1H21zM24 27h1v1H24zM28 27h1v1H28zM30 27h1v1H30zM32,27 h1v1H32zM0 28h1v1H0zM2 28h3v1H2zM6 28h1v1H6zM11 28h5v1H11zM17 28h2v1H17zM23 28h6v1H23zM30 28h1v1H30zM32,28 h1v1H32zM0 29h1v1H0zM2 29h3v1H2zM6 29h1v1H6zM8 29h3v1H8zM12 29h3v1H12zM18 29h1v1H18zM21 29h3v1H21zM25 29h1v1H25zM27 29h1v1H27zM31,29 h2v1H31zM0 30h1v1H0zM2 30h3v1H2zM6 30h1v1H6zM8 30h3v1H8zM12 30h2v1H12zM20 30h7v1H20zM30 30h1v1H30zM0 31h1v1H0zM6 31h1v1H6zM10 31h4v1H10zM15 31h2v1H15zM18 31h1v1H18zM24 31h3v1H24zM29 31h1v1H29zM32,31 h1v1H32zM0 32h7v1H0zM9 32h2v1H9zM12 32h2v1H12zM16 32h2v1H16zM20 32h1v1H20zM27 32h2v1H27zM30 32h1v1H30z"
                                                           fill="#000000"
                                                         />
                                                         <image
@@ -1383,6 +1383,30 @@ exports[`should match exact snapshot 1`] = `
                                 />
                               </Blueprint3.Dialog>
                             </ScanQRStep>
+                            <Blueprint3.Button
+                              onClick={[Function]}
+                            >
+                              <button
+                                className="bp3-button"
+                                onClick={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyUp={[Function]}
+                                type="button"
+                              >
+                                <Blueprint3.Icon
+                                  key="leftIcon"
+                                />
+                                <span
+                                  className="bp3-button-text"
+                                  key="text"
+                                >
+                                  Connect Test Device
+                                </span>
+                                <Blueprint3.Icon
+                                  key="rightIcon"
+                                />
+                              </button>
+                            </Blueprint3.Button>
                             <Blueprint3.Button
                               icon="chevron-left"
                               intent="danger"

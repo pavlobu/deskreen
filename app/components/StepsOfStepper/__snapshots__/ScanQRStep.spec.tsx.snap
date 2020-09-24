@@ -47,7 +47,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           level="H"
           renderAs="svg"
           size={128}
-          value="http://192.168.31.214:65000/99999"
+          value="http://255.255.255.255:65000/99999"
         />
       </div>
     </Blueprint3.Tooltip>
@@ -166,7 +166,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
             level="H"
             renderAs="svg"
             size={128}
-            value="http://192.168.31.214:65000/99999"
+            value="http://255.255.255.255:65000/99999"
             width="390px"
           />
         </div>

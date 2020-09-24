@@ -34,7 +34,7 @@ jobs:
             artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: windows-2019
             artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
-          - os: macos-10.14
+          - os: macos-10.15
             artifact_name: 'release/{*.zip,*.dmg,*.blockmap,*.yml}'
 
     steps:
@@ -58,7 +58,8 @@ jobs:
           npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
           npm config set always-auth true
           yarn install --frozen-lockfile
-          yarn install-client:frozenlockfile
+          cd app/client
+          yarn install --frozen-lockfile
 
       - name: yarn package-ci
         env:

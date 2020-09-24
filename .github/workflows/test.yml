@@ -1,74 +1,74 @@
-name: build and test
+# name: build and test
 
-on: [pull_request]
+# on: [pull_request]
 
-# NPMRC_ADMIN_USER_AUTH_TOKEN
+# # NPMRC_ADMIN_USER_AUTH_TOKEN
 
-jobs:
-  build-and-test:
-    runs-on: ${{ matrix.os }}
+# jobs:
+#   build-and-test:
+#     runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os: [macos-10.14, windows-2019, ubuntu-18.04]
+#     strategy:
+#       matrix:
+#         os: [macos-10.14, windows-2019, ubuntu-18.04]
 
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2.3.1
+#     steps:
+#       - name: Check out Git repository
+#         uses: actions/checkout@v2.3.1
 
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1.4.2
-        with:
-          node-version: 14
+#       - name: Install Node.js, NPM and Yarn
+#         uses: actions/setup-node@v1.4.2
+#         with:
+#           node-version: 14
 
-      # - name: yarn install from npmjs registry
-      #   run: |
-      #     yarn install --no-lockfile
-      #     yarn install-client:nolockfile
+#       # - name: yarn install from npmjs registry
+#       #   run: |
+#       #     yarn install --no-lockfile
+#       #     yarn install-client:nolockfile
 
-      - name: Configure private AWS npm registry and install packages from it
-        # if: ${{ failure() }}
-        run: |
-          npm config set registry https://packages.deskreen.com/
-          npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
-          npm config set always-auth true
-          yarn install --frozen-lockfile
-          yarn install-client:frozenlockfile
+#       - name: Configure private AWS npm registry and install packages from it
+#         # if: ${{ failure() }}
+#         run: |
+#           npm config set registry https://packages.deskreen.com/
+#           npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
+#           npm config set always-auth true
+#           yarn install --frozen-lockfile
+#           yarn install-client:frozenlockfile
 
-      # following step does code signing when `electron-builder --publish always` (look in package.json)
-      - name: yarn package-ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn package-ci
+#       # following step does code signing when `electron-builder --publish always` (look in package.json)
+#       - name: yarn package-ci
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn package-ci
 
-      - name: yarn build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build
+#       - name: yarn build
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn build
 
-      - name: yarn lint
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn lint
+#       - name: yarn lint
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn lint
 
-      - name: yarn tsc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn tsc
+#       - name: yarn tsc
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn tsc
 
-      - name: yarn test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn test
+#       - name: yarn test
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn test
 
-      - name: yarn build-e2e
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build-e2e
+#       - name: yarn build-ux
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: yarn build-ux
 
-      - name: yarn test-e2e
-        uses: GabrielBB/xvfb-action@v1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          run: yarn test-e2e
+#       - name: yarn test-ux
+#         uses: GabrielBB/xvfb-action@v1.2
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           run: yarn test-ux
