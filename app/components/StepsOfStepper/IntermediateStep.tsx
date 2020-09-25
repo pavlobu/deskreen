@@ -98,14 +98,20 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         // ) : (
         //   <></>
         // )
-        // eslint-disable-next-line react/jsx-indent
-        <Button
-          onClick={() => {
-            connectDevice(DEVICES[Math.floor(Math.random() * DEVICES.length)]);
-          }}
-        >
-          Connect Test Device
-        </Button>
+        props.activeStep === 0 ? (
+          // eslint-disable-next-line react/jsx-indent
+          <Button
+            onClick={() => {
+              connectDevice(
+                DEVICES[Math.floor(Math.random() * DEVICES.length)]
+              );
+            }}
+          >
+            Connect Test Device
+          </Button>
+        ) : (
+          <></>
+        )
       }
       {
         /**/

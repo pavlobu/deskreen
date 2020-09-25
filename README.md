@@ -34,11 +34,11 @@ sonar.login=d0c254aaff5ebd89dd5c6f0663238ab6ad5fddea
 
 ## Maintainer
 
-- [Pavlo (Paul) Buidenkov](https://github.com/pavlo/buidenkov)
+- [Pavlo (Paul) Buidenkov](https://github.com/pavlobu)
 
 ## License
 
-MIT © [Deskreen](https://github.com/pavlobu/deskreen)
+MIT © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen)
 
 ## Copyright
 
