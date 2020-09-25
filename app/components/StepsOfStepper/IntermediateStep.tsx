@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable react/destructuring-assignment */
 import React, { useContext } from 'react';
 import { Button } from '@blueprintjs/core';
@@ -78,25 +79,33 @@ export default function IntermediateStep(props: IntermediateStepProps) {
       )}
 
       {
-        // eslint-disable-next-line no-nested-ternary
-        process.env.NODE_ENV === 'production' &&
-        process.env.RUN_MODE !== 'dev' &&
-        process.env.RUN_MODE !== 'test' ? (
-          <></>
-        ) : props.activeStep === 0 ? (
-          // eslint-disable-next-line react/jsx-indent
-          <Button
-            onClick={() => {
-              connectDevice(
-                DEVICES[Math.floor(Math.random() * DEVICES.length)]
-              );
-            }}
-          >
-            Connect Test Device
-          </Button>
-        ) : (
-          <></>
-        )
+        // // eslint-disable-next-line no-nested-ternary
+        // process.env.NODE_ENV === 'production' &&
+        // process.env.RUN_MODE !== 'dev' &&
+        // process.env.RUN_MODE !== 'test' ? (
+        //   <></>
+        // ) : props.activeStep === 0 ? (
+        //   // eslint-disable-next-line react/jsx-indent
+        //   <Button
+        //     onClick={() => {
+        //       connectDevice(
+        //         DEVICES[Math.floor(Math.random() * DEVICES.length)]
+        //       );
+        //     }}
+        //   >
+        //     Connect Test Device
+        //   </Button>
+        // ) : (
+        //   <></>
+        // )
+        // eslint-disable-next-line react/jsx-indent
+        <Button
+          onClick={() => {
+            connectDevice(DEVICES[Math.floor(Math.random() * DEVICES.length)]);
+          }}
+        >
+          Connect Test Device
+        </Button>
       }
       {
         /**/
