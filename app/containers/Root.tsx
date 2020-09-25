@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { FocusStyleManager } from '@blueprintjs/core';
 import { Provider } from 'react-redux';
+
 import { ConnectedRouter } from 'connected-react-router';
 import { hot } from 'react-hot-loader/root';
 import { History } from 'history';
 import { Store } from '../store';
 import Routes from '../Routes';
 import i18n from '../configs/i18next.config.client';
+import { SettingsProvider } from './SettingsProvider';
+import { ConnectedDevicesProvider } from './ConnectedDevicesProvider';
+
+FocusStyleManager.onlyShowFocusOnTabs();
 
 type Props = {
   store: Store;
@@ -23,9 +29,13 @@ const Root = ({ store, history }: Props) => {
 
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Routes />
-      </ConnectedRouter>
+      <SettingsProvider>
+        <ConnectedDevicesProvider>
+          <ConnectedRouter history={history}>
+            <Routes />
+          </ConnectedRouter>
+        </ConnectedDevicesProvider>
+      </SettingsProvider>
     </Provider>
   );
 };

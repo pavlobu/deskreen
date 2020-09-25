@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
+<Fragment>
+  <div
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <Blueprint3.Text
+      className="bp3-text"
+    >
+      Scan the QR code
+    </Blueprint3.Text>
+    <Blueprint3.Text
+      className="bp3-text-muted"
+    >
+      ( make sure your computer and device are connected on same WiFi )
+    </Blueprint3.Text>
+  </div>
+  <div>
+    <Blueprint3.Tooltip
+      content="Click to make bigger"
+      hoverCloseDelay={0}
+      hoverOpenDelay={100}
+      position="left"
+      transitionDuration={100}
+    >
+      <div
+        className="makeStyles-smallQRCode-1"
+        id="magnify-qr-code-button"
+        onClick={[Function]}
+      >
+        <QRCode
+          bgColor="rgba(0,0,0,0.0)"
+          fgColor="#000000"
+          imageSettings={
+            Object {
+              "height": 40,
+              "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+              "width": 40,
+            }
+          }
+          includeMargin={false}
+          level="H"
+          renderAs="svg"
+          size={128}
+          value="http://255.255.255.255:65000/99999"
+        />
+      </div>
+    </Blueprint3.Tooltip>
+  </div>
+  <div
+    style={
+      Object {
+        "marginBottom": "10px",
+      }
+    }
+  >
+    <Blueprint3.Text
+      className="bp3-text-muted"
+    >
+      or type the following address manualy in browser address bar on any device:
+    </Blueprint3.Text>
+  </div>
+  <Blueprint3.Tooltip
+    content="Click to copy"
+    hoverCloseDelay={0}
+    hoverOpenDelay={100}
+    position="left"
+    transitionDuration={100}
+  >
+    <Blueprint3.Button
+      icon="duplicate"
+      intent="primary"
+      style={
+        Object {
+          "borderRadius": "100px",
+        }
+      }
+    >
+      http://255.255.255.255:65000/99999
+    </Blueprint3.Button>
+  </Blueprint3.Tooltip>
+  <Blueprint3.Dialog
+    canEscapeKeyClose={true}
+    canOutsideClickClose={true}
+    className="makeStyles-bigQRCodeDialogRoot-3"
+    id="bp3-qr-code-dialog-root"
+    isOpen={false}
+    onClose={[Function]}
+    style={
+      Object {
+        "position": "relative",
+        "top": "-30px",
+      }
+    }
+    transitionDuration={0}
+  >
+    <div
+      id="qr-code-dialog-inner"
+      onClick={[Function]}
+      style={
+        Object {
+          "paddingBottom": "13px",
+          "paddingTop": "20px",
+        }
+      }
+    >
+      <Row
+        between="xs"
+        middle="xs"
+      >
+        <Col
+          xs={10}
+        >
+          <Component
+            style={
+              Object {
+                "margin": "0px",
+                "marginLeft": "35px",
+                "padding": "0px",
+              }
+            }
+          >
+            Scan QR Code
+          </Component>
+        </Col>
+        <Col
+          xs={2}
+        >
+          <CloseOverlayButton
+            noDefaultStyles={true}
+            onClick={[Function]}
+            style={
+              Object {
+                "borderRadius": "100px",
+                "height": "40px",
+                "position": "relative",
+                "width": "40px",
+              }
+            }
+          />
+        </Col>
+      </Row>
+      <Row
+        center="xs"
+      >
+        <div
+          className="makeStyles-dialogQRWrapper-2"
+        >
+          <QRCode
+            bgColor="#FFFFFF"
+            fgColor="#000000"
+            height="390px"
+            imageSettings={
+              Object {
+                "height": 25,
+                "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+                "width": 25,
+              }
+            }
+            includeMargin={false}
+            level="H"
+            renderAs="svg"
+            size={128}
+            value="http://255.255.255.255:65000/99999"
+            width="390px"
+          />
+        </div>
+      </Row>
+    </div>
+  </Blueprint3.Dialog>
+</Fragment>
+`;

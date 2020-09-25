@@ -1,0 +1,72 @@
+[
+  {
+    "id": "123414",
+    "sessionId": "14422424",
+    "deviceOs": "Android",
+    "deviceType": "Mobile",
+    "deviceIp": "123.123.123.123"
+  },
+  {
+    "id": "1123",
+    "sessionId": "43",
+    "deviceOs": "IOS",
+    "deviceType": "Mobile",
+    "deviceIp": "124.124.124.124"
+  },
+  {
+    "id": "2",
+    "sessionId": "22",
+    "deviceOs": "Windows",
+    "deviceType": "PS",
+    "deviceIp": "255.255.124.124"
+  },
+  {
+    "id": "33",
+    "sessionId": "22",
+    "deviceOs": "Ubuntu",
+    "deviceType": "PC",
+    "deviceIp": "4.4.4.124"
+  },
+  {
+    "id": "414",
+    "sessionId": "423",
+    "deviceOs": "Blackberry",
+    "deviceType": "Mobile",
+    "deviceIp": "224.224.224.124"
+  },
+  {
+    "id": "1133223",
+    "sessionId": "4133",
+    "deviceOs": "IOS",
+    "deviceType": "Mobile",
+    "deviceIp": "24.24.24.24"
+  },
+  {
+    "id": "1321123",
+    "sessionId": "44133",
+    "deviceOs": "Android",
+    "deviceType": "Mobile",
+    "deviceIp": "14.14.14.14"
+  },
+  {
+    "id": "993",
+    "sessionId": "91322",
+    "deviceOs": "Debian",
+    "deviceType": "PC",
+    "deviceIp": "1.1.14.14"
+  },
+  {
+    "id": "7757",
+    "sessionId": "1111",
+    "deviceOs": "MacOS",
+    "deviceType": "Mac",
+    "deviceIp": "12.12.14.14"
+  },
+  {
+    "id": "123332",
+    "sessionId": "323231",
+    "deviceOs": "MacOS",
+    "deviceType": "Mac",
+    "deviceIp": "11.11.14.14"
+  }
+]

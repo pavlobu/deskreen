@@ -1,0 +1,1580 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match exact snapshot 1`] = `
+<ToastProvider
+  autoDismiss={false}
+  autoDismissTimeout={5000}
+  components={
+    Object {
+      "Toast": [Function],
+      "ToastContainer": [Function],
+    }
+  }
+  placement="top-center"
+  transitionDuration={220}
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ForwardRef>
+        <Row>
+          <div
+            className="row"
+          >
+            <Col
+              xs={12}
+            >
+              <div
+                className="col-xs-12"
+              >
+                <Pulse
+                  duration={0}
+                  top={true}
+                >
+                  <RevealBase
+                    fraction={0.2}
+                    inEffect={
+                      Object {
+                        "count": 1,
+                        "delay": 0,
+                        "duration": 0,
+                        "forever": undefined,
+                        "make": [Function],
+                        "style": Object {
+                          "animationFillMode": "both",
+                        },
+                      }
+                    }
+                    outEffect={false}
+                    refProp="ref"
+                    top={true}
+                  >
+                    <div
+                      style={
+                        Object {
+                          "opacity": undefined,
+                        }
+                      }
+                    >
+                      <WithStyles(ForwardRef(Stepper))
+                        activeStep={0}
+                        alternativeLabel={true}
+                        className="makeStyles-stepperComponent-3"
+                        connector={<WithStyles(WithStyles(ForwardRef(StepConnector))) />}
+                        style={
+                          Object {
+                            "background": "transparent",
+                          }
+                        }
+                      >
+                        <ForwardRef(Stepper)
+                          activeStep={0}
+                          alternativeLabel={true}
+                          className="makeStyles-stepperComponent-3"
+                          classes={
+                            Object {
+                              "alternativeLabel": "MuiStepper-alternativeLabel",
+                              "horizontal": "MuiStepper-horizontal",
+                              "root": "MuiStepper-root",
+                              "vertical": "MuiStepper-vertical",
+                            }
+                          }
+                          connector={<WithStyles(WithStyles(ForwardRef(StepConnector))) />}
+                          style={
+                            Object {
+                              "background": "transparent",
+                            }
+                          }
+                        >
+                          <WithStyles(ForwardRef(Paper))
+                            className="MuiStepper-root MuiStepper-horizontal makeStyles-stepperComponent-3 MuiStepper-alternativeLabel"
+                            elevation={0}
+                            square={true}
+                            style={
+                              Object {
+                                "background": "transparent",
+                              }
+                            }
+                          >
+                            <ForwardRef(Paper)
+                              className="MuiStepper-root MuiStepper-horizontal makeStyles-stepperComponent-3 MuiStepper-alternativeLabel"
+                              classes={
+                                Object {
+                                  "elevation0": "MuiPaper-elevation0",
+                                  "elevation1": "MuiPaper-elevation1",
+                                  "elevation10": "MuiPaper-elevation10",
+                                  "elevation11": "MuiPaper-elevation11",
+                                  "elevation12": "MuiPaper-elevation12",
+                                  "elevation13": "MuiPaper-elevation13",
+                                  "elevation14": "MuiPaper-elevation14",
+                                  "elevation15": "MuiPaper-elevation15",
+                                  "elevation16": "MuiPaper-elevation16",
+                                  "elevation17": "MuiPaper-elevation17",
+                                  "elevation18": "MuiPaper-elevation18",
+                                  "elevation19": "MuiPaper-elevation19",
+                                  "elevation2": "MuiPaper-elevation2",
+                                  "elevation20": "MuiPaper-elevation20",
+                                  "elevation21": "MuiPaper-elevation21",
+                                  "elevation22": "MuiPaper-elevation22",
+                                  "elevation23": "MuiPaper-elevation23",
+                                  "elevation24": "MuiPaper-elevation24",
+                                  "elevation3": "MuiPaper-elevation3",
+                                  "elevation4": "MuiPaper-elevation4",
+                                  "elevation5": "MuiPaper-elevation5",
+                                  "elevation6": "MuiPaper-elevation6",
+                                  "elevation7": "MuiPaper-elevation7",
+                                  "elevation8": "MuiPaper-elevation8",
+                                  "elevation9": "MuiPaper-elevation9",
+                                  "outlined": "MuiPaper-outlined",
+                                  "root": "MuiPaper-root",
+                                  "rounded": "MuiPaper-rounded",
+                                }
+                              }
+                              elevation={0}
+                              square={true}
+                              style={
+                                Object {
+                                  "background": "transparent",
+                                }
+                              }
+                            >
+                              <div
+                                className="MuiPaper-root MuiStepper-root MuiStepper-horizontal makeStyles-stepperComponent-3 MuiStepper-alternativeLabel MuiPaper-elevation0"
+                                style={
+                                  Object {
+                                    "background": "transparent",
+                                  }
+                                }
+                              >
+                                <WithStyles(ForwardRef(Step))
+                                  active={true}
+                                  alternativeLabel={true}
+                                  completed={false}
+                                  connector={
+                                    <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                      orientation="horizontal"
+                                    />
+                                  }
+                                  disabled={false}
+                                  index={0}
+                                  key=".$Connect"
+                                  last={false}
+                                  orientation="horizontal"
+                                >
+                                  <ForwardRef(Step)
+                                    active={true}
+                                    alternativeLabel={true}
+                                    classes={
+                                      Object {
+                                        "alternativeLabel": "MuiStep-alternativeLabel",
+                                        "completed": "MuiStep-completed",
+                                        "horizontal": "MuiStep-horizontal",
+                                        "root": "MuiStep-root",
+                                        "vertical": "MuiStep-vertical",
+                                      }
+                                    }
+                                    completed={false}
+                                    connector={
+                                      <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                        orientation="horizontal"
+                                      />
+                                    }
+                                    disabled={false}
+                                    index={0}
+                                    last={false}
+                                    orientation="horizontal"
+                                  >
+                                    <div
+                                      className="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel"
+                                    >
+                                      <WithStyles(ForwardRef(StepLabel))
+                                        StepIconComponent={[Function]}
+                                        StepIconProps={
+                                          Object {
+                                            "isApplicationWindowSelected": false,
+                                            "isEntireScreenSelected": false,
+                                          }
+                                        }
+                                        active={true}
+                                        alternativeLabel={true}
+                                        className="makeStyles-stepLabelContent-2"
+                                        completed={false}
+                                        disabled={false}
+                                        expanded={false}
+                                        icon={1}
+                                        id="step-label-deskreen"
+                                        key=".0"
+                                        last={false}
+                                        orientation="horizontal"
+                                      >
+                                        <ForwardRef(StepLabel)
+                                          StepIconComponent={[Function]}
+                                          StepIconProps={
+                                            Object {
+                                              "isApplicationWindowSelected": false,
+                                              "isEntireScreenSelected": false,
+                                            }
+                                          }
+                                          active={true}
+                                          alternativeLabel={true}
+                                          className="makeStyles-stepLabelContent-2"
+                                          classes={
+                                            Object {
+                                              "active": "MuiStepLabel-active",
+                                              "alternativeLabel": "MuiStepLabel-alternativeLabel",
+                                              "completed": "MuiStepLabel-completed",
+                                              "disabled": "Mui-disabled",
+                                              "error": "Mui-error",
+                                              "horizontal": "MuiStepLabel-horizontal",
+                                              "iconContainer": "MuiStepLabel-iconContainer",
+                                              "label": "MuiStepLabel-label",
+                                              "labelContainer": "MuiStepLabel-labelContainer",
+                                              "root": "MuiStepLabel-root",
+                                              "vertical": "MuiStepLabel-vertical",
+                                            }
+                                          }
+                                          completed={false}
+                                          disabled={false}
+                                          expanded={false}
+                                          icon={1}
+                                          id="step-label-deskreen"
+                                          last={false}
+                                          orientation="horizontal"
+                                        >
+                                          <span
+                                            className="MuiStepLabel-root MuiStepLabel-horizontal makeStyles-stepLabelContent-2 MuiStepLabel-alternativeLabel"
+                                            id="step-label-deskreen"
+                                          >
+                                            <span
+                                              className="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel"
+                                            >
+                                              <ColorlibStepIcon
+                                                active={true}
+                                                completed={false}
+                                                error={false}
+                                                icon={1}
+                                                isApplicationWindowSelected={false}
+                                                isEntireScreenSelected={false}
+                                              >
+                                                <div
+                                                  className="makeStyles-root-4 makeStyles-active-5 active-stepper-pulse-icon"
+                                                >
+                                                  <Blueprint3.Icon
+                                                    color="#fff"
+                                                    icon="feed"
+                                                    iconSize={25}
+                                                  >
+                                                    <span
+                                                      className="bp3-icon bp3-icon-feed"
+                                                      icon="feed"
+                                                    >
+                                                      <svg
+                                                        data-icon="feed"
+                                                        fill="#fff"
+                                                        height={25}
+                                                        viewBox="0 0 20 20"
+                                                        width={25}
+                                                      >
+                                                        <desc>
+                                                          feed
+                                                        </desc>
+                                                        <path
+                                                          d="M2.5 15a2.5 2.5 0 000 5 2.5 2.5 0 000-5zm.5-5c-.55 0-1 .45-1 1s.45 1 1 1c2.76 0 5 2.24 5 5 0 .55.45 1 1 1s1-.45 1-1c0-3.87-3.13-7-7-7zM3 0c-.55 0-1 .45-1 1s.45 1 1 1c8.28 0 15 6.72 15 15 0 .55.45 1 1 1s1-.45 1-1C20 7.61 12.39 0 3 0zm0 5c-.55 0-1 .45-1 1s.45 1 1 1c5.52 0 10 4.48 10 10 0 .55.45 1 1 1s1-.45 1-1C15 10.37 9.63 5 3 5z"
+                                                          fillRule="evenodd"
+                                                          key="0"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </Blueprint3.Icon>
+                                                </div>
+                                              </ColorlibStepIcon>
+                                            </span>
+                                            <span
+                                              className="MuiStepLabel-labelContainer"
+                                            >
+                                              <WithStyles(ForwardRef(Typography))
+                                                className="MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-active"
+                                                component="span"
+                                                display="block"
+                                                variant="body2"
+                                              >
+                                                <ForwardRef(Typography)
+                                                  className="MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-active"
+                                                  classes={
+                                                    Object {
+                                                      "alignCenter": "MuiTypography-alignCenter",
+                                                      "alignJustify": "MuiTypography-alignJustify",
+                                                      "alignLeft": "MuiTypography-alignLeft",
+                                                      "alignRight": "MuiTypography-alignRight",
+                                                      "body1": "MuiTypography-body1",
+                                                      "body2": "MuiTypography-body2",
+                                                      "button": "MuiTypography-button",
+                                                      "caption": "MuiTypography-caption",
+                                                      "colorError": "MuiTypography-colorError",
+                                                      "colorInherit": "MuiTypography-colorInherit",
+                                                      "colorPrimary": "MuiTypography-colorPrimary",
+                                                      "colorSecondary": "MuiTypography-colorSecondary",
+                                                      "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                                                      "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                                                      "displayBlock": "MuiTypography-displayBlock",
+                                                      "displayInline": "MuiTypography-displayInline",
+                                                      "gutterBottom": "MuiTypography-gutterBottom",
+                                                      "h1": "MuiTypography-h1",
+                                                      "h2": "MuiTypography-h2",
+                                                      "h3": "MuiTypography-h3",
+                                                      "h4": "MuiTypography-h4",
+                                                      "h5": "MuiTypography-h5",
+                                                      "h6": "MuiTypography-h6",
+                                                      "noWrap": "MuiTypography-noWrap",
+                                                      "overline": "MuiTypography-overline",
+                                                      "paragraph": "MuiTypography-paragraph",
+                                                      "root": "MuiTypography-root",
+                                                      "srOnly": "MuiTypography-srOnly",
+                                                      "subtitle1": "MuiTypography-subtitle1",
+                                                      "subtitle2": "MuiTypography-subtitle2",
+                                                    }
+                                                  }
+                                                  component="span"
+                                                  display="block"
+                                                  variant="body2"
+                                                >
+                                                  <span
+                                                    className="MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiStepLabel-active MuiTypography-body2 MuiTypography-displayBlock"
+                                                  >
+                                                    <Blueprint3.Text
+                                                      className="bp3-text-muted"
+                                                    >
+                                                      <div
+                                                        className="bp3-text-muted"
+                                                      >
+                                                        Connect
+                                                      </div>
+                                                    </Blueprint3.Text>
+                                                  </span>
+                                                </ForwardRef(Typography)>
+                                              </WithStyles(ForwardRef(Typography))>
+                                            </span>
+                                          </span>
+                                        </ForwardRef(StepLabel)>
+                                      </WithStyles(ForwardRef(StepLabel))>
+                                    </div>
+                                  </ForwardRef(Step)>
+                                </WithStyles(ForwardRef(Step))>
+                                <WithStyles(ForwardRef(Step))
+                                  active={false}
+                                  alternativeLabel={true}
+                                  completed={false}
+                                  connector={
+                                    <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                      orientation="horizontal"
+                                    />
+                                  }
+                                  disabled={true}
+                                  index={1}
+                                  key=".$Select"
+                                  last={false}
+                                  orientation="horizontal"
+                                >
+                                  <ForwardRef(Step)
+                                    active={false}
+                                    alternativeLabel={true}
+                                    classes={
+                                      Object {
+                                        "alternativeLabel": "MuiStep-alternativeLabel",
+                                        "completed": "MuiStep-completed",
+                                        "horizontal": "MuiStep-horizontal",
+                                        "root": "MuiStep-root",
+                                        "vertical": "MuiStep-vertical",
+                                      }
+                                    }
+                                    completed={false}
+                                    connector={
+                                      <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                        orientation="horizontal"
+                                      />
+                                    }
+                                    disabled={true}
+                                    index={1}
+                                    last={false}
+                                    orientation="horizontal"
+                                  >
+                                    <div
+                                      className="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel"
+                                    >
+                                      <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                        active={false}
+                                        alternativeLabel={true}
+                                        completed={false}
+                                        disabled={true}
+                                        index={1}
+                                        orientation="horizontal"
+                                      >
+                                        <WithStyles(ForwardRef(StepConnector))
+                                          active={false}
+                                          alternativeLabel={true}
+                                          classes={
+                                            Object {
+                                              "active": "WithStyles(ForwardRef(StepConnector))-active-9",
+                                              "alternativeLabel": "WithStyles(ForwardRef(StepConnector))-alternativeLabel-8",
+                                              "completed": "WithStyles(ForwardRef(StepConnector))-completed-10",
+                                              "line": "WithStyles(ForwardRef(StepConnector))-line-11",
+                                            }
+                                          }
+                                          completed={false}
+                                          disabled={true}
+                                          index={1}
+                                          orientation="horizontal"
+                                        >
+                                          <ForwardRef(StepConnector)
+                                            active={false}
+                                            alternativeLabel={true}
+                                            classes={
+                                              Object {
+                                                "active": "MuiStepConnector-active WithStyles(ForwardRef(StepConnector))-active-9",
+                                                "alternativeLabel": "MuiStepConnector-alternativeLabel WithStyles(ForwardRef(StepConnector))-alternativeLabel-8",
+                                                "completed": "MuiStepConnector-completed WithStyles(ForwardRef(StepConnector))-completed-10",
+                                                "disabled": "Mui-disabled",
+                                                "horizontal": "MuiStepConnector-horizontal",
+                                                "line": "MuiStepConnector-line WithStyles(ForwardRef(StepConnector))-line-11",
+                                                "lineHorizontal": "MuiStepConnector-lineHorizontal",
+                                                "lineVertical": "MuiStepConnector-lineVertical",
+                                                "root": "MuiStepConnector-root",
+                                                "vertical": "MuiStepConnector-vertical",
+                                              }
+                                            }
+                                            completed={false}
+                                            disabled={true}
+                                            index={1}
+                                            orientation="horizontal"
+                                          >
+                                            <div
+                                              className="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel WithStyles(ForwardRef(StepConnector))-alternativeLabel-8 Mui-disabled"
+                                            >
+                                              <span
+                                                className="MuiStepConnector-line WithStyles(ForwardRef(StepConnector))-line-11 MuiStepConnector-lineHorizontal"
+                                              />
+                                            </div>
+                                          </ForwardRef(StepConnector)>
+                                        </WithStyles(ForwardRef(StepConnector))>
+                                      </WithStyles(WithStyles(ForwardRef(StepConnector)))>
+                                      <WithStyles(ForwardRef(StepLabel))
+                                        StepIconComponent={[Function]}
+                                        StepIconProps={
+                                          Object {
+                                            "isApplicationWindowSelected": false,
+                                            "isEntireScreenSelected": false,
+                                          }
+                                        }
+                                        active={false}
+                                        alternativeLabel={true}
+                                        className="makeStyles-stepLabelContent-2"
+                                        completed={false}
+                                        disabled={true}
+                                        expanded={false}
+                                        icon={2}
+                                        id="step-label-deskreen"
+                                        key=".0"
+                                        last={false}
+                                        orientation="horizontal"
+                                      >
+                                        <ForwardRef(StepLabel)
+                                          StepIconComponent={[Function]}
+                                          StepIconProps={
+                                            Object {
+                                              "isApplicationWindowSelected": false,
+                                              "isEntireScreenSelected": false,
+                                            }
+                                          }
+                                          active={false}
+                                          alternativeLabel={true}
+                                          className="makeStyles-stepLabelContent-2"
+                                          classes={
+                                            Object {
+                                              "active": "MuiStepLabel-active",
+                                              "alternativeLabel": "MuiStepLabel-alternativeLabel",
+                                              "completed": "MuiStepLabel-completed",
+                                              "disabled": "Mui-disabled",
+                                              "error": "Mui-error",
+                                              "horizontal": "MuiStepLabel-horizontal",
+                                              "iconContainer": "MuiStepLabel-iconContainer",
+                                              "label": "MuiStepLabel-label",
+                                              "labelContainer": "MuiStepLabel-labelContainer",
+                                              "root": "MuiStepLabel-root",
+                                              "vertical": "MuiStepLabel-vertical",
+                                            }
+                                          }
+                                          completed={false}
+                                          disabled={true}
+                                          expanded={false}
+                                          icon={2}
+                                          id="step-label-deskreen"
+                                          last={false}
+                                          orientation="horizontal"
+                                        >
+                                          <span
+                                            className="MuiStepLabel-root MuiStepLabel-horizontal makeStyles-stepLabelContent-2 Mui-disabled MuiStepLabel-alternativeLabel"
+                                            id="step-label-deskreen"
+                                          >
+                                            <span
+                                              className="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel"
+                                            >
+                                              <ColorlibStepIcon
+                                                active={false}
+                                                completed={false}
+                                                error={false}
+                                                icon={2}
+                                                isApplicationWindowSelected={false}
+                                                isEntireScreenSelected={false}
+                                              >
+                                                <div
+                                                  className="makeStyles-root-4 "
+                                                >
+                                                  <Blueprint3.Icon
+                                                    color="#5C7080"
+                                                    icon="flow-branch"
+                                                    iconSize={25}
+                                                  >
+                                                    <span
+                                                      className="bp3-icon bp3-icon-flow-branch"
+                                                      icon="flow-branch"
+                                                    >
+                                                      <svg
+                                                        data-icon="flow-branch"
+                                                        fill="#5C7080"
+                                                        height={25}
+                                                        viewBox="0 0 20 20"
+                                                        width={25}
+                                                      >
+                                                        <desc>
+                                                          flow-branch
+                                                        </desc>
+                                                        <path
+                                                          d="M14.425 7.953a3.98 3.98 0 01.562 2.045 3.98 3.98 0 01-.583 2.08L18 15.671V12.98c0-.248.097-.496.29-.689.379-.379 1.047-.38 1.426 0a.94.94 0 01.283.696l-.001 5.049a.957.957 0 01-.276.69.955.955 0 01-.69.273h-5.059a.971.971 0 01-.689-.289 1.026 1.026 0 010-1.417.972.972 0 01.69-.29h2.702l-3.634-3.573a3.998 3.998 0 01-5.924-2.431H1a1 1 0 010-2h6.12a3.998 3.998 0 015.96-2.409L16.665 3l-2.694-.001a.972.972 0 01-.689-.29 1.035 1.035 0 010-1.425.94.94 0 01.696-.283l5.05.001c.248 0 .497.083.69.276a.954.954 0 01.272.69l.001 5.052a.971.971 0 01-.29.689 1.028 1.028 0 01-1.419 0 .972.972 0 01-.29-.69V4.323l-3.567 3.63z"
+                                                          fillRule="evenodd"
+                                                          key="0"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </Blueprint3.Icon>
+                                                </div>
+                                              </ColorlibStepIcon>
+                                            </span>
+                                            <span
+                                              className="MuiStepLabel-labelContainer"
+                                            >
+                                              <WithStyles(ForwardRef(Typography))
+                                                className="MuiStepLabel-label MuiStepLabel-alternativeLabel"
+                                                component="span"
+                                                display="block"
+                                                variant="body2"
+                                              >
+                                                <ForwardRef(Typography)
+                                                  className="MuiStepLabel-label MuiStepLabel-alternativeLabel"
+                                                  classes={
+                                                    Object {
+                                                      "alignCenter": "MuiTypography-alignCenter",
+                                                      "alignJustify": "MuiTypography-alignJustify",
+                                                      "alignLeft": "MuiTypography-alignLeft",
+                                                      "alignRight": "MuiTypography-alignRight",
+                                                      "body1": "MuiTypography-body1",
+                                                      "body2": "MuiTypography-body2",
+                                                      "button": "MuiTypography-button",
+                                                      "caption": "MuiTypography-caption",
+                                                      "colorError": "MuiTypography-colorError",
+                                                      "colorInherit": "MuiTypography-colorInherit",
+                                                      "colorPrimary": "MuiTypography-colorPrimary",
+                                                      "colorSecondary": "MuiTypography-colorSecondary",
+                                                      "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                                                      "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                                                      "displayBlock": "MuiTypography-displayBlock",
+                                                      "displayInline": "MuiTypography-displayInline",
+                                                      "gutterBottom": "MuiTypography-gutterBottom",
+                                                      "h1": "MuiTypography-h1",
+                                                      "h2": "MuiTypography-h2",
+                                                      "h3": "MuiTypography-h3",
+                                                      "h4": "MuiTypography-h4",
+                                                      "h5": "MuiTypography-h5",
+                                                      "h6": "MuiTypography-h6",
+                                                      "noWrap": "MuiTypography-noWrap",
+                                                      "overline": "MuiTypography-overline",
+                                                      "paragraph": "MuiTypography-paragraph",
+                                                      "root": "MuiTypography-root",
+                                                      "srOnly": "MuiTypography-srOnly",
+                                                      "subtitle1": "MuiTypography-subtitle1",
+                                                      "subtitle2": "MuiTypography-subtitle2",
+                                                    }
+                                                  }
+                                                  component="span"
+                                                  display="block"
+                                                  variant="body2"
+                                                >
+                                                  <span
+                                                    className="MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiTypography-body2 MuiTypography-displayBlock"
+                                                  >
+                                                    <Blueprint3.Text
+                                                      className="bp3-text-muted"
+                                                    >
+                                                      <div
+                                                        className="bp3-text-muted"
+                                                      >
+                                                        Select
+                                                      </div>
+                                                    </Blueprint3.Text>
+                                                  </span>
+                                                </ForwardRef(Typography)>
+                                              </WithStyles(ForwardRef(Typography))>
+                                            </span>
+                                          </span>
+                                        </ForwardRef(StepLabel)>
+                                      </WithStyles(ForwardRef(StepLabel))>
+                                    </div>
+                                  </ForwardRef(Step)>
+                                </WithStyles(ForwardRef(Step))>
+                                <WithStyles(ForwardRef(Step))
+                                  active={false}
+                                  alternativeLabel={true}
+                                  completed={false}
+                                  connector={
+                                    <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                      orientation="horizontal"
+                                    />
+                                  }
+                                  disabled={true}
+                                  index={2}
+                                  key=".$Confirm"
+                                  last={true}
+                                  orientation="horizontal"
+                                >
+                                  <ForwardRef(Step)
+                                    active={false}
+                                    alternativeLabel={true}
+                                    classes={
+                                      Object {
+                                        "alternativeLabel": "MuiStep-alternativeLabel",
+                                        "completed": "MuiStep-completed",
+                                        "horizontal": "MuiStep-horizontal",
+                                        "root": "MuiStep-root",
+                                        "vertical": "MuiStep-vertical",
+                                      }
+                                    }
+                                    completed={false}
+                                    connector={
+                                      <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                        orientation="horizontal"
+                                      />
+                                    }
+                                    disabled={true}
+                                    index={2}
+                                    last={true}
+                                    orientation="horizontal"
+                                  >
+                                    <div
+                                      className="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel"
+                                    >
+                                      <WithStyles(WithStyles(ForwardRef(StepConnector)))
+                                        active={false}
+                                        alternativeLabel={true}
+                                        completed={false}
+                                        disabled={true}
+                                        index={2}
+                                        orientation="horizontal"
+                                      >
+                                        <WithStyles(ForwardRef(StepConnector))
+                                          active={false}
+                                          alternativeLabel={true}
+                                          classes={
+                                            Object {
+                                              "active": "WithStyles(ForwardRef(StepConnector))-active-9",
+                                              "alternativeLabel": "WithStyles(ForwardRef(StepConnector))-alternativeLabel-8",
+                                              "completed": "WithStyles(ForwardRef(StepConnector))-completed-10",
+                                              "line": "WithStyles(ForwardRef(StepConnector))-line-11",
+                                            }
+                                          }
+                                          completed={false}
+                                          disabled={true}
+                                          index={2}
+                                          orientation="horizontal"
+                                        >
+                                          <ForwardRef(StepConnector)
+                                            active={false}
+                                            alternativeLabel={true}
+                                            classes={
+                                              Object {
+                                                "active": "MuiStepConnector-active WithStyles(ForwardRef(StepConnector))-active-9",
+                                                "alternativeLabel": "MuiStepConnector-alternativeLabel WithStyles(ForwardRef(StepConnector))-alternativeLabel-8",
+                                                "completed": "MuiStepConnector-completed WithStyles(ForwardRef(StepConnector))-completed-10",
+                                                "disabled": "Mui-disabled",
+                                                "horizontal": "MuiStepConnector-horizontal",
+                                                "line": "MuiStepConnector-line WithStyles(ForwardRef(StepConnector))-line-11",
+                                                "lineHorizontal": "MuiStepConnector-lineHorizontal",
+                                                "lineVertical": "MuiStepConnector-lineVertical",
+                                                "root": "MuiStepConnector-root",
+                                                "vertical": "MuiStepConnector-vertical",
+                                              }
+                                            }
+                                            completed={false}
+                                            disabled={true}
+                                            index={2}
+                                            orientation="horizontal"
+                                          >
+                                            <div
+                                              className="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel WithStyles(ForwardRef(StepConnector))-alternativeLabel-8 Mui-disabled"
+                                            >
+                                              <span
+                                                className="MuiStepConnector-line WithStyles(ForwardRef(StepConnector))-line-11 MuiStepConnector-lineHorizontal"
+                                              />
+                                            </div>
+                                          </ForwardRef(StepConnector)>
+                                        </WithStyles(ForwardRef(StepConnector))>
+                                      </WithStyles(WithStyles(ForwardRef(StepConnector)))>
+                                      <WithStyles(ForwardRef(StepLabel))
+                                        StepIconComponent={[Function]}
+                                        StepIconProps={
+                                          Object {
+                                            "isApplicationWindowSelected": false,
+                                            "isEntireScreenSelected": false,
+                                          }
+                                        }
+                                        active={false}
+                                        alternativeLabel={true}
+                                        className="makeStyles-stepLabelContent-2"
+                                        completed={false}
+                                        disabled={true}
+                                        expanded={false}
+                                        icon={3}
+                                        id="step-label-deskreen"
+                                        key=".0"
+                                        last={true}
+                                        orientation="horizontal"
+                                      >
+                                        <ForwardRef(StepLabel)
+                                          StepIconComponent={[Function]}
+                                          StepIconProps={
+                                            Object {
+                                              "isApplicationWindowSelected": false,
+                                              "isEntireScreenSelected": false,
+                                            }
+                                          }
+                                          active={false}
+                                          alternativeLabel={true}
+                                          className="makeStyles-stepLabelContent-2"
+                                          classes={
+                                            Object {
+                                              "active": "MuiStepLabel-active",
+                                              "alternativeLabel": "MuiStepLabel-alternativeLabel",
+                                              "completed": "MuiStepLabel-completed",
+                                              "disabled": "Mui-disabled",
+                                              "error": "Mui-error",
+                                              "horizontal": "MuiStepLabel-horizontal",
+                                              "iconContainer": "MuiStepLabel-iconContainer",
+                                              "label": "MuiStepLabel-label",
+                                              "labelContainer": "MuiStepLabel-labelContainer",
+                                              "root": "MuiStepLabel-root",
+                                              "vertical": "MuiStepLabel-vertical",
+                                            }
+                                          }
+                                          completed={false}
+                                          disabled={true}
+                                          expanded={false}
+                                          icon={3}
+                                          id="step-label-deskreen"
+                                          last={true}
+                                          orientation="horizontal"
+                                        >
+                                          <span
+                                            className="MuiStepLabel-root MuiStepLabel-horizontal makeStyles-stepLabelContent-2 Mui-disabled MuiStepLabel-alternativeLabel"
+                                            id="step-label-deskreen"
+                                          >
+                                            <span
+                                              className="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel"
+                                            >
+                                              <ColorlibStepIcon
+                                                active={false}
+                                                completed={false}
+                                                error={false}
+                                                icon={3}
+                                                isApplicationWindowSelected={false}
+                                                isEntireScreenSelected={false}
+                                              >
+                                                <div
+                                                  className="makeStyles-root-4 "
+                                                >
+                                                  <Blueprint3.Icon
+                                                    color="#5C7080"
+                                                    icon="confirm"
+                                                    iconSize={25}
+                                                  >
+                                                    <span
+                                                      className="bp3-icon bp3-icon-confirm"
+                                                      icon="confirm"
+                                                    >
+                                                      <svg
+                                                        data-icon="confirm"
+                                                        fill="#5C7080"
+                                                        height={25}
+                                                        viewBox="0 0 20 20"
+                                                        width={25}
+                                                      >
+                                                        <desc>
+                                                          confirm
+                                                        </desc>
+                                                        <path
+                                                          d="M9.71 5.29a1.003 1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l7-7a1.003 1.003 0 00-1.42-1.42L12 7.59l-2.29-2.3zm7.93 2.32c.23.75.36 1.56.36 2.39 0 4.42-3.58 8-8 8s-8-3.58-8-8a7.998 7.998 0 0111.8-7.04l1.46-1.46C13.73.56 11.93 0 10 0 4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10c0-1.4-.29-2.73-.81-3.95l-1.55 1.56z"
+                                                          fillRule="evenodd"
+                                                          key="0"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </Blueprint3.Icon>
+                                                </div>
+                                              </ColorlibStepIcon>
+                                            </span>
+                                            <span
+                                              className="MuiStepLabel-labelContainer"
+                                            >
+                                              <WithStyles(ForwardRef(Typography))
+                                                className="MuiStepLabel-label MuiStepLabel-alternativeLabel"
+                                                component="span"
+                                                display="block"
+                                                variant="body2"
+                                              >
+                                                <ForwardRef(Typography)
+                                                  className="MuiStepLabel-label MuiStepLabel-alternativeLabel"
+                                                  classes={
+                                                    Object {
+                                                      "alignCenter": "MuiTypography-alignCenter",
+                                                      "alignJustify": "MuiTypography-alignJustify",
+                                                      "alignLeft": "MuiTypography-alignLeft",
+                                                      "alignRight": "MuiTypography-alignRight",
+                                                      "body1": "MuiTypography-body1",
+                                                      "body2": "MuiTypography-body2",
+                                                      "button": "MuiTypography-button",
+                                                      "caption": "MuiTypography-caption",
+                                                      "colorError": "MuiTypography-colorError",
+                                                      "colorInherit": "MuiTypography-colorInherit",
+                                                      "colorPrimary": "MuiTypography-colorPrimary",
+                                                      "colorSecondary": "MuiTypography-colorSecondary",
+                                                      "colorTextPrimary": "MuiTypography-colorTextPrimary",
+                                                      "colorTextSecondary": "MuiTypography-colorTextSecondary",
+                                                      "displayBlock": "MuiTypography-displayBlock",
+                                                      "displayInline": "MuiTypography-displayInline",
+                                                      "gutterBottom": "MuiTypography-gutterBottom",
+                                                      "h1": "MuiTypography-h1",
+                                                      "h2": "MuiTypography-h2",
+                                                      "h3": "MuiTypography-h3",
+                                                      "h4": "MuiTypography-h4",
+                                                      "h5": "MuiTypography-h5",
+                                                      "h6": "MuiTypography-h6",
+                                                      "noWrap": "MuiTypography-noWrap",
+                                                      "overline": "MuiTypography-overline",
+                                                      "paragraph": "MuiTypography-paragraph",
+                                                      "root": "MuiTypography-root",
+                                                      "srOnly": "MuiTypography-srOnly",
+                                                      "subtitle1": "MuiTypography-subtitle1",
+                                                      "subtitle2": "MuiTypography-subtitle2",
+                                                    }
+                                                  }
+                                                  component="span"
+                                                  display="block"
+                                                  variant="body2"
+                                                >
+                                                  <span
+                                                    className="MuiTypography-root MuiStepLabel-label MuiStepLabel-alternativeLabel MuiTypography-body2 MuiTypography-displayBlock"
+                                                  >
+                                                    <Blueprint3.Text
+                                                      className="bp3-text-muted"
+                                                    >
+                                                      <div
+                                                        className="bp3-text-muted"
+                                                      >
+                                                        Confirm
+                                                      </div>
+                                                    </Blueprint3.Text>
+                                                  </span>
+                                                </ForwardRef(Typography)>
+                                              </WithStyles(ForwardRef(Typography))>
+                                            </span>
+                                          </span>
+                                        </ForwardRef(StepLabel)>
+                                      </WithStyles(ForwardRef(StepLabel))>
+                                    </div>
+                                  </ForwardRef(Step)>
+                                </WithStyles(ForwardRef(Step))>
+                              </div>
+                            </ForwardRef(Paper)>
+                          </WithStyles(ForwardRef(Paper))>
+                        </ForwardRef(Stepper)>
+                      </WithStyles(ForwardRef(Stepper))>
+                    </div>
+                  </RevealBase>
+                </Pulse>
+              </div>
+            </Col>
+            <Col
+              className="makeStyles-stepContent-1"
+              xs={12}
+            >
+              <div
+                className="col-xs-12 makeStyles-stepContent-1"
+              >
+                <Fade
+                  duration={0}
+                  when={false}
+                >
+                  <RevealBase
+                    fraction={0.2}
+                    inEffect={
+                      Object {
+                        "count": 1,
+                        "delay": 0,
+                        "duration": 0,
+                        "forever": undefined,
+                        "make": [Function],
+                        "reverse": undefined,
+                        "style": Object {
+                          "animationFillMode": "both",
+                        },
+                      }
+                    }
+                    outEffect={
+                      Object {
+                        "count": 1,
+                        "delay": 0,
+                        "duration": 0,
+                        "forever": undefined,
+                        "make": [Function],
+                        "reverse": undefined,
+                        "style": Object {
+                          "animationFillMode": "both",
+                        },
+                      }
+                    }
+                    refProp="ref"
+                    when={false}
+                  >
+                    <div
+                      className="react-reveal"
+                      style={
+                        Object {
+                          "opacity": 0,
+                        }
+                      }
+                    >
+                      <IntermediateStep
+                        activeStep={0}
+                        handleBack={[Function]}
+                        handleNext={[Function]}
+                        handleNextApplicationWindow={[Function]}
+                        handleNextEntireScreen={[Function]}
+                        resetPendingConnectionDevice={[Function]}
+                        resetUserAllowedConnection={[Function]}
+                        steps={
+                          Array [
+                            "Connect",
+                            "Select",
+                            "Confirm",
+                          ]
+                        }
+                      >
+                        <Col
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "display": "flex",
+                              "flexDirection": "column",
+                              "height": "260px",
+                              "justifyContent": "center",
+                            }
+                          }
+                          xs={12}
+                        >
+                          <div
+                            className="col-xs-12"
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "height": "260px",
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <ScanQRStep>
+                              <div
+                                style={
+                                  Object {
+                                    "textAlign": "center",
+                                  }
+                                }
+                              >
+                                <Blueprint3.Text
+                                  className="bp3-text"
+                                >
+                                  <div
+                                    className="bp3-text"
+                                  >
+                                    Scan the QR code
+                                  </div>
+                                </Blueprint3.Text>
+                                <Blueprint3.Text
+                                  className="bp3-text-muted"
+                                >
+                                  <div
+                                    className="bp3-text-muted"
+                                  >
+                                    ( make sure your computer and device are connected on same WiFi )
+                                  </div>
+                                </Blueprint3.Text>
+                              </div>
+                              <div>
+                                <Blueprint3.Tooltip
+                                  content="Click to make bigger"
+                                  hoverCloseDelay={0}
+                                  hoverOpenDelay={100}
+                                  position="left"
+                                  transitionDuration={100}
+                                >
+                                  <Blueprint3.Popover
+                                    autoFocus={false}
+                                    boundary="scrollParent"
+                                    canEscapeKeyClose={false}
+                                    captureDismiss={false}
+                                    content="Click to make bigger"
+                                    defaultIsOpen={false}
+                                    disabled={false}
+                                    enforceFocus={false}
+                                    fill={false}
+                                    hasBackdrop={false}
+                                    hoverCloseDelay={0}
+                                    hoverOpenDelay={100}
+                                    inheritDarkTheme={true}
+                                    interactionKind="hover-target"
+                                    lazy={true}
+                                    minimal={false}
+                                    modifiers={Object {}}
+                                    openOnTargetFocus={true}
+                                    popoverClassName="bp3-tooltip"
+                                    position="left"
+                                    targetTagName="span"
+                                    transitionDuration={100}
+                                    usePortal={true}
+                                    wrapperTagName="span"
+                                  >
+                                    <Manager>
+                                      <span
+                                        className="bp3-popover-wrapper"
+                                      >
+                                        <Reference
+                                          innerRef={[Function]}
+                                        >
+                                          <InnerReference
+                                            innerRef={[Function]}
+                                            setReferenceNode={[Function]}
+                                          >
+                                            <Blueprint3.ResizeSensor
+                                              onResize={[Function]}
+                                            >
+                                              <span
+                                                className="bp3-popover-target"
+                                                onBlur={[Function]}
+                                                onFocus={[Function]}
+                                                onMouseEnter={[Function]}
+                                                onMouseLeave={[Function]}
+                                              >
+                                                <div
+                                                  className="makeStyles-smallQRCode-12"
+                                                  id="magnify-qr-code-button"
+                                                  key=".0"
+                                                  onClick={[Function]}
+                                                  tabIndex={0}
+                                                >
+                                                  <QRCode
+                                                    bgColor="rgba(0,0,0,0.0)"
+                                                    fgColor="#000000"
+                                                    imageSettings={
+                                                      Object {
+                                                        "height": 40,
+                                                        "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+                                                        "width": 40,
+                                                      }
+                                                    }
+                                                    includeMargin={false}
+                                                    level="H"
+                                                    renderAs="svg"
+                                                    size={128}
+                                                    value="http://255.255.255.255:65000/99999"
+                                                  >
+                                                    <QRCodeSVG
+                                                      bgColor="rgba(0,0,0,0.0)"
+                                                      fgColor="#000000"
+                                                      imageSettings={
+                                                        Object {
+                                                          "height": 40,
+                                                          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+                                                          "width": 40,
+                                                        }
+                                                      }
+                                                      includeMargin={false}
+                                                      level="H"
+                                                      size={128}
+                                                      value="http://255.255.255.255:65000/99999"
+                                                    >
+                                                      <svg
+                                                        height={128}
+                                                        shapeRendering="crispEdges"
+                                                        viewBox="0 0 33 33"
+                                                        width={128}
+                                                      >
+                                                        <path
+                                                          d="M0,0 h33v33H0z"
+                                                          fill="rgba(0,0,0,0.0)"
+                                                        />
+                                                        <path
+                                                          d="M0 0h7v1H0zM10 0h1v1H10zM13 0h2v1H13zM16 0h1v1H16zM19 0h1v1H19zM23 0h2v1H23zM26,0 h7v1H26zM0 1h1v1H0zM6 1h1v1H6zM11 1h2v1H11zM14 1h2v1H14zM19 1h6v1H19zM26 1h1v1H26zM32,1 h1v1H32zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM9 2h1v1H9zM12 2h3v1H12zM17 2h1v1H17zM19 2h1v1H19zM22 2h3v1H22zM26 2h1v1H26zM28 2h3v1H28zM32,2 h1v1H32zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM9 3h1v1H9zM11 3h2v1H11zM14 3h1v1H14zM16 3h5v1H16zM23 3h1v1H23zM26 3h1v1H26zM28 3h3v1H28zM32,3 h1v1H32zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h1v1H8zM12 4h3v1H12zM16 4h5v1H16zM22 4h1v1H22zM26 4h1v1H26zM28 4h3v1H28zM32,4 h1v1H32zM0 5h1v1H0zM6 5h1v1H6zM11 5h1v1H11zM13 5h1v1H13zM17 5h5v1H17zM24 5h1v1H24zM26 5h1v1H26zM32,5 h1v1H32zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h1v1H22zM24 6h1v1H24zM26,6 h7v1H26zM8 7h1v1H8zM11 7h1v1H11zM14 7h1v1H14zM19 7h1v1H19zM23 7h1v1H23zM2 8h2v1H2zM6 8h3v1H6zM11 8h2v1H11zM14 8h1v1H14zM16 8h1v1H16zM20 8h7v1H20zM28 8h1v1H28zM0 9h4v1H0zM5 9h1v1H5zM7 9h1v1H7zM10 9h1v1H10zM12 9h1v1H12zM14 9h1v1H14zM16 9h4v1H16zM22 9h5v1H22zM29,9 h4v1H29zM1 10h1v1H1zM3 10h1v1H3zM6 10h1v1H6zM13 10h1v1H13zM18 10h1v1H18zM23 10h1v1H23zM26 10h1v1H26zM32,10 h1v1H32zM0 11h1v1H0zM2 11h3v1H2zM7 11h1v1H7zM9 11h1v1H9zM18 11h1v1H18zM20 11h1v1H20zM23 11h1v1H23zM25 11h4v1H25zM1 12h3v1H1zM6 12h1v1H6zM8 12h1v1H8zM11 12h2v1H11zM15 12h2v1H15zM19 12h2v1H19zM23 12h2v1H23zM28 12h1v1H28zM31 12h1v1H31zM7 13h2v1H7zM11 13h2v1H11zM15 13h1v1H15zM19 13h4v1H19zM25 13h1v1H25zM29 13h1v1H29zM1 14h1v1H1zM3 14h2v1H3zM6 14h3v1H6zM13 14h1v1H13zM15 14h1v1H15zM17 14h2v1H17zM21 14h1v1H21zM24 14h1v1H24zM27 14h1v1H27zM0 15h2v1H0zM3 15h1v1H3zM5 15h1v1H5zM9 15h1v1H9zM12 15h1v1H12zM14 15h2v1H14zM17 15h6v1H17zM25 15h1v1H25zM28 15h1v1H28zM30 15h1v1H30zM32,15 h1v1H32zM4 16h3v1H4zM9 16h1v1H9zM11 16h1v1H11zM19 16h1v1H19zM21 16h1v1H21zM23 16h1v1H23zM26 16h3v1H26zM30 16h1v1H30zM32,16 h1v1H32zM3 17h3v1H3zM10 17h4v1H10zM19 17h1v1H19zM23 17h1v1H23zM26 17h1v1H26zM28 17h1v1H28zM30 17h1v1H30zM32,17 h1v1H32zM2 18h1v1H2zM4 18h1v1H4zM6 18h4v1H6zM12 18h1v1H12zM14 18h3v1H14zM18 18h3v1H18zM24 18h1v1H24zM26 18h3v1H26zM30 18h1v1H30zM1 19h1v1H1zM4 19h2v1H4zM7 19h2v1H7zM10 19h1v1H10zM13 19h1v1H13zM18 19h3v1H18zM25 19h2v1H25zM32,19 h1v1H32zM2 20h1v1H2zM4 20h1v1H4zM6 20h1v1H6zM8 20h1v1H8zM11 20h1v1H11zM14 20h1v1H14zM16 20h1v1H16zM19 20h7v1H19zM27 20h1v1H27zM29 20h3v1H29zM0 21h1v1H0zM2 21h2v1H2zM8 21h2v1H8zM11 21h3v1H11zM17 21h2v1H17zM20 21h8v1H20zM29,21 h4v1H29zM2 22h3v1H2zM6 22h1v1H6zM11 22h2v1H11zM16 22h1v1H16zM18 22h1v1H18zM20 22h1v1H20zM22 22h3v1H22zM26 22h1v1H26zM28 22h1v1H28zM32,22 h1v1H32zM1 23h3v1H1zM5 23h1v1H5zM9 23h1v1H9zM12 23h1v1H12zM14 23h4v1H14zM19 23h2v1H19zM25 23h1v1H25zM27 23h1v1H27zM0 24h1v1H0zM2 24h2v1H2zM6 24h4v1H6zM13 24h2v1H13zM16 24h4v1H16zM23 24h6v1H23zM31 24h1v1H31zM8 25h8v1H8zM19 25h4v1H19zM24 25h1v1H24zM28 25h1v1H28zM30 25h2v1H30zM0 26h7v1H0zM8 26h2v1H8zM12 26h4v1H12zM19 26h1v1H19zM22 26h3v1H22zM26 26h1v1H26zM28 26h1v1H28zM30 26h2v1H30zM0 27h1v1H0zM6 27h1v1H6zM9 27h1v1H9zM11 27h3v1H11zM16 27h2v1H16zM19 27h1v1H19zM21 27h2v1H21zM24 27h1v1H24zM28 27h1v1H28zM30 27h1v1H30zM32,27 h1v1H32zM0 28h1v1H0zM2 28h3v1H2zM6 28h1v1H6zM11 28h5v1H11zM17 28h2v1H17zM23 28h6v1H23zM30 28h1v1H30zM32,28 h1v1H32zM0 29h1v1H0zM2 29h3v1H2zM6 29h1v1H6zM8 29h3v1H8zM12 29h3v1H12zM18 29h1v1H18zM21 29h3v1H21zM25 29h1v1H25zM27 29h1v1H27zM31,29 h2v1H31zM0 30h1v1H0zM2 30h3v1H2zM6 30h1v1H6zM8 30h3v1H8zM12 30h2v1H12zM20 30h7v1H20zM30 30h1v1H30zM0 31h1v1H0zM6 31h1v1H6zM10 31h4v1H10zM15 31h2v1H15zM18 31h1v1H18zM24 31h3v1H24zM29 31h1v1H29zM32,31 h1v1H32zM0 32h7v1H0zM9 32h2v1H9zM12 32h2v1H12zM16 32h2v1H16zM20 32h1v1H20zM27 32h2v1H27zM30 32h1v1H30z"
+                                                          fill="#000000"
+                                                        />
+                                                        <image
+                                                          height={10.3125}
+                                                          preserveAspectRatio="none"
+                                                          width={10.3125}
+                                                          x={11.34375}
+                                                          xlinkHref="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png"
+                                                          y={11.34375}
+                                                        />
+                                                      </svg>
+                                                    </QRCodeSVG>
+                                                  </QRCode>
+                                                </div>
+                                              </span>
+                                            </Blueprint3.ResizeSensor>
+                                          </InnerReference>
+                                        </Reference>
+                                        <Blueprint3.Overlay
+                                          autoFocus={false}
+                                          backdropClassName="bp3-popover-backdrop"
+                                          backdropProps={Object {}}
+                                          canEscapeKeyClose={false}
+                                          canOutsideClickClose={false}
+                                          enforceFocus={false}
+                                          hasBackdrop={false}
+                                          isOpen={false}
+                                          lazy={true}
+                                          onClose={[Function]}
+                                          transitionDuration={100}
+                                          transitionName="bp3-popover"
+                                          usePortal={true}
+                                        />
+                                      </span>
+                                    </Manager>
+                                  </Blueprint3.Popover>
+                                </Blueprint3.Tooltip>
+                              </div>
+                              <div
+                                style={
+                                  Object {
+                                    "marginBottom": "10px",
+                                  }
+                                }
+                              >
+                                <Blueprint3.Text
+                                  className="bp3-text-muted"
+                                >
+                                  <div
+                                    className="bp3-text-muted"
+                                  >
+                                    or type the following address manualy in browser address bar on any device:
+                                  </div>
+                                </Blueprint3.Text>
+                              </div>
+                              <Blueprint3.Tooltip
+                                content="Click to copy"
+                                hoverCloseDelay={0}
+                                hoverOpenDelay={100}
+                                position="left"
+                                transitionDuration={100}
+                              >
+                                <Blueprint3.Popover
+                                  autoFocus={false}
+                                  boundary="scrollParent"
+                                  canEscapeKeyClose={false}
+                                  captureDismiss={false}
+                                  content="Click to copy"
+                                  defaultIsOpen={false}
+                                  disabled={false}
+                                  enforceFocus={false}
+                                  fill={false}
+                                  hasBackdrop={false}
+                                  hoverCloseDelay={0}
+                                  hoverOpenDelay={100}
+                                  inheritDarkTheme={true}
+                                  interactionKind="hover-target"
+                                  lazy={true}
+                                  minimal={false}
+                                  modifiers={Object {}}
+                                  openOnTargetFocus={true}
+                                  popoverClassName="bp3-tooltip"
+                                  position="left"
+                                  targetTagName="span"
+                                  transitionDuration={100}
+                                  usePortal={true}
+                                  wrapperTagName="span"
+                                >
+                                  <Manager>
+                                    <span
+                                      className="bp3-popover-wrapper"
+                                    >
+                                      <Reference
+                                        innerRef={[Function]}
+                                      >
+                                        <InnerReference
+                                          innerRef={[Function]}
+                                          setReferenceNode={[Function]}
+                                        >
+                                          <Blueprint3.ResizeSensor
+                                            onResize={[Function]}
+                                          >
+                                            <span
+                                              className="bp3-popover-target"
+                                              onBlur={[Function]}
+                                              onFocus={[Function]}
+                                              onMouseEnter={[Function]}
+                                              onMouseLeave={[Function]}
+                                            >
+                                              <Blueprint3.Button
+                                                className=""
+                                                icon="duplicate"
+                                                intent="primary"
+                                                key=".0"
+                                                style={
+                                                  Object {
+                                                    "borderRadius": "100px",
+                                                  }
+                                                }
+                                                tabIndex={0}
+                                              >
+                                                <button
+                                                  className="bp3-button bp3-intent-primary"
+                                                  onKeyDown={[Function]}
+                                                  onKeyUp={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "borderRadius": "100px",
+                                                    }
+                                                  }
+                                                  tabIndex={0}
+                                                  type="button"
+                                                >
+                                                  <Blueprint3.Icon
+                                                    icon="duplicate"
+                                                    key="leftIcon"
+                                                  >
+                                                    <span
+                                                      className="bp3-icon bp3-icon-duplicate"
+                                                      icon="duplicate"
+                                                    >
+                                                      <svg
+                                                        data-icon="duplicate"
+                                                        height={16}
+                                                        viewBox="0 0 16 16"
+                                                        width={16}
+                                                      >
+                                                        <desc>
+                                                          duplicate
+                                                        </desc>
+                                                        <path
+                                                          d="M15 0H5c-.55 0-1 .45-1 1v2h2V2h8v7h-1v2h2c.55 0 1-.45 1-1V1c0-.55-.45-1-1-1zm-4 4H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-1 10H2V6h8v8z"
+                                                          fillRule="evenodd"
+                                                          key="0"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </Blueprint3.Icon>
+                                                  <span
+                                                    className="bp3-button-text"
+                                                    key="text"
+                                                  >
+                                                    http://255.255.255.255:65000/99999
+                                                  </span>
+                                                  <Blueprint3.Icon
+                                                    key="rightIcon"
+                                                  />
+                                                </button>
+                                              </Blueprint3.Button>
+                                            </span>
+                                          </Blueprint3.ResizeSensor>
+                                        </InnerReference>
+                                      </Reference>
+                                      <Blueprint3.Overlay
+                                        autoFocus={false}
+                                        backdropClassName="bp3-popover-backdrop"
+                                        backdropProps={Object {}}
+                                        canEscapeKeyClose={false}
+                                        canOutsideClickClose={false}
+                                        enforceFocus={false}
+                                        hasBackdrop={false}
+                                        isOpen={false}
+                                        lazy={true}
+                                        onClose={[Function]}
+                                        transitionDuration={100}
+                                        transitionName="bp3-popover"
+                                        usePortal={true}
+                                      />
+                                    </span>
+                                  </Manager>
+                                </Blueprint3.Popover>
+                              </Blueprint3.Tooltip>
+                              <Blueprint3.Dialog
+                                canEscapeKeyClose={true}
+                                canOutsideClickClose={true}
+                                className="makeStyles-bigQRCodeDialogRoot-14"
+                                id="bp3-qr-code-dialog-root"
+                                isOpen={false}
+                                onClose={[Function]}
+                                style={
+                                  Object {
+                                    "position": "relative",
+                                    "top": "-30px",
+                                  }
+                                }
+                                transitionDuration={0}
+                              >
+                                <Blueprint3.Overlay
+                                  autoFocus={true}
+                                  backdropProps={Object {}}
+                                  canEscapeKeyClose={true}
+                                  canOutsideClickClose={true}
+                                  className="bp3-overlay-scroll-container"
+                                  enforceFocus={true}
+                                  hasBackdrop={true}
+                                  id="bp3-qr-code-dialog-root"
+                                  isOpen={false}
+                                  lazy={true}
+                                  onClose={[Function]}
+                                  style={
+                                    Object {
+                                      "position": "relative",
+                                      "top": "-30px",
+                                    }
+                                  }
+                                  transitionDuration={0}
+                                  transitionName="bp3-overlay"
+                                  usePortal={true}
+                                />
+                              </Blueprint3.Dialog>
+                            </ScanQRStep>
+                            <Blueprint3.Button
+                              onClick={[Function]}
+                            >
+                              <button
+                                className="bp3-button"
+                                onClick={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyUp={[Function]}
+                                type="button"
+                              >
+                                <Blueprint3.Icon
+                                  key="leftIcon"
+                                />
+                                <span
+                                  className="bp3-button-text"
+                                  key="text"
+                                >
+                                  Connect Test Device
+                                </span>
+                                <Blueprint3.Icon
+                                  key="rightIcon"
+                                />
+                              </button>
+                            </Blueprint3.Button>
+                            <Blueprint3.Button
+                              icon="chevron-left"
+                              intent="danger"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "borderRadius": "100px",
+                                  "display": "none",
+                                  "marginTop": "10px",
+                                }
+                              }
+                              text="No, I need to share other thing"
+                            >
+                              <button
+                                className="bp3-button bp3-intent-danger"
+                                onClick={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyUp={[Function]}
+                                style={
+                                  Object {
+                                    "borderRadius": "100px",
+                                    "display": "none",
+                                    "marginTop": "10px",
+                                  }
+                                }
+                                type="button"
+                              >
+                                <Blueprint3.Icon
+                                  icon="chevron-left"
+                                  key="leftIcon"
+                                >
+                                  <span
+                                    className="bp3-icon bp3-icon-chevron-left"
+                                    icon="chevron-left"
+                                  >
+                                    <svg
+                                      data-icon="chevron-left"
+                                      height={16}
+                                      viewBox="0 0 16 16"
+                                      width={16}
+                                    >
+                                      <desc>
+                                        chevron-left
+                                      </desc>
+                                      <path
+                                        d="M7.41 8l3.29-3.29c.19-.18.3-.43.3-.71a1.003 1.003 0 00-1.71-.71l-4 4C5.11 7.47 5 7.72 5 8c0 .28.11.53.29.71l4 4a1.003 1.003 0 001.42-1.42L7.41 8z"
+                                        fillRule="evenodd"
+                                        key="0"
+                                      />
+                                    </svg>
+                                  </span>
+                                </Blueprint3.Icon>
+                                <span
+                                  className="bp3-button-text"
+                                  key="text"
+                                >
+                                  No, I need to share other thing
+                                </span>
+                                <Blueprint3.Icon
+                                  key="rightIcon"
+                                />
+                              </button>
+                            </Blueprint3.Button>
+                          </div>
+                        </Col>
+                      </IntermediateStep>
+                    </div>
+                  </RevealBase>
+                </Fade>
+              </div>
+            </Col>
+          </div>
+        </Row>
+        <AllowConnectionForDeviceAlert
+          device={null}
+          isOpen={false}
+          onCancel={[Function]}
+          onConfirm={[Function]}
+        >
+          <Blueprint3.Alert
+            canEscapeKeyCancel={false}
+            canOutsideClickCancel={false}
+            cancelButtonText="Deny"
+            className="class-allow-device-to-connect-alert"
+            confirmButtonText="Allow"
+            icon="feed"
+            intent="danger"
+            isOpen={false}
+            onCancel={[Function]}
+            onConfirm={[Function]}
+            transitionDuration={0}
+          >
+            <Blueprint3.Dialog
+              canEscapeKeyClose={false}
+              canOutsideClickClose={false}
+              className="bp3-alert class-allow-device-to-connect-alert"
+              isOpen={false}
+              onCancel={[Function]}
+              onClose={[Function]}
+              onConfirm={[Function]}
+              transitionDuration={0}
+            >
+              <Blueprint3.Overlay
+                autoFocus={true}
+                backdropProps={Object {}}
+                canEscapeKeyClose={false}
+                canOutsideClickClose={false}
+                className="bp3-overlay-scroll-container"
+                enforceFocus={true}
+                hasBackdrop={true}
+                isOpen={false}
+                lazy={true}
+                onCancel={[Function]}
+                onClose={[Function]}
+                onConfirm={[Function]}
+                transitionDuration={0}
+                transitionName="bp3-overlay"
+                usePortal={true}
+              />
+            </Blueprint3.Dialog>
+          </Blueprint3.Alert>
+        </AllowConnectionForDeviceAlert>
+      </ForwardRef>
+    </Router>
+  </BrowserRouter>
+  <Portal
+    containerInfo={
+      <body>
+        <div
+          class="react-toast-notifications__container css-1frfeuj-ToastContainer"
+        />
+      </body>
+    }
+  >
+    <ToastContainer
+      hasToasts={false}
+      placement="top-center"
+    >
+      <EmotionCssPropInternal
+        __EMOTION_LABEL_PLEASE_DO_NOT_USE__="ToastContainer"
+        __EMOTION_TYPE_PLEASE_DO_NOT_USE__="div"
+        className="react-toast-notifications__container"
+        css={
+          Object {
+            "boxSizing": "border-box",
+            "left": "50%",
+            "maxHeight": "100%",
+            "overflowX": "hidden",
+            "overflowY": "auto",
+            "padding": 8,
+            "pointerEvents": "none",
+            "position": "fixed",
+            "top": 0,
+            "transform": "translateX(-50%)",
+            "zIndex": 1000,
+          }
+        }
+      >
+        <div
+          className="react-toast-notifications__container css-1frfeuj-ToastContainer"
+        >
+          <TransitionGroup
+            childFactory={[Function]}
+            component={null}
+          />
+        </div>
+      </EmotionCssPropInternal>
+    </ToastContainer>
+  </Portal>
+</ToastProvider>
+`;

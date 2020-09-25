@@ -1,0 +1,88 @@
+[
+  {
+    "path": "https://material-ui.com/static/images/grid-list/breakfast.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/breakfast.jpg",
+    "name": "Breakfast",
+    "author": "jill111",
+    "cols": 2,
+    "featured": true
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/burgers.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/burgers.jpg",
+    "name": "Tasty burger",
+    "cols": 3,
+    "author": "director90"
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/camera.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/camera.jpg",
+    "name": "Camera",
+    "cols": 2,
+    "author": "Danson67"
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/morning.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/morning.jpg",
+    "name": "Morning",
+    "author": "fancycrave1",
+    "cols": 1,
+    "featured": true
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/hats.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/hats.jpg",
+    "name": "Hats",
+    "cols": 4,
+    "author": "Hans"
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/honey.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/honey.jpg",
+    "name": "Honey",
+    "cols": 1,
+    "author": "fancycravel"
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/vegetables.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/vegetables.jpg",
+    "name": "Vegetables",
+    "author": "jill111",
+    "cols": 2
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/plant.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/plant.jpg",
+    "name": "Water plant",
+    "author": "BkrmadtyaKarki",
+    "cols": 3
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/mushroom.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/mushroom.jpg",
+    "name": "Mushrooms",
+    "author": "PublicDomainPictures",
+    "cols": 2
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/olive.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/olive.jpg",
+    "name": "Olive oil",
+    "author": "congerdesign",
+    "cols": 1
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/star.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/star.jpg",
+    "name": "Sea star",
+    "cols": 2,
+    "author": "821292"
+  },
+  {
+    "path": "https://material-ui.com/static/images/grid-list/bike.jpg",
+    "id": "https://material-ui.com/static/images/grid-list/bike.jpg",
+    "name": "Bike",
+    "author": "danfador",
+    "cols": 3
+  }
+]

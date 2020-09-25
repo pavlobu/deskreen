@@ -20,16 +20,9 @@ import pollForInactiveRooms from './inactiveRooms';
 import getStore from './store';
 
 import Logger from '../utils/logger';
+import isProduction from '../utils/isProduction';
 
 const log = new Logger('app/server/index.ts');
-
-let isDev;
-try {
-  // eslint-disable-next-line global-require
-  isDev = require('electron-is-dev');
-} catch (e) {
-  isDev = true;
-}
 
 const app = new Koa();
 
@@ -54,9 +47,9 @@ function setStaticFileHeaders(
   });
 }
 
-const clientDistDirectory = isDev
-  ? `${__dirname}/../client/build`
-  : `${__dirname}/client/build`;
+const clientDistDirectory = isProduction()
+  ? `${__dirname}/client/build`
+  : `${__dirname}/../client/build`;
 
 if (clientDistDirectory) {
   app.use(async (ctx, next) => {

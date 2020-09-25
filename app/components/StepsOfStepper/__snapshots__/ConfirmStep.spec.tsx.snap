@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match exact snapshot 1`] = `
+<BrowserRouter>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <ConfirmStep
+      device={Object {}}
+    >
+      <div
+        style={
+          Object {
+            "marginBottom": "10px",
+          }
+        }
+      >
+        <Blueprint3.Text>
+          <div
+            className=""
+          >
+            Check if all is OK and click "Confirm"
+          </div>
+        </Blueprint3.Text>
+      </div>
+      <Blueprint3.Card
+        elevation={0}
+        interactive={false}
+        style={
+          Object {
+            "marginBottom": "10px",
+          }
+        }
+      >
+        <div
+          className="bp3-card bp3-elevation-0"
+          style={
+            Object {
+              "marginBottom": "10px",
+            }
+          }
+        >
+          <Blueprint3.Text>
+            <div
+              className=""
+            >
+              Device: undefined
+            </div>
+          </Blueprint3.Text>
+          <Blueprint3.Text>
+            <div
+              className=""
+            >
+              Device IP: undefined
+            </div>
+          </Blueprint3.Text>
+          <Blueprint3.Text>
+            <div
+              className=""
+            >
+              Device OS: undefined
+            </div>
+          </Blueprint3.Text>
+          <Blueprint3.Text>
+            <div
+              className=""
+            >
+              Session ID: undefined
+            </div>
+          </Blueprint3.Text>
+        </div>
+      </Blueprint3.Card>
+      <div
+        style={
+          Object {
+            "marginBottom": "10px",
+          }
+        }
+      >
+        <Blueprint3.Text
+          className="bp3-text-muted"
+        >
+          <div
+            className="bp3-text-muted"
+          >
+            Click "Back" if you need to change something
+          </div>
+        </Blueprint3.Text>
+      </div>
+    </ConfirmStep>
+  </Router>
+</BrowserRouter>
+`;
