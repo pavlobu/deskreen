@@ -4,4 +4,7 @@ interface Device {
   deviceOS: string;
   deviceType: string;
   deviceIP: string;
+  deviceBrowser: string;
+  deviceScreenWidth: number;
+  deviceScreenHeight: number;
 }

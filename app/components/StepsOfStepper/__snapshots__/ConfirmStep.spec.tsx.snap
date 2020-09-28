@@ -30,81 +30,482 @@ exports[`should match exact snapshot 1`] = `
       <div
         style={
           Object {
-            "marginBottom": "10px",
+            "marginTop": "50px",
+            "width": "80%",
           }
         }
       >
-        <Blueprint3.Text>
-          <div
-            className=""
-          >
-            Check if all is OK and click "Confirm"
-          </div>
-        </Blueprint3.Text>
-      </div>
-      <Blueprint3.Card
-        elevation={0}
-        interactive={false}
-        style={
-          Object {
-            "marginBottom": "10px",
-          }
-        }
-      >
-        <div
-          className="bp3-card bp3-elevation-0"
+        <Row
           style={
             Object {
               "marginBottom": "10px",
             }
           }
         >
-          <Blueprint3.Text>
-            <div
-              className=""
+          <div
+            className="row"
+            style={
+              Object {
+                "marginBottom": "10px",
+              }
+            }
+          >
+            <Col
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+              xs={12}
             >
-              Device: undefined
-            </div>
-          </Blueprint3.Text>
-          <Blueprint3.Text>
-            <div
-              className=""
-            >
-              Device IP: undefined
-            </div>
-          </Blueprint3.Text>
-          <Blueprint3.Text>
-            <div
-              className=""
-            >
-              Device OS: undefined
-            </div>
-          </Blueprint3.Text>
-          <Blueprint3.Text>
-            <div
-              className=""
-            >
-              Session ID: undefined
-            </div>
-          </Blueprint3.Text>
-        </div>
-      </Blueprint3.Card>
-      <div
-        style={
-          Object {
-            "marginBottom": "10px",
-          }
-        }
-      >
-        <Blueprint3.Text
-          className="bp3-text-muted"
+              <div
+                className="col-xs-12"
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }
+              >
+                <Blueprint3.Text>
+                  <div
+                    className=""
+                  >
+                    Check if all is OK and click "Confirm"
+                  </div>
+                </Blueprint3.Text>
+              </div>
+            </Col>
+          </div>
+        </Row>
+        <Row
+          center="xs"
+          middle="xs"
         >
           <div
-            className="bp3-text-muted"
+            className="row center-xs middle-xs"
           >
-            Click "Back" if you need to change something
+            <Col
+              xs={5}
+            >
+              <div
+                className="col-xs-5"
+              >
+                <DeviceInfoCallout>
+                  <Component
+                    style={
+                      Object {
+                        "margin": "0 auto",
+                        "textAlign": "center",
+                      }
+                    }
+                  >
+                    <h4
+                      className="bp3-heading"
+                      style={
+                        Object {
+                          "margin": "0 auto",
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      Partner Device Info:
+                    </h4>
+                  </Component>
+                  <Blueprint3.Callout
+                    id="device-info-callout"
+                  >
+                    <div
+                      className="bp3-callout"
+                      id="device-info-callout"
+                    >
+                      <Row
+                        center="xs"
+                      >
+                        <div
+                          className="row center-xs"
+                        >
+                          <Col
+                            xs={12}
+                          >
+                            <div
+                              className="col-xs-12"
+                            >
+                              <Blueprint3.Text>
+                                <div
+                                  className=""
+                                >
+                                  Device Type: 
+                                  <span />
+                                </div>
+                              </Blueprint3.Text>
+                              <Blueprint3.Tooltip
+                                content={
+                                  <React.Fragment>
+                                    <Blueprint3.Text>
+                                      This should match with 'Device IP' displayed on the screen of device
+        that is trying to connect.
+                                    </Blueprint3.Text>
+                                    <span
+                                      style={
+                                        Object {
+                                          "fontWeight": 900,
+                                        }
+                                      }
+                                    >
+                                      <Blueprint3.Text>
+                                        If IPs don't match click 'Deny' or 'Disconnect' button immediately to
+          secure your computer!
+                                      </Blueprint3.Text>
+                                    </span>
+                                  </React.Fragment>
+                                }
+                                hoverCloseDelay={0}
+                                hoverOpenDelay={100}
+                                position="top"
+                                transitionDuration={100}
+                              >
+                                <Blueprint3.Popover
+                                  autoFocus={false}
+                                  boundary="scrollParent"
+                                  canEscapeKeyClose={false}
+                                  captureDismiss={false}
+                                  content={
+                                    <React.Fragment>
+                                      <Blueprint3.Text>
+                                        This should match with 'Device IP' displayed on the screen of device
+        that is trying to connect.
+                                      </Blueprint3.Text>
+                                      <span
+                                        style={
+                                          Object {
+                                            "fontWeight": 900,
+                                          }
+                                        }
+                                      >
+                                        <Blueprint3.Text>
+                                          If IPs don't match click 'Deny' or 'Disconnect' button immediately to
+          secure your computer!
+                                        </Blueprint3.Text>
+                                      </span>
+                                    </React.Fragment>
+                                  }
+                                  defaultIsOpen={false}
+                                  disabled={false}
+                                  enforceFocus={false}
+                                  fill={false}
+                                  hasBackdrop={false}
+                                  hoverCloseDelay={0}
+                                  hoverOpenDelay={100}
+                                  inheritDarkTheme={true}
+                                  interactionKind="hover-target"
+                                  lazy={true}
+                                  minimal={false}
+                                  modifiers={Object {}}
+                                  openOnTargetFocus={true}
+                                  popoverClassName="bp3-tooltip"
+                                  position="top"
+                                  targetTagName="span"
+                                  transitionDuration={100}
+                                  usePortal={true}
+                                  wrapperTagName="span"
+                                >
+                                  <Manager>
+                                    <span
+                                      className="bp3-popover-wrapper"
+                                    >
+                                      <Reference
+                                        innerRef={[Function]}
+                                      >
+                                        <InnerReference
+                                          innerRef={[Function]}
+                                          setReferenceNode={[Function]}
+                                        >
+                                          <Blueprint3.ResizeSensor
+                                            onResize={[Function]}
+                                          >
+                                            <span
+                                              className="bp3-popover-target"
+                                              onBlur={[Function]}
+                                              onFocus={[Function]}
+                                              onMouseEnter={[Function]}
+                                              onMouseLeave={[Function]}
+                                            >
+                                              <div
+                                                className=""
+                                                key=".0"
+                                                style={
+                                                  Object {
+                                                    "backgroundColor": "#00f99273",
+                                                    "fontWeight": 900,
+                                                  }
+                                                }
+                                                tabIndex={0}
+                                              >
+                                                <Blueprint3.Text
+                                                  className="bp3-text-large"
+                                                >
+                                                  <div
+                                                    className="bp3-text-large"
+                                                  >
+                                                    Device IP: 
+                                                    <span
+                                                      className="device-ip-span"
+                                                    />
+                                                  </div>
+                                                </Blueprint3.Text>
+                                              </div>
+                                            </span>
+                                          </Blueprint3.ResizeSensor>
+                                        </InnerReference>
+                                      </Reference>
+                                      <Blueprint3.Overlay
+                                        autoFocus={false}
+                                        backdropClassName="bp3-popover-backdrop"
+                                        backdropProps={Object {}}
+                                        canEscapeKeyClose={false}
+                                        canOutsideClickClose={false}
+                                        enforceFocus={false}
+                                        hasBackdrop={false}
+                                        isOpen={false}
+                                        lazy={true}
+                                        onClose={[Function]}
+                                        transitionDuration={100}
+                                        transitionName="bp3-popover"
+                                        usePortal={true}
+                                      />
+                                    </span>
+                                  </Manager>
+                                </Blueprint3.Popover>
+                              </Blueprint3.Tooltip>
+                              <Blueprint3.Text>
+                                <div
+                                  className=""
+                                >
+                                  Device Browser: 
+                                  <span />
+                                </div>
+                              </Blueprint3.Text>
+                              <Blueprint3.Text>
+                                <div
+                                  className=""
+                                >
+                                  Device OS: 
+                                  <span />
+                                </div>
+                              </Blueprint3.Text>
+                              <div
+                                style={
+                                  Object {
+                                    "margin": "0 auto",
+                                    "width": "200px",
+                                  }
+                                }
+                              >
+                                <Blueprint3.Text
+                                  className="bp3-text-muted"
+                                  ellipsize={true}
+                                >
+                                  <div
+                                    className="bp3-text-overflow-ellipsis bp3-text-muted"
+                                  >
+                                    Session ID: 
+                                    <span />
+                                  </div>
+                                </Blueprint3.Text>
+                              </div>
+                            </div>
+                          </Col>
+                        </div>
+                      </Row>
+                    </div>
+                  </Blueprint3.Callout>
+                </DeviceInfoCallout>
+              </div>
+            </Col>
+            <Col
+              xs={5}
+            >
+              <div
+                className="col-xs-5"
+              >
+                <SharingSourcePreviewCard>
+                  <Blueprint3.Card
+                    className="preview-share-thumb-container"
+                    elevation={0}
+                    interactive={false}
+                    onClick={[Function]}
+                    onMouseEnter={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseOver={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "rgba(0,0,0,0.0)",
+                        "height": "200px",
+                        "minWidth": "250px",
+                      }
+                    }
+                  >
+                    <div
+                      className="bp3-card bp3-elevation-0 preview-share-thumb-container"
+                      onClick={[Function]}
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseOver={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "rgba(0,0,0,0.0)",
+                          "height": "200px",
+                          "minWidth": "250px",
+                        }
+                      }
+                    >
+                      <Row
+                        center="xs"
+                        middle="xs"
+                        style={
+                          Object {
+                            "height": "95%",
+                            "minWidth": "200px",
+                          }
+                        }
+                      >
+                        <div
+                          className="row center-xs middle-xs"
+                          style={
+                            Object {
+                              "height": "95%",
+                              "minWidth": "200px",
+                            }
+                          }
+                        >
+                          <Col
+                            xs={12}
+                          >
+                            <div
+                              className="col-xs-12"
+                            >
+                              <Blueprint3.Spinner
+                                size={60}
+                              >
+                                <div
+                                  className="bp3-spinner"
+                                >
+                                  <div
+                                    className="bp3-spinner-animation"
+                                  >
+                                    <svg
+                                      height={60}
+                                      strokeWidth="6.67"
+                                      viewBox="1.67 1.67 96.67 96.67"
+                                      width={60}
+                                    >
+                                      <path
+                                        className="bp3-spinner-track"
+                                        d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
+                                      />
+                                      <path
+                                        className="bp3-spinner-head"
+                                        d="M 50,50 m 0,-45 a 45,45 0 1 1 0,90 a 45,45 0 1 1 0,-90"
+                                        pathLength={280}
+                                        strokeDasharray="280 280"
+                                        strokeDashoffset={210}
+                                      />
+                                    </svg>
+                                  </div>
+                                </div>
+                              </Blueprint3.Spinner>
+                            </div>
+                          </Col>
+                        </div>
+                      </Row>
+                      <Row
+                        center="xs"
+                      >
+                        <div
+                          className="row center-xs"
+                        >
+                          <Col
+                            style={
+                              Object {
+                                "backgroundColor": "rgba(0,0,0,0.45)",
+                                "color": "white",
+                                "textAlign": "center",
+                              }
+                            }
+                            xs={12}
+                          >
+                            <div
+                              className="col-xs-12"
+                              style={
+                                Object {
+                                  "backgroundColor": "rgba(0,0,0,0.45)",
+                                  "color": "white",
+                                  "textAlign": "center",
+                                }
+                              }
+                            >
+                              <Blueprint3.Text
+                                ellipsize={true}
+                              >
+                                <div
+                                  className="bp3-text-overflow-ellipsis"
+                                />
+                              </Blueprint3.Text>
+                            </div>
+                          </Col>
+                        </div>
+                      </Row>
+                    </div>
+                  </Blueprint3.Card>
+                </SharingSourcePreviewCard>
+              </div>
+            </Col>
           </div>
-        </Blueprint3.Text>
+        </Row>
+        <Row
+          style={
+            Object {
+              "marginBottom": "10px",
+            }
+          }
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "marginBottom": "10px",
+              }
+            }
+          >
+            <Col
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+              xs={12}
+            >
+              <div
+                className="col-xs-12"
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }
+              >
+                <Blueprint3.Text
+                  className="bp3-text-muted"
+                >
+                  <div
+                    className="bp3-text-muted"
+                  >
+                    Click "Back" if you need to change something
+                  </div>
+                </Blueprint3.Text>
+              </div>
+            </Col>
+          </div>
+        </Row>
       </div>
     </ConfirmStep>
   </Router>

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
+import { remote } from 'electron';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -11,7 +12,6 @@ import { useToasts } from 'react-toast-notifications';
 
 import SuccessStep from '../components/StepsOfStepper/SuccessStep';
 import IntermediateStep from '../components/StepsOfStepper/IntermediateStep';
-import { ConnectedDevicesContext } from './ConnectedDevicesProvider';
 import AllowConnectionForDeviceAlert from '../components/AllowConnectionForDeviceAlert';
 import DeviceConnectedInfoButton from '../components/StepperPanel/DeviceConnectedInfoButton';
 import ColorlibStepIcon, {
@@ -20,6 +20,19 @@ import ColorlibStepIcon, {
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
 import isProduction from '../utils/isProduction';
+import SharingSessionService from '../features/SharingSessionsService';
+import ConnectedDevicesService from '../features/ConnectedDevicesService';
+import SharingSessionStatusEnum from '../features/SharingSessionsService/SharingSessionStatusEnum';
+import Logger from '../utils/logger';
+
+const log = new Logger(__filename);
+
+const sharingSessionService = remote.getGlobal(
+  'sharingSessionService'
+) as SharingSessionService;
+const connectedDevicesService = remote.getGlobal(
+  'connectedDevicesService'
+) as ConnectedDevicesService;
 
 const Fade = require('react-reveal/Fade');
 const Zoom = require('react-reveal/Zoom');
@@ -60,20 +73,30 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isUserAllowedConnection, setIsUserAllowedConnection] = useState(false);
 
-  const { addPendingConnectedDeviceListener } = useContext(
-    ConnectedDevicesContext
-  );
-
   const [
     pendingConnectionDevice,
     setPendingConnectionDevice,
   ] = useState<Device | null>(null);
 
   useEffect(() => {
-    addPendingConnectedDeviceListener((device: Device) => {
-      setPendingConnectionDevice(device);
-      setIsAlertOpen(true);
-    });
+    sharingSessionService
+      .createWaitingForConnectionSharingSession()
+      // eslint-disable-next-line promise/always-return
+      .then((waitingForConnectionSharingSession) => {
+        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+          (device: Device) => {
+            connectedDevicesService.setPendingConnectionDevice(device);
+          }
+        );
+      })
+      .catch((e) => log.error(e));
+
+    connectedDevicesService.addPendingConnectedDeviceListener(
+      (device: Device) => {
+        setPendingConnectionDevice(device);
+        setIsAlertOpen(true);
+      }
+    );
 
     setTimeout(
       () => {
@@ -81,7 +104,6 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
       },
       isProduction() ? 500 : 0
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [activeStep, setActiveStep] = useState(0);
@@ -129,6 +151,20 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   const handleReset = useCallback(() => {
     makeSmoothIntermediateStepTransition();
     setActiveStep(0);
+    setPendingConnectionDevice(null);
+    setIsUserAllowedConnection(false);
+    sharingSessionService.waitingForConnectionSharingSession = null;
+    sharingSessionService
+      .createWaitingForConnectionSharingSession()
+      // eslint-disable-next-line promise/always-return
+      .then((waitingForConnectionSharingSession) => {
+        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+          (device: Device) => {
+            connectedDevicesService.setPendingConnectionDevice(device);
+          }
+        );
+      })
+      .catch((e) => log.error(e));
   }, []);
 
   React.useImperativeHandle(ref, () => ({
@@ -137,20 +173,49 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     },
   }));
 
-  const handleCancelAlert = () => {
+  const handleCancelAlert = async () => {
     setIsAlertOpen(false);
+
+    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+      const sharingSession =
+        sharingSessionService.waitingForConnectionSharingSession;
+      sharingSession.denyConnectionForPartner();
+      sharingSession.destory();
+      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
+      sharingSessionService.sharingSessions.delete(sharingSession.id);
+
+      const prevRoomID =
+        sharingSessionService.waitingForConnectionSharingSession.roomID;
+
+      sharingSessionService.waitingForConnectionSharingSession = null;
+      sharingSessionService
+        .createWaitingForConnectionSharingSession(prevRoomID)
+        // eslint-disable-next-line promise/always-return
+        .then((waitingForConnectionSharingSession) => {
+          waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+            (device: Device) => {
+              connectedDevicesService.setPendingConnectionDevice(device);
+            }
+          );
+        })
+        .catch((e) => log.error(e));
+    }
   };
 
-  const handleConfirmAlert = useCallback(() => {
+  const handleConfirmAlert = useCallback(async () => {
     setIsAlertOpen(false);
     setIsUserAllowedConnection(true);
     handleNext();
+
+    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+      const sharingSession =
+        sharingSessionService.waitingForConnectionSharingSession;
+      sharingSession.setStatus(SharingSessionStatusEnum.CONNECTED);
+    }
   }, [handleNext]);
 
-  const handleUserClickedDeviceDisconnectButton = useCallback(() => {
+  const handleUserClickedDeviceDisconnectButton = useCallback(async () => {
     handleReset();
-    setPendingConnectionDevice(null);
-    setIsUserAllowedConnection(false);
 
     addToast(
       <Text>
@@ -163,28 +228,48 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
         isdarktheme: `${isDarkTheme}`,
       }
     );
+
+    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+      const sharingSession =
+        sharingSessionService.waitingForConnectionSharingSession;
+      sharingSession.disconnectByHostMachineUser();
+      sharingSession.destory();
+      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
+      sharingSessionService.sharingSessions.delete(sharingSession.id);
+    }
   }, [addToast, handleReset, isDarkTheme]);
 
   const renderIntermediateOrSuccessStepContent = useCallback(() => {
     return activeStep === steps.length ? (
-      <Zoom duration={300} when={isInterShow}>
-        <Row middle="xs" center="xs">
-          <SuccessStep handleReset={handleReset} />
-        </Row>
-      </Zoom>
+      <div style={{ width: '100%' }}>
+        <Zoom duration={300} when={isInterShow} style={{ width: '100%' }}>
+          <Row middle="xs" center="xs">
+            <SuccessStep handleReset={handleReset} />
+          </Row>
+        </Zoom>
+      </div>
     ) : (
-      <Fade duration={isProduction() ? 300 : 0} when={isInterShow}>
-        <IntermediateStep
-          activeStep={activeStep}
-          steps={steps}
-          handleNext={handleNext}
-          handleBack={handleBack}
-          handleNextEntireScreen={handleNextEntireScreen}
-          handleNextApplicationWindow={handleNextApplicationWindow}
-          resetPendingConnectionDevice={() => setPendingConnectionDevice(null)}
-          resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
-        />
-      </Fade>
+      <div id="intermediate-step-container" style={{ width: '100%' }}>
+        <Fade
+          duration={isProduction() ? 300 : 0}
+          when={isInterShow}
+          style={{ width: '100%' }}
+        >
+          <IntermediateStep
+            activeStep={activeStep}
+            steps={steps}
+            handleNext={handleNext}
+            handleBack={handleBack}
+            handleNextEntireScreen={handleNextEntireScreen}
+            handleNextApplicationWindow={handleNextApplicationWindow}
+            resetPendingConnectionDevice={
+              () => setPendingConnectionDevice(null)
+              // eslint-disable-next-line react/jsx-curly-newline
+            }
+            resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
+          />
+        </Fade>
+      </div>
     );
   }, [
     activeStep,
@@ -234,7 +319,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
   return (
     <>
-      <Row>
+      <Row style={{ width: '100%' }}>
         <Col xs={12}>
           <Pulse top duration={isProduction() ? 1500 : 0}>
             <Stepper

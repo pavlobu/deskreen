@@ -2,8 +2,6 @@
  * original JS code from darkwire.io
  * translated to typescript for Deskreen app
  * */
-
-/* eslint-disable no-console */
 import getStore from './store';
 
 export default async function pollForInactiveRooms() {
@@ -21,5 +19,5 @@ export default async function pollForInactiveRooms() {
     }
   });
 
-  setTimeout(pollForInactiveRooms, 1000 * 60 * 60 * 12); // every 12 hours
+  setTimeout(pollForInactiveRooms, 1000 * 60 * 60); // every hour
 }

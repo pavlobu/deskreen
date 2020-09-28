@@ -1,7 +1,7 @@
 import React from 'react';
-import { Row, Col } from 'react-flexbox-grid';
-import { Text, H3, Intent, Alert } from '@blueprintjs/core';
+import { Intent, Alert, H4 } from '@blueprintjs/core';
 import isProduction from '../utils/isProduction';
+import DeviceInfoCallout from './DeviceInfoCallout';
 
 interface AllowConnectionForDeviceAlertProps {
   device: Device | null;
@@ -27,30 +27,14 @@ export default function AllowConnectionForDeviceAlert(
       onConfirm={onConfirm}
       transitionDuration={isProduction() ? 700 : 0}
     >
-      <H3>Device is trying to connect</H3>
-      <Row>
-        <Col>
-          <Text>{`Device IP: `}</Text>
-          <span id="allow-connection-device-alert-device-ip-span">
-            {device?.deviceIP}
-          </span>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Text>{`Device Type: ${device?.deviceType}`}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Text>{`Device OS: ${device?.deviceOS}`}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Text>{`session ID: ${device?.sharingSessionID}`}</Text>
-        </Col>
-      </Row>
+      <H4>Device is trying to connect, do you allow?</H4>
+      <DeviceInfoCallout
+        deviceType={device?.deviceType}
+        deviceIP={device?.deviceIP}
+        deviceOS={device?.deviceOS}
+        sharingSessionID={device?.sharingSessionID}
+        deviceBrowser={device?.deviceBrowser}
+      />
     </Alert>
   );
 }

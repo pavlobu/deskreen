@@ -9,6 +9,28 @@ import DeskreenStepper from './Stepper';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    remote: {
+      getGlobal: (globalName: string) => {
+        if (globalName === 'sharingSessionService') {
+          return {
+            createWaitingForConnectionSharingSession: () =>
+              new Promise(() => {}),
+          };
+        }
+        if (globalName === 'connectedDevicesService') {
+          return {
+            getDevices: () => [],
+            addPendingConnectedDeviceListener: () => {},
+          };
+        }
+        return {};
+      },
+    },
+  };
+});
+
 it('should match exact snapshot', () => {
   const subject = mount(
     <>

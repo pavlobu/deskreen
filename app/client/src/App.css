@@ -1,38 +1,70 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  #pulsing-circle-1 {
+    animation: pulse1 infinite 6s linear;
   }
-  to {
-    transform: rotate(360deg);
+
+  #pulsing-circle-2 {
+    animation: pulse2 infinite 6s linear;
   }
+
+  .pulse-3-once {
+    animation: pulse3twice 2 750ms linear;
+  }
+}
+
+@keyframes pulse1 {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(72, 175, 240, 0.7);
+	}
+
+	80% {
+		transform: scale(1);
+		box-shadow: 0 0 0 15px rgba(72, 175, 240, 0.4);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(72, 175, 240, 0);
+	}
+}
+
+@keyframes pulse2 {
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(72, 175, 240, 0);
+	}
+
+	80% {
+		transform: scale(1);
+		box-shadow: 0 0 0 33px rgba(72, 175, 240, 0.3);
+	}
+
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(72, 175, 240, 1);
+	}
+}
+
+@keyframes pulse3twice {
+  0% {
+		box-shadow: 0 0 0 0 rgba(21, 179, 113, 0.7);
+  }
+
+  50% {
+    box-shadow: 0 0 0 30px rgba(21, 179, 113, 0.3);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(21, 179, 113, 0);
+  }
+}
+
+
+.container > .react-reveal {
+  overflow: hidden;
 }

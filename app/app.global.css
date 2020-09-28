@@ -29,6 +29,14 @@ body {
   background-color: var(--light-bg-color);
 }
 
+#intermediate-step-container > .react-reveal {
+  width: 100%;
+}
+
+#choose-app-or-screen-overlay-container > .react-reveal {
+  height: 0%;
+}
+
 /* UI colors FOR LIGHT AND DARK THEME START */
 .bp3-button:not([class*='bp3-intent-']) {
   background-color: var(--light-btn-no-intent-color);
@@ -141,7 +149,7 @@ div.class-allow-device-to-connect-alert
   > span
   > svg
   > path {
-  color: #a82a2a !important;
+  color: #a82a2a;
   -webkit-animation: blink 0.75s infinite alternate; /* to blink 3 times instead of infinite write just 3 */
   -moz-animation: blink 0.75s infinite alternate;
   -ms-animation: blink 0.75s infinite alternate;
@@ -226,8 +234,6 @@ div.class-allow-device-to-connect-alert
 #settings-overlay-inner > div > div.bp3-tab-list {
   background-color: rgba(0, 0, 0, 0.1);
   padding: 8px;
-
-  /* height: 100%; */
 }
 
 /* settings inner 100% height regardless tab content height */
@@ -241,10 +247,6 @@ div.class-allow-device-to-connect-alert
   justify-content: center;
 }
 
-/* .bp3-overlay-settings.bp3-overlay-content {
-  display: flex;
-} */
-
 /* TODO: move to appropriate style file in ShareEntireScreenOrAppWindowControlGroup */
 #share-screen-or-app-btn-group > button > span {
   display: flex;
@@ -252,11 +254,6 @@ div.class-allow-device-to-connect-alert
   align-items: center;
   flex-direction: column;
 }
-
-/* #root>div.MuiPaper-root.MuiStepper-root.MuiStepper-horizontal.MuiStepper-alternativeLabel.MuiPaper-elevation0>div:nth-child(1)>span>span.MuiStepLabel-iconContainer.MuiStepLabel-alternativeLabel>div {
-  transform: scale(1);
-  animation: pulse-black 2s infinite;
-} */
 
 .active-stepper-pulse-icon {
   transform: scale(1);

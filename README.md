@@ -45,3 +45,7 @@ MIT © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen)
 MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 
 ## Test ?
+
+## By
+
+Crafted with LOVE and support from Pavlo (Paul) Buidenkov

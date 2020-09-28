@@ -1,7 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react/destructuring-assignment */
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import { Icon, Text } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -31,12 +28,10 @@ interface SettingRowLabelAndInput {
 export default function SettingRowLabelAndInput(
   props: SettingRowLabelAndInput
 ) {
+  const { icon, label, input } = props;
   const { isDarkTheme } = useContext(SettingsContext);
 
-  const getClassesCallback = useCallback(() => {
-    // TODO: dont use callback inside callback, then how to use styles with theme?
-    return useStylesWithTheme(isDarkTheme)();
-  }, [isDarkTheme]);
+  const getClassesCallback = useStylesWithTheme(isDarkTheme);
 
   return (
     <Row middle="xs" between="xs">
@@ -44,19 +39,20 @@ export default function SettingRowLabelAndInput(
         <Row middle="xs" className={getClassesCallback().oneSettingRow}>
           <Col>
             <Icon
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore: ok here
-              icon={props.icon}
+              icon={icon}
               iconSize={25}
               className={getClassesCallback().settingRowIcon}
             />
           </Col>
           <Col>
-            <Text>{props.label}</Text>
+            <Text>{label}</Text>
           </Col>
         </Row>
       </Col>
       <Col xs={6}>
-        <Row>{props.input}</Row>
+        <Row>{input}</Row>
       </Col>
     </Row>
   );

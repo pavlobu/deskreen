@@ -8,6 +8,21 @@ import ConnectedDevicesListDrawer from './ConnectedDevicesListDrawer';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    remote: {
+      getGlobal: (globalName: string) => {
+        if (globalName === 'connectedDevicesService') {
+          return {
+            getDevices: () => [],
+          };
+        }
+        return {};
+      },
+    },
+  };
+});
+
 it('should match exact snapshot', () => {
   const subject = mount(
     <>

@@ -4,13 +4,22 @@ import chalk from 'chalk';
 import fs from 'fs';
 
 const mainPath = path.join(__dirname, '..', '..', 'app', 'main.prod.js');
-const rendererPath = path.join(
+const mainWindowRendererPath = path.join(
   __dirname,
   '..',
   '..',
   'app',
   'dist',
-  'renderer.prod.js'
+  'mainWindow.renderer.prod.js'
+);
+
+const peerConnectionHelperRendererWindowPath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'app',
+  'dist',
+  'peerConnectionHelperRendererWindow.renderer.prod.js'
 );
 
 if (!fs.existsSync(mainPath)) {
@@ -21,10 +30,18 @@ if (!fs.existsSync(mainPath)) {
   );
 }
 
-if (!fs.existsSync(rendererPath)) {
+if (!fs.existsSync(mainWindowRendererPath)) {
   throw new Error(
     chalk.whiteBright.bgRed.bold(
       'The renderer process is not built yet. Build it by running "yarn build-renderer"'
+    )
+  );
+}
+
+if (!fs.existsSync(peerConnectionHelperRendererWindowPath)) {
+  throw new Error(
+    chalk.whiteBright.bgRed.bold(
+      'The mousePointer renderer process is not built yet. Build it by running "yarn build-renderer"'
     )
   );
 }

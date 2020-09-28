@@ -14,13 +14,8 @@ const bp3QRCodeDialogRootSelector = '#bp3-qr-code-dialog-root';
 const magnifyQRCodeButtonSelector = '#magnify-qr-code-button';
 const qrCodeDialogInnerSelector = '#qr-code-dialog-inner';
 
-type EnzymeShallowWrapper =
-  | Enzyme.CommonWrapper<{}, {}, React.Component<{}, {}, any>>
-  | Cheerio
-  | Enzyme.ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>;
-
 describe('<ScanQRStep />', () => {
-  let wrapper: EnzymeShallowWrapper;
+  let wrapper = Enzyme.shallow(<ScanQRStep />);
 
   beforeEach(() => {
     wrapper = Enzyme.shallow(<ScanQRStep />);

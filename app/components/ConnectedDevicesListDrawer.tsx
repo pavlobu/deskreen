@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/destructuring-assignment */
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { remote } from 'electron';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import {
   Button,
@@ -14,10 +15,31 @@ import {
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from './CloseOverlayButton';
-import { ConnectedDevicesContext } from '../containers/ConnectedDevicesProvider';
 import isProduction from '../utils/isProduction';
+import ConnectedDevicesService from '../features/ConnectedDevicesService';
+import SharingSessionsService from '../features/SharingSessionsService';
+import DeviceInfoCallout from './DeviceInfoCallout';
+import SharingSourcePreviewCard from './SharingSourcePreviewCard';
+
+const sharingSessionsService = remote.getGlobal(
+  'sharingSessionService'
+) as SharingSessionsService;
+const connectedDevicesService = remote.getGlobal(
+  'connectedDevicesService'
+) as ConnectedDevicesService;
 
 const Fade = require('react-reveal/Fade');
+
+const disconnectPeerAndDestroySharingSessionBySessionID = (
+  sharingSessionID: string
+) => {
+  const sharingSession = sharingSessionsService.sharingSessions.get(
+    sharingSessionID
+  );
+  sharingSession?.disconnectByHostMachineUser();
+  sharingSession?.destory();
+  sharingSessionsService.sharingSessions.delete(sharingSessionID);
+};
 
 interface ConnectedDevicesListDrawerProps {
   isOpen: boolean;
@@ -49,31 +71,33 @@ export default function ConnectedDevicesListDrawer(
 
   const [isAlertDisconectAllOpen, setIsAlertDisconectAllOpen] = useState(false);
 
-  const { devices, setDevicesHook } = useContext(ConnectedDevicesContext);
   const [devicesDisplayed, setDevicesDisplayed] = useState(new Map());
 
   useEffect(() => {
     const map = new Map();
-    devices.forEach((el) => {
+    connectedDevicesService.getDevices().forEach((el) => {
       map.set(el.id, true);
     });
     setDevicesDisplayed(map);
-  }, [devices, setDevicesDisplayed]);
+  }, [setDevicesDisplayed]);
 
-  const handleDisconnectOneDevice = useCallback(
-    (id: string) => {
-      const filteredDevices = devices.filter((device) => {
-        return device.id !== id;
-      });
-
-      setDevicesHook(filteredDevices);
-    },
-    [devices, setDevicesHook]
-  );
+  const handleDisconnectOneDevice = useCallback(async (id: string) => {
+    const device = connectedDevicesService.devices.find(
+      (d: Device) => d.id === id
+    );
+    if (!device) return;
+    disconnectPeerAndDestroySharingSessionBySessionID(device.sharingSessionID);
+    connectedDevicesService.removeDeviceByID(id);
+  }, []);
 
   const handleDisconnectAll = useCallback(() => {
-    setDevicesHook([] as Device[]);
-  }, [setDevicesHook]);
+    connectedDevicesService.devices.forEach((device: Device) => {
+      disconnectPeerAndDestroySharingSessionBySessionID(
+        device.sharingSessionID
+      );
+    });
+    connectedDevicesService.removeAllDevices();
+  }, []);
 
   const hideOneDeviceInDevicesDisplayed = useCallback(
     (id) => {
@@ -94,10 +118,10 @@ export default function ConnectedDevicesListDrawer(
 
   const handleDisconnectAndHideOneDevice = useCallback(
     (id) => {
-      hideOneDeviceInDevicesDisplayed(id);
       setTimeout(
-        () => {
-          handleDisconnectOneDevice(id);
+        async () => {
+          await handleDisconnectOneDevice(id);
+          hideOneDeviceInDevicesDisplayed(id);
         },
         isProduction() ? 1000 : 0
       );
@@ -126,6 +150,7 @@ export default function ConnectedDevicesListDrawer(
         isOpen={props.isOpen}
         onClose={props.handleToggle}
         transitionDuration={isProduction() ? 700 : 0}
+        // transitionDuration={0}
       >
         <Row between="xs" middle="xs" className={classes.drawerInnerTopPanel}>
           <Col xs={11}>
@@ -135,7 +160,7 @@ export default function ConnectedDevicesListDrawer(
               </div>
               <Button
                 intent="danger"
-                disabled={devices.length === 0}
+                disabled={connectedDevicesService.getDevices().length === 0}
                 onClick={() => {
                   setIsAlertDisconectAllOpen(true);
                 }}
@@ -146,39 +171,55 @@ export default function ConnectedDevicesListDrawer(
             </Row>
           </Col>
           <Col xs={1}>
-            <CloseOverlayButton onClick={props.handleToggle} />
+            <CloseOverlayButton onClick={props.handleToggle} isDefaultStyles />
           </Col>
         </Row>
         <Row className={classes.connectedDevicesRoot}>
           <Col xs={12}>
             <Fade bottom cascade duration={isProduction() ? 700 : 0}>
               <div className={classes.zoomFullWidth}>
-                {devices.map((device) => {
+                {connectedDevicesService.getDevices().map((device) => {
                   return (
                     <div key={device.id}>
                       <Fade
                         collapse
                         opposite
-                        /* @ts-ignore: fine here */
                         when={devicesDisplayed.get(device.id)}
                         duration={isProduction() ? 700 : 0}
                       >
-                        <Card>
-                          <Text className="device-ip-container">
-                            {device.deviceIP}
-                          </Text>
-                          <Text>{device.deviceType}</Text>
-                          <Text>{device.deviceOS}</Text>
-                          <Text>{device.sharingSessionID}</Text>
-                          <Button
-                            intent="danger"
-                            onClick={(): void => {
-                              handleDisconnectAndHideOneDevice(device.id);
-                            }}
-                            icon="disable"
-                          >
-                            Disconnect
-                          </Button>
+                        <Card className="connected-device-card">
+                          <Row middle="xs">
+                            <Col xs={6}>
+                              <DeviceInfoCallout
+                                deviceType={device.deviceType}
+                                deviceOS={device.deviceOS}
+                                deviceIP={device.deviceIP}
+                                sharingSessionID={device.sharingSessionID}
+                                deviceBrowser={device.deviceBrowser}
+                              />
+                            </Col>
+                            <Col xs={6}>
+                              <SharingSourcePreviewCard
+                                sharingSourceID={
+                                  sharingSessionsService.sharingSessions.get(
+                                    device.sharingSessionID
+                                  )?.desktopCapturerSourceID
+                                }
+                              />
+                            </Col>
+                          </Row>
+                          <Row center="xs">
+                            <Button
+                              id={`disconnect-device-${device.deviceIP}`}
+                              intent="danger"
+                              onClick={(): void => {
+                                handleDisconnectAndHideOneDevice(device.id);
+                              }}
+                              icon="disable"
+                            >
+                              Disconnect
+                            </Button>
+                          </Row>
                         </Card>
                       </Fade>
                     </div>

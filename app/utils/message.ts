@@ -1,9 +1,11 @@
-/* eslint-disable no-console */
 /* eslint-disable promise/param-names */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */
 import forge from 'node-forge';
 import Crypto from './crypto';
+import Logger from './logger';
+
+const log = new Logger(__filename);
 
 const crypto = new Crypto();
 
@@ -25,7 +27,7 @@ interface ProcessedPayload {
 }
 
 export const process = (payload: any, privateKeyString: string) =>
-  new Promise(async (resolve) => {
+  new Promise<ProcessedMessage>(async (resolve) => {
     const privateKey = (await crypto.importEncryptDecryptKey(
       privateKeyString
     )) as forge.pki.rsa.PrivateKey;
@@ -46,7 +48,7 @@ export const process = (payload: any, privateKeyString: string) =>
           signingHMACKey = crypto.unwrapKey(privateKey, key.signingKey);
           resolvePayload();
         } catch (e) {
-          console.error(e);
+          log.error(e);
         }
       });
     });
@@ -69,7 +71,7 @@ export const process = (payload: any, privateKeyString: string) =>
       iv
     );
 
-    const payloadJson = JSON.parse(decryptedPayload);
+    const payloadJson = JSON.parse(decryptedPayload) as ProcessedMessage;
     resolve(payloadJson);
   });
 

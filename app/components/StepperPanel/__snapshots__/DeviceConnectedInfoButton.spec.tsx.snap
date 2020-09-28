@@ -44,33 +44,11 @@ exports[`should match exact snapshot 1`] = `
               <Row
                 style={
                   Object {
-                    "marginBottom": "10px",
+                    "margin": "0 px 10px 10px 10px",
                   }
                 }
               >
-                <Col
-                  xs={12}
-                >
-                  <Unknown>
-                    Connected Device:
-                  </Unknown>
-                  <Blueprint3.Text>
-                    Type: undefined
-                  </Blueprint3.Text>
-                  <Blueprint3.Text>
-                    OS: undefined
-                  </Blueprint3.Text>
-                  <div
-                    id="connected-button-popover-div-with-ip"
-                  >
-                    <Blueprint3.Text>
-                      IP: undefined
-                    </Blueprint3.Text>
-                  </div>
-                  <Blueprint3.Text>
-                    sharingSessionID: undefined
-                  </Blueprint3.Text>
-                </Col>
+                <DeviceInfoCallout />
               </Row>
               <Row>
                 <Col

@@ -8,6 +8,22 @@ import ChooseAppOrScreenOverlay from './ChooseAppOrScreenOverlay';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    remote: {
+      getGlobal: (globalName: string) => {
+        if (globalName === 'desktopCapturerSourcesService') {
+          return {
+            getScreenSources: () => [],
+            getAppWindowSources: () => [],
+          };
+        }
+        return {};
+      },
+    },
+  };
+});
+
 it('should match exact snapshot', () => {
   const subject = mount(
     <>

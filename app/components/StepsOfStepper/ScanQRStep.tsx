@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext, useState } from 'react';
+import { clipboard, remote } from 'electron';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Text, Tooltip, Position, H2, Dialog } from '@blueprintjs/core';
 import QRCode from 'qrcode.react';
 import { makeStyles, createStyles } from '@material-ui/core';
@@ -9,11 +8,19 @@ import { Row, Col } from 'react-flexbox-grid';
 import { SettingsContext } from '../../containers/SettingsProvider';
 import isProduction from '../../utils/isProduction';
 import CloseOverlayButton from '../CloseOverlayButton';
+import SharingSessionService from '../../features/SharingSessionsService';
+
+const sharingSessionService = remote.getGlobal(
+  'sharingSessionService'
+) as SharingSessionService;
 
 const LOCAL_LAN_IP =
   process.env.RUN_MODE === 'dev' || process.env.NODE_ENV === 'production'
     ? require('internal-ip').v4.sync()
     : '255.255.255.255';
+
+// TODO: change 3131 to user defined port, if it is really defined
+const CLIENT_VIEWER_PORT = isProduction() ? '3131' : '3000';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -45,6 +52,22 @@ const ScanQRStep: React.FC = () => {
   const classes = useStyles();
   const { isDarkTheme } = useContext(SettingsContext);
 
+  const [roomID, setRoomID] = useState('');
+
+  useEffect(() => {
+    const thisInterval = setInterval(() => {
+      if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+        setRoomID(
+          sharingSessionService.waitingForConnectionSharingSession.roomID
+        );
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(thisInterval);
+    };
+  }, []);
+
   const [isQRCodeMagnified, setIsQRCodeMagnified] = useState(false);
 
   return (
@@ -57,27 +80,26 @@ const ScanQRStep: React.FC = () => {
       </div>
       <div>
         <Tooltip content="Click to make bigger" position={Position.LEFT}>
-          <div
+          <Button
             id="magnify-qr-code-button"
             className={classes.smallQRCode}
             onClick={() => setIsQRCodeMagnified(true)}
           >
             <QRCode
-              value={`http://${LOCAL_LAN_IP}:65000/99999`}
+              value={`http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`}
               level="H"
               renderAs="svg"
-              // bgColor={isDarkTheme ? '#293742' : '#ffffff'}
               bgColor="rgba(0,0,0,0.0)"
               fgColor={isDarkTheme ? '#ffffff' : '#000000'}
               imageSettings={{
-                // src: `data:image/png;base64, ${contents}`,
+                // TODO: change image to app icon
                 src:
                   'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
                 width: 40,
                 height: 40,
               }}
             />
-          </div>
+          </Button>
         </Tooltip>
       </div>
       <div style={{ marginBottom: '10px' }}>
@@ -92,8 +114,13 @@ const ScanQRStep: React.FC = () => {
           intent="primary"
           icon="duplicate"
           style={{ borderRadius: '100px' }}
+          onClick={() => {
+            clipboard.writeText(
+              `http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`
+            );
+          }}
         >
-          {`http://${LOCAL_LAN_IP}:65000/99999`}
+          {`http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`}
         </Button>
       </Tooltip>
 
@@ -108,7 +135,7 @@ const ScanQRStep: React.FC = () => {
         transitionDuration={isProduction() ? 700 : 0}
         style={{ position: 'relative', top: '-30px' }}
       >
-        <div
+        <Button
           id="qr-code-dialog-inner"
           onClick={() => setIsQRCodeMagnified(false)}
           style={{ paddingTop: '20px', paddingBottom: '13px' }}
@@ -128,17 +155,17 @@ const ScanQRStep: React.FC = () => {
                   position: 'relative',
                   borderRadius: '100px',
                 }}
-                noDefaultStyles
               />
             </Col>
           </Row>
           <Row center="xs">
             <div className={classes.dialogQRWrapper}>
               <QRCode
-                value={`http://${LOCAL_LAN_IP}:65000/99999`}
+                value={`http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`}
                 level="H"
                 renderAs="svg"
                 imageSettings={{
+                  // TODO: change image to app icon
                   src:
                     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
                   width: 25,
@@ -149,7 +176,7 @@ const ScanQRStep: React.FC = () => {
               />
             </div>
           </Row>
-        </div>
+        </Button>
       </Dialog>
     </>
   );

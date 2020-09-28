@@ -1,13 +1,20 @@
-/* eslint-disable react/jsx-curly-brace-presence */
-/* eslint-disable react/destructuring-assignment */
-import React, { useContext } from 'react';
+import React from 'react';
+import { remote } from 'electron';
 import { Button } from '@blueprintjs/core';
-import { Col } from 'react-flexbox-grid';
+import { Col, Row } from 'react-flexbox-grid';
 import DEVICES from '../../constants/test-devices.json';
 import ScanQRStep from './ScanQRStep';
 import ChooseAppOrScreeenStep from './ChooseAppOrScreeenStep';
 import ConfirmStep from './ConfirmStep';
-import { ConnectedDevicesContext } from '../../containers/ConnectedDevicesProvider';
+import ConnectedDevicesService from '../../features/ConnectedDevicesService';
+import SharingSessionService from '../../features/SharingSessionsService';
+
+const sharingSessionService = remote.getGlobal(
+  'sharingSessionService'
+) as SharingSessionService;
+const connectedDevicesService = remote.getGlobal(
+  'connectedDevicesService'
+) as ConnectedDevicesService;
 
 interface IntermediateStepProps {
   activeStep: number;
@@ -49,15 +56,18 @@ function isConfirmStep(activeStep: number, steps: string[]) {
 
 export default function IntermediateStep(props: IntermediateStepProps) {
   const {
-    devices,
-    setPendingConnectionDeviceHook,
-    setDevicesHook,
-    pendingConnectionDevice,
-    resetPendingConnectionDeviceHook,
-  } = useContext(ConnectedDevicesContext);
+    activeStep,
+    steps,
+    handleNext,
+    handleBack,
+    handleNextEntireScreen,
+    handleNextApplicationWindow,
+    resetPendingConnectionDevice,
+    resetUserAllowedConnection,
+  } = props;
 
   const connectDevice = (device: Device) => {
-    setPendingConnectionDeviceHook(device);
+    connectedDevicesService.setPendingConnectionDevice(device);
   };
 
   return (
@@ -69,22 +79,24 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         justifyContent: 'center',
         alignItems: 'center',
         height: '260px',
+        width: '100%',
       }}
     >
       {getStepContent(
-        props.activeStep,
-        props.handleNextEntireScreen,
-        props.handleNextApplicationWindow,
-        pendingConnectionDevice
+        activeStep,
+        handleNextEntireScreen,
+        handleNextApplicationWindow,
+        connectedDevicesService.pendingConnectionDevice
       )}
 
       {
+        // TODO: uncomment this for TRUE production use ! no Connect Test Device buttons in production!
         // // eslint-disable-next-line no-nested-ternary
         // process.env.NODE_ENV === 'production' &&
         // process.env.RUN_MODE !== 'dev' &&
         // process.env.RUN_MODE !== 'test' ? (
         //   <></>
-        // ) : props.activeStep === 0 ? (
+        // ) : activeStep === 0 ? (
         //   // eslint-disable-next-line react/jsx-indent
         //   <Button
         //     onClick={() => {
@@ -98,11 +110,12 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         // ) : (
         //   <></>
         // )
-        props.activeStep === 0 ? (
-          // eslint-disable-next-line react/jsx-indent
+        activeStep === 0 ? (
           <Button
             onClick={() => {
               connectDevice(
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 DEVICES[Math.floor(Math.random() * DEVICES.length)]
               );
             }}
@@ -115,47 +128,65 @@ export default function IntermediateStep(props: IntermediateStepProps) {
       }
       {
         /**/
-        props.activeStep !== 0 ? (
-          <Button
-            intent={props.activeStep === 2 ? 'success' : 'none'}
-            onClick={() => {
-              props.handleNext();
-              if (isConfirmStep(props.activeStep, props.steps)) {
-                setDevicesHook([...devices, pendingConnectionDevice as Device]);
-                resetPendingConnectionDeviceHook();
-                props.resetPendingConnectionDevice();
-                props.resetUserAllowedConnection();
-              }
-            }}
-            style={{
-              display: props.activeStep === 1 ? 'none' : 'inline',
-              borderRadius: '100px',
-              width: '100%',
-              textAlign: 'center',
-            }}
-            rightIcon={
-              isConfirmStep(props.activeStep, props.steps)
-                ? 'small-tick'
-                : 'chevron-right'
-            }
-          >
-            {isConfirmStep(props.activeStep, props.steps) ? 'Confirm' : 'Next'}
-          </Button>
+        activeStep !== 0 ? (
+          <Row>
+            <Col xs={12}>
+              <Button
+                intent={activeStep === 2 ? 'success' : 'none'}
+                onClick={async () => {
+                  handleNext();
+                  if (isConfirmStep(activeStep, steps)) {
+                    if (
+                      sharingSessionService.waitingForConnectionSharingSession !==
+                      null
+                    ) {
+                      const sharingSession =
+                        sharingSessionService.waitingForConnectionSharingSession;
+                      sharingSession.callPeer();
+                      sharingSessionService.changeSharingSessionStatusToSharing(
+                        sharingSession
+                      );
+                    }
+                    connectedDevicesService.addDevice(
+                      connectedDevicesService.pendingConnectionDevice
+                    );
+                    connectedDevicesService.resetPendingConnectionDevice();
+                    resetPendingConnectionDevice();
+                    resetUserAllowedConnection();
+                  }
+                }}
+                style={{
+                  display: activeStep === 1 ? 'none' : 'inline',
+                  borderRadius: '100px',
+                  width: '300px',
+                  textAlign: 'center',
+                }}
+                rightIcon={
+                  isConfirmStep(activeStep, steps)
+                    ? 'small-tick'
+                    : 'chevron-right'
+                }
+              >
+                {isConfirmStep(activeStep, steps) ? 'Confirm' : 'Next'}
+              </Button>
+            </Col>
+          </Row>
         ) : (
           <></>
         )
       }
-      <Button
-        intent="danger"
-        style={{
-          marginTop: '10px',
-          display: props.activeStep === 2 ? 'inline-block' : 'none',
-          borderRadius: '100px',
-        }}
-        onClick={props.handleBack}
-        icon="chevron-left"
-        text="No, I need to share other thing"
-      />
+      <Row style={{ display: activeStep === 2 ? 'inline-block' : 'none' }}>
+        <Button
+          intent="danger"
+          style={{
+            marginTop: '10px',
+            borderRadius: '100px',
+          }}
+          onClick={handleBack}
+          icon="chevron-left"
+          text="No, I need to share other thing"
+        />
+      </Row>
     </Col>
   );
 }

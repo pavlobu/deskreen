@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable prefer-template */
-/* eslint-disable react/destructuring-assignment */
 import React, { useState, useCallback } from 'react';
 import { Button, Icon, ControlGroup, Text } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -14,7 +11,7 @@ interface ShareEntireScreenOrAppWindowProps {
 const useStyles = makeStyles(() =>
   createStyles({
     controlGroupRoot: {
-      width: '380px',
+      width: '500px',
       display: 'flex',
       position: 'relative',
       left: '20px',
@@ -48,8 +45,7 @@ const useStyles = makeStyles(() =>
       position: 'relative',
       top: '72px',
       left: '-190px !important',
-      // @ts-ignore: need to use !important, can't work without it
-      zIndex: '9999 !important',
+      zIndex: 9999,
       cursor: 'default',
     },
   })
@@ -58,6 +54,7 @@ const useStyles = makeStyles(() =>
 export default function ShareEntireScreenOrAppWindowControlGroup(
   props: ShareEntireScreenOrAppWindowProps
 ) {
+  const { handleNextEntireScreen, handleNextApplicationWindow } = props;
   const classes = useStyles();
 
   const [
@@ -94,6 +91,7 @@ export default function ShareEntireScreenOrAppWindowControlGroup(
         className={classes.controlGroupRoot}
         fill
         vertical={false}
+        style={{ width: '380px' }}
       >
         <Button
           className={classes.shareEntireScreenButton}
@@ -129,8 +127,8 @@ export default function ShareEntireScreenOrAppWindowControlGroup(
         isEntireScreenToShareChosen={isEntireScreenToShareChosen}
         isChooseAppOrScreenOverlayOpen={isChooseAppOrScreenOverlayOpen}
         handleClose={handleCloseChooseAppOrScreenOverlay}
-        handleNextEntireScreen={props.handleNextEntireScreen}
-        handleNextApplicationWindow={props.handleNextApplicationWindow}
+        handleNextEntireScreen={handleNextEntireScreen}
+        handleNextApplicationWindow={handleNextApplicationWindow}
       />
     </>
   );
