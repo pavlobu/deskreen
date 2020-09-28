@@ -32,7 +32,7 @@ export default function AllowConnectionForDeviceAlert(
         <Col>
           <Text>{`Device IP: `}</Text>
           <span id="allow-connection-device-alert-device-ip-span">
-            {device?.deviceIp}
+            {device?.deviceIP}
           </span>
         </Col>
       </Row>
@@ -43,12 +43,12 @@ export default function AllowConnectionForDeviceAlert(
       </Row>
       <Row>
         <Col>
-          <Text>{`Device OS: ${device?.deviceOs}`}</Text>
+          <Text>{`Device OS: ${device?.deviceOS}`}</Text>
         </Col>
       </Row>
       <Row>
         <Col>
-          <Text>{`session ID: ${device?.sessionId}`}</Text>
+          <Text>{`session ID: ${device?.sharingSessionID}`}</Text>
         </Col>
       </Row>
     </Alert>

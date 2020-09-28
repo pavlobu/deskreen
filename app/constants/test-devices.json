@@ -1,72 +1,72 @@
 [
   {
     "id": "123414",
-    "sessionId": "14422424",
-    "deviceOs": "Android",
+    "sharingSessionID": "14422424",
+    "deviceOS": "Android",
     "deviceType": "Mobile",
-    "deviceIp": "123.123.123.123"
+    "deviceIP": "123.123.123.123"
   },
   {
     "id": "1123",
-    "sessionId": "43",
-    "deviceOs": "IOS",
+    "sharingSessionID": "43",
+    "deviceOS": "IOS",
     "deviceType": "Mobile",
-    "deviceIp": "124.124.124.124"
+    "deviceIP": "124.124.124.124"
   },
   {
     "id": "2",
-    "sessionId": "22",
-    "deviceOs": "Windows",
+    "sharingSessionID": "22",
+    "deviceOS": "Windows",
     "deviceType": "PS",
-    "deviceIp": "255.255.124.124"
+    "deviceIP": "255.255.124.124"
   },
   {
     "id": "33",
-    "sessionId": "22",
-    "deviceOs": "Ubuntu",
+    "sharingSessionID": "22",
+    "deviceOS": "Ubuntu",
     "deviceType": "PC",
-    "deviceIp": "4.4.4.124"
+    "deviceIP": "4.4.4.124"
   },
   {
     "id": "414",
-    "sessionId": "423",
-    "deviceOs": "Blackberry",
+    "sharingSessionID": "423",
+    "deviceOS": "Blackberry",
     "deviceType": "Mobile",
-    "deviceIp": "224.224.224.124"
+    "deviceIP": "224.224.224.124"
   },
   {
     "id": "1133223",
-    "sessionId": "4133",
-    "deviceOs": "IOS",
+    "sharingSessionID": "4133",
+    "deviceOS": "IOS",
     "deviceType": "Mobile",
-    "deviceIp": "24.24.24.24"
+    "deviceIP": "24.24.24.24"
   },
   {
     "id": "1321123",
-    "sessionId": "44133",
-    "deviceOs": "Android",
+    "sharingSessionID": "44133",
+    "deviceOS": "Android",
     "deviceType": "Mobile",
-    "deviceIp": "14.14.14.14"
+    "deviceIP": "14.14.14.14"
   },
   {
     "id": "993",
-    "sessionId": "91322",
-    "deviceOs": "Debian",
+    "sharingSessionID": "91322",
+    "deviceOS": "Debian",
     "deviceType": "PC",
-    "deviceIp": "1.1.14.14"
+    "deviceIP": "1.1.14.14"
   },
   {
     "id": "7757",
-    "sessionId": "1111",
-    "deviceOs": "MacOS",
+    "sharingSessionID": "1111",
+    "deviceOS": "MacOS",
     "deviceType": "Mac",
-    "deviceIp": "12.12.14.14"
+    "deviceIP": "12.12.14.14"
   },
   {
     "id": "123332",
-    "sessionId": "323231",
-    "deviceOs": "MacOS",
+    "sharingSessionID": "323231",
+    "deviceOS": "MacOS",
     "deviceType": "Mac",
-    "deviceIp": "11.11.14.14"
+    "deviceIP": "11.11.14.14"
   }
 ]

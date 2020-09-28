@@ -19,11 +19,11 @@ const getDeviceConnectedPopoverContent = (
           <Col xs={12}>
             <H6>Connected Device:</H6>
             <Text>{`Type: ${pendingConnectionDevice?.deviceType}`}</Text>
-            <Text>{`OS: ${pendingConnectionDevice?.deviceOs}`}</Text>
+            <Text>{`OS: ${pendingConnectionDevice?.deviceOS}`}</Text>
             <div id="connected-button-popover-div-with-ip">
-              <Text>{`IP: ${pendingConnectionDevice?.deviceIp}`}</Text>
+              <Text>{`IP: ${pendingConnectionDevice?.deviceIP}`}</Text>
             </div>
-            <Text>{`SessionId: ${pendingConnectionDevice?.sessionId}`}</Text>
+            <Text>{`sharingSessionID: ${pendingConnectionDevice?.sharingSessionID}`}</Text>
           </Col>
         </Row>
         <Row>

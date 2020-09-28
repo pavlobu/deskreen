@@ -165,11 +165,11 @@ export default function ConnectedDevicesListDrawer(
                       >
                         <Card>
                           <Text className="device-ip-container">
-                            {device.deviceIp}
+                            {device.deviceIP}
                           </Text>
                           <Text>{device.deviceType}</Text>
-                          <Text>{device.deviceOs}</Text>
-                          <Text>{device.sessionId}</Text>
+                          <Text>{device.deviceOS}</Text>
+                          <Text>{device.sharingSessionID}</Text>
                           <Button
                             intent="danger"
                             onClick={(): void => {

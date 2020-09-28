@@ -1,7 +1,7 @@
 interface Device {
   id: string;
-  sessionId: string;
-  deviceOs: string;
+  sharingSessionID: string;
+  deviceOS: string;
   deviceType: string;
-  deviceIp: string;
+  deviceIP: string;
 }

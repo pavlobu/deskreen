@@ -26,7 +26,7 @@ const largeQRCodeDialog = Selector('#qr-code-dialog-inner');
 const connectedInfoStepperButton = Selector(
   '#connected-device-info-stepper-button'
 );
-const popoverDivWithDeviceIP = Selector(
+const popoverDivWithdeviceIP = Selector(
   '#connected-button-popover-div-with-ip'
 );
 const disconnectOneDeviceButton = Selector('button').withExactText(
@@ -58,7 +58,7 @@ const connectedDevicesButton = Selector(
 const connectedDevicesHeader = Selector('.bp3-text-muted').withText(
   'Connected Devices'
 );
-const getDeviceIPContainerByIP = (ip) =>
+const getdeviceIPContainerByIP = (ip) =>
   Selector('.device-ip-container').withText(ip);
 const yesDisconnectAllButton = Selector('button').withText(
   'Yes, Disconnect All'
@@ -69,7 +69,7 @@ const darkColorAppSettingButton = Selector('button').withText('Dark');
 const lightColorAppSettingButton = Selector('button').withText('Light');
 const darkUIClassName = Selector('.bp3-dark');
 
-async function getConnectedDeviceIPFromAllowToConnectDeviceAlert() {
+async function getConnecteddeviceIPFromAllowToConnectDeviceAlert() {
   const deviceIPTextElement = Selector(
     '#allow-connection-device-alert-device-ip-span'
   );
@@ -80,7 +80,7 @@ async function getConnectedDeviceIPFromAllowToConnectDeviceAlert() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function connectTestDeviceAndGetIP(t) {
   await t.click(connectTestDeviceButton());
-  return getConnectedDeviceIPFromAllowToConnectDeviceAlert();
+  return getConnecteddeviceIPFromAllowToConnectDeviceAlert();
 }
 
 async function connectTestDevice(t) {
@@ -89,7 +89,7 @@ async function connectTestDevice(t) {
 
 async function connectAndAllowTestDeviceAndGetIP(t) {
   await connectTestDevice(t);
-  const ip = getConnectedDeviceIPFromAllowToConnectDeviceAlert();
+  const ip = getConnecteddeviceIPFromAllowToConnectDeviceAlert();
   await t.click(allowToConnectButton());
   return ip;
 }
@@ -246,7 +246,7 @@ test(`when on step 2,
   const ip = await connectAndAllowTestDeviceAndGetIP(t);
   await openConnectedDeviceInfoPopover(t);
 
-  const textWithIp = await popoverDivWithDeviceIP().innerText;
+  const textWithIp = await popoverDivWithdeviceIP().innerText;
   await t.expect(textWithIp.includes(ip)).ok();
 });
 
@@ -375,7 +375,7 @@ test(`when on step 4 (Success Step),
   const ip = await connectDeviceSharingAppWindowAndGetIP(t);
   await openConnectedDevicesListDrawer(t);
 
-  await t.expect(getDeviceIPContainerByIP(ip).exists).ok();
+  await t.expect(getdeviceIPContainerByIP(ip).exists).ok();
 });
 
 test(`when multiple devices are connected,
@@ -390,10 +390,10 @@ test(`when multiple devices are connected,
 
   await openConnectedDevicesListDrawer(t);
 
-  await t.expect(getDeviceIPContainerByIP(ipOne).exists).ok();
-  await t.expect(getDeviceIPContainerByIP(ipTwo).exists).ok();
-  await t.expect(getDeviceIPContainerByIP(ipThree).exists).ok();
-  await t.expect(getDeviceIPContainerByIP(ipFour).exists).ok();
+  await t.expect(getdeviceIPContainerByIP(ipOne).exists).ok();
+  await t.expect(getdeviceIPContainerByIP(ipTwo).exists).ok();
+  await t.expect(getdeviceIPContainerByIP(ipThree).exists).ok();
+  await t.expect(getdeviceIPContainerByIP(ipFour).exists).ok();
 });
 
 test(`when device is connected,
@@ -405,7 +405,7 @@ test(`when device is connected,
   await openConnectedDevicesListDrawer(t);
   await t.click(disconnectOneDeviceButton());
 
-  await t.expect(getDeviceIPContainerByIP(ip).exists).notOk();
+  await t.expect(getdeviceIPContainerByIP(ip).exists).notOk();
 });
 
 test(`when multiple devices are connected,
@@ -425,10 +425,10 @@ test(`when multiple devices are connected,
 
   await openConnectedDevicesListDrawer(t);
 
-  await t.expect(getDeviceIPContainerByIP(ipOne).exists).notOk();
-  await t.expect(getDeviceIPContainerByIP(ipTwo).exists).notOk();
-  await t.expect(getDeviceIPContainerByIP(ipThree).exists).notOk();
-  await t.expect(getDeviceIPContainerByIP(ipFour).exists).notOk();
+  await t.expect(getdeviceIPContainerByIP(ipOne).exists).notOk();
+  await t.expect(getdeviceIPContainerByIP(ipTwo).exists).notOk();
+  await t.expect(getdeviceIPContainerByIP(ipThree).exists).notOk();
+  await t.expect(getdeviceIPContainerByIP(ipFour).exists).notOk();
 });
 
 test(`when device is connected,

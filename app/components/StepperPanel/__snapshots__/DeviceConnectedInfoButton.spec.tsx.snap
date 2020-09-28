@@ -68,7 +68,7 @@ exports[`should match exact snapshot 1`] = `
                     </Blueprint3.Text>
                   </div>
                   <Blueprint3.Text>
-                    SessionId: undefined
+                    sharingSessionID: undefined
                   </Blueprint3.Text>
                 </Col>
               </Row>

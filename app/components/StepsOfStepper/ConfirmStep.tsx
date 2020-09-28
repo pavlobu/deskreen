@@ -16,9 +16,9 @@ export default function ConfirmStep(props: ConfirmStepProps) {
 
       <Card style={{ marginBottom: '10px' }}>
         <Text>{`Device: ${props.device?.deviceType}`}</Text>
-        <Text>{`Device IP: ${props.device?.deviceIp}`}</Text>
-        <Text>{`Device OS: ${props.device?.deviceOs}`}</Text>
-        <Text>{`Session ID: ${props.device?.sessionId}`}</Text>
+        <Text>{`Device IP: ${props.device?.deviceIP}`}</Text>
+        <Text>{`Device OS: ${props.device?.deviceOS}`}</Text>
+        <Text>{`Session ID: ${props.device?.sharingSessionID}`}</Text>
       </Card>
       <div style={{ marginBottom: '10px' }}>
         <Text className="bp3-text-muted">
