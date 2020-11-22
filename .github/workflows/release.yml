@@ -52,9 +52,12 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
+          npm config set registry https://registry.npmjs.org
           cd app/client
           yarn install --no-lockfile
-          cd ../..
+          cd ..
+          yarn install --no-lockfile
+          cd ..
           yarn install --no-lockfile
 
       - name: Configure private AWS npm registry and install packages from it
