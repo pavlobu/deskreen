@@ -1,9 +1,9 @@
 /*
  * original JS code from darkwire.io
  * translated to typescript for Deskreen app
+ * by Pavlo (Paul) Buidenkov
  * */
 
-/* eslint-disable no-console */
 import http, { Server } from 'http';
 import express from 'express';
 import Koa from 'koa';
@@ -21,6 +21,7 @@ import getStore from './store';
 
 import Logger from '../utils/logger';
 import isProduction from '../utils/isProduction';
+import SocketsIPService from './socketsIPService';
 
 const log = new Logger('app/server/index.ts');
 
@@ -79,6 +80,12 @@ const io = Io(server, {
 const getRoomIdHash = (id: string) => {
   return crypto.createHash('sha256').update(id).digest('hex');
 };
+
+io.sockets.on('connection', (socket) => {
+  const socketId = socket.id;
+  const clientIp = socket.request.connection.remoteAddress;
+  SocketsIPService.setIPOfSocketID(socketId, clientIp);
+});
 
 io.on('connection', async (socket) => {
   const { roomId } = socket.handshake.query;

@@ -1,5 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +33,15 @@ const useColorlibStepIconStyles = makeStyles({
   stepContent: {},
 });
 
+const getDesktopOrAppIcon = (isDesktop: boolean, color: string) => {
+  if (isDesktop) {
+    return <Icon icon="desktop" iconSize={25} color={color} />;
+  }
+  return <Icon icon="application" iconSize={25} color={color} />;
+};
+
 export default function ColorlibStepIcon(props: StepIconPropsDeskreen) {
+  const { icon } = props;
   const classes = useColorlibStepIconStyles();
   const { active, completed, isEntireScreenSelected } = props;
 
@@ -48,11 +54,7 @@ export default function ColorlibStepIcon(props: StepIconPropsDeskreen) {
       <Icon icon="feed" iconSize={25} color={color} />
     ),
     2: completed ? (
-      isEntireScreenSelected ? (
-        <Icon icon="desktop" iconSize={25} color={color} />
-      ) : (
-        <Icon icon="application" iconSize={25} color={color} />
-      )
+      getDesktopOrAppIcon(isEntireScreenSelected, color)
     ) : (
       <Icon icon="flow-branch" iconSize={25} color={color} />
     ),
@@ -70,7 +72,7 @@ export default function ColorlibStepIcon(props: StepIconPropsDeskreen) {
         [classes.completed]: completed,
       })} ${active ? 'active-stepper-pulse-icon' : ''}`}
     >
-      {icons[String(props.icon)]}
+      {icons[String(icon)]}
     </div>
   );
 }

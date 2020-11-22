@@ -8,14 +8,24 @@ import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 
-export const getLangNameToLangKeyMap = () => {
-  const res = {};
+export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
+  const res = new Map<string, string>();
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(
     config.langISOKeyToLangFullNameMap
   )) {
-    // @ts-ignore: fine here
-    res[value] = key;
+    res.set(value, key);
+  }
+  return res;
+};
+
+export const getLangISOKeyToLangFullNameMap = (): Map<string, string> => {
+  const res = new Map<string, string>();
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [key, value] of Object.entries(
+    config.langISOKeyToLangFullNameMap
+  )) {
+    res.set(key, value);
   }
   return res;
 };

@@ -1,0 +1,55 @@
+<!--
+  IMPORTANT! THIS IS A HELPER RENDERER WINDOW,
+  IT IS MEANT TO RUN IN A BACKGROUND TO OFFLOAD CALCULATIONS ON APP'S mainWindow,
+  IT IS NEVER MEANT TO BE SHOWIN IN USER INTERFACE OF PACKAGED APPLICATION IN PRODUCTION!
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Mouse Pointer Renderer</title>
+    <script>
+      (() => {
+        if (
+          typeof process !== 'object' ||
+          (typeof process === 'object' && !process.env.START_HOT)
+        ) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = './dist/style.css';
+          // HACK: Writing the script path should be done with webpack
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if (typeof process === 'object') {
+        const scripts = [];
+
+        if (process.env.NODE_ENV === 'development') {
+          // Dynamically insert the DLL script in development env in the
+          // renderer process
+          scripts.push('../dll/renderer.dev.dll.js');
+        }
+        if (process.env.START_HOT) {
+          // Dynamically insert the bundled app script in the renderer process
+          const port = process.env.PORT || 1212;
+          scripts.push(`http://localhost:${port}/dist/peerConnectionHelperRendererWindow.renderer.dev.js`);
+        } else {
+          scripts.push('./dist/peerConnectionHelperRendererWindow.renderer.prod.js');
+        }
+
+        if (scripts.length) {
+          document.write(
+            scripts
+              .map((script) => `<script defer src="${script}"><\/script>`)
+              .join('')
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

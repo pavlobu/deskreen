@@ -6,9 +6,6 @@ interface TestPayload {
   text: string;
 }
 
-interface TestDecryptedPayload {
-  payload: TestPayload;
-}
 describe('message.ts tests for proper encryption and decryption functionality', () => {
   const TEST_TEXT = 'some test text here';
   const TEST_TEXT_AS_URL = 'some%20test%20text%20here';
@@ -49,8 +46,8 @@ describe('message.ts tests for proper encryption and decryption functionality', 
       getTestPrivateKeyPem()
     );
 
-    expect((decryptedPayload as TestDecryptedPayload).payload.text).toContain(
-      TEST_TEXT_AS_URL
-    );
+    expect(
+      ((decryptedPayload.payload as unknown) as TestPayload).text
+    ).toContain(TEST_TEXT_AS_URL);
   });
 });

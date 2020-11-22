@@ -1,15 +1,4 @@
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/destructuring-assignment */
-import React, {
-  useContext,
-  useCallback,
-  useMemo,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useContext, useCallback, useEffect, useState } from 'react';
 import {
   Button,
   Overlay,
@@ -34,8 +23,10 @@ import {
   SettingsContext,
 } from '../../containers/SettingsProvider';
 import CloseOverlayButton from '../CloseOverlayButton';
-import { getLangNameToLangKeyMap } from '../../configs/i18next.config.client';
-import config from '../../configs/app.lang.config';
+import {
+  getLangFullNameToLangISOKeyMap,
+  getLangISOKeyToLangFullNameMap,
+} from '../../configs/i18next.config.client';
 import isProduction from '../../utils/isProduction';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
 
@@ -46,17 +37,14 @@ interface SettingsOverlayProps {
   handleClose: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useStylesWithTheme = (_isDarkTheme: boolean) =>
+const useStylesWithTheme = (isDarkTheme: boolean) =>
   makeStyles(() =>
     createStyles({
       checkboxSettings: { margin: '0' },
       overlayInnerRoot: { width: '90%' },
       overlayInsideFade: {
         height: '90vh',
-        backgroundColor: _isDarkTheme
-          ? DARK_UI_BACKGROUND
-          : LIGHT_UI_BACKGROUND,
+        backgroundColor: isDarkTheme ? DARK_UI_BACKGROUND : LIGHT_UI_BACKGROUND,
       },
       absoluteCloseButton: { position: 'absolute', left: 'calc(100% - 65px)' },
       tabNavigationRowButton: { fontWeight: 700 },
@@ -67,28 +55,21 @@ const useStylesWithTheme = (_isDarkTheme: boolean) =>
 export default function SettingsOverlay(props: SettingsOverlayProps) {
   const { t } = useTranslation();
 
+  const { handleClose, isSettingsOpen } = props;
+
   const { isDarkTheme, setIsDarkThemeHook } = useContext(SettingsContext);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const [languagesList, setLanguagesList] = useState([] as string[]);
-
-  const LANG_NAME_TO_KEY_MAP = useMemo(() => {
-    return getLangNameToLangKeyMap();
-  }, []);
 
   useEffect(() => {
     const tmp: string[] = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const [key] of Object.entries(LANG_NAME_TO_KEY_MAP)) {
-      // @ts-ignore: fine here
+    getLangFullNameToLangISOKeyMap().forEach((_, key) => {
       tmp.push(key);
-    }
+    });
     setLanguagesList(tmp);
-  }, [LANG_NAME_TO_KEY_MAP]);
+  }, []);
 
-  const getClassesCallback = useCallback(() => {
-    return useStylesWithTheme(isDarkTheme)();
-  }, [isDarkTheme]);
+  const getClassesCallback = useStylesWithTheme(isDarkTheme);
 
   const handleToggleDarkTheme = useCallback(() => {
     if (!isDarkTheme) {
@@ -104,14 +85,57 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     }
   }, [isDarkTheme, setIsDarkThemeHook]);
 
-  const onChangeLangueageHTMLSelectHandler = (event: any) => {
+  const onChangeLangueageHTMLSelectHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     if (
       event.currentTarget &&
-      event.currentTarget.value in LANG_NAME_TO_KEY_MAP
+      getLangFullNameToLangISOKeyMap().has(event.currentTarget.value)
     ) {
-      // @ts-ignore: fine here
-      i18n.changeLanguage(LANG_NAME_TO_KEY_MAP[event.currentTarget.value]);
+      i18n.changeLanguage(
+        getLangFullNameToLangISOKeyMap().get(event.currentTarget.value) ||
+          'English'
+      );
     }
+  };
+
+  const getThemeChangingControlGroupInput = () => {
+    return (
+      <ControlGroup fill vertical={false}>
+        <Button
+          icon="flash"
+          text="Light"
+          onClick={handleToggleLightTheme}
+          active={!isDarkTheme}
+        />
+        <Button
+          icon="moon"
+          text="Dark"
+          onClick={handleToggleDarkTheme}
+          active={isDarkTheme}
+        />
+      </ControlGroup>
+    );
+  };
+
+  const getLanguageChangingHTMLSelect = () => {
+    return (
+      <HTMLSelect
+        defaultValue={getLangISOKeyToLangFullNameMap().get(i18n.language)}
+        options={languagesList}
+        onChange={onChangeLangueageHTMLSelectHandler}
+      />
+    );
+  };
+
+  const getAutomaticUpdatesCheckboxInput = () => {
+    return (
+      <Checkbox
+        checked
+        className={getClassesCallback().checkboxSettings}
+        label="Enabled"
+      />
+    );
   };
 
   const GeneralSettingsPanel: React.FC = () => (
@@ -122,47 +146,17 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       <SettingRowLabelAndInput
         icon="style"
         label="Colors"
-        input={
-          <ControlGroup fill vertical={false}>
-            <Button
-              icon="flash"
-              text="Light"
-              onClick={handleToggleLightTheme}
-              active={!isDarkTheme}
-            />
-            <Button
-              icon="moon"
-              text="Dark"
-              onClick={handleToggleDarkTheme}
-              active={isDarkTheme}
-            />
-          </ControlGroup>
-        }
+        input={getThemeChangingControlGroupInput()}
       />
       <SettingRowLabelAndInput
         icon="translate"
         label={t('Language')}
-        input={
-          <HTMLSelect
-            defaultValue={
-              // @ts-ignore: fine here
-              config.langISOKeyToLangFullNameMap[i18n.language]
-            }
-            options={languagesList}
-            onChange={onChangeLangueageHTMLSelectHandler}
-          />
-        }
+        input={getLanguageChangingHTMLSelect()}
       />
       <SettingRowLabelAndInput
         icon="automatic-updates"
         label="Automatic Updates"
-        input={
-          <Checkbox
-            checked
-            className={getClassesCallback().checkboxSettings}
-            label="Enabled"
-          />
-        }
+        input={getAutomaticUpdatesCheckboxInput()}
       />
     </>
   );
@@ -227,14 +221,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
 
   return (
     <Overlay
-      onClose={props.handleClose}
+      onClose={handleClose}
       className={`${Classes.OVERLAY_SCROLL_CONTAINER} bp3-overlay-settings`}
       autoFocus
       canEscapeKeyClose
       canOutsideClickClose
       enforceFocus
       hasBackdrop
-      isOpen={props.isSettingsOpen}
+      isOpen={isSettingsOpen}
       usePortal
       transitionDuration={0}
     >
@@ -248,7 +242,8 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           >
             <CloseOverlayButton
               className={getClassesCallback().absoluteCloseButton}
-              onClick={props.handleClose}
+              onClick={handleClose}
+              isDefaultStyles
             />
             <Tabs
               animate

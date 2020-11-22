@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-new */
+import { ipcRenderer } from 'electron';
 import React, { Fragment, Suspense } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
@@ -36,3 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('root')
   );
 });
+
+window.onbeforeunload = () => {
+  ipcRenderer.invoke('main-window-onbeforeunload');
+};

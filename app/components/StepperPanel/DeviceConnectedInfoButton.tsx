@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import { Icon, Text, Button, Popover, H6, Tooltip } from '@blueprintjs/core';
+import { Icon, Text, Button, Popover, Tooltip } from '@blueprintjs/core';
 import isProduction from '../../utils/isProduction';
+import DeviceInfoCallout from '../DeviceInfoCallout';
 
 interface DeviceConnectedInfoButtonProps {
   device: Device;
@@ -15,16 +16,14 @@ const getDeviceConnectedPopoverContent = (
   return (
     <Row>
       <div style={{ padding: '20px', borderRadius: '100px' }}>
-        <Row style={{ marginBottom: '10px' }}>
-          <Col xs={12}>
-            <H6>Connected Device:</H6>
-            <Text>{`Type: ${pendingConnectionDevice?.deviceType}`}</Text>
-            <Text>{`OS: ${pendingConnectionDevice?.deviceOs}`}</Text>
-            <div id="connected-button-popover-div-with-ip">
-              <Text>{`IP: ${pendingConnectionDevice?.deviceIp}`}</Text>
-            </div>
-            <Text>{`SessionId: ${pendingConnectionDevice?.sessionId}`}</Text>
-          </Col>
+        <Row style={{ margin: '0 px 10px 10px 10px' }}>
+          <DeviceInfoCallout
+            deviceType={pendingConnectionDevice?.deviceType}
+            deviceIP={pendingConnectionDevice?.deviceIP}
+            deviceOS={pendingConnectionDevice?.deviceOS}
+            sharingSessionID={pendingConnectionDevice?.sharingSessionID}
+            deviceBrowser={pendingConnectionDevice?.deviceBrowser}
+          />
         </Row>
         <Row>
           <Col xs={12}>

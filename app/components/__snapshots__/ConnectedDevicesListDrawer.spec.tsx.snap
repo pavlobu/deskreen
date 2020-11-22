@@ -466,6 +466,7 @@ exports[`should match exact snapshot 1`] = `
                                 className="col-xs-1"
                               >
                                 <CloseOverlayButton
+                                  isDefaultStyles={true}
                                   onClick={[Function]}
                                 >
                                   <Blueprint3.Button

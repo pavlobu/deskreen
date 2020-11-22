@@ -6,10 +6,6 @@
  */
 
 /*!
- * base64id v0.1.0
- */
-
-/*!
  * body-parser
  * Copyright(c) 2014 Jonathan Ong
  * Copyright(c) 2014-2015 Douglas Christopher Wilson
@@ -294,8 +290,6 @@
  */
 
 /*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
-
-/*! https://mths.be/utf8js v2.1.2 by @mathias */
 
 /**
  * @license

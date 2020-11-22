@@ -32,11 +32,21 @@ exports[`should match exact snapshot 1`] = `
         className="makeStyles-controlGroupRoot-1"
         fill={true}
         id="share-screen-or-app-btn-group"
+        style={
+          Object {
+            "width": "380px",
+          }
+        }
         vertical={false}
       >
         <div
           className="bp3-control-group bp3-fill makeStyles-controlGroupRoot-1"
           id="share-screen-or-app-btn-group"
+          style={
+            Object {
+              "width": "380px",
+            }
+          }
         >
           <Blueprint3.Button
             className="makeStyles-shareEntireScreenButton-2"

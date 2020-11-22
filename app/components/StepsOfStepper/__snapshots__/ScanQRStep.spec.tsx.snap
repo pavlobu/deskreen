@@ -28,7 +28,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       position="left"
       transitionDuration={100}
     >
-      <div
+      <Blueprint3.Button
         className="makeStyles-smallQRCode-1"
         id="magnify-qr-code-button"
         onClick={[Function]}
@@ -47,9 +47,9 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           level="H"
           renderAs="svg"
           size={128}
-          value="http://255.255.255.255:65000/99999"
+          value="http://255.255.255.255:3000/"
         />
-      </div>
+      </Blueprint3.Button>
     </Blueprint3.Tooltip>
   </div>
   <div
@@ -75,13 +75,14 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
     <Blueprint3.Button
       icon="duplicate"
       intent="primary"
+      onClick={[Function]}
       style={
         Object {
           "borderRadius": "100px",
         }
       }
     >
-      http://255.255.255.255:65000/99999
+      http://255.255.255.255:3000/
     </Blueprint3.Button>
   </Blueprint3.Tooltip>
   <Blueprint3.Dialog
@@ -99,7 +100,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
     }
     transitionDuration={0}
   >
-    <div
+    <Blueprint3.Button
       id="qr-code-dialog-inner"
       onClick={[Function]}
       style={
@@ -132,7 +133,6 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           xs={2}
         >
           <CloseOverlayButton
-            noDefaultStyles={true}
             onClick={[Function]}
             style={
               Object {
@@ -166,12 +166,12 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
             level="H"
             renderAs="svg"
             size={128}
-            value="http://255.255.255.255:65000/99999"
+            value="http://255.255.255.255:3000/"
             width="390px"
           />
         </div>
       </Row>
-    </div>
+    </Blueprint3.Button>
   </Blueprint3.Dialog>
 </Fragment>
 `;

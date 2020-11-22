@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /*
  * original JS code from darkwire.io
  * translated to typescript for Deskreen app
@@ -8,12 +9,14 @@ import _ from 'lodash';
 import Io from 'socket.io';
 // eslint-disable-next-line import/no-cycle
 import { getIO } from '.';
+import socketsIPService from './socketsIPService';
 import getStore from './store';
 
 interface User {
   socketId: string;
   publicKey: string;
   isOwner: boolean;
+  ip: string;
 }
 
 interface Room {
@@ -97,8 +100,33 @@ export default class Socket implements SocketOPTS {
   }
 
   async handleSocket(socket: Io.Socket) {
+    socket.on('GET_MY_IP', (acknowledgeFunction) => {
+      acknowledgeFunction(socketsIPService.getSocketIPByID(socket.id));
+    });
+
+    socket.on('GET_IP_BY_SOCKET_ID', (socketID, acknowledgeFunction) => {
+      acknowledgeFunction(socketsIPService.getSocketIPByID(socketID));
+    });
+
+    socket.on('IS_ROOM_LOCKED', async (acknowledgeFunction) => {
+      const room: Room = (await this.fetchRoom()) as Room;
+      acknowledgeFunction(room.isLocked);
+    });
+
     socket.on('ENCRYPTED_MESSAGE', (payload) => {
       socket.to(this.roomId).emit('ENCRYPTED_MESSAGE', payload);
+    });
+
+    socket.on('DISCONNECT_SOCKET_BY_DEVICE_IP', async (payload) => {
+      const room: Room = (await this.fetchRoom()) as Room;
+      const ownerUser = (room.users || []).find(
+        (u) => u.socketId === socket.id && u.isOwner
+      );
+      if (!ownerUser) return;
+      const socketIDToDisconnect = socketsIPService.getSocketIDByIP(payload.ip);
+      if (!socketIDToDisconnect) return;
+
+      this.handleDisconnect(getIO().sockets.connected[socketIDToDisconnect]);
     });
 
     socket.on('USER_ENTER', async (payload) => {
@@ -110,6 +138,11 @@ export default class Socket implements SocketOPTS {
           isLocked: false,
           createdAt: Date.now(),
         };
+      } else {
+        const userFound = room.users.find(
+          (r) => r.publicKey === payload.publicKey
+        );
+        if (userFound) return;
       }
 
       const newRoom: Room = {
@@ -120,6 +153,7 @@ export default class Socket implements SocketOPTS {
             socketId: socket.id,
             publicKey: payload.publicKey,
             isOwner: (room.users || []).length === 0,
+            ip: payload.ip ? payload.ip : '',
           },
         ],
       };
@@ -140,6 +174,7 @@ export default class Socket implements SocketOPTS {
       );
 
       if (!user) {
+        // @ts-ignore
         callback({
           isLocked: room.isLocked,
         });
@@ -161,13 +196,20 @@ export default class Socket implements SocketOPTS {
       });
     });
 
-    socket.on('disconnect', () => this.handleDisconnect(socket));
+    socket.on('disconnect', () => {
+      this.handleDisconnect(socket);
+    });
 
-    socket.on('USER_DISCONNECT', () => this.handleDisconnect(socket));
+    socket.on('USER_DISCONNECT', () => {
+      this.handleDisconnect(socket);
+    });
   }
 
   async handleDisconnect(socket: Io.Socket) {
     const room: Room = (await this.fetchRoom()) as Room;
+    const ownerUser = (room.users || []).find(
+      (u) => u.socketId === socket.id && u.isOwner
+    );
 
     const newRoom = {
       ...room,
@@ -178,6 +220,16 @@ export default class Socket implements SocketOPTS {
           isOwner: index === 0,
         })),
     };
+
+    if (ownerUser) {
+      // if owner left diconnect all users
+      newRoom.users.forEach((u) => {
+        if (getIO().sockets.connected[u.socketId]) {
+          getIO().sockets.connected[u.socketId].disconnect();
+        }
+      });
+      newRoom.users = [];
+    }
 
     await this.saveRoom(newRoom);
 

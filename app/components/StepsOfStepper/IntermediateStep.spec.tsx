@@ -8,6 +8,22 @@ import IntermediateStep from './IntermediateStep';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    remote: {
+      getGlobal: (globalName: string) => {
+        if (globalName === 'desktopCapturerSourcesService') {
+          return {
+            getScreenSources: () => [],
+            getAppWindowSources: () => [],
+          };
+        }
+        return {};
+      },
+    },
+  };
+});
+
 const confirmButtonSelector = 'button.bp3-button.bp3-intent-success';
 
 function setup(
@@ -56,7 +72,7 @@ it('should match exact snapshot on each step', () => {
   }
 });
 
-it('should call resetPendingConnectionDevice when Confirm button clicked on confirm step', () => {
+it('should call resetPendingConnectionDevice when Confirm button clicked on confirm step', async () => {
   const confirmStepNumber = 2;
   const mockResetPendingConnectionDeviceCallback = jest.fn();
   const { buttons } = setup(
@@ -67,7 +83,9 @@ it('should call resetPendingConnectionDevice when Confirm button clicked on conf
 
   buttons.confirmButton.simulate('click');
 
-  expect(mockResetPendingConnectionDeviceCallback).toBeCalled();
+  setTimeout(() => {
+    expect(mockResetPendingConnectionDeviceCallback).toBeCalled();
+  }, 500);
 });
 
 it('should call resetUserAllowedConnection when Confirm button clicked on confirm step', () => {
@@ -81,5 +99,7 @@ it('should call resetUserAllowedConnection when Confirm button clicked on confir
 
   buttons.confirmButton.simulate('click');
 
-  expect(mockResetUserAllowedConnectionCallback).toBeCalled();
+  setTimeout(() => {
+    expect(mockResetUserAllowedConnectionCallback).toBeCalled();
+  }, 500);
 });

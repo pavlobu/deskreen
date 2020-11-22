@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "deskreen",
-  "version": "0.0.3-alpha",
+  "version": "1.0.0-beta",
   "description": "TODO: write description about this project",
   "main": "./main.prod.js",
   "author": {
@@ -14,5 +14,7 @@
     "postinstall": "yarn electron-rebuild"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
 }

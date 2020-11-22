@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React from 'react';
+import { remote } from 'electron';
+import React, { useEffect, useState } from 'react';
 import { H3, Card, Dialog } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from '../../CloseOverlayButton';
 import isProduction from '../../../utils/isProduction';
 import PreviewGridList from './PreviewGridList';
-import TEST_SCREEN_SHARING_OBECTS from '../../../constants/test-screen-sharing-objects.json';
+import DesktopCapturerSources from '../../../features/DesktopCapturerSourcesService';
+
+const desktopCapturerSourcesService = remote.getGlobal(
+  'desktopCapturerSourcesService'
+) as DesktopCapturerSources;
 
 const Zoom = require('react-reveal/Zoom');
 const Fade = require('react-reveal/Fade');
@@ -48,22 +50,66 @@ interface ChooseAppOrScreenOverlayProps {
 export default function ChooseAppOrScreenOverlay(
   props: ChooseAppOrScreenOverlayProps
 ) {
+  const {
+    handleClose,
+    isChooseAppOrScreenOverlayOpen,
+    isEntireScreenToShareChosen,
+    handleNextEntireScreen,
+    handleNextApplicationWindow,
+  } = props;
   const classes = useStyles();
+
+  const [
+    screenViewSharingObjectsMap,
+    setScreenViewSharingObjectsMap,
+  ] = useState<Map<string, ViewSharingObject>>(new Map());
+
+  const [
+    appsWindowsViewSharingObjectsMap,
+    setAppsWindowsViewSharingObjectsMap,
+  ] = useState<Map<string, ViewSharingObject>>(new Map());
+
+  useEffect(() => {
+    if (isEntireScreenToShareChosen) {
+      const sourcesToShare = desktopCapturerSourcesService.getScreenSources();
+      const screenViewMap = new Map<string, ViewSharingObject>();
+      sourcesToShare.forEach((source) => {
+        screenViewMap.set(source.id, {
+          thumbnailUrl: source.thumbnail.toDataURL(),
+          name: source.name,
+        });
+      });
+      setScreenViewSharingObjectsMap(screenViewMap);
+    } else {
+      const sourcesToShare = desktopCapturerSourcesService.getAppWindowSources();
+      const appViewMap = new Map<string, ViewSharingObject>();
+      sourcesToShare.forEach((source) => {
+        appViewMap.set(source.id, {
+          thumbnailUrl: source.thumbnail.toDataURL(),
+          name: source.name,
+        });
+      });
+      setAppsWindowsViewSharingObjectsMap(appViewMap);
+    }
+  }, [isEntireScreenToShareChosen]);
 
   return (
     <Dialog
-      onClose={props.handleClose}
+      onClose={handleClose}
       className={`${classes.dialogRoot} choose-app-or-screen-dialog`}
       autoFocus
       canEscapeKeyClose
       canOutsideClickClose
       enforceFocus
       hasBackdrop
-      isOpen={props.isChooseAppOrScreenOverlayOpen}
+      isOpen={isChooseAppOrScreenOverlayOpen}
       usePortal
       transitionDuration={isProduction() ? 750 : 0}
     >
-      <div>
+      <div
+        id="choose-app-or-screen-overlay-container"
+        style={{ minHeight: '95%' }}
+      >
         <Fade
           duration={isProduction() ? 1000 : 0}
           delay={isProduction() ? 1000 : 0}
@@ -95,7 +141,7 @@ export default function ChooseAppOrScreenOverlay(
                 }}
               >
                 <Col xs={11}>
-                  {props.isEntireScreenToShareChosen ? (
+                  {isEntireScreenToShareChosen ? (
                     <div>
                       <H3 style={{ marginBottom: '0px' }}>
                         Select Entire Screen to Share
@@ -112,13 +158,12 @@ export default function ChooseAppOrScreenOverlay(
 
                 <Col xs={1}>
                   <CloseOverlayButton
-                    onClick={props.handleClose}
+                    onClick={handleClose}
                     style={{
                       borderRadius: '100px',
                       width: '40px',
                       height: '40px',
                     }}
-                    noDefaultStyles
                   />
                 </Col>
               </Row>
@@ -136,22 +181,26 @@ export default function ChooseAppOrScreenOverlay(
           <Card
             style={{
               position: 'relative',
-              // @ts-ignore
-              zIndex: '1',
+              zIndex: 1,
+              height: '100%',
             }}
           >
             <Row>
               <div className={classes.sharePreviewsContainer}>
                 <PreviewGridList
-                  screenSharingObjects={TEST_SCREEN_SHARING_OBECTS}
-                  isEntireScreen={props.isEntireScreenToShareChosen}
+                  viewSharingObjectsMap={
+                    isEntireScreenToShareChosen
+                      ? screenViewSharingObjectsMap
+                      : appsWindowsViewSharingObjectsMap
+                  }
+                  isEntireScreen={isEntireScreenToShareChosen}
                   handleNextEntireScreen={() => {
-                    props.handleNextEntireScreen();
-                    props.handleClose();
+                    handleNextEntireScreen();
+                    handleClose();
                   }}
                   handleNextApplicationWindow={() => {
-                    props.handleNextApplicationWindow();
-                    props.handleClose();
+                    handleNextApplicationWindow();
+                    handleClose();
                   }}
                 />
               </div>

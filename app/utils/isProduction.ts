@@ -5,4 +5,5 @@ export default function isProduction() {
     process.env.RUN_MODE !== 'test'
   );
   // return true; // for animations and other things debugging as in production mode
+  // return false;
 }

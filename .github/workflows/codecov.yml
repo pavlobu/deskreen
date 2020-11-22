@@ -9,23 +9,32 @@ jobs:
         uses: actions/checkout@v2.3.1
 
       - name: Install Node.js, NPM and Yarn
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         uses: actions/setup-node@v1.4.2
         with:
           node-version: 14
 
-      # - name: yarn install from npmjs registry
-      #   run: |
-      #     yarn install --no-lockfile
-      #     yarn install-client:nolockfile
+      - name: yarn install from npmjs registry
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: |
+          cd app/client
+          yarn install --no-lockfile
+          cd ../..
+          yarn install --no-lockfile
 
       - name: Configure private AWS npm registry and install packages from it
-        # if: ${{ failure() }}
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        if: ${{ failure() }}
         run: |
           npm config set registry https://packages.deskreen.com/
           npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
           npm config set always-auth true
-          yarn install --frozen-lockfile
           cd app/client
+          yarn install --frozen-lockfile
+          cd ../..
           yarn install --frozen-lockfile
 
       - name: yarn build

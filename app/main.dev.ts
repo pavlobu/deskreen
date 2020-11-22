@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint global-require: off, no-console: off */
 
 /**
@@ -11,21 +10,24 @@
  */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { Display } from 'electron/main';
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, screen } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import settings from 'electron-settings';
 import i18n from './configs/i18next.config';
 import signalingServer from './server';
 import MenuBuilder from './menu';
+import initGlobals from './mainProcessHelpers/initGlobals';
+import ConnectedDevicesService from './features/ConnectedDevicesService';
+import RoomIDService from './server/RoomIDService';
+import SharingSession from './features/SharingSessionsService/SharingSession';
+import getDeskreenGlobal from './mainProcessHelpers/getDeskreenGlobal';
 
-const globalAny: any = global;
-globalAny.appPath = __dirname;
+initGlobals(__dirname);
 
 signalingServer.start();
-
-log.error(process.platform);
 
 export default class AppUpdater {
   constructor() {
@@ -71,21 +73,22 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 820,
-    height: 480,
-    // maxWidth: 820,
-    // maxHeight: 480,
+    height: 540,
     minHeight: 400,
     minWidth: 600,
     titleBarStyle: 'hiddenInset',
+    useContentSize: true,
     webPreferences:
       (process.env.NODE_ENV === 'development' ||
         process.env.E2E_BUILD === 'true') &&
       process.env.ERB_SECURE !== 'true'
         ? {
             nodeIntegration: true,
+            enableRemoteModule: true,
           }
         : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js'),
+            preload: path.join(__dirname, 'dist/mainWindow.renderer.prod.js'),
+            enableRemoteModule: true,
           },
   });
 
@@ -107,12 +110,18 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    // TODO: when app will be set to auto start on login, this will be not required,
+    // TODO: the app will run until user didn't kill it in system tray
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
   });
+
+  // mainWindow.webContents.toggleDevTools();
 
   menuBuilder = new MenuBuilder(mainWindow, i18n);
   menuBuilder.buildMenu();
 
-  // i18n.on('loaded', (loaded) => {
   i18n.on('loaded', () => {
     i18n.changeLanguage('en');
     i18n.off('loaded');
@@ -140,6 +149,8 @@ const createWindow = async () => {
  */
 
 app.on('window-all-closed', () => {
+  // TODO: when app will be set to auto start on login, this will be not required,
+  // TODO: the app will run until user didn't kill it in system tray
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
@@ -169,3 +180,42 @@ ipcMain.on('client-changed-language', async (_, newLangCode) => {
   i18n.changeLanguage(newLangCode);
   await settings.set('appLanguage', newLangCode);
 });
+
+ipcMain.handle('get-all-displays', () => {
+  return screen.getAllDisplays();
+});
+
+ipcMain.handle('get-display-size-by-display-id', (_, displayID: string) => {
+  const display = screen.getAllDisplays().find((d: Display) => {
+    return `${d.id}` === displayID;
+  });
+
+  if (display) {
+    return display.size;
+  }
+  return undefined;
+});
+
+ipcMain.handle('main-window-onbeforeunload', () => {
+  const deskreenGlobal = getDeskreenGlobal();
+  deskreenGlobal.connectedDevicesService = new ConnectedDevicesService();
+  deskreenGlobal.roomIDService = new RoomIDService();
+  deskreenGlobal.sharingSessionService.sharingSessions.forEach(
+    (sharingSession: SharingSession) => {
+      sharingSession.denyConnectionForPartner();
+      sharingSession.destory();
+    }
+  );
+
+  deskreenGlobal.rendererWebrtcHelpersService.helpers.forEach(
+    (helperWindow) => {
+      helperWindow.close();
+    }
+  );
+
+  deskreenGlobal.sharingSessionService.waitingForConnectionSharingSession = null;
+  deskreenGlobal.rendererWebrtcHelpersService.helpers.clear();
+  deskreenGlobal.sharingSessionService.sharingSessions.clear();
+});
+
+app.commandLine.appendSwitch('webrtc-max-cpu-consumption-percentage', '100');

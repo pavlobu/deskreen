@@ -23,16 +23,27 @@ export default merge(baseConfig, {
 
   target: process.env.E2E_BUILD ? 'electron-renderer' : 'electron-preload',
 
-  entry: [
-    'core-js',
-    'regenerator-runtime/runtime',
-    path.join(__dirname, '..', 'app/index.tsx'),
-  ],
+  entry: {
+    mainWindow: [
+      'core-js',
+      'regenerator-runtime/runtime',
+      path.join(__dirname, '..', 'app/index.tsx'),
+    ],
+    peerConnectionHelperRendererWindow: [
+      'core-js',
+      'regenerator-runtime/runtime',
+      path.join(
+        __dirname,
+        '..',
+        'app/peerConnectionHelperRendererWindowIndex.tsx'
+      ),
+    ],
+  },
 
   output: {
     path: path.join(__dirname, '..', 'app/dist'),
     publicPath: './dist/',
-    filename: 'renderer.prod.js',
+    filename: '[name].renderer.prod.js',
   },
 
   module: {
@@ -214,6 +225,8 @@ export default merge(baseConfig, {
     }),
 
     new MiniCssExtractPlugin({
+      // TODO: look here if you need to have different css files for different window renderers
+      // https://github.com/amilajack/erb-second-renderer-window-example/blob/d3187de6ae0f0eaed4d46e755f71b73ad3aa6572/configs/webpack.config.renderer.prod.babel.js#L209
       filename: 'style.css',
     }),
 

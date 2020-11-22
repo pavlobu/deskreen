@@ -116,63 +116,77 @@ exports[`should match exact snapshot 1`] = `
                             <div
                               class="bp3-alert-contents"
                             >
-                              <h3
+                              <h4
                                 class="bp3-heading"
                               >
-                                Device is trying to connect
-                              </h3>
+                                Device is trying to connect, do you allow?
+                              </h4>
+                              <h4
+                                class="bp3-heading"
+                                style="margin: 0px auto; text-align: center;"
+                              >
+                                Partner Device Info:
+                              </h4>
                               <div
-                                class="row"
+                                class="bp3-callout"
+                                id="device-info-callout"
                               >
                                 <div
-                                  class=""
+                                  class="row center-xs"
                                 >
                                   <div
-                                    class=""
+                                    class="col-xs-12"
                                   >
-                                    Device IP: 
-                                  </div>
-                                  <span
-                                    id="allow-connection-device-alert-device-ip-span"
-                                  />
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    Device Type: undefined
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    Device OS: undefined
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    session ID: undefined
+                                    <div
+                                      class=""
+                                    >
+                                      Device Type: 
+                                      <span />
+                                    </div>
+                                    <span
+                                      class="bp3-popover-wrapper"
+                                    >
+                                      <span
+                                        class="bp3-popover-target"
+                                      >
+                                        <div
+                                          class=""
+                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451);"
+                                          tabindex="0"
+                                        >
+                                          <div
+                                            class="bp3-text-large"
+                                          >
+                                            Device IP: 
+                                            <span
+                                              class="device-ip-span"
+                                            />
+                                          </div>
+                                        </div>
+                                      </span>
+                                    </span>
+                                    <div
+                                      class=""
+                                    >
+                                      Device Browser: 
+                                      <span />
+                                    </div>
+                                    <div
+                                      class=""
+                                    >
+                                      Device OS: 
+                                      <span />
+                                    </div>
+                                    <div
+                                      style="width: 200px; margin: 0px auto;"
+                                    >
+                                      <div
+                                        class="bp3-text-overflow-ellipsis bp3-text-muted"
+                                      >
+                                        Session ID: 
+                                        <span />
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -252,63 +266,77 @@ exports[`should match exact snapshot 1`] = `
                             <div
                               class="bp3-alert-contents"
                             >
-                              <h3
+                              <h4
                                 class="bp3-heading"
                               >
-                                Device is trying to connect
-                              </h3>
+                                Device is trying to connect, do you allow?
+                              </h4>
+                              <h4
+                                class="bp3-heading"
+                                style="margin: 0px auto; text-align: center;"
+                              >
+                                Partner Device Info:
+                              </h4>
                               <div
-                                class="row"
+                                class="bp3-callout"
+                                id="device-info-callout"
                               >
                                 <div
-                                  class=""
+                                  class="row center-xs"
                                 >
                                   <div
-                                    class=""
+                                    class="col-xs-12"
                                   >
-                                    Device IP: 
-                                  </div>
-                                  <span
-                                    id="allow-connection-device-alert-device-ip-span"
-                                  />
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    Device Type: undefined
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    Device OS: undefined
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="row"
-                              >
-                                <div
-                                  class=""
-                                >
-                                  <div
-                                    class=""
-                                  >
-                                    session ID: undefined
+                                    <div
+                                      class=""
+                                    >
+                                      Device Type: 
+                                      <span />
+                                    </div>
+                                    <span
+                                      class="bp3-popover-wrapper"
+                                    >
+                                      <span
+                                        class="bp3-popover-target"
+                                      >
+                                        <div
+                                          class=""
+                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451);"
+                                          tabindex="0"
+                                        >
+                                          <div
+                                            class="bp3-text-large"
+                                          >
+                                            Device IP: 
+                                            <span
+                                              class="device-ip-span"
+                                            />
+                                          </div>
+                                        </div>
+                                      </span>
+                                    </span>
+                                    <div
+                                      class=""
+                                    >
+                                      Device Browser: 
+                                      <span />
+                                    </div>
+                                    <div
+                                      class=""
+                                    >
+                                      Device OS: 
+                                      <span />
+                                    </div>
+                                    <div
+                                      style="width: 200px; margin: 0px auto;"
+                                    >
+                                      <div
+                                        class="bp3-text-overflow-ellipsis bp3-text-muted"
+                                      >
+                                        Session ID: 
+                                        <span />
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -448,91 +476,242 @@ exports[`should match exact snapshot 1`] = `
                                 className="bp3-alert-contents"
                               >
                                 <Component>
-                                  <h3
+                                  <h4
                                     className="bp3-heading"
                                   >
-                                    Device is trying to connect
-                                  </h3>
+                                    Device is trying to connect, do you allow?
+                                  </h4>
                                 </Component>
-                                <Row>
-                                  <div
-                                    className="row"
+                                <DeviceInfoCallout>
+                                  <Component
+                                    style={
+                                      Object {
+                                        "margin": "0 auto",
+                                        "textAlign": "center",
+                                      }
+                                    }
                                   >
-                                    <Col>
-                                      <div
-                                        className=""
-                                      >
-                                        <Blueprint3.Text>
-                                          <div
-                                            className=""
-                                          >
-                                            Device IP: 
-                                          </div>
-                                        </Blueprint3.Text>
-                                        <span
-                                          id="allow-connection-device-alert-device-ip-span"
-                                        />
-                                      </div>
-                                    </Col>
-                                  </div>
-                                </Row>
-                                <Row>
-                                  <div
-                                    className="row"
+                                    <h4
+                                      className="bp3-heading"
+                                      style={
+                                        Object {
+                                          "margin": "0 auto",
+                                          "textAlign": "center",
+                                        }
+                                      }
+                                    >
+                                      Partner Device Info:
+                                    </h4>
+                                  </Component>
+                                  <Blueprint3.Callout
+                                    id="device-info-callout"
                                   >
-                                    <Col>
-                                      <div
-                                        className=""
+                                    <div
+                                      className="bp3-callout"
+                                      id="device-info-callout"
+                                    >
+                                      <Row
+                                        center="xs"
                                       >
-                                        <Blueprint3.Text>
-                                          <div
-                                            className=""
+                                        <div
+                                          className="row center-xs"
+                                        >
+                                          <Col
+                                            xs={12}
                                           >
-                                            Device Type: undefined
-                                          </div>
-                                        </Blueprint3.Text>
-                                      </div>
-                                    </Col>
-                                  </div>
-                                </Row>
-                                <Row>
-                                  <div
-                                    className="row"
-                                  >
-                                    <Col>
-                                      <div
-                                        className=""
-                                      >
-                                        <Blueprint3.Text>
-                                          <div
-                                            className=""
-                                          >
-                                            Device OS: undefined
-                                          </div>
-                                        </Blueprint3.Text>
-                                      </div>
-                                    </Col>
-                                  </div>
-                                </Row>
-                                <Row>
-                                  <div
-                                    className="row"
-                                  >
-                                    <Col>
-                                      <div
-                                        className=""
-                                      >
-                                        <Blueprint3.Text>
-                                          <div
-                                            className=""
-                                          >
-                                            session ID: undefined
-                                          </div>
-                                        </Blueprint3.Text>
-                                      </div>
-                                    </Col>
-                                  </div>
-                                </Row>
+                                            <div
+                                              className="col-xs-12"
+                                            >
+                                              <Blueprint3.Text>
+                                                <div
+                                                  className=""
+                                                >
+                                                  Device Type: 
+                                                  <span />
+                                                </div>
+                                              </Blueprint3.Text>
+                                              <Blueprint3.Tooltip
+                                                content={
+                                                  <React.Fragment>
+                                                    <Blueprint3.Text>
+                                                      This should match with 'Device IP' displayed on the screen of device
+        that is trying to connect.
+                                                    </Blueprint3.Text>
+                                                    <span
+                                                      style={
+                                                        Object {
+                                                          "fontWeight": 900,
+                                                        }
+                                                      }
+                                                    >
+                                                      <Blueprint3.Text>
+                                                        If IPs don't match click 'Deny' or 'Disconnect' button immediately to
+          secure your computer!
+                                                      </Blueprint3.Text>
+                                                    </span>
+                                                  </React.Fragment>
+                                                }
+                                                hoverCloseDelay={0}
+                                                hoverOpenDelay={100}
+                                                position="top"
+                                                transitionDuration={100}
+                                              >
+                                                <Blueprint3.Popover
+                                                  autoFocus={false}
+                                                  boundary="scrollParent"
+                                                  canEscapeKeyClose={false}
+                                                  captureDismiss={false}
+                                                  content={
+                                                    <React.Fragment>
+                                                      <Blueprint3.Text>
+                                                        This should match with 'Device IP' displayed on the screen of device
+        that is trying to connect.
+                                                      </Blueprint3.Text>
+                                                      <span
+                                                        style={
+                                                          Object {
+                                                            "fontWeight": 900,
+                                                          }
+                                                        }
+                                                      >
+                                                        <Blueprint3.Text>
+                                                          If IPs don't match click 'Deny' or 'Disconnect' button immediately to
+          secure your computer!
+                                                        </Blueprint3.Text>
+                                                      </span>
+                                                    </React.Fragment>
+                                                  }
+                                                  defaultIsOpen={false}
+                                                  disabled={false}
+                                                  enforceFocus={false}
+                                                  fill={false}
+                                                  hasBackdrop={false}
+                                                  hoverCloseDelay={0}
+                                                  hoverOpenDelay={100}
+                                                  inheritDarkTheme={true}
+                                                  interactionKind="hover-target"
+                                                  lazy={true}
+                                                  minimal={false}
+                                                  modifiers={Object {}}
+                                                  openOnTargetFocus={true}
+                                                  popoverClassName="bp3-tooltip"
+                                                  position="top"
+                                                  targetTagName="span"
+                                                  transitionDuration={100}
+                                                  usePortal={true}
+                                                  wrapperTagName="span"
+                                                >
+                                                  <Manager>
+                                                    <span
+                                                      className="bp3-popover-wrapper"
+                                                    >
+                                                      <Reference
+                                                        innerRef={[Function]}
+                                                      >
+                                                        <InnerReference
+                                                          innerRef={[Function]}
+                                                          setReferenceNode={[Function]}
+                                                        >
+                                                          <Blueprint3.ResizeSensor
+                                                            onResize={[Function]}
+                                                          >
+                                                            <span
+                                                              className="bp3-popover-target"
+                                                              onBlur={[Function]}
+                                                              onFocus={[Function]}
+                                                              onMouseEnter={[Function]}
+                                                              onMouseLeave={[Function]}
+                                                            >
+                                                              <div
+                                                                className=""
+                                                                key=".0"
+                                                                style={
+                                                                  Object {
+                                                                    "backgroundColor": "#00f99273",
+                                                                    "fontWeight": 900,
+                                                                  }
+                                                                }
+                                                                tabIndex={0}
+                                                              >
+                                                                <Blueprint3.Text
+                                                                  className="bp3-text-large"
+                                                                >
+                                                                  <div
+                                                                    className="bp3-text-large"
+                                                                  >
+                                                                    Device IP: 
+                                                                    <span
+                                                                      className="device-ip-span"
+                                                                    />
+                                                                  </div>
+                                                                </Blueprint3.Text>
+                                                              </div>
+                                                            </span>
+                                                          </Blueprint3.ResizeSensor>
+                                                        </InnerReference>
+                                                      </Reference>
+                                                      <Blueprint3.Overlay
+                                                        autoFocus={false}
+                                                        backdropClassName="bp3-popover-backdrop"
+                                                        backdropProps={Object {}}
+                                                        canEscapeKeyClose={false}
+                                                        canOutsideClickClose={false}
+                                                        enforceFocus={false}
+                                                        hasBackdrop={false}
+                                                        isOpen={false}
+                                                        lazy={true}
+                                                        onClose={[Function]}
+                                                        transitionDuration={100}
+                                                        transitionName="bp3-popover"
+                                                        usePortal={true}
+                                                      />
+                                                    </span>
+                                                  </Manager>
+                                                </Blueprint3.Popover>
+                                              </Blueprint3.Tooltip>
+                                              <Blueprint3.Text>
+                                                <div
+                                                  className=""
+                                                >
+                                                  Device Browser: 
+                                                  <span />
+                                                </div>
+                                              </Blueprint3.Text>
+                                              <Blueprint3.Text>
+                                                <div
+                                                  className=""
+                                                >
+                                                  Device OS: 
+                                                  <span />
+                                                </div>
+                                              </Blueprint3.Text>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "margin": "0 auto",
+                                                    "width": "200px",
+                                                  }
+                                                }
+                                              >
+                                                <Blueprint3.Text
+                                                  className="bp3-text-muted"
+                                                  ellipsize={true}
+                                                >
+                                                  <div
+                                                    className="bp3-text-overflow-ellipsis bp3-text-muted"
+                                                  >
+                                                    Session ID: 
+                                                    <span />
+                                                  </div>
+                                                </Blueprint3.Text>
+                                              </div>
+                                            </div>
+                                          </Col>
+                                        </div>
+                                      </Row>
+                                    </div>
+                                  </Blueprint3.Callout>
+                                </DeviceInfoCallout>
                               </div>
                             </div>
                             <div

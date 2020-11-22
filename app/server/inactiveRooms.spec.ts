@@ -16,7 +16,6 @@ describe('Inactive rooms auto removed from store', () => {
     pollForInactiveRooms();
 
     const rooms = (await store.getAll('rooms')) || {};
-    // log.info(`${Object.keys(rooms).length} rooms found`);
     expect(Object.keys(rooms).length).toBe(0);
   });
 });

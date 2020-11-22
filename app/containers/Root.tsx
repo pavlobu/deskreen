@@ -9,7 +9,6 @@ import { Store } from '../store';
 import Routes from '../Routes';
 import i18n from '../configs/i18next.config.client';
 import { SettingsProvider } from './SettingsProvider';
-import { ConnectedDevicesProvider } from './ConnectedDevicesProvider';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -30,11 +29,9 @@ const Root = ({ store, history }: Props) => {
   return (
     <Provider store={store}>
       <SettingsProvider>
-        <ConnectedDevicesProvider>
-          <ConnectedRouter history={history}>
-            <Routes />
-          </ConnectedRouter>
-        </ConnectedDevicesProvider>
+        <ConnectedRouter history={history}>
+          <Routes />
+        </ConnectedRouter>
       </SettingsProvider>
     </Provider>
   );
