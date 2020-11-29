@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-import { Icon, Text, Switch, Classes, Alignment } from '@blueprintjs/core';
-import { Row, Col } from 'react-flexbox-grid';
+import { Switch, Classes, Alignment } from '@blueprintjs/core';
 import { AppContext } from '../../providers/AppContextProvider';
 
 function ToggleDarkModeSwitch() {
   const { isDarkTheme, setIsDarkThemeHook } = useContext(AppContext)
-
 
   return (
     <Switch

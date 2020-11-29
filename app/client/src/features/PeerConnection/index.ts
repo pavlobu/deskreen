@@ -127,12 +127,6 @@ export default class LocalTestPeer {
     });
 
     peer.on('stream', (stream) => {
-      setTimeout(() => {
-        (document.querySelector(
-          '#video-local-test-peer-sees'
-        ) as any).srcObject = stream;
-      }, 1000);
-
       this.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
         this.peer.send('set good quality');
       });

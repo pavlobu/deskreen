@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef, useContext, useCallback } from 'react';
 import { H3, Button } from '@blueprintjs/core';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { findDOMNode } from 'react-dom';
@@ -16,9 +16,12 @@ import {
 } from './constants/styleConstants';
 import { AppContext } from './providers/AppContextProvider';
 import ToggleDarkModeSwitch from './components/ToggleDarkModeSwitch';
+import PlayerControlPanel from './components/PlayerControlPanel';
 
 const Fade = require('react-reveal/Fade');
 const Slide = require('react-reveal/Slide');
+
+const REACT_PLAYER_WRAPPER_ID = "react-player-wrapper-id";
 
 function getPromptContent(step: number) {
   switch (step) {
@@ -41,7 +44,7 @@ function getPromptContent(step: number) {
 }
 
 function App() {
-  const { isDarkTheme, setIsDarkThemeHook } = useContext(AppContext);
+  const { isDarkTheme } = useContext(AppContext);
 
   const player = useRef(null);
   const [promptStep, setPromptStep] = useState(1);
@@ -56,6 +59,7 @@ function App() {
   });
 
   const [playing, setPlaying] = useState(true);
+  const [isFullScreenOn, setIsFullScreenOn] = useState(false);
   const [url, setUrl] = useState();
   const [isWithControls, setIsWithControls] = useState(!screenfull.isEnabled);
   const [isShownTextPrompt, setIsShownTextPrompt] = useState(false);
@@ -104,14 +108,16 @@ function App() {
     }, 1500);
   }, [isShownSpinnerIcon]);
 
-  const handleClickFullscreen = () => {
-    // @ts-ignore Property 'request' does not exist on type '{ isEnabled: false; }'.
-    screenfull.request(findDOMNode(player.current));
-  };
+  // const handleClickFullscreen = useCallback(() => {
+  //   if (!player.current) return;
+  //   // @ts-ignore Property 'request' does not exist on type '{ isEnabled: false; }'.
+  //   screenfull.request(findDOMNode(player.current));
+  //   setIsFullScreenOn(!isFullScreenOn);
+  // }, []);
 
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     setPlaying(!playing);
-  };
+  }, [playing]);
 
   useEffect(() => {
     document.body.style.backgroundColor = isDarkTheme
@@ -221,7 +227,7 @@ function App() {
           height: '100vh',
         }}
       >
-        <Button
+        {/* <Button
           onClick={() => setIsWithControls(true)}
           onTouchStart={() => setIsWithControls(true)}
         >
@@ -236,7 +242,19 @@ function App() {
         >
           ENTER FULL SCREEN
         </Button>
-        <ToggleDarkModeSwitch />
+        <ToggleDarkModeSwitch /> */}
+        <PlayerControlPanel
+          onSwitchChangedCallback={(isEnabled) => setIsWithControls(isEnabled)}
+          isDefaultPlayerTurnedOn={isWithControls}
+          handleClickFullscreen={() => {
+            // @ts-ignore Property 'request' does not exist on type '{ isEnabled: false; }'.
+            screenfull.request(findDOMNode(player.current));
+            setIsFullScreenOn(!isFullScreenOn);
+          }}
+          handleClickPlayPause={handlePlayPause}
+          isFullScreenOn={isFullScreenOn}
+          isPlaying={playing}
+        />
         <div
           id="video-container"
           style={{
@@ -245,6 +263,7 @@ function App() {
           }}
         >
           <div
+            id="player-wrapper-id"
             className="player-wrapper"
             style={{
               position: 'relative',
@@ -253,7 +272,7 @@ function App() {
           >
             <ReactPlayer
               ref={player}
-              id="video-local-test-peer-sees"
+              id={REACT_PLAYER_WRAPPER_ID}
               playing={playing}
               playsinline={true}
               controls={isWithControls}
@@ -273,7 +292,8 @@ function App() {
                 top: 0,
                 left: 0,
               }}
-            />
+            >
+            </ReactPlayer>
           </div>
           <canvas id="comparison-canvas" style={{ display: 'none' }}></canvas>
         </div>
