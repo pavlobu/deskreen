@@ -18,6 +18,7 @@ import Logger from '../../utils/logger';
 import DesktopCapturerSources from '../DesktopCapturerSourcesService';
 import setSdpMediaBitrate from './setSdpMediaBitrate';
 import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID';
+import prepareDataMessageToSendScreenSourceType from './prepareDataMessageToSendScreenSourceType';
 
 const log = new Logger(__filename);
 
@@ -69,11 +70,15 @@ export default class PeerConnection {
   prevStreamHeight: number;
   displayID: string;
   sourceDisplaySize: DisplaySize | undefined;
+  appLanguage: string;
+  appColorTheme: boolean;
 
   constructor(
     roomID: string,
     sharingSessionID: string,
     user: LocalPeerUser,
+    appColorTheme: boolean,
+    appLanguage: string,
     roomIDService: RoomIDService,
     connectedDevicesService: ConnectedDevicesService,
     sharingSessionsService: SharingSessionsService
@@ -96,9 +101,35 @@ export default class PeerConnection {
     this.prevStreamHeight = -1;
     this.displayID = '';
     this.sourceDisplaySize = undefined;
+    this.appLanguage = appLanguage;
+    this.appColorTheme = appColorTheme;
     this.onDeviceConnectedCallback = () => {};
 
     this.initSocketWhenUserCreatedCallback();
+  }
+
+  setAppLanguage(lang: string) {
+    this.appLanguage = lang;
+    this.notifyClientWithNewLanguage();
+  }
+
+  setAppTheme(theme: boolean) {
+    this.appColorTheme = theme;
+    this.notifyClientWithNewColorTheme();
+  }
+
+  notifyClientWithNewLanguage() {
+    this.sendEncryptedMessage({
+      type: 'APP_LANGUAGE',
+      payload: { value: this.appLanguage },
+    });
+  }
+
+  notifyClientWithNewColorTheme() {
+    this.sendEncryptedMessage({
+      type: 'APP_THEME',
+      payload: { value: this.appColorTheme },
+    });
   }
 
   setDesktopCapturerSourceID(id: string) {
@@ -137,9 +168,14 @@ export default class PeerConnection {
     this.sendEncryptedMessage({
       type: 'DENY_TO_CONNECT',
       payload: {},
-    });
-
-    this.disconnectPartner();
+    })
+      // eslint-disable-next-line promise/always-return
+      .then(() => {
+        this.disconnectPartner();
+      })
+      .catch((e) => {
+        log.error(e);
+      });
   }
 
   sendUserAllowedToConnect() {
@@ -153,10 +189,15 @@ export default class PeerConnection {
     this.sendEncryptedMessage({
       type: 'DISCONNECT_BY_HOST_MACHINE_USER',
       payload: {},
-    });
-
-    this.disconnectPartner();
-    this.selfDestrory();
+    })
+      // eslint-disable-next-line promise/always-return
+      .then(() => {
+        this.disconnectPartner();
+        this.selfDestrory();
+      })
+      .catch((e) => {
+        log.error(e);
+      });
   }
 
   disconnectPartner() {
@@ -284,13 +325,10 @@ export default class PeerConnection {
   async receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload) {
     if (!this.user) return;
     const message = await processMessage(payload, this.user.privateKey);
-    log.info(message);
     if (message.type === 'CALL_ACCEPTED') {
       this.peer.signal(message.payload.signalData);
     }
     if (message.type === 'DEVICE_DETAILS') {
-      log.info(message);
-      log.info(message.payload.browser);
       this.socket.emit(
         'GET_IP_BY_SOCKET_ID',
         message.payload.socketID,
@@ -309,6 +347,18 @@ export default class PeerConnection {
           this.onDeviceConnectedCallback(device);
         }
       );
+    }
+    if (message.type === 'GET_APP_THEME') {
+      this.sendEncryptedMessage({
+        type: 'APP_THEME',
+        payload: { value: this.appColorTheme },
+      });
+    }
+    if (message.type === 'GET_APP_LANGUAGE') {
+      this.sendEncryptedMessage({
+        type: 'APP_LANGUAGE',
+        payload: { value: this.appLanguage },
+      });
     }
   }
 
@@ -358,18 +408,21 @@ export default class PeerConnection {
       this.peer = peer;
 
       this.peer.on('data', async (data) => {
-        if (`${data}` === 'set half quality') {
-          // TODO: later on change to more sophisticated quality change for app window
+        const dataJSON = JSON.parse(data);
+
+        if (dataJSON.type === 'set_video_quality') {
+          const maxVideoQualityMultiplier = dataJSON.payload.value;
+          const minVideoQualityMultiplier =
+            maxVideoQualityMultiplier === 1 ? 0.5 : maxVideoQualityMultiplier;
+
           if (!this.desktopCapturerSourceID.includes('screen')) return;
 
           const newStream = await getDesktopSourceStreamBySourceID(
             this.desktopCapturerSourceID,
             this.sourceDisplaySize?.width,
             this.sourceDisplaySize?.height,
-            2,
-            2,
-            15,
-            30
+            minVideoQualityMultiplier,
+            maxVideoQualityMultiplier
           );
           const newVideoTrack = newStream.getVideoTracks()[0];
           const oldTrack = this.localStream?.getVideoTracks()[0];
@@ -378,23 +431,14 @@ export default class PeerConnection {
             peer.replaceTrack(oldTrack, newVideoTrack, this.localStream);
             oldTrack.stop();
           }
-        } else if (`${data}` === 'set good quality') {
-          // TODO: later on change to more sophisticated quality change for app window
-          if (!this.desktopCapturerSourceID.includes('screen')) return;
+        }
 
-          const newStream = await getDesktopSourceStreamBySourceID(
-            this.desktopCapturerSourceID,
-            this.sourceDisplaySize?.width,
-            this.sourceDisplaySize?.height,
-            2,
-            1
-          );
-          const newVideoTrack = newStream.getVideoTracks()[0];
-          const oldTrack = this.localStream?.getVideoTracks()[0];
-          if (oldTrack && this.localStream) {
-            peer.replaceTrack(oldTrack, newVideoTrack, this.localStream);
-            oldTrack.stop();
-          }
+        if (dataJSON.type === 'get_sharing_source_type') {
+          const sourceType = this.desktopCapturerSourceID.includes('screen')
+            ? 'screen'
+            : 'window';
+
+          this.peer.send(prepareDataMessageToSendScreenSourceType(sourceType));
         }
       });
       return peer;
@@ -419,7 +463,7 @@ export default class PeerConnection {
             sourceID,
             this.sourceDisplaySize?.width,
             this.sourceDisplaySize?.height,
-            2,
+            0.5,
             1
           ).then((stream) => {
             this.localStream = stream;

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Callout, Card, H3, Text, Tooltip, Position } from '@blueprintjs/core';
 import { AppContext } from '../../providers/AppContextProvider';
-
-const LIGHT_UI_BACKGROUND = 'rgba(240, 248, 250, 1)';
-const DARK_UI_BACKGROUND = '#293742';
+import {
+  DARK_UI_BACKGROUND,
+  LIGHT_UI_BACKGROUND,
+} from '../../constants/styleConstants';
 
 interface MyDeviceDetailsCardProps {
   deviceDetails: DeviceDetails;
@@ -27,10 +28,18 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
       <Callout>
         <Text>Device Type: {myDeviceType}</Text>
         <Tooltip
-          content="This should match with 'Device IP' in alert displayed on your computer, where Deskreen is running."
+          content="This should match with 'Device IP' in alert popup appeared on your computer, where Deskreen is running."
           position={Position.TOP}
         >
-          <div style={{ fontWeight: 900, backgroundColor: '#00f99273' }}>
+          <div
+            style={{
+              fontWeight: 900,
+              backgroundColor: '#00f99273',
+              paddingLeft: '10px',
+              paddingRight: '10px',
+              borderRadius: '20px',
+            }}
+          >
             <Text>Device IP: {myIP}</Text>
           </div>
         </Tooltip>
@@ -38,8 +47,8 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
         <Text>Device OS: {myOS}</Text>
       </Callout>
       <Text className="bp3-text-muted">
-        These details should match with the ones that you see in alert on
-        sharing device.
+        These details should match with the ones that you see in alert popup on
+        screen sharing device.
       </Text>
     </Card>
   );

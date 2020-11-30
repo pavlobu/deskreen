@@ -12,6 +12,8 @@ import { getIO } from '.';
 import socketsIPService from './socketsIPService';
 import getStore from './store';
 
+const LOCALHOST_SOCKET_IP = '::1';
+
 interface User {
   socketId: string;
   publicKey: string;
@@ -152,7 +154,8 @@ export default class Socket implements SocketOPTS {
           {
             socketId: socket.id,
             publicKey: payload.publicKey,
-            isOwner: (room.users || []).length === 0,
+            isOwner:
+              LOCALHOST_SOCKET_IP === socket.request.connection.remoteAddress,
             ip: payload.ip ? payload.ip : '',
           },
         ],

@@ -17,6 +17,8 @@ jest.mock('electron', () => {
           return {
             createWaitingForConnectionSharingSession: () =>
               new Promise(() => {}),
+            setAppLanguage: () => {},
+            setAppTheme: () => {},
           };
         }
         if (globalName === 'connectedDevicesService') {

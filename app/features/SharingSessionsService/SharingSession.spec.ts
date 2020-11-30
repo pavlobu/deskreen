@@ -26,7 +26,9 @@ describe('SharingSession unit tests', () => {
             },
           };
         },
-      }
+      },
+      '',
+      ''
     );
   });
 

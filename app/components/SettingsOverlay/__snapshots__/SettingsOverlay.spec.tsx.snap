@@ -67,15 +67,15 @@ exports[`should match exact snapshot 1`] = `
                         tabindex="0"
                       />
                       <div
-                        class="makeStyles-overlayInnerRoot-8 bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+                        class="makeStyles-overlayInnerRoot-21 bp3-overlay-content bp3-overlay-appear-active"
                         tabindex="0"
                       >
                         <div
-                          class="react-reveal makeStyles-overlayInsideFade-9 bp3-card"
+                          class="react-reveal makeStyles-overlayInsideFade-22 bp3-card"
                           id="settings-overlay-inner"
                         >
                           <button
-                            class="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-10"
+                            class="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-23"
                             id="close-overlay-button"
                             type="button"
                           >
@@ -112,7 +112,7 @@ exports[`should match exact snapshot 1`] = `
                             >
                               <div
                                 class="bp3-tab-indicator-wrapper"
-                                style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px; transition: none;"
+                                style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px;"
                               >
                                 <div
                                   class="bp3-tab-indicator"
@@ -131,10 +131,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-25"
                                     icon="wrench"
                                   >
                                     <svg
@@ -172,10 +172,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-25"
                                     icon="shield"
                                   >
                                     <svg
@@ -212,10 +212,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-25"
                                     icon="blocked-person"
                                   >
                                     <svg
@@ -267,13 +267,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-20 row middle-xs"
+                                    class="makeStyles-oneSettingRow-26 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-style makeStyles-settingRowIcon-21"
+                                        class="bp3-icon bp3-icon-style makeStyles-settingRowIcon-27"
                                         icon="style"
                                       >
                                         <svg
@@ -381,13 +381,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-22 row middle-xs"
+                                    class="makeStyles-oneSettingRow-28 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-23"
+                                        class="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-29"
                                         icon="translate"
                                       >
                                         <svg
@@ -473,13 +473,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-24 row middle-xs"
+                                    class="makeStyles-oneSettingRow-30 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-25"
+                                        class="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-31"
                                         icon="automatic-updates"
                                       >
                                         <svg
@@ -516,7 +516,7 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <label
-                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-7"
+                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
                                     >
                                       <input
                                         checked=""
@@ -552,15 +552,15 @@ exports[`should match exact snapshot 1`] = `
                         tabindex="0"
                       />
                       <div
-                        class="makeStyles-overlayInnerRoot-8 bp3-overlay-content bp3-overlay-appear bp3-overlay-appear-active"
+                        class="makeStyles-overlayInnerRoot-21 bp3-overlay-content bp3-overlay-appear-active"
                         tabindex="0"
                       >
                         <div
-                          class="react-reveal makeStyles-overlayInsideFade-9 bp3-card"
+                          class="react-reveal makeStyles-overlayInsideFade-22 bp3-card"
                           id="settings-overlay-inner"
                         >
                           <button
-                            class="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-10"
+                            class="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-23"
                             id="close-overlay-button"
                             type="button"
                           >
@@ -597,7 +597,7 @@ exports[`should match exact snapshot 1`] = `
                             >
                               <div
                                 class="bp3-tab-indicator-wrapper"
-                                style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px; transition: none;"
+                                style="height: 0px; transform: translateX(0px) translateY(0px); width: 0px;"
                               >
                                 <div
                                   class="bp3-tab-indicator"
@@ -616,10 +616,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-25"
                                     icon="wrench"
                                   >
                                     <svg
@@ -657,10 +657,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-25"
                                     icon="shield"
                                   >
                                     <svg
@@ -697,10 +697,10 @@ exports[`should match exact snapshot 1`] = `
                               >
                                 
                                 <div
-                                  class="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                 >
                                   <span
-                                    class="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-12"
+                                    class="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-25"
                                     icon="blocked-person"
                                   >
                                     <svg
@@ -752,13 +752,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-20 row middle-xs"
+                                    class="makeStyles-oneSettingRow-26 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-style makeStyles-settingRowIcon-21"
+                                        class="bp3-icon bp3-icon-style makeStyles-settingRowIcon-27"
                                         icon="style"
                                       >
                                         <svg
@@ -866,13 +866,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-22 row middle-xs"
+                                    class="makeStyles-oneSettingRow-28 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-23"
+                                        class="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-29"
                                         icon="translate"
                                       >
                                         <svg
@@ -958,13 +958,13 @@ exports[`should match exact snapshot 1`] = `
                                   class="col-xs-6"
                                 >
                                   <div
-                                    class="makeStyles-oneSettingRow-24 row middle-xs"
+                                    class="makeStyles-oneSettingRow-30 row middle-xs"
                                   >
                                     <div
                                       class=""
                                     >
                                       <span
-                                        class="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-25"
+                                        class="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-31"
                                         icon="automatic-updates"
                                       >
                                         <svg
@@ -1001,7 +1001,7 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <label
-                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-7"
+                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
                                     >
                                       <input
                                         checked=""
@@ -1035,7 +1035,6 @@ exports[`should match exact snapshot 1`] = `
                     onKeyDown={[Function]}
                   >
                     <CSSTransition
-                      appear={true}
                       classNames="bp3-overlay"
                       in={true}
                       key=".$__backdrop"
@@ -1043,7 +1042,7 @@ exports[`should match exact snapshot 1`] = `
                       timeout={0}
                     >
                       <Transition
-                        appear={true}
+                        appear={false}
                         enter={true}
                         exit={true}
                         in={true}
@@ -1065,7 +1064,6 @@ exports[`should match exact snapshot 1`] = `
                       </Transition>
                     </CSSTransition>
                     <CSSTransition
-                      appear={true}
                       classNames="bp3-overlay"
                       in={true}
                       key=".$.0"
@@ -1073,7 +1071,7 @@ exports[`should match exact snapshot 1`] = `
                       timeout={0}
                     >
                       <Transition
-                        appear={true}
+                        appear={false}
                         enter={true}
                         exit={true}
                         in={true}
@@ -1088,7 +1086,7 @@ exports[`should match exact snapshot 1`] = `
                         unmountOnExit={false}
                       >
                         <div
-                          className="makeStyles-overlayInnerRoot-8 bp3-overlay-content"
+                          className="makeStyles-overlayInnerRoot-21 bp3-overlay-content"
                           tabIndex={0}
                         >
                           <Fade
@@ -1125,7 +1123,7 @@ exports[`should match exact snapshot 1`] = `
                               refProp="ref"
                             >
                               <div
-                                className="react-reveal makeStyles-overlayInsideFade-9 bp3-card"
+                                className="react-reveal makeStyles-overlayInsideFade-22 bp3-card"
                                 id="settings-overlay-inner"
                                 style={
                                   Object {
@@ -1134,17 +1132,17 @@ exports[`should match exact snapshot 1`] = `
                                 }
                               >
                                 <CloseOverlayButton
-                                  className="makeStyles-absoluteCloseButton-10"
+                                  className="makeStyles-absoluteCloseButton-23"
                                   isDefaultStyles={true}
                                   onClick={[Function]}
                                 >
                                   <Blueprint3.Button
-                                    className="makeStyles-closeButton-13 makeStyles-absoluteCloseButton-10"
+                                    className="makeStyles-closeButton-13 makeStyles-absoluteCloseButton-23"
                                     id="close-overlay-button"
                                     onClick={[Function]}
                                   >
                                     <button
-                                      className="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-10"
+                                      className="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-23"
                                       id="close-overlay-button"
                                       onClick={[Function]}
                                       onKeyDown={[Function]}
@@ -1213,7 +1211,6 @@ exports[`should match exact snapshot 1`] = `
                                           Object {
                                             "height": 0,
                                             "transform": "translateX(0px) translateY(0px)",
-                                            "transition": "none",
                                             "width": 0,
                                           }
                                         }
@@ -1245,18 +1242,18 @@ exports[`should match exact snapshot 1`] = `
                                           tabIndex={0}
                                         >
                                           <Row
-                                            className="makeStyles-tabNavigationRowButton-11"
+                                            className="makeStyles-tabNavigationRowButton-24"
                                             middle="xs"
                                           >
                                             <div
-                                              className="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                              className="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                             >
                                               <Blueprint3.Icon
-                                                className="makeStyles-iconInTablLeftButton-12"
+                                                className="makeStyles-iconInTablLeftButton-25"
                                                 icon="wrench"
                                               >
                                                 <span
-                                                  className="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-12"
+                                                  className="bp3-icon bp3-icon-wrench makeStyles-iconInTablLeftButton-25"
                                                   icon="wrench"
                                                 >
                                                   <svg
@@ -1312,18 +1309,18 @@ exports[`should match exact snapshot 1`] = `
                                           tabIndex={0}
                                         >
                                           <Row
-                                            className="makeStyles-tabNavigationRowButton-11"
+                                            className="makeStyles-tabNavigationRowButton-24"
                                             middle="xs"
                                           >
                                             <div
-                                              className="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                              className="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                             >
                                               <Blueprint3.Icon
-                                                className="makeStyles-iconInTablLeftButton-12"
+                                                className="makeStyles-iconInTablLeftButton-25"
                                                 icon="shield"
                                               >
                                                 <span
-                                                  className="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-12"
+                                                  className="bp3-icon bp3-icon-shield makeStyles-iconInTablLeftButton-25"
                                                   icon="shield"
                                                 >
                                                   <svg
@@ -1377,18 +1374,18 @@ exports[`should match exact snapshot 1`] = `
                                           role="tab"
                                         >
                                           <Row
-                                            className="makeStyles-tabNavigationRowButton-11"
+                                            className="makeStyles-tabNavigationRowButton-24"
                                             middle="xs"
                                           >
                                             <div
-                                              className="makeStyles-tabNavigationRowButton-11 row middle-xs"
+                                              className="makeStyles-tabNavigationRowButton-24 row middle-xs"
                                             >
                                               <Blueprint3.Icon
-                                                className="makeStyles-iconInTablLeftButton-12"
+                                                className="makeStyles-iconInTablLeftButton-25"
                                                 icon="blocked-person"
                                               >
                                                 <span
-                                                  className="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-12"
+                                                  className="bp3-icon bp3-icon-blocked-person makeStyles-iconInTablLeftButton-25"
                                                   icon="blocked-person"
                                                 >
                                                   <svg
@@ -1492,23 +1489,23 @@ exports[`should match exact snapshot 1`] = `
                                                   className="col-xs-6"
                                                 >
                                                   <Row
-                                                    className="makeStyles-oneSettingRow-20"
+                                                    className="makeStyles-oneSettingRow-26"
                                                     middle="xs"
                                                   >
                                                     <div
-                                                      className="makeStyles-oneSettingRow-20 row middle-xs"
+                                                      className="makeStyles-oneSettingRow-26 row middle-xs"
                                                     >
                                                       <Col>
                                                         <div
                                                           className=""
                                                         >
                                                           <Blueprint3.Icon
-                                                            className="makeStyles-settingRowIcon-21"
+                                                            className="makeStyles-settingRowIcon-27"
                                                             icon="style"
                                                             iconSize={25}
                                                           >
                                                             <span
-                                                              className="bp3-icon bp3-icon-style makeStyles-settingRowIcon-21"
+                                                              className="bp3-icon bp3-icon-style makeStyles-settingRowIcon-27"
                                                               icon="style"
                                                             >
                                                               <svg
@@ -1701,23 +1698,23 @@ exports[`should match exact snapshot 1`] = `
                                                   className="col-xs-6"
                                                 >
                                                   <Row
-                                                    className="makeStyles-oneSettingRow-22"
+                                                    className="makeStyles-oneSettingRow-28"
                                                     middle="xs"
                                                   >
                                                     <div
-                                                      className="makeStyles-oneSettingRow-22 row middle-xs"
+                                                      className="makeStyles-oneSettingRow-28 row middle-xs"
                                                     >
                                                       <Col>
                                                         <div
                                                           className=""
                                                         >
                                                           <Blueprint3.Icon
-                                                            className="makeStyles-settingRowIcon-23"
+                                                            className="makeStyles-settingRowIcon-29"
                                                             icon="translate"
                                                             iconSize={25}
                                                           >
                                                             <span
-                                                              className="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-23"
+                                                              className="bp3-icon bp3-icon-translate makeStyles-settingRowIcon-29"
                                                               icon="translate"
                                                             >
                                                               <svg
@@ -1840,7 +1837,7 @@ exports[`should match exact snapshot 1`] = `
                                           input={
                                             <Blueprint3.Checkbox
                                               checked={true}
-                                              className="makeStyles-checkboxSettings-7"
+                                              className="makeStyles-checkboxSettings-20"
                                               label="Enabled"
                                             />
                                           }
@@ -1860,23 +1857,23 @@ exports[`should match exact snapshot 1`] = `
                                                   className="col-xs-6"
                                                 >
                                                   <Row
-                                                    className="makeStyles-oneSettingRow-24"
+                                                    className="makeStyles-oneSettingRow-30"
                                                     middle="xs"
                                                   >
                                                     <div
-                                                      className="makeStyles-oneSettingRow-24 row middle-xs"
+                                                      className="makeStyles-oneSettingRow-30 row middle-xs"
                                                     >
                                                       <Col>
                                                         <div
                                                           className=""
                                                         >
                                                           <Blueprint3.Icon
-                                                            className="makeStyles-settingRowIcon-25"
+                                                            className="makeStyles-settingRowIcon-31"
                                                             icon="automatic-updates"
                                                             iconSize={25}
                                                           >
                                                             <span
-                                                              className="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-25"
+                                                              className="bp3-icon bp3-icon-automatic-updates makeStyles-settingRowIcon-31"
                                                               icon="automatic-updates"
                                                             >
                                                               <svg
@@ -1927,12 +1924,12 @@ exports[`should match exact snapshot 1`] = `
                                                     >
                                                       <Blueprint3.Checkbox
                                                         checked={true}
-                                                        className="makeStyles-checkboxSettings-7"
+                                                        className="makeStyles-checkboxSettings-20"
                                                         label="Enabled"
                                                       >
                                                         <Control
                                                           checked={true}
-                                                          className="makeStyles-checkboxSettings-7"
+                                                          className="makeStyles-checkboxSettings-20"
                                                           inputRef={[Function]}
                                                           label="Enabled"
                                                           onChange={[Function]}
@@ -1940,7 +1937,7 @@ exports[`should match exact snapshot 1`] = `
                                                           typeClassName="bp3-checkbox"
                                                         >
                                                           <label
-                                                            className="bp3-control bp3-checkbox makeStyles-checkboxSettings-7"
+                                                            className="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
                                                           >
                                                             <input
                                                               checked={true}

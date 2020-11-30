@@ -1059,23 +1059,31 @@ exports[`should match exact snapshot 1`] = `
                                     }
                                   }
                                 >
+                                  <Blueprint3.Text>
+                                    <div
+                                      className=""
+                                    >
+                                      <span
+                                        style={
+                                          Object {
+                                            "backgroundColor": "#00f99273",
+                                            "borderRadius": "20px",
+                                            "fontWeight": 900,
+                                            "paddingLeft": "8px",
+                                            "paddingRight": "8px",
+                                          }
+                                        }
+                                      >
+                                        make sure your computer and device are connected to same WiFi
+                                      </span>
+                                    </div>
+                                  </Blueprint3.Text>
                                   <Blueprint3.Text
                                     className="bp3-text"
                                   >
                                     <div
                                       className="bp3-text"
-                                    >
-                                      Scan the QR code
-                                    </div>
-                                  </Blueprint3.Text>
-                                  <Blueprint3.Text
-                                    className="bp3-text-muted"
-                                  >
-                                    <div
-                                      className="bp3-text-muted"
-                                    >
-                                      ( make sure your computer and device are connected on same WiFi )
-                                    </div>
+                                    />
                                   </Blueprint3.Text>
                                 </div>
                                 <div>
@@ -1408,7 +1416,7 @@ exports[`should match exact snapshot 1`] = `
                                   style={
                                     Object {
                                       "position": "relative",
-                                      "top": "-30px",
+                                      "top": "0px",
                                     }
                                   }
                                   transitionDuration={0}
@@ -1428,7 +1436,7 @@ exports[`should match exact snapshot 1`] = `
                                     style={
                                       Object {
                                         "position": "relative",
-                                        "top": "-30px",
+                                        "top": "0px",
                                       }
                                     }
                                     transitionDuration={0}

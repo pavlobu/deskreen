@@ -10,7 +10,16 @@ import {
 import setSdpMediaBitrate from './setSdpMediaBitrate';
 import Crypto from '../../utils/crypto';
 import VideoAutoQualityOptimizer from '../VideoAutoQualityOptimizer';
-import { getBrowserFromUAParser, getDeviceTypeFromUAParser, getOSFromUAParser } from '../../utils/userAgentParserHelpers';
+import {
+  getBrowserFromUAParser,
+  getDeviceTypeFromUAParser,
+  getOSFromUAParser,
+} from '../../utils/userAgentParserHelpers';
+import { VideoQuality } from './VideoQualityEnum';
+import prepareDataMessageToChangeQuality from './prepareDataMessageToChangeQuality';
+import { VIDEO_QUALITY_TO_DECIMAL } from './../../constants/appConstants';
+import prepareDataMessageToGetSharingSourceType from './prepareDataMessageToGetSharingSourceType';
+import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
 
 interface LocalPeerUser {
   username: string;
@@ -37,7 +46,7 @@ interface ReceiveEncryptedMessagePayload {
   keys: { sessionKey: string; signingKey: string }[];
 }
 
-export default class LocalTestPeer {
+export default class PeerConnection {
   roomId: string;
 
   socket: any;
@@ -48,7 +57,7 @@ export default class LocalTestPeer {
 
   partner: PartnerPeerUser = nullUser;
 
-  peer: any;
+  peer: null | SimplePeer.Instance = null;
 
   myIP = '';
 
@@ -72,24 +81,49 @@ export default class LocalTestPeer {
 
   largeMismatchFramesCount: number;
 
-  isRequestedHalfQuality: boolean;
+  screenSharingSourceType: string | undefined = undefined;
+
+  videoQuality = VideoQuality.Q_AUTO;
 
   videoAutoQualityOptimizer: VideoAutoQualityOptimizer;
+
+  isDarkTheme: boolean;
+
+  isStreamStarted: boolean = false;
 
   setMyDeviceDetails: (details: DeviceDetails) => void;
 
   hostAllowedToConnectCallback: () => void;
 
+  setScreenSharingSourceTypeCallback: (s: 'screen' | 'window') => void;
+
+  setIsDarkThemeCallback: (val: boolean) => void;
+
+  setAppLanguageCallback: (newLang: string) => void;
+
+  setDialogErrorMessageCallback: (message: ErrorMessage) => void;
+
+  setIsErrorDialogOpen: (val: boolean) => void;
+
+  errorDialogMessage = ErrorMessage.UNKNOWN_ERROR;
+
   constructor(
     setUrlCallback: any,
     crypto: Crypto,
     videoAutoQualityOptimizer: VideoAutoQualityOptimizer,
+    isDarkTheme: boolean,
     setMyDeviceDetailsCallback: (details: DeviceDetails) => void,
-    hostAllowedToConnectCallback: () => void
+    hostAllowedToConnectCallback: () => void,
+    setScreenSharingSourceTypeCallback: (s: 'screen' | 'window') => void,
+    setIsDarkThemeCallback: (val: boolean) => void,
+    setAppLanguageCallback: (newLang: string) => void,
+    setDialogErrorMessageCallback: (message: ErrorMessage) => void,
+    setIsErrorDialogOpen: (val: boolean) => void
   ) {
     this.setUrlCallback = setUrlCallback;
     this.crypto = crypto;
     this.videoAutoQualityOptimizer = videoAutoQualityOptimizer;
+    this.isDarkTheme = isDarkTheme;
     this.setMyDeviceDetails = setMyDeviceDetailsCallback;
     this.hostAllowedToConnectCallback = hostAllowedToConnectCallback;
     this.roomId = encodeURI(window.location.pathname.replace('/', ''));
@@ -97,15 +131,51 @@ export default class LocalTestPeer {
     this.uaParser = new UAParser();
     this.createUserAndInitSocket();
     this.createPeer();
+    this.setScreenSharingSourceTypeCallback = setScreenSharingSourceTypeCallback;
+    this.setIsDarkThemeCallback = setIsDarkThemeCallback;
+    this.setAppLanguageCallback = setAppLanguageCallback;
+    this.setDialogErrorMessageCallback = setDialogErrorMessageCallback;
+    this.setIsErrorDialogOpen = setIsErrorDialogOpen;
 
     this.video = null;
     this.canvas = null;
     this.largeMismatchFramesCount = 0;
-    this.isRequestedHalfQuality = false;
+
+    if (!this.roomId || this.roomId === '') {
+      setDialogErrorMessageCallback(ErrorMessage.UNKNOWN_ERROR);
+      setIsErrorDialogOpen(true);
+    }
+
+    setInterval(() => {
+      if (!this.socket.connected) {
+        if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+          this.setDialogErrorMessageCallback(ErrorMessage.DENY_TO_CONNECT);
+          this.setIsErrorDialogOpen(true);
+          this.errorDialogMessage = ErrorMessage.DENY_TO_CONNECT;
+        }
+      }
+    }, 2000);
   }
 
-  log(...toLog: any[]) {
-    console.log('LocalTestPeer - ', ...toLog);
+  setVideoQuality(videoQuality: VideoQuality) {
+    this.videoQuality = videoQuality;
+    this.videoQualityChangedCallback();
+  }
+
+  setErrorDialogMessage(message: ErrorMessage) {
+    this.errorDialogMessage = message;
+  }
+
+  videoQualityChangedCallback() {
+    if (this.videoQuality !== VideoQuality.Q_AUTO) {
+      this.peer?.send(
+        prepareDataMessageToChangeQuality(
+          VIDEO_QUALITY_TO_DECIMAL[this.videoQuality]
+        )
+      );
+    } else {
+      this.peer?.send(prepareDataMessageToChangeQuality(1));
+    }
   }
 
   createPeer() {
@@ -128,16 +198,25 @@ export default class LocalTestPeer {
 
     peer.on('stream', (stream) => {
       this.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
-        this.peer.send('set good quality');
+        if (this.videoQuality === VideoQuality.Q_AUTO) {
+          this.peer?.send(prepareDataMessageToChangeQuality(1));
+        }
       });
 
       this.videoAutoQualityOptimizer.setHalfQualityCallbak(() => {
-        this.peer.send('set half quality');
+        if (this.videoQuality === VideoQuality.Q_AUTO) {
+          this.peer?.send(prepareDataMessageToChangeQuality(0.5));
+        }
       });
 
       this.videoAutoQualityOptimizer.startOptimizationLoop();
 
       this.setUrlCallback(stream);
+      setTimeout(() => {
+        this.peer?.send(prepareDataMessageToGetSharingSourceType());
+      }, 1000);
+
+      this.isStreamStarted = true;
     });
 
     peer.on('signal', (data) => {
@@ -148,6 +227,20 @@ export default class LocalTestPeer {
           signalData: data,
         },
       });
+    });
+
+    peer.on('data', (data) => {
+      const dataJSON = JSON.parse(data);
+
+      if (dataJSON.type === 'screen_sharing_source_type') {
+        this.screenSharingSourceType = dataJSON.payload.value;
+        if (
+          this.screenSharingSourceType === 'screen' ||
+          this.screenSharingSourceType === 'window'
+        ) {
+          this.setScreenSharingSourceTypeCallback(this.screenSharingSourceType);
+        }
+      }
     });
 
     this.peer = peer;
@@ -187,7 +280,6 @@ export default class LocalTestPeer {
     if (!this.user) return;
     if (!this.partner) return;
     const msg = (await prepareMessage(payload, this.user, this.partner)) as any;
-    this.log('encrypted message', msg);
     this.socket.emit('ENCRYPTED_MESSAGE', msg.toSend);
   }
 
@@ -198,17 +290,33 @@ export default class LocalTestPeer {
       this.user.privateKey
     )) as any;
     if (message.type === 'CALL_USER') {
-      this.log('ACCEPTING CALL USER', message);
-      this.peer.signal(message.payload.signalData);
+      this.peer?.signal(message.payload.signalData);
     }
     if (message.type === 'DENY_TO_CONNECT') {
-      this.log('OH NO, deny to connect...');
+      if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+        this.setDialogErrorMessageCallback(ErrorMessage.DENY_TO_CONNECT);
+        this.setIsErrorDialogOpen(true);
+        this.errorDialogMessage = ErrorMessage.DENY_TO_CONNECT;
+      }
     }
     if (message.type === 'DISCONNECT_BY_HOST_MACHINE_USER') {
-      this.log('DAMN, you were disconnected by host machine user!');
+      if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+        this.setDialogErrorMessageCallback(ErrorMessage.DICONNECTED);
+        this.setIsErrorDialogOpen(true);
+        this.errorDialogMessage = ErrorMessage.DICONNECTED;
+      }
     }
     if (message.type === 'ALLOWED_TO_CONNECT') {
       this.hostAllowedToConnectCallback();
+    }
+    if (message.type === 'APP_THEME') {
+      if (this.isDarkTheme !== message.payload.value) {
+        this.setIsDarkThemeCallback(message.payload.value);
+        this.isDarkTheme = message.payload.value;
+      }
+    }
+    if (message.type === 'APP_LANGUAGE') {
+      this.setAppLanguageCallback(message.payload.value);
     }
   }
 
@@ -222,34 +330,31 @@ export default class LocalTestPeer {
 
       this.socket.on('disconnect', () => {
         // this.props.toggleSocketConnected(false);
+        if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+          this.setDialogErrorMessageCallback(ErrorMessage.DICONNECTED);
+          this.setIsErrorDialogOpen(true);
+          this.errorDialogMessage = ErrorMessage.DICONNECTED;
+        }
       });
 
       this.socket.on('connect', () => {
         this.socket.emit('GET_MY_IP', (ip: string) => {
-          // TODO: use set ip callback here, that will change the UI of react component
-          // @ts-ignore
-          // document.querySelector('#my-ip')?.innerHTML = ip;
           this.myIP = ip;
           this.uaParser.setUA(window.navigator.userAgent);
-          // const osFromUAParser = this.uaParser.getResult().os;
-          // const deviceTypeFromUAParser = this.uaParser.getResult().device;
-          // const browserFromUAParser = this.uaParser.getResult().browser;
-
-          // this.myOS = `${osFromUAParser.name ? osFromUAParser.name : ''} ${
-          //   osFromUAParser.version ? osFromUAParser.version : ''
-          // }`;
-          // this.myDeviceType = deviceTypeFromUAParser.type
-          // ? deviceTypeFromUAParser.type.toString()
-          // : 'computer';
           this.myOS = getOSFromUAParser(this.uaParser);
           this.myDeviceType = getDeviceTypeFromUAParser(this.uaParser);
-          // this.myBrowser = `${browserFromUAParser.name ? browserFromUAParser.name : ''} ${
-          //   browserFromUAParser.version ? browserFromUAParser.version : ''
-          // }`;
           this.myBrowser = getBrowserFromUAParser(this.uaParser);
 
           this.initApp(createdUser, ip);
         });
+      });
+
+      this.socket.on('NOT_ALLOWED', () => {
+        if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+          this.setDialogErrorMessageCallback(ErrorMessage.NOT_ALLOWED);
+          this.setIsErrorDialogOpen(true);
+          this.errorDialogMessage = ErrorMessage.NOT_ALLOWED;
+        }
       });
 
       this.socket.on('USER_ENTER', (payload: { users: PartnerPeerUser[] }) => {
@@ -282,6 +387,9 @@ export default class LocalTestPeer {
           },
         });
 
+        this.sendEncryptedMessage({ type: 'GET_APP_THEME', payload: {} });
+        this.sendEncryptedMessage({ type: 'GET_APP_LANGUAGE', payload: {} });
+
         setTimeout(() => {
           this.setMyDeviceDetails({
             myIP: this.myIP,
@@ -307,6 +415,11 @@ export default class LocalTestPeer {
         // TODO: call ROOM LOCKED callback to change react component contain ROOM LOCKED message
         // @ts-ignore
         // document.querySelector('#my-ip')?.innerHTML = 'ROOM LOCKED';
+        if (this.errorDialogMessage === ErrorMessage.UNKNOWN_ERROR) {
+          this.setDialogErrorMessageCallback(ErrorMessage.DENY_TO_CONNECT);
+          this.setIsErrorDialogOpen(true);
+          this.errorDialogMessage = ErrorMessage.UNKNOWN_ERROR;
+        }
       });
 
       window.addEventListener('beforeunload', (_) => {

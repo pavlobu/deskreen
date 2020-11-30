@@ -33,4 +33,8 @@ export default class RoomIDService {
   public unmarkRoomIDAsTaken(id: string) {
     this.takenRoomIDs.delete(id);
   }
+
+  public isRoomIDTaken(id: string) {
+    return this.takenRoomIDs.has(id);
+  }
 }

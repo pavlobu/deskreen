@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { clipboard, remote } from 'electron';
 import React, { useContext, useEffect, useState } from 'react';
-import { Button, Text, Tooltip, Position, H2, Dialog } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  Text,
+  Tooltip,
+  Position,
+  Dialog,
+  Classes,
+} from '@blueprintjs/core';
 import QRCode from 'qrcode.react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { SettingsContext } from '../../containers/SettingsProvider';
 import isProduction from '../../utils/isProduction';
-import CloseOverlayButton from '../CloseOverlayButton';
 import SharingSessionService from '../../features/SharingSessionsService';
 
 const sharingSessionService = remote.getGlobal(
@@ -38,17 +45,21 @@ const useStyles = makeStyles(() =>
     dialogQRWrapper: {
       backgroundColor: 'white',
       padding: '20px',
+      // width: '95%',
+      // hieght: '95%',
       borderRadius: '10px',
     },
     bigQRCodeDialogRoot: {
       '&:hover': {
         cursor: 'zoom-out',
       },
+      paddingBottom: '0px',
     },
   })
 );
 
 const ScanQRStep: React.FC = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const { isDarkTheme } = useContext(SettingsContext);
 
@@ -73,10 +84,20 @@ const ScanQRStep: React.FC = () => {
   return (
     <>
       <div style={{ textAlign: 'center' }}>
-        <Text className="bp3-text">Scan the QR code</Text>
-        <Text className="bp3-text-muted">
-          ( make sure your computer and device are connected on same WiFi )
+        <Text>
+          <span
+            style={{
+              backgroundColor: '#00f99273',
+              fontWeight: 900,
+              paddingRight: '8px',
+              paddingLeft: '8px',
+              borderRadius: '20px',
+            }}
+          >
+            make sure your computer and device are connected to same WiFi
+          </span>
         </Text>
+        <Text className="bp3-text">{t('Scan the QR code')}</Text>
       </div>
       <div>
         <Tooltip content="Click to make bigger" position={Position.LEFT}>
@@ -133,50 +154,32 @@ const ScanQRStep: React.FC = () => {
         canEscapeKeyClose
         canOutsideClickClose
         transitionDuration={isProduction() ? 700 : 0}
-        style={{ position: 'relative', top: '-30px' }}
+        style={{ position: 'relative', top: '0px' }}
       >
-        <Button
+        <Row
           id="qr-code-dialog-inner"
+          className={Classes.DIALOG_BODY}
+          center="xs"
+          middle="xs"
           onClick={() => setIsQRCodeMagnified(false)}
-          style={{ paddingTop: '20px', paddingBottom: '13px' }}
         >
-          <Row between="xs" middle="xs">
-            <Col xs={10}>
-              <H2 style={{ margin: '0px', padding: '0px', marginLeft: '35px' }}>
-                Scan QR Code
-              </H2>
-            </Col>
-            <Col xs={2}>
-              <CloseOverlayButton
-                onClick={() => setIsQRCodeMagnified(false)}
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  position: 'relative',
-                  borderRadius: '100px',
-                }}
-              />
-            </Col>
-          </Row>
-          <Row center="xs">
-            <div className={classes.dialogQRWrapper}>
-              <QRCode
-                value={`http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`}
-                level="H"
-                renderAs="svg"
-                imageSettings={{
-                  // TODO: change image to app icon
-                  src:
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
-                  width: 25,
-                  height: 25,
-                }}
-                width="390px"
-                height="390px"
-              />
-            </div>
-          </Row>
-        </Button>
+          <Col xs={11} className={classes.dialogQRWrapper}>
+            <QRCode
+              value={`http://${LOCAL_LAN_IP}:${CLIENT_VIEWER_PORT}/${roomID}`}
+              level="H"
+              renderAs="svg"
+              imageSettings={{
+                // TODO: change image to app icon
+                src:
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
+                width: 25,
+                height: 25,
+              }}
+              width="390px"
+              height="390px"
+            />
+          </Col>
+        </Row>
       </Dialog>
     </>
   );

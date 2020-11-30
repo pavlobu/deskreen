@@ -1,12 +1,20 @@
-import React, { useEffect, useState, useRef, useContext, useCallback } from 'react';
-import { H3, Button } from '@blueprintjs/core';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from './config/i18n';
+import { H3, Position, Toaster } from '@blueprintjs/core';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { findDOMNode } from 'react-dom';
 import ReactPlayer from 'react-player';
 import screenfull from 'screenfull';
 import Crypto from './utils/crypto';
 import './App.css';
-import LocalTestPeer from './features/PeerConnection';
+import PeerConnection from './features/PeerConnection';
 import VideoAutoQualityOptimizer from './features/VideoAutoQualityOptimizer';
 import ConnectingIndicator from './components/ConnectingIndicator';
 import MyDeviceInfoCard from './components/MyDeviceInfoCard';
@@ -15,27 +23,34 @@ import {
   LIGHT_UI_BACKGROUND,
 } from './constants/styleConstants';
 import { AppContext } from './providers/AppContextProvider';
-import ToggleDarkModeSwitch from './components/ToggleDarkModeSwitch';
 import PlayerControlPanel from './components/PlayerControlPanel';
+import { VideoQuality } from './features/PeerConnection/VideoQualityEnum';
+import { REACT_PLAYER_WRAPPER_ID } from './constants/appConstants';
+import { TFunction } from 'i18next';
+import ErrorDialog from './components/ErrorDialog';
+import { ErrorMessage } from './components/ErrorDialog/ErrorMessageEnum';
 
 const Fade = require('react-reveal/Fade');
 const Slide = require('react-reveal/Slide');
 
-const REACT_PLAYER_WRAPPER_ID = "react-player-wrapper-id";
-
-function getPromptContent(step: number) {
+function getPromptContent(step: number, t: TFunction) {
   switch (step) {
     case 1:
       return (
-        <H3>Waiting for user to click "Allow" on screen sharing device...</H3>
+        <H3>
+          {t(
+            'Waiting for user to click ALLOW button on screen sharing device...'
+          )}
+        </H3>
       );
     case 2:
       return <H3>Connected!</H3>;
     case 3:
       return (
         <H3>
-          Wating for user to select source to share from screen sharing
-          device...
+          {t(
+            'Wating for user to select source to share from screen sharing device...'
+          )}
         </H3>
       );
     default:
@@ -44,10 +59,23 @@ function getPromptContent(step: number) {
 }
 
 function App() {
-  const { isDarkTheme } = useContext(AppContext);
+  const { t } = useTranslation();
+  const { isDarkTheme, setIsDarkThemeHook } = useContext(AppContext);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+
+  const [toaster, setToaster] = useState<undefined | Toaster>();
+
+  const refHandlers = {
+    toaster: (ref: Toaster) => {
+      setToaster(ref);
+    },
+  };
 
   const player = useRef(null);
   const [promptStep, setPromptStep] = useState(1);
+  const [dialogErrorMessage, setDialogErrorMessage] = useState<ErrorMessage>(
+    ErrorMessage.UNKNOWN_ERROR
+  );
   const [connectionIconType, setConnectionIconType] = useState<
     'feed' | 'feed-subscribed'
   >('feed');
@@ -61,42 +89,71 @@ function App() {
   const [playing, setPlaying] = useState(true);
   const [isFullScreenOn, setIsFullScreenOn] = useState(false);
   const [url, setUrl] = useState();
+  const [screenSharingSourceType, setScreenSharingSourceType] = useState<
+    'screen' | 'window'
+  >('screen');
   const [isWithControls, setIsWithControls] = useState(!screenfull.isEnabled);
   const [isShownTextPrompt, setIsShownTextPrompt] = useState(false);
   const [isShownSpinnerIcon, setIsShownSpinnerIcon] = useState(false);
   const [spinnerIconType, setSpinnerIconType] = useState<
     'desktop' | 'application'
   >('desktop');
+  const [videoQuality, setVideoQuality] = useState<VideoQuality>(
+    VideoQuality.Q_AUTO
+  );
+  const [peer, setPeer] = useState<undefined | PeerConnection>();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
+  useEffect(() => {
+    if (!peer) return;
+    if (!peer.isStreamStarted) return;
+    peer.setVideoQuality(videoQuality);
+  }, [videoQuality, peer]);
 
   useEffect(() => {
     document.body.style.backgroundColor = isDarkTheme
       ? DARK_UI_BACKGROUND
       : LIGHT_UI_BACKGROUND;
+  }, [isDarkTheme]);
 
-    const peer = new LocalTestPeer(
-      setUrl,
-      new Crypto(),
-      new VideoAutoQualityOptimizer(),
-      setMyDeviceDetails,
-      () => {
-        setConnectionIconType('feed-subscribed');
+  useEffect(() => {
+    if (!peer) {
+      const _peer = new PeerConnection(
+        setUrl,
+        new Crypto(),
+        new VideoAutoQualityOptimizer(),
+        isDarkTheme,
+        setMyDeviceDetails,
+        () => {
+          setConnectionIconType('feed-subscribed');
 
-        setIsShownTextPrompt(false);
-        setIsShownTextPrompt(true);
-        setPromptStep(2);
-
-        setTimeout(() => {
           setIsShownTextPrompt(false);
           setIsShownTextPrompt(true);
-          setPromptStep(3);
-        }, 2000);
-      }
-    );
+          setPromptStep(2);
 
-    setTimeout(() => {
-      setIsShownTextPrompt(true);
-    }, 100);
-  }, []);
+          setTimeout(() => {
+            setIsShownTextPrompt(false);
+            setIsShownTextPrompt(true);
+            setPromptStep(3);
+          }, 2000);
+        },
+        setScreenSharingSourceType,
+        setIsDarkThemeHook,
+        changeLanguage,
+        setDialogErrorMessage,
+        setIsErrorDialogOpen
+      );
+
+      setPeer(_peer);
+
+      setTimeout(() => {
+        setIsShownTextPrompt(true);
+      }, 100);
+    }
+  }, [setIsDarkThemeHook, isDarkTheme, peer]);
 
   useEffect(() => {
     // infinite use effect
@@ -106,24 +163,11 @@ function App() {
         spinnerIconType === 'desktop' ? 'application' : 'desktop'
       );
     }, 1500);
-  }, [isShownSpinnerIcon]);
-
-  // const handleClickFullscreen = useCallback(() => {
-  //   if (!player.current) return;
-  //   // @ts-ignore Property 'request' does not exist on type '{ isEnabled: false; }'.
-  //   screenfull.request(findDOMNode(player.current));
-  //   setIsFullScreenOn(!isFullScreenOn);
-  // }, []);
+  }, [isShownSpinnerIcon, spinnerIconType]);
 
   const handlePlayPause = useCallback(() => {
     setPlaying(!playing);
   }, [playing]);
-
-  useEffect(() => {
-    document.body.style.backgroundColor = isDarkTheme
-      ? DARK_UI_BACKGROUND
-      : LIGHT_UI_BACKGROUND;
-  }, [isDarkTheme]);
 
   useEffect(() => {
     if (url !== undefined) {
@@ -163,7 +207,6 @@ function App() {
               : LIGHT_UI_BACKGROUND,
           }}
         >
-          <ToggleDarkModeSwitch />
           <Row
             bottom="xs"
             style={{
@@ -195,7 +238,7 @@ function App() {
                     style={{ width: '100%' }}
                   >
                     <div id="prompt-text" style={{ fontSize: '20px' }}>
-                      {getPromptContent(promptStep)}
+                      {getPromptContent(promptStep, t)}
                     </div>
                   </Fade>
                 </div>
@@ -227,33 +270,21 @@ function App() {
           height: '100vh',
         }}
       >
-        {/* <Button
-          onClick={() => setIsWithControls(true)}
-          onTouchStart={() => setIsWithControls(true)}
-        >
-          Help! I'm having troubles to zoom in on my device
-        </Button>
-        <Button onClick={handlePlayPause} onTouchStart={handlePlayPause}>
-          PLAY!
-        </Button>
-        <Button
-          onClick={handleClickFullscreen}
-          onTouchStart={handleClickFullscreen}
-        >
-          ENTER FULL SCREEN
-        </Button>
-        <ToggleDarkModeSwitch /> */}
         <PlayerControlPanel
           onSwitchChangedCallback={(isEnabled) => setIsWithControls(isEnabled)}
           isDefaultPlayerTurnedOn={isWithControls}
           handleClickFullscreen={() => {
+            if (!screenfull.isEnabled) return;
             // @ts-ignore Property 'request' does not exist on type '{ isEnabled: false; }'.
             screenfull.request(findDOMNode(player.current));
             setIsFullScreenOn(!isFullScreenOn);
           }}
           handleClickPlayPause={handlePlayPause}
-          isFullScreenOn={isFullScreenOn}
           isPlaying={playing}
+          setVideoQuality={setVideoQuality}
+          selectedVideoQuality={videoQuality}
+          screenSharingSourceType={screenSharingSourceType}
+          toaster={toaster}
         />
         <div
           id="video-container"
@@ -277,14 +308,7 @@ function App() {
               playsinline={true}
               controls={isWithControls}
               muted={true}
-              // url={mergedStream}
               url={(url as unknown) as MediaStream}
-              // width={url.getVideoTracks()[0].getSettings().width}
-              // height={url.getVideoTracks()[0].getSettings().height}
-              // onPlay={setProperCanvasWidth}
-              // wrapper="div"
-              // width={window.screen.width}
-              // height={window.screen.height}
               width="100%"
               height="100%"
               style={{
@@ -292,12 +316,16 @@ function App() {
                 top: 0,
                 left: 0,
               }}
-            >
-            </ReactPlayer>
+            />
           </div>
           <canvas id="comparison-canvas" style={{ display: 'none' }}></canvas>
         </div>
       </div>
+      <Toaster ref={refHandlers.toaster} position={Position.TOP_LEFT} />
+      <ErrorDialog
+        errorMessage={dialogErrorMessage}
+        isOpen={isErrorDialogOpen}
+      />
     </Grid>
   );
 }

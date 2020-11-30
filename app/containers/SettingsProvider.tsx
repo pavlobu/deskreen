@@ -9,12 +9,16 @@ export const DARK_UI_BACKGROUND = '#293742';
 
 interface SettingsContextInterface {
   isDarkTheme: boolean;
+  currentLanguage: string;
   setIsDarkThemeHook: (val: boolean) => void;
+  setCurrentLanguageHook: (newLang: string) => void;
 }
 
 const defaultSettingsContextValue = {
   isDarkTheme: false,
   setIsDarkThemeHook: () => {},
+  setCurrentLanguageHook: () => {},
+  currentLanguage: 'en',
 };
 
 export const SettingsContext = React.createContext<SettingsContextInterface>(
@@ -23,6 +27,7 @@ export const SettingsContext = React.createContext<SettingsContextInterface>(
 
 export const SettingsProvider: React.FC = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('en');
 
   const loadDarkThemeFromSettings = () => {
     const gotIsDarkThemeFromSettings = settings.hasSync('appIsDarkTheme')
@@ -46,7 +51,16 @@ export const SettingsProvider: React.FC = ({ children }) => {
     setIsDarkTheme(val);
   };
 
-  const value = { isDarkTheme, setIsDarkThemeHook };
+  const setCurrentLanguageHook = (newLang: string) => {
+    setCurrentLanguage(newLang);
+  };
+
+  const value = {
+    isDarkTheme,
+    setIsDarkThemeHook,
+    currentLanguage,
+    setCurrentLanguageHook,
+  };
 
   return (
     <SettingsContext.Provider value={value}>

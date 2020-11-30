@@ -2,12 +2,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useCallback, useContext } from 'react';
-import { Button, Icon, Position, Tooltip } from '@blueprintjs/core';
+import { Button, Text, Icon, Position, Tooltip } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { Col, Row } from 'react-flexbox-grid';
 import SettingsOverlay from './SettingsOverlay/SettingsOverlay';
 import ConnectedDevicesListDrawer from './ConnectedDevicesListDrawer';
 import { SettingsContext } from '../containers/SettingsProvider';
 import isProduction from '../utils/isProduction';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore fine import here
+import RedHeartTwemojiPNG from '../images/red_heart_2764_twemoji_120x120.png';
 
 const Zoom = require('react-reveal/Zoom');
 const Fade = require('react-reveal/Fade');
@@ -72,13 +76,41 @@ export default function TopPanel(props: any) {
     setIsDrawerOpen(!isDrawersOpen);
   }, [isDrawersOpen]);
 
+  const renderDonateButton = useCallback(() => {
+    return (
+      <Tooltip
+        content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+        position={Position.BOTTOM}
+      >
+        <Button style={{ transform: 'translateY(2px)', marginRight: '10px' }}>
+          <Row start="xs">
+            <Col xs>
+              <img
+                src={RedHeartTwemojiPNG}
+                width={16}
+                height={16}
+                style={{ transform: 'translateY(2px)' }}
+                alt="heart"
+              />
+            </Col>
+            <Col xs>
+              <div style={{ transform: 'translateY(2px) translateX(-5px)' }}>
+                <Text>Donate!</Text>
+              </div>
+            </Col>
+          </Row>
+        </Button>
+      </Tooltip>
+    );
+  }, []);
+
   const renderConnectedDevicesListButton = useCallback(() => {
     return (
       <div className={getClassesCallback().topPanelControlButtonMargin}>
         <Tooltip content="Connected Devices" position={Position.BOTTOM}>
           <Button
             id="top-panel-connected-devices-list-button"
-            intent="none"
+            intent="primary"
             className={getClassesCallback().topPanelControlButton}
             onClick={handleToggleConnectedDevicesListDrawer}
           >
@@ -96,7 +128,7 @@ export default function TopPanel(props: any) {
   const renderHelpButton = useCallback(() => {
     return (
       <div className={getClassesCallback().topPanelControlButtonMargin}>
-        <Tooltip content="Help" position={Position.BOTTOM}>
+        <Tooltip content="Tutorial" position={Position.BOTTOM}>
           <Button
             id="top-panel-help-button"
             intent="none"
@@ -104,7 +136,7 @@ export default function TopPanel(props: any) {
           >
             <Icon
               className={getClassesCallback().topPanelIconOfControlButton}
-              icon="help"
+              icon="learning"
               iconSize={22}
             />
           </Button>
@@ -140,12 +172,17 @@ export default function TopPanel(props: any) {
           id="logo-with-popover-visit-website"
           className={getClassesCallback().logoWithAppName}
         >
-          <h4
-            id="deskreen-top-app-name-header"
-            className={getClassesCallback().appNameHeader}
+          <Tooltip
+            content="Click to visit our website"
+            position={Position.BOTTOM}
           >
-            Deskreen
-          </h4>
+            <h4
+              id="deskreen-top-app-name-header"
+              className={getClassesCallback().appNameHeader}
+            >
+              Deskreen
+            </h4>
+          </Tooltip>
         </div>
       </Zoom>
     );
@@ -154,7 +191,14 @@ export default function TopPanel(props: any) {
   return (
     <>
       <div className={getClassesCallback().topPanelRoot}>
-        {renderLogoWithAppName()}
+        <Row
+          middle="xs"
+          center="xs"
+          style={{ width: '100%', transform: 'translateX(-50px)' }}
+        >
+          <Col>{renderDonateButton()}</Col>
+          <Col>{renderLogoWithAppName()}</Col>
+        </Row>
         <div className={getClassesCallback().topPanelControlButtonsRoot}>
           <Fade right duration={isProduction() ? 2000 : 0}>
             {renderConnectedDevicesListButton()}

@@ -43,9 +43,8 @@ const useStyles = makeStyles(() =>
       width: '40px',
       borderRadius: '100px !important',
       position: 'relative',
-      top: '72px',
+      top: '70px',
       left: '-190px !important',
-      zIndex: 9999,
       cursor: 'default',
     },
   })
@@ -119,7 +118,11 @@ export default function ShareEntireScreenOrAppWindowControlGroup(
           />
           <Text className="bp3-running-text">Application Window</Text>
         </Button>
-        <Button active className={classes.orDecorationButton}>
+        <Button
+          active
+          className={classes.orDecorationButton}
+          style={{ zIndex: 999 }}
+        >
           OR
         </Button>
       </ControlGroup>

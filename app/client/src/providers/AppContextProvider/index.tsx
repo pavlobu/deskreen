@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-
-// export const LIGHT_UI_BACKGROUND = 'rgba(240, 248, 250, 1)';
+import { Classes } from '@blueprintjs/core';
+import React, { useState } from 'react';
+import {
+  DARK_UI_BACKGROUND,
+  LIGHT_UI_BACKGROUND,
+} from '../../constants/styleConstants';
 
 interface AppContextInterface {
   isDarkTheme: boolean;
@@ -19,34 +22,27 @@ export const AppContext = React.createContext<AppContextInterface>(
 
 export const AppContextProvider: React.FC = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  const getThemeFromHost = () => {
-    // const gotIsDarkThemeFromSettings = settings.hasSync('appIsDarkTheme')
-    //   ? settings.getSync('appIsDarkTheme') === 'true'
-    //   : false;
-
-    // if (gotIsDarkThemeFromSettings) {
-    //   document.body.classList.toggle(Classes.DARK);
-    //   document.body.style.backgroundColor = LIGHT_UI_BACKGROUND;
-    // }
-
-    // setIsDarkTheme(gotIsDarkThemeFromSettings);
-  };
-
-  useEffect(() => {
-    getThemeFromHost();
-  }, []);
+  const [appLanguage, setAppLanguage] = useState('en');
 
   const setIsDarkThemeHook = (val: boolean) => {
-    // settings.setSync('appIsDarkTheme', `${val}`);
-    setIsDarkTheme(val);
+      document.body.classList.toggle(Classes.DARK);
+
+      document.body.style.backgroundColor = val
+        ? DARK_UI_BACKGROUND
+        : LIGHT_UI_BACKGROUND;
+      setIsDarkTheme(val);
   };
 
-  const value = { isDarkTheme, setIsDarkThemeHook };
+  const setAppLanguageHook = (newLang: string) => {
+    setAppLanguage(newLang);
+  };
 
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
-  );
+  const value = {
+    isDarkTheme,
+    setIsDarkThemeHook,
+    appLanguage,
+    setAppLanguageHook,
+  };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
