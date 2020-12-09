@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import React, { useContext, useCallback, useEffect, useState } from 'react';
 import {
   Button,
@@ -17,13 +18,14 @@ import { useTranslation } from 'react-i18next';
 import { Row } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import i18n from 'i18next';
+import SharingSessionsService from '../../features/SharingSessionsService';
 import {
   DARK_UI_BACKGROUND,
   LIGHT_UI_BACKGROUND,
   SettingsContext,
 } from '../../containers/SettingsProvider';
 import CloseOverlayButton from '../CloseOverlayButton';
-import {
+import i18n_client, {
   getLangFullNameToLangISOKeyMap,
   getLangISOKeyToLangFullNameMap,
 } from '../../configs/i18next.config.client';
@@ -31,6 +33,10 @@ import isProduction from '../../utils/isProduction';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
 
 const Fade = require('react-reveal/Fade');
+
+const sharingSessionsService = remote.getGlobal(
+  'sharingSessionService'
+) as SharingSessionsService;
 
 interface SettingsOverlayProps {
   isSettingsOpen: boolean;
@@ -57,7 +63,11 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
 
   const { handleClose, isSettingsOpen } = props;
 
-  const { isDarkTheme, setIsDarkThemeHook } = useContext(SettingsContext);
+  const {
+    isDarkTheme,
+    setIsDarkThemeHook,
+    setCurrentLanguageHook,
+  } = useContext(SettingsContext);
 
   const [languagesList, setLanguagesList] = useState([] as string[]);
 
@@ -67,7 +77,8 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       tmp.push(key);
     });
     setLanguagesList(tmp);
-  }, []);
+    setCurrentLanguageHook(i18n_client.language);
+  }, [setCurrentLanguageHook]);
 
   const getClassesCallback = useStylesWithTheme(isDarkTheme);
 
@@ -76,6 +87,11 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(true);
     }
+    // TODO: call sharing sessions service here to notify all connected clients about theme change
+    sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+      sharingSession?.appThemeChanged(true);
+    });
+    sharingSessionsService.setAppTheme(true);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const handleToggleLightTheme = useCallback(() => {
@@ -83,6 +99,11 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(false);
     }
+    // TODO: call sharing sessions service here to notify all connected clients about theme change
+    sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+      sharingSession?.appThemeChanged(false);
+    });
+    sharingSessionsService.setAppTheme(false);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const onChangeLangueageHTMLSelectHandler = (
@@ -92,10 +113,15 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       event.currentTarget &&
       getLangFullNameToLangISOKeyMap().has(event.currentTarget.value)
     ) {
-      i18n.changeLanguage(
+      const newLang =
         getLangFullNameToLangISOKeyMap().get(event.currentTarget.value) ||
-          'English'
-      );
+        'English';
+      i18n.changeLanguage(newLang);
+      // TODO: call sharing sessions service here to notify all connected clients about language change
+      sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+        sharingSession?.appLanguageChanged(newLang);
+      });
+      sharingSessionsService.setAppLanguage(newLang);
     }
   };
 

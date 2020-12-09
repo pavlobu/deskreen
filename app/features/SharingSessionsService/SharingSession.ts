@@ -24,7 +24,9 @@ export default class SharingSession {
   constructor(
     _roomID: string,
     user: LocalPeerUser,
-    peerConnectionHelperRendererService: PeerConnectionHelperRendererService
+    peerConnectionHelperRendererService: PeerConnectionHelperRendererService,
+    appLanguage: string,
+    isDarkTheme: boolean
   ) {
     this.id = uuid.v4();
     this.deviceID = '';
@@ -49,6 +51,8 @@ export default class SharingSession {
           roomID: this.roomID,
           sharingSessionID: this.id,
           user,
+          appTheme: isDarkTheme,
+          appLanguage,
         }
       );
     });
@@ -104,6 +108,20 @@ export default class SharingSession {
   denyConnectionForPartner() {
     this.peerConnectionHelperRenderer?.webContents.send(
       'deny-connection-for-partner'
+    );
+  }
+
+  appLanguageChanged(newLang: string) {
+    this.peerConnectionHelperRenderer?.webContents.send(
+      'app-language-changed',
+      newLang
+    );
+  }
+
+  appThemeChanged(isDarkTheme: boolean) {
+    this.peerConnectionHelperRenderer?.webContents.send(
+      'app-color-theme-changed',
+      isDarkTheme
     );
   }
 

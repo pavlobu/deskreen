@@ -237,11 +237,21 @@ exports[`should match exact snapshot 1`] = `
                                     <Blueprint3.Button
                                       active={true}
                                       className="makeStyles-orDecorationButton-6"
+                                      style={
+                                        Object {
+                                          "zIndex": 999,
+                                        }
+                                      }
                                     >
                                       <button
                                         className="bp3-button bp3-active makeStyles-orDecorationButton-6"
                                         onKeyDown={[Function]}
                                         onKeyUp={[Function]}
+                                        style={
+                                          Object {
+                                            "zIndex": 999,
+                                          }
+                                        }
                                         type="button"
                                       >
                                         <Blueprint3.Icon

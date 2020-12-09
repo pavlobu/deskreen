@@ -57,63 +57,339 @@ exports[`should match exact snapshot 1`] = `
                 }
               >
                 <div
-                  className="makeStyles-topPanelRoot-1"
+                  className="makeStyles-topPanelRoot-117"
                 >
-                  <Zoom
-                    duration={0}
-                    top={true}
+                  <Row
+                    center="xs"
+                    middle="xs"
+                    style={
+                      Object {
+                        "transform": "translateX(-50px)",
+                        "width": "100%",
+                      }
+                    }
                   >
-                    <RevealBase
-                      fraction={0.2}
-                      inEffect={
+                    <div
+                      className="row center-xs middle-xs"
+                      style={
                         Object {
-                          "count": 1,
-                          "delay": 0,
-                          "duration": 0,
-                          "forever": undefined,
-                          "make": [Function],
-                          "reverse": undefined,
-                          "style": Object {
-                            "animationFillMode": "both",
-                          },
+                          "transform": "translateX(-50px)",
+                          "width": "100%",
                         }
                       }
-                      outEffect={
-                        Object {
-                          "count": 1,
-                          "delay": 0,
-                          "duration": 0,
-                          "forever": undefined,
-                          "make": [Function],
-                          "reverse": undefined,
-                          "style": Object {
-                            "animationFillMode": "both",
-                          },
-                        }
-                      }
-                      refProp="ref"
-                      top={true}
                     >
-                      <div
-                        className="react-reveal makeStyles-logoWithAppName-9"
-                        id="logo-with-popover-visit-website"
-                        style={
-                          Object {
-                            "opacity": undefined,
-                          }
-                        }
-                      >
-                        <h4
-                          className="makeStyles-appNameHeader-17"
-                          id="deskreen-top-app-name-header"
+                      <Col>
+                        <div
+                          className=""
                         >
-                          Deskreen
-                        </h4>
-                      </div>
-                    </RevealBase>
-                  </Zoom>
+                          <Blueprint3.Tooltip
+                            content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+                            hoverCloseDelay={0}
+                            hoverOpenDelay={100}
+                            position="bottom"
+                            transitionDuration={100}
+                          >
+                            <Blueprint3.Popover
+                              autoFocus={false}
+                              boundary="scrollParent"
+                              canEscapeKeyClose={false}
+                              captureDismiss={false}
+                              content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+                              defaultIsOpen={false}
+                              disabled={false}
+                              enforceFocus={false}
+                              fill={false}
+                              hasBackdrop={false}
+                              hoverCloseDelay={0}
+                              hoverOpenDelay={100}
+                              inheritDarkTheme={true}
+                              interactionKind="hover-target"
+                              lazy={true}
+                              minimal={false}
+                              modifiers={Object {}}
+                              openOnTargetFocus={true}
+                              popoverClassName="bp3-tooltip"
+                              position="bottom"
+                              targetTagName="span"
+                              transitionDuration={100}
+                              usePortal={true}
+                              wrapperTagName="span"
+                            >
+                              <Manager>
+                                <span
+                                  className="bp3-popover-wrapper"
+                                >
+                                  <Reference
+                                    innerRef={[Function]}
+                                  >
+                                    <InnerReference
+                                      innerRef={[Function]}
+                                      setReferenceNode={[Function]}
+                                    >
+                                      <Blueprint3.ResizeSensor
+                                        onResize={[Function]}
+                                      >
+                                        <span
+                                          className="bp3-popover-target"
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
+                                          onMouseEnter={[Function]}
+                                          onMouseLeave={[Function]}
+                                        >
+                                          <Blueprint3.Button
+                                            className=""
+                                            key=".0"
+                                            style={
+                                              Object {
+                                                "marginRight": "10px",
+                                                "transform": "translateY(2px)",
+                                              }
+                                            }
+                                            tabIndex={0}
+                                          >
+                                            <button
+                                              className="bp3-button"
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              style={
+                                                Object {
+                                                  "marginRight": "10px",
+                                                  "transform": "translateY(2px)",
+                                                }
+                                              }
+                                              tabIndex={0}
+                                              type="button"
+                                            >
+                                              <Blueprint3.Icon
+                                                key="leftIcon"
+                                              />
+                                              <span
+                                                className="bp3-button-text"
+                                                key="text"
+                                              >
+                                                <Row
+                                                  start="xs"
+                                                >
+                                                  <div
+                                                    className="row start-xs"
+                                                  >
+                                                    <Col
+                                                      xs={true}
+                                                    >
+                                                      <div
+                                                        className="col-xs"
+                                                      >
+                                                        <img
+                                                          alt="heart"
+                                                          height={16}
+                                                          src="test-file-stub"
+                                                          style={
+                                                            Object {
+                                                              "transform": "translateY(2px)",
+                                                            }
+                                                          }
+                                                          width={16}
+                                                        />
+                                                      </div>
+                                                    </Col>
+                                                    <Col
+                                                      xs={true}
+                                                    >
+                                                      <div
+                                                        className="col-xs"
+                                                      >
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "transform": "translateY(2px) translateX(-5px)",
+                                                            }
+                                                          }
+                                                        >
+                                                          <Blueprint3.Text>
+                                                            <div
+                                                              className=""
+                                                            >
+                                                              Donate!
+                                                            </div>
+                                                          </Blueprint3.Text>
+                                                        </div>
+                                                      </div>
+                                                    </Col>
+                                                  </div>
+                                                </Row>
+                                              </span>
+                                              <Blueprint3.Icon
+                                                key="rightIcon"
+                                              />
+                                            </button>
+                                          </Blueprint3.Button>
+                                        </span>
+                                      </Blueprint3.ResizeSensor>
+                                    </InnerReference>
+                                  </Reference>
+                                  <Blueprint3.Overlay
+                                    autoFocus={false}
+                                    backdropClassName="bp3-popover-backdrop"
+                                    backdropProps={Object {}}
+                                    canEscapeKeyClose={false}
+                                    canOutsideClickClose={false}
+                                    enforceFocus={false}
+                                    hasBackdrop={false}
+                                    isOpen={false}
+                                    lazy={true}
+                                    onClose={[Function]}
+                                    transitionDuration={100}
+                                    transitionName="bp3-popover"
+                                    usePortal={true}
+                                  />
+                                </span>
+                              </Manager>
+                            </Blueprint3.Popover>
+                          </Blueprint3.Tooltip>
+                        </div>
+                      </Col>
+                      <Col>
+                        <div
+                          className=""
+                        >
+                          <Zoom
+                            duration={0}
+                            top={true}
+                          >
+                            <RevealBase
+                              fraction={0.2}
+                              inEffect={
+                                Object {
+                                  "count": 1,
+                                  "delay": 0,
+                                  "duration": 0,
+                                  "forever": undefined,
+                                  "make": [Function],
+                                  "reverse": undefined,
+                                  "style": Object {
+                                    "animationFillMode": "both",
+                                  },
+                                }
+                              }
+                              outEffect={
+                                Object {
+                                  "count": 1,
+                                  "delay": 0,
+                                  "duration": 0,
+                                  "forever": undefined,
+                                  "make": [Function],
+                                  "reverse": undefined,
+                                  "style": Object {
+                                    "animationFillMode": "both",
+                                  },
+                                }
+                              }
+                              refProp="ref"
+                              top={true}
+                            >
+                              <div
+                                className="react-reveal makeStyles-logoWithAppName-125"
+                                id="logo-with-popover-visit-website"
+                                style={
+                                  Object {
+                                    "opacity": undefined,
+                                  }
+                                }
+                              >
+                                <Blueprint3.Tooltip
+                                  content="Click to visit our website"
+                                  hoverCloseDelay={0}
+                                  hoverOpenDelay={100}
+                                  position="bottom"
+                                  transitionDuration={100}
+                                >
+                                  <Blueprint3.Popover
+                                    autoFocus={false}
+                                    boundary="scrollParent"
+                                    canEscapeKeyClose={false}
+                                    captureDismiss={false}
+                                    content="Click to visit our website"
+                                    defaultIsOpen={false}
+                                    disabled={false}
+                                    enforceFocus={false}
+                                    fill={false}
+                                    hasBackdrop={false}
+                                    hoverCloseDelay={0}
+                                    hoverOpenDelay={100}
+                                    inheritDarkTheme={true}
+                                    interactionKind="hover-target"
+                                    lazy={true}
+                                    minimal={false}
+                                    modifiers={Object {}}
+                                    openOnTargetFocus={true}
+                                    popoverClassName="bp3-tooltip"
+                                    position="bottom"
+                                    targetTagName="span"
+                                    transitionDuration={100}
+                                    usePortal={true}
+                                    wrapperTagName="span"
+                                  >
+                                    <Manager>
+                                      <span
+                                        className="bp3-popover-wrapper"
+                                      >
+                                        <Reference
+                                          innerRef={[Function]}
+                                        >
+                                          <InnerReference
+                                            innerRef={[Function]}
+                                            setReferenceNode={[Function]}
+                                          >
+                                            <Blueprint3.ResizeSensor
+                                              onResize={[Function]}
+                                            >
+                                              <span
+                                                className="bp3-popover-target"
+                                                onBlur={[Function]}
+                                                onFocus={[Function]}
+                                                onMouseEnter={[Function]}
+                                                onMouseLeave={[Function]}
+                                              >
+                                                <h4
+                                                  className="makeStyles-appNameHeader-133"
+                                                  id="deskreen-top-app-name-header"
+                                                  key=".0"
+                                                  tabIndex={0}
+                                                >
+                                                  Deskreen
+                                                </h4>
+                                              </span>
+                                            </Blueprint3.ResizeSensor>
+                                          </InnerReference>
+                                        </Reference>
+                                        <Blueprint3.Overlay
+                                          autoFocus={false}
+                                          backdropClassName="bp3-popover-backdrop"
+                                          backdropProps={Object {}}
+                                          canEscapeKeyClose={false}
+                                          canOutsideClickClose={false}
+                                          enforceFocus={false}
+                                          hasBackdrop={false}
+                                          isOpen={false}
+                                          lazy={true}
+                                          onClose={[Function]}
+                                          transitionDuration={100}
+                                          transitionName="bp3-popover"
+                                          usePortal={true}
+                                        />
+                                      </span>
+                                    </Manager>
+                                  </Blueprint3.Popover>
+                                </Blueprint3.Tooltip>
+                              </div>
+                            </RevealBase>
+                          </Zoom>
+                        </div>
+                      </Col>
+                    </div>
+                  </Row>
                   <div
-                    className="makeStyles-topPanelControlButtonsRoot-25"
+                    className="makeStyles-topPanelControlButtonsRoot-141"
                   >
                     <Fade
                       duration={0}
@@ -152,7 +428,7 @@ exports[`should match exact snapshot 1`] = `
                         right={true}
                       >
                         <div
-                          className="react-reveal makeStyles-topPanelControlButtonMargin-34"
+                          className="react-reveal makeStyles-topPanelControlButtonMargin-150"
                           style={
                             Object {
                               "opacity": undefined,
@@ -214,15 +490,15 @@ exports[`should match exact snapshot 1`] = `
                                           onMouseLeave={[Function]}
                                         >
                                           <Blueprint3.Button
-                                            className="makeStyles-topPanelControlButton-40"
+                                            className="makeStyles-topPanelControlButton-156"
                                             id="top-panel-connected-devices-list-button"
-                                            intent="none"
+                                            intent="primary"
                                             key=".0"
                                             onClick={[Function]}
                                             tabIndex={0}
                                           >
                                             <button
-                                              className="bp3-button makeStyles-topPanelControlButton-40"
+                                              className="bp3-button bp3-intent-primary makeStyles-topPanelControlButton-156"
                                               id="top-panel-connected-devices-list-button"
                                               onClick={[Function]}
                                               onKeyDown={[Function]}
@@ -238,12 +514,12 @@ exports[`should match exact snapshot 1`] = `
                                                 key="text"
                                               >
                                                 <Blueprint3.Icon
-                                                  className="makeStyles-topPanelIconOfControlButton-49"
+                                                  className="makeStyles-topPanelIconOfControlButton-165"
                                                   icon="th-list"
                                                   iconSize={20}
                                                 >
                                                   <span
-                                                    className="bp3-icon bp3-icon-th-list makeStyles-topPanelIconOfControlButton-49"
+                                                    className="bp3-icon bp3-icon-th-list makeStyles-topPanelIconOfControlButton-165"
                                                     icon="th-list"
                                                   >
                                                     <svg
@@ -327,7 +603,7 @@ exports[`should match exact snapshot 1`] = `
                         right={true}
                       >
                         <div
-                          className="react-reveal makeStyles-topPanelControlButtonMargin-55"
+                          className="react-reveal makeStyles-topPanelControlButtonMargin-171"
                           style={
                             Object {
                               "opacity": undefined,
@@ -335,7 +611,7 @@ exports[`should match exact snapshot 1`] = `
                           }
                         >
                           <Blueprint3.Tooltip
-                            content="Help"
+                            content="Tutorial"
                             hoverCloseDelay={0}
                             hoverOpenDelay={100}
                             position="bottom"
@@ -346,7 +622,7 @@ exports[`should match exact snapshot 1`] = `
                               boundary="scrollParent"
                               canEscapeKeyClose={false}
                               captureDismiss={false}
-                              content="Help"
+                              content="Tutorial"
                               defaultIsOpen={false}
                               disabled={false}
                               enforceFocus={false}
@@ -389,14 +665,14 @@ exports[`should match exact snapshot 1`] = `
                                           onMouseLeave={[Function]}
                                         >
                                           <Blueprint3.Button
-                                            className="makeStyles-topPanelControlButton-61"
+                                            className="makeStyles-topPanelControlButton-177"
                                             id="top-panel-help-button"
                                             intent="none"
                                             key=".0"
                                             tabIndex={0}
                                           >
                                             <button
-                                              className="bp3-button makeStyles-topPanelControlButton-61"
+                                              className="bp3-button makeStyles-topPanelControlButton-177"
                                               id="top-panel-help-button"
                                               onKeyDown={[Function]}
                                               onKeyUp={[Function]}
@@ -411,27 +687,32 @@ exports[`should match exact snapshot 1`] = `
                                                 key="text"
                                               >
                                                 <Blueprint3.Icon
-                                                  className="makeStyles-topPanelIconOfControlButton-70"
-                                                  icon="help"
+                                                  className="makeStyles-topPanelIconOfControlButton-186"
+                                                  icon="learning"
                                                   iconSize={22}
                                                 >
                                                   <span
-                                                    className="bp3-icon bp3-icon-help makeStyles-topPanelIconOfControlButton-70"
-                                                    icon="help"
+                                                    className="bp3-icon bp3-icon-learning makeStyles-topPanelIconOfControlButton-186"
+                                                    icon="learning"
                                                   >
                                                     <svg
-                                                      data-icon="help"
+                                                      data-icon="learning"
                                                       height={22}
                                                       viewBox="0 0 20 20"
                                                       width={22}
                                                     >
                                                       <desc>
-                                                        help
+                                                        learning
                                                       </desc>
                                                       <path
-                                                        d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zM7.41 4.62c.65-.54 1.51-.82 2.56-.82.54 0 1.03.08 1.48.25.44.17.83.39 1.14.68.32.29.56.63.74 1.02.17.39.26.82.26 1.27s-.08.87-.24 1.23c-.16.37-.4.73-.71 1.11l-1.21 1.58c-.14.17-.28.33-.32.48-.05.15-.11.35-.11.6v.97H9v-2s.06-.58.24-.81l1.21-1.64c.25-.3.41-.56.51-.77s.14-.44.14-.67c0-.35-.11-.63-.32-.85s-.5-.33-.88-.33c-.37 0-.67.11-.89.33-.22.23-.37.54-.46.94-.03.12-.11.17-.23.16l-1.95-.29c-.12-.01-.16-.08-.14-.22.13-.93.52-1.67 1.18-2.22zM9 14h2.02L11 16H9v-2z"
+                                                        d="M10.551 1.127a1.256 1.256 0 00-1.102 0L.456 5.89c-.608.309-.608.913 0 1.222l8.993 4.762c.334.17.767.17 1.102 0l8.992-4.762c.61-.309.61-.913 0-1.222l-8.992-4.762z"
                                                         fillRule="evenodd"
                                                         key="0"
+                                                      />
+                                                      <path
+                                                        d="M18 6.5l.016 4.514c.002.548.447.99.994.99a.99.99 0 00.99-.99V6.5h-2zM3.366 10.033l6.401 3.358a.5.5 0 00.465 0l6.406-3.358a.25.25 0 01.366.221v5.109a.25.25 0 01-.139.224l-6.64 3.302a.5.5 0 01-.446 0l-6.64-3.302A.25.25 0 013 15.363v-5.108a.25.25 0 01.366-.222z"
+                                                        fillRule="evenodd"
+                                                        key="1"
                                                       />
                                                     </svg>
                                                   </span>
@@ -500,7 +781,7 @@ exports[`should match exact snapshot 1`] = `
                         right={true}
                       >
                         <div
-                          className="react-reveal makeStyles-topPanelControlButtonMargin-76"
+                          className="react-reveal makeStyles-topPanelControlButtonMargin-192"
                           style={
                             Object {
                               "opacity": undefined,
@@ -562,14 +843,14 @@ exports[`should match exact snapshot 1`] = `
                                           onMouseLeave={[Function]}
                                         >
                                           <Blueprint3.Button
-                                            className="makeStyles-topPanelControlButton-82"
+                                            className="makeStyles-topPanelControlButton-198"
                                             id="top-panel-settings-button"
                                             key=".0"
                                             onClick={[Function]}
                                             tabIndex={0}
                                           >
                                             <button
-                                              className="bp3-button makeStyles-topPanelControlButton-82"
+                                              className="bp3-button makeStyles-topPanelControlButton-198"
                                               id="top-panel-settings-button"
                                               onClick={[Function]}
                                               onKeyDown={[Function]}
@@ -585,12 +866,12 @@ exports[`should match exact snapshot 1`] = `
                                                 key="text"
                                               >
                                                 <Blueprint3.Icon
-                                                  className="makeStyles-topPanelIconOfControlButton-91"
+                                                  className="makeStyles-topPanelIconOfControlButton-207"
                                                   icon="cog"
                                                   iconSize={22}
                                                 >
                                                   <span
-                                                    className="bp3-icon bp3-icon-cog makeStyles-topPanelIconOfControlButton-91"
+                                                    className="bp3-icon bp3-icon-cog makeStyles-topPanelIconOfControlButton-207"
                                                     icon="cog"
                                                   >
                                                     <svg
@@ -1773,23 +2054,31 @@ exports[`should match exact snapshot 1`] = `
                                             }
                                           }
                                         >
+                                          <Blueprint3.Text>
+                                            <div
+                                              className=""
+                                            >
+                                              <span
+                                                style={
+                                                  Object {
+                                                    "backgroundColor": "#00f99273",
+                                                    "borderRadius": "20px",
+                                                    "fontWeight": 900,
+                                                    "paddingLeft": "8px",
+                                                    "paddingRight": "8px",
+                                                  }
+                                                }
+                                              >
+                                                make sure your computer and device are connected to same WiFi
+                                              </span>
+                                            </div>
+                                          </Blueprint3.Text>
                                           <Blueprint3.Text
                                             className="bp3-text"
                                           >
                                             <div
                                               className="bp3-text"
-                                            >
-                                              Scan the QR code
-                                            </div>
-                                          </Blueprint3.Text>
-                                          <Blueprint3.Text
-                                            className="bp3-text-muted"
-                                          >
-                                            <div
-                                              className="bp3-text-muted"
-                                            >
-                                              ( make sure your computer and device are connected on same WiFi )
-                                            </div>
+                                            />
                                           </Blueprint3.Text>
                                         </div>
                                         <div>
@@ -2122,7 +2411,7 @@ exports[`should match exact snapshot 1`] = `
                                           style={
                                             Object {
                                               "position": "relative",
-                                              "top": "-30px",
+                                              "top": "0px",
                                             }
                                           }
                                           transitionDuration={0}
@@ -2142,7 +2431,7 @@ exports[`should match exact snapshot 1`] = `
                                             style={
                                               Object {
                                                 "position": "relative",
-                                                "top": "-30px",
+                                                "top": "0px",
                                               }
                                             }
                                             transitionDuration={0}

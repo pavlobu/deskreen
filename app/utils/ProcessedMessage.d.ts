@@ -17,6 +17,18 @@ type DeviceDetailsMessageWithPayload = {
   };
 };
 
+type GetAppThemeMessageWithPayload = {
+  type: 'GET_APP_THEME';
+  payload: Record<string, unknown>;
+};
+
+type GetAppLanguageMessageWithPayload = {
+  type: 'GET_APP_LANGUAGE';
+  payload: Record<string, unknown>;
+};
+
 type ProcessedMessage =
   | CallAcceptedMessageWithPayload
-  | DeviceDetailsMessageWithPayload;
+  | DeviceDetailsMessageWithPayload
+  | GetAppThemeMessageWithPayload
+  | GetAppLanguageMessageWithPayload;

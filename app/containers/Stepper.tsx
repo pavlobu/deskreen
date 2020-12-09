@@ -66,7 +66,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
   const [isInterShow, setIsInterShow] = useState(false);
 
-  const { isDarkTheme } = useContext(SettingsContext);
+  const { isDarkTheme, currentLanguage } = useContext(SettingsContext);
 
   const { addToast } = useToasts();
 
@@ -104,7 +104,16 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
       },
       isProduction() ? 500 : 0
     );
+
+    // sharingSessionService.setAppLanguage(currentLanguage);
+    // sharingSessionService.setAppTheme(isDarkTheme ? 'dark' : 'light');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    sharingSessionService.setAppLanguage(currentLanguage);
+    sharingSessionService.setAppTheme(isDarkTheme);
+  }, [currentLanguage, isDarkTheme]);
 
   const [activeStep, setActiveStep] = useState(0);
   const [isEntireScreenSelected, setIsEntireScreenSelected] = useState(false);
@@ -153,7 +162,40 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setActiveStep(0);
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
+
+    // const sharingSession =
+    //   sharingSessionService.waitingForConnectionSharingSession;
+    // sharingSession?.disconnectByHostMachineUser();
+    // sharingSession?.destory();
+    // sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
+    // sharingSessionService.waitingForConnectionSharingSession = null;
+
+    sharingSessionService
+      .createWaitingForConnectionSharingSession()
+      // eslint-disable-next-line promise/always-return
+      .then((waitingForConnectionSharingSession) => {
+        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+          (device: Device) => {
+            connectedDevicesService.setPendingConnectionDevice(device);
+          }
+        );
+      })
+      .catch((e) => log.error(e));
+  }, []);
+
+  const handleResetWithSharingSessionRestart = useCallback(() => {
+    makeSmoothIntermediateStepTransition();
+    setActiveStep(0);
+    setPendingConnectionDevice(null);
+    setIsUserAllowedConnection(false);
+
+    const sharingSession =
+      sharingSessionService.waitingForConnectionSharingSession;
+    sharingSession?.disconnectByHostMachineUser();
+    sharingSession?.destory();
+    sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
     sharingSessionService.waitingForConnectionSharingSession = null;
+
     sharingSessionService
       .createWaitingForConnectionSharingSession()
       // eslint-disable-next-line promise/always-return
@@ -169,7 +211,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
   React.useImperativeHandle(ref, () => ({
     handleReset() {
-      handleReset();
+      handleResetWithSharingSessionRestart();
     },
   }));
 
@@ -215,7 +257,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, [handleNext]);
 
   const handleUserClickedDeviceDisconnectButton = useCallback(async () => {
-    handleReset();
+    handleResetWithSharingSessionRestart();
 
     addToast(
       <Text>
@@ -224,20 +266,11 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
       {
         appearance: 'info',
         autoDismiss: true,
-        // @ts-ignore: works fine here, ignore
+        // @ts-ignore: works fine here
         isdarktheme: `${isDarkTheme}`,
       }
     );
-
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.disconnectByHostMachineUser();
-      sharingSession.destory();
-      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
-      sharingSessionService.sharingSessions.delete(sharingSession.id);
-    }
-  }, [addToast, handleReset, isDarkTheme]);
+  }, [addToast, handleResetWithSharingSessionRestart, isDarkTheme]);
 
   const renderIntermediateOrSuccessStepContent = useCallback(() => {
     return activeStep === steps.length ? (

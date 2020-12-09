@@ -108,8 +108,8 @@ async function openLargeQRCodeDialog(t) {
   await t.click(magnifyQRCodeButton());
 }
 
-async function clickCrossButtonToCloseDialog(t) {
-  await t.click(crossCloseDialogButton());
+async function clickOnLargeQRCodeDialog(t) {
+  await t.click(largeQRCodeDialog());
 }
 
 async function openConnectedDeviceInfoPopover(t) {
@@ -239,7 +239,7 @@ test(`when large QR overflow is opened,
 
   it should close large QR code overflow`, async (t) => {
   await openLargeQRCodeDialog(t);
-  await clickCrossButtonToCloseDialog(t);
+  await clickOnLargeQRCodeDialog(t);
 
   const largeQrCodeDialogExists = largeQRCodeDialog().exists;
   await t.expect(largeQrCodeDialogExists).notOk();

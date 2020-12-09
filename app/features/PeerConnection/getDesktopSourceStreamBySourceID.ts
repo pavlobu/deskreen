@@ -2,8 +2,8 @@ export default async (
   sourceID: string,
   width: number | null | undefined = undefined,
   height: number | null | undefined = undefined,
-  minSizeDivisor = 1,
-  maxSizeDivisor = 1,
+  minSizeMultiplier = 1,
+  maxSizeMultiplier = 1,
   minFrameRate = 15,
   maxFrameRate = 60
 ) => {
@@ -17,10 +17,10 @@ export default async (
           chromeMediaSource: 'desktop',
           chromeMediaSourceId: sourceID,
 
-          minWidth: width / minSizeDivisor,
-          maxWidth: width / maxSizeDivisor,
-          minHeight: height / minSizeDivisor,
-          maxHeight: height / maxSizeDivisor,
+          minWidth: width * minSizeMultiplier,
+          maxWidth: width * maxSizeMultiplier,
+          minHeight: height * minSizeMultiplier,
+          maxHeight: height * maxSizeMultiplier,
 
           minFrameRate,
           maxFrameRate,

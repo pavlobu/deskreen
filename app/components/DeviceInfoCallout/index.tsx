@@ -49,7 +49,15 @@ export default function DeviceInfoCallout(props: DeviceInfoCalloutProps) {
               Device Type: <span>{deviceType}</span>
             </Text>
             <Tooltip content={getContentOfTooltip()} position={Position.TOP}>
-              <div style={{ fontWeight: 900, backgroundColor: '#00f99273' }}>
+              <div
+                style={{
+                  fontWeight: 900,
+                  backgroundColor: '#00f99273',
+                  paddingLeft: '10px',
+                  paddingRight: '10px',
+                  borderRadius: '20px',
+                }}
+              >
                 <Text className="bp3-text-large">
                   Device IP: <span className="device-ip-span">{deviceIP}</span>
                 </Text>

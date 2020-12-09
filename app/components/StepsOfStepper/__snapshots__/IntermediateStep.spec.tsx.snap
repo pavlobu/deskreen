@@ -74,23 +74,31 @@ exports[`should match exact snapshot on each step 1`] = `
                 }
               }
             >
+              <Blueprint3.Text>
+                <div
+                  className=""
+                >
+                  <span
+                    style={
+                      Object {
+                        "backgroundColor": "#00f99273",
+                        "borderRadius": "20px",
+                        "fontWeight": 900,
+                        "paddingLeft": "8px",
+                        "paddingRight": "8px",
+                      }
+                    }
+                  >
+                    make sure your computer and device are connected to same WiFi
+                  </span>
+                </div>
+              </Blueprint3.Text>
               <Blueprint3.Text
                 className="bp3-text"
               >
                 <div
                   className="bp3-text"
-                >
-                  Scan the QR code
-                </div>
-              </Blueprint3.Text>
-              <Blueprint3.Text
-                className="bp3-text-muted"
-              >
-                <div
-                  className="bp3-text-muted"
-                >
-                  ( make sure your computer and device are connected on same WiFi )
-                </div>
+                />
               </Blueprint3.Text>
             </div>
             <div>
@@ -423,7 +431,7 @@ exports[`should match exact snapshot on each step 1`] = `
               style={
                 Object {
                   "position": "relative",
-                  "top": "-30px",
+                  "top": "0px",
                 }
               }
               transitionDuration={0}
@@ -443,7 +451,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 style={
                   Object {
                     "position": "relative",
-                    "top": "-30px",
+                    "top": "0px",
                   }
                 }
                 transitionDuration={0}
@@ -840,11 +848,21 @@ exports[`should match exact snapshot on each step 2`] = `
                                           <Blueprint3.Button
                                             active={true}
                                             className="makeStyles-orDecorationButton-9"
+                                            style={
+                                              Object {
+                                                "zIndex": 999,
+                                              }
+                                            }
                                           >
                                             <button
                                               className="bp3-button bp3-active makeStyles-orDecorationButton-9"
                                               onKeyDown={[Function]}
                                               onKeyUp={[Function]}
+                                              style={
+                                                Object {
+                                                  "zIndex": 999,
+                                                }
+                                              }
                                               type="button"
                                             >
                                               <Blueprint3.Icon
@@ -1352,7 +1370,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                                       style={
                                                         Object {
                                                           "backgroundColor": "#00f99273",
+                                                          "borderRadius": "20px",
                                                           "fontWeight": 900,
+                                                          "paddingLeft": "10px",
+                                                          "paddingRight": "10px",
                                                         }
                                                       }
                                                       tabIndex={0}

@@ -1,4 +1,5 @@
 import pixelmatch from 'pixelmatch';
+import { REACT_PLAYER_WRAPPER_ID } from '../../constants/appConstants';
 
 export default class VideoAutoQualityOptimizer {
   video: any;
@@ -14,8 +15,6 @@ export default class VideoAutoQualityOptimizer {
   goodQualityCallback = () => {};
 
   halfQualityCallbak = () => {};
-
-  constructor() {}
 
   setGoodQualityCallback(callback: () => void) {
     this.goodQualityCallback = callback;
@@ -66,13 +65,11 @@ export default class VideoAutoQualityOptimizer {
           } else if (mismatchInPercent < 0.1 && this.isRequestedHalfQuality) {
             this.largeMismatchFramesCount = 0;
             this.isRequestedHalfQuality = false;
-            // this.peer.send('set good quality');
             this.goodQualityCallback();
           } else if (mismatchInPercent >= 0.1 && !this.isRequestedHalfQuality) {
             if (this.largeMismatchFramesCount < 3) {
               this.largeMismatchFramesCount += 1;
             } else {
-              // this.peer.send('set half quality');
               this.halfQualityCallbak();
               this.isRequestedHalfQuality = true;
             }
@@ -85,7 +82,7 @@ export default class VideoAutoQualityOptimizer {
       imageData = null;
     } else {
       this.video = document.querySelector(
-        '#video-local-test-peer-sees > video'
+        `#${REACT_PLAYER_WRAPPER_ID} > video`
       );
       this.canvas = document.getElementById('comparison-canvas');
     }

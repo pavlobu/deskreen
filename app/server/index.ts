@@ -22,6 +22,7 @@ import getStore from './store';
 import Logger from '../utils/logger';
 import isProduction from '../utils/isProduction';
 import SocketsIPService from './socketsIPService';
+import getDeskreenGlobal from '../mainProcessHelpers/getDeskreenGlobal';
 
 const log = new Logger('app/server/index.ts');
 
@@ -90,25 +91,34 @@ io.sockets.on('connection', (socket) => {
 io.on('connection', async (socket) => {
   const { roomId } = socket.handshake.query;
 
-  const roomIdHash = getRoomIdHash(roomId);
+  setTimeout(async () => {
+    if (!getDeskreenGlobal().roomIDService.isRoomIDTaken(roomId)) {
+      socket.emit('NOT_ALLOWED');
+      setTimeout(() => {
+        socket.disconnect();
+      }, 1000);
+    } else {
+      const roomIdHash = getRoomIdHash(roomId);
 
-  let room = await store.get('rooms', roomIdHash);
-  room = JSON.parse(room || '{}');
+      let room = await store.get('rooms', roomIdHash);
+      room = JSON.parse(room || '{}');
 
-  // eslint-disable-next-line no-new
-  new DarkwireSocket({
-    roomIdOriginal: roomId,
-    roomId: roomIdHash,
-    socket,
-    room,
-  });
+      // eslint-disable-next-line no-new
+      new DarkwireSocket({
+        roomIdOriginal: roomId,
+        roomId: roomIdHash,
+        socket,
+        room,
+      });
+    }
+  }, 1000); // timeout 1 second for throttling malitios connections
 });
 
 const init = async (PORT: number) => {
   pollForInactiveRooms();
 
   return server.listen(PORT, () => {
-    log.info(`Signaling server is online at port ${PORT}`);
+    log.info(`Deskreen signaling server is online at port ${PORT}`);
   });
 };
 

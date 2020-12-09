@@ -9,16 +9,24 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       }
     }
   >
+    <Blueprint3.Text>
+      <span
+        style={
+          Object {
+            "backgroundColor": "#00f99273",
+            "borderRadius": "20px",
+            "fontWeight": 900,
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+          }
+        }
+      >
+        make sure your computer and device are connected to same WiFi
+      </span>
+    </Blueprint3.Text>
     <Blueprint3.Text
       className="bp3-text"
-    >
-      Scan the QR code
-    </Blueprint3.Text>
-    <Blueprint3.Text
-      className="bp3-text-muted"
-    >
-      ( make sure your computer and device are connected on same WiFi )
-    </Blueprint3.Text>
+    />
   </div>
   <div>
     <Blueprint3.Tooltip
@@ -95,83 +103,42 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
     style={
       Object {
         "position": "relative",
-        "top": "-30px",
+        "top": "0px",
       }
     }
     transitionDuration={0}
   >
-    <Blueprint3.Button
+    <Row
+      center="xs"
+      className="bp3-dialog-body"
       id="qr-code-dialog-inner"
+      middle="xs"
       onClick={[Function]}
-      style={
-        Object {
-          "paddingBottom": "13px",
-          "paddingTop": "20px",
-        }
-      }
     >
-      <Row
-        between="xs"
-        middle="xs"
+      <Col
+        className="makeStyles-dialogQRWrapper-2"
+        xs={11}
       >
-        <Col
-          xs={10}
-        >
-          <Component
-            style={
-              Object {
-                "margin": "0px",
-                "marginLeft": "35px",
-                "padding": "0px",
-              }
+        <QRCode
+          bgColor="#FFFFFF"
+          fgColor="#000000"
+          height="390px"
+          imageSettings={
+            Object {
+              "height": 25,
+              "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+              "width": 25,
             }
-          >
-            Scan QR Code
-          </Component>
-        </Col>
-        <Col
-          xs={2}
-        >
-          <CloseOverlayButton
-            onClick={[Function]}
-            style={
-              Object {
-                "borderRadius": "100px",
-                "height": "40px",
-                "position": "relative",
-                "width": "40px",
-              }
-            }
-          />
-        </Col>
-      </Row>
-      <Row
-        center="xs"
-      >
-        <div
-          className="makeStyles-dialogQRWrapper-2"
-        >
-          <QRCode
-            bgColor="#FFFFFF"
-            fgColor="#000000"
-            height="390px"
-            imageSettings={
-              Object {
-                "height": 25,
-                "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
-                "width": 25,
-              }
-            }
-            includeMargin={false}
-            level="H"
-            renderAs="svg"
-            size={128}
-            value="http://255.255.255.255:3000/"
-            width="390px"
-          />
-        </div>
-      </Row>
-    </Blueprint3.Button>
+          }
+          includeMargin={false}
+          level="H"
+          renderAs="svg"
+          size={128}
+          value="http://255.255.255.255:3000/"
+          width="390px"
+        />
+      </Col>
+    </Row>
   </Blueprint3.Dialog>
 </Fragment>
 `;

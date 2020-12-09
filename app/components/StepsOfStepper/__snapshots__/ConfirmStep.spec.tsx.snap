@@ -236,7 +236,10 @@ exports[`should match exact snapshot 1`] = `
                                                 style={
                                                   Object {
                                                     "backgroundColor": "#00f99273",
+                                                    "borderRadius": "20px",
                                                     "fontWeight": 900,
+                                                    "paddingLeft": "10px",
+                                                    "paddingRight": "10px",
                                                   }
                                                 }
                                                 tabIndex={0}

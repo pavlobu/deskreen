@@ -19,6 +19,8 @@ ipcRenderer.on('create-peer-connection-with-data', (_, data) => {
     data.roomID,
     data.sharingSessionID,
     data.user,
+    data.appTheme, // TODO getAppTheme
+    data.appLanguage, // TODO getLanguage
     roomIDService,
     connectedDevicesService,
     sharingSessionsService
@@ -47,4 +49,12 @@ ipcRenderer.on('deny-connection-for-partner', () => {
 
 ipcRenderer.on('send-user-allowed-to-connect', () => {
   peerConnection.sendUserAllowedToConnect();
+});
+
+ipcRenderer.on('app-color-theme-changed', (_, newTheme: boolean) => {
+  peerConnection.setAppTheme(newTheme);
+});
+
+ipcRenderer.on('app-language-changed', (_, newLang: string) => {
+  peerConnection.setAppLanguage(newLang);
 });

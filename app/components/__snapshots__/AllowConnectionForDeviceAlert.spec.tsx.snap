@@ -151,7 +151,7 @@ exports[`should match exact snapshot 1`] = `
                                       >
                                         <div
                                           class=""
-                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451);"
+                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451); padding-left: 10px; padding-right: 10px; border-radius: 20px;"
                                           tabindex="0"
                                         >
                                           <div
@@ -301,7 +301,7 @@ exports[`should match exact snapshot 1`] = `
                                       >
                                         <div
                                           class=""
-                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451);"
+                                          style="font-weight: 900; background-color: rgba(0, 249, 146, 0.451); padding-left: 10px; padding-right: 10px; border-radius: 20px;"
                                           tabindex="0"
                                         >
                                           <div
@@ -628,7 +628,10 @@ exports[`should match exact snapshot 1`] = `
                                                                 style={
                                                                   Object {
                                                                     "backgroundColor": "#00f99273",
+                                                                    "borderRadius": "20px",
                                                                     "fontWeight": 900,
+                                                                    "paddingLeft": "10px",
+                                                                    "paddingRight": "10px",
                                                                   }
                                                                 }
                                                                 tabIndex={0}

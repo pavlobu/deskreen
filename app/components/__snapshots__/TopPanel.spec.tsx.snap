@@ -5,22 +5,96 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
   <div
     className="makeStyles-topPanelRoot-1"
   >
-    <Zoom
-      duration={0}
-      top={true}
+    <Row
+      center="xs"
+      middle="xs"
+      style={
+        Object {
+          "transform": "translateX(-50px)",
+          "width": "100%",
+        }
+      }
     >
-      <div
-        className="makeStyles-logoWithAppName-9"
-        id="logo-with-popover-visit-website"
-      >
-        <h4
-          className="makeStyles-appNameHeader-17"
-          id="deskreen-top-app-name-header"
+      <Col>
+        <Blueprint3.Tooltip
+          content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+          hoverCloseDelay={0}
+          hoverOpenDelay={100}
+          position="bottom"
+          transitionDuration={100}
         >
-          Deskreen
-        </h4>
-      </div>
-    </Zoom>
+          <Blueprint3.Button
+            style={
+              Object {
+                "marginRight": "10px",
+                "transform": "translateY(2px)",
+              }
+            }
+          >
+            <Row
+              start="xs"
+            >
+              <Col
+                xs={true}
+              >
+                <img
+                  alt="heart"
+                  height={16}
+                  src="test-file-stub"
+                  style={
+                    Object {
+                      "transform": "translateY(2px)",
+                    }
+                  }
+                  width={16}
+                />
+              </Col>
+              <Col
+                xs={true}
+              >
+                <div
+                  style={
+                    Object {
+                      "transform": "translateY(2px) translateX(-5px)",
+                    }
+                  }
+                >
+                  <Blueprint3.Text>
+                    Donate!
+                  </Blueprint3.Text>
+                </div>
+              </Col>
+            </Row>
+          </Blueprint3.Button>
+        </Blueprint3.Tooltip>
+      </Col>
+      <Col>
+        <Zoom
+          duration={0}
+          top={true}
+        >
+          <div
+            className="makeStyles-logoWithAppName-9"
+            id="logo-with-popover-visit-website"
+          >
+            <Blueprint3.Tooltip
+              content="Click to visit our website"
+              hoverCloseDelay={0}
+              hoverOpenDelay={100}
+              position="bottom"
+              transitionDuration={100}
+            >
+              <h4
+                className="makeStyles-appNameHeader-17"
+                id="deskreen-top-app-name-header"
+              >
+                Deskreen
+              </h4>
+            </Blueprint3.Tooltip>
+          </div>
+        </Zoom>
+      </Col>
+    </Row>
     <div
       className="makeStyles-topPanelControlButtonsRoot-25"
     >
@@ -41,7 +115,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
             <Blueprint3.Button
               className="makeStyles-topPanelControlButton-40"
               id="top-panel-connected-devices-list-button"
-              intent="none"
+              intent="primary"
               onClick={[Function]}
             >
               <Blueprint3.Icon
@@ -56,7 +130,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
           className="makeStyles-topPanelControlButtonMargin-55"
         >
           <Blueprint3.Tooltip
-            content="Help"
+            content="Tutorial"
             hoverCloseDelay={0}
             hoverOpenDelay={100}
             position="bottom"
@@ -69,7 +143,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
             >
               <Blueprint3.Icon
                 className="makeStyles-topPanelIconOfControlButton-70"
-                icon="help"
+                icon="learning"
                 iconSize={22}
               />
             </Blueprint3.Button>
