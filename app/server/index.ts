@@ -16,10 +16,10 @@ import koaSend from 'koa-send';
 import getPort from 'get-port';
 // eslint-disable-next-line import/no-cycle
 import DarkwireSocket from './darkwireSocket';
-import pollForInactiveRooms from './inactiveRooms';
+import pollForInactiveRooms from './pollForInactiveRooms';
 import getStore from './store';
 
-import Logger from '../utils/logger';
+import Logger from '../utils/LoggerWithFilePrefix';
 import isProduction from '../utils/isProduction';
 import SocketsIPService from './socketsIPService';
 import getDeskreenGlobal from '../mainProcessHelpers/getDeskreenGlobal';
@@ -46,6 +46,7 @@ function setStaticFileHeaders(
     'Referrer-Policy': 'no-referrer',
     'Feature-Policy':
       "geolocation 'none'; vr 'none'; payment 'none'; microphone 'none'",
+    // 'Cache-Control': 'max-age=0', // make browser get fresh files and make new connection when client connected
   });
 }
 

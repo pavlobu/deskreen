@@ -66,7 +66,10 @@ exports[`should match exact snapshot 1`] = `
                   }
                 }
               >
-                <Blueprint3.Text>
+                <Blueprint3.Text
+                  ellipsize={false}
+                  tagName="div"
+                >
                   <div
                     className=""
                   >
@@ -130,7 +133,10 @@ exports[`should match exact snapshot 1`] = `
                             <div
                               className="col-xs-12"
                             >
-                              <Blueprint3.Text>
+                              <Blueprint3.Text
+                                ellipsize={false}
+                                tagName="div"
+                              >
                                 <div
                                   className=""
                                 >
@@ -141,7 +147,10 @@ exports[`should match exact snapshot 1`] = `
                               <Blueprint3.Tooltip
                                 content={
                                   <React.Fragment>
-                                    <Blueprint3.Text>
+                                    <Blueprint3.Text
+                                      ellipsize={false}
+                                      tagName="div"
+                                    >
                                       This should match with 'Device IP' displayed on the screen of device
         that is trying to connect.
                                     </Blueprint3.Text>
@@ -152,7 +161,10 @@ exports[`should match exact snapshot 1`] = `
                                         }
                                       }
                                     >
-                                      <Blueprint3.Text>
+                                      <Blueprint3.Text
+                                        ellipsize={false}
+                                        tagName="div"
+                                      >
                                         If IPs don't match click 'Deny' or 'Disconnect' button immediately to
           secure your computer!
                                       </Blueprint3.Text>
@@ -161,6 +173,7 @@ exports[`should match exact snapshot 1`] = `
                                 }
                                 hoverCloseDelay={0}
                                 hoverOpenDelay={100}
+                                minimal={false}
                                 position="top"
                                 transitionDuration={100}
                               >
@@ -171,7 +184,10 @@ exports[`should match exact snapshot 1`] = `
                                   captureDismiss={false}
                                   content={
                                     <React.Fragment>
-                                      <Blueprint3.Text>
+                                      <Blueprint3.Text
+                                        ellipsize={false}
+                                        tagName="div"
+                                      >
                                         This should match with 'Device IP' displayed on the screen of device
         that is trying to connect.
                                       </Blueprint3.Text>
@@ -182,7 +198,10 @@ exports[`should match exact snapshot 1`] = `
                                           }
                                         }
                                       >
-                                        <Blueprint3.Text>
+                                        <Blueprint3.Text
+                                          ellipsize={false}
+                                          tagName="div"
+                                        >
                                           If IPs don't match click 'Deny' or 'Disconnect' button immediately to
           secure your computer!
                                         </Blueprint3.Text>
@@ -200,7 +219,13 @@ exports[`should match exact snapshot 1`] = `
                                   interactionKind="hover-target"
                                   lazy={true}
                                   minimal={false}
-                                  modifiers={Object {}}
+                                  modifiers={
+                                    Object {
+                                      "arrow": Object {
+                                        "enabled": true,
+                                      },
+                                    }
+                                  }
                                   openOnTargetFocus={true}
                                   popoverClassName="bp3-tooltip"
                                   position="top"
@@ -246,6 +271,8 @@ exports[`should match exact snapshot 1`] = `
                                               >
                                                 <Blueprint3.Text
                                                   className="bp3-text-large"
+                                                  ellipsize={false}
+                                                  tagName="div"
                                                 >
                                                   <div
                                                     className="bp3-text-large"
@@ -280,7 +307,10 @@ exports[`should match exact snapshot 1`] = `
                                   </Manager>
                                 </Blueprint3.Popover>
                               </Blueprint3.Tooltip>
-                              <Blueprint3.Text>
+                              <Blueprint3.Text
+                                ellipsize={false}
+                                tagName="div"
+                              >
                                 <div
                                   className=""
                                 >
@@ -288,7 +318,10 @@ exports[`should match exact snapshot 1`] = `
                                   <span />
                                 </div>
                               </Blueprint3.Text>
-                              <Blueprint3.Text>
+                              <Blueprint3.Text
+                                ellipsize={false}
+                                tagName="div"
+                              >
                                 <div
                                   className=""
                                 >
@@ -307,6 +340,7 @@ exports[`should match exact snapshot 1`] = `
                                 <Blueprint3.Text
                                   className="bp3-text-muted"
                                   ellipsize={true}
+                                  tagName="div"
                                 >
                                   <div
                                     className="bp3-text-overflow-ellipsis bp3-text-muted"
@@ -449,6 +483,7 @@ exports[`should match exact snapshot 1`] = `
                             >
                               <Blueprint3.Text
                                 ellipsize={true}
+                                tagName="div"
                               >
                                 <div
                                   className="bp3-text-overflow-ellipsis"
@@ -498,6 +533,8 @@ exports[`should match exact snapshot 1`] = `
               >
                 <Blueprint3.Text
                   className="bp3-text-muted"
+                  ellipsize={false}
+                  tagName="div"
                 >
                   <div
                     className="bp3-text-muted"

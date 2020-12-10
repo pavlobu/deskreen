@@ -8,7 +8,7 @@ import { ToastProvider, DefaultToast } from 'react-toast-notifications';
 
 import TopPanel from '../components/TopPanel';
 import { LIGHT_UI_BACKGROUND } from './SettingsProvider';
-import DeskreenStepper from './Stepper';
+import DeskreenStepper from './DeskreenStepper';
 
 // @ts-ignore: it is ok here, be like js it is fine
 // eslint-disable-next-line react/prop-types

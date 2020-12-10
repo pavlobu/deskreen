@@ -18,8 +18,8 @@ export default class RendererWebrtcHelpersService {
 
     helperRendererWindow = new BrowserWindow({
       show: false,
-      width: 300,
-      height: 300,
+      // width: 300,
+      // height: 300,
       // x: 2147483647,
       // y: 2147483647,
       // transparent: true,
@@ -54,6 +54,7 @@ export default class RendererWebrtcHelpersService {
       if (!helperRendererWindow) {
         throw new Error('"helperRendererWindow" is not defined');
       }
+      helperRendererWindow.webContents.send('start-peer-connection');
     });
 
     helperRendererWindow.on('closed', () => {

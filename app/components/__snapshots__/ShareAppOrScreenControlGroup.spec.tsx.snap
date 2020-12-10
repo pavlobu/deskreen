@@ -24,7 +24,7 @@ exports[`should match exact snapshot 1`] = `
       }
     }
   >
-    <ShareEntireScreenOrAppWindowControlGroup
+    <ShareAppOrScreenControlGroup
       handleNextApplicationWindow={[Function]}
       handleNextEntireScreen={[Function]}
     >
@@ -55,6 +55,7 @@ exports[`should match exact snapshot 1`] = `
           >
             <button
               className="bp3-button bp3-intent-primary makeStyles-shareEntireScreenButton-2"
+              onBlur={[Function]}
               onClick={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
@@ -97,6 +98,8 @@ exports[`should match exact snapshot 1`] = `
                 </Blueprint3.Icon>
                 <Blueprint3.Text
                   className="bp3-running-text"
+                  ellipsize={false}
+                  tagName="div"
                 >
                   <div
                     className="bp3-running-text"
@@ -117,6 +120,7 @@ exports[`should match exact snapshot 1`] = `
           >
             <button
               className="bp3-button bp3-intent-primary makeStyles-shareAppButton-4"
+              onBlur={[Function]}
               onClick={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
@@ -159,6 +163,8 @@ exports[`should match exact snapshot 1`] = `
                 </Blueprint3.Icon>
                 <Blueprint3.Text
                   className="bp3-running-text"
+                  ellipsize={false}
+                  tagName="div"
                 >
                   <div
                     className="bp3-running-text"
@@ -183,6 +189,7 @@ exports[`should match exact snapshot 1`] = `
           >
             <button
               className="bp3-button bp3-active makeStyles-orDecorationButton-6"
+              onBlur={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
               style={
@@ -244,7 +251,7 @@ exports[`should match exact snapshot 1`] = `
           />
         </Blueprint3.Dialog>
       </ChooseAppOrScreenOverlay>
-    </ShareEntireScreenOrAppWindowControlGroup>
+    </ShareAppOrScreenControlGroup>
   </Router>
 </BrowserRouter>
 `;

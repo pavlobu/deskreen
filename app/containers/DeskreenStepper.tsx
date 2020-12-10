@@ -19,11 +19,10 @@ import ColorlibStepIcon, {
 } from '../components/StepperPanel/ColorlibStepIcon';
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
-import isProduction from '../utils/isProduction';
 import SharingSessionService from '../features/SharingSessionsService';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import SharingSessionStatusEnum from '../features/SharingSessionsService/SharingSessionStatusEnum';
-import Logger from '../utils/logger';
+import Logger from '../utils/LoggerWithFilePrefix';
 
 const log = new Logger(__filename);
 
@@ -33,10 +32,6 @@ const sharingSessionService = remote.getGlobal(
 const connectedDevicesService = remote.getGlobal(
   'connectedDevicesService'
 ) as ConnectedDevicesService;
-
-const Fade = require('react-reveal/Fade');
-const Zoom = require('react-reveal/Zoom');
-const Pulse = require('react-reveal/Pulse');
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -63,8 +58,6 @@ function getSteps() {
 // eslint-disable-next-line react/display-name
 const DeskreenStepper = React.forwardRef((_props, ref) => {
   const classes = useStyles();
-
-  const [isInterShow, setIsInterShow] = useState(false);
 
   const { isDarkTheme, currentLanguage } = useContext(SettingsContext);
 
@@ -97,17 +90,6 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
         setIsAlertOpen(true);
       }
     );
-
-    setTimeout(
-      () => {
-        setIsInterShow(true);
-      },
-      isProduction() ? 500 : 0
-    );
-
-    // sharingSessionService.setAppLanguage(currentLanguage);
-    // sharingSessionService.setAppTheme(isDarkTheme ? 'dark' : 'light');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -123,16 +105,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   ] = useState(false);
   const steps = getSteps();
 
-  const makeSmoothIntermediateStepTransition = () => {
-    if (!isProduction()) return;
-    setIsInterShow(false);
-    setTimeout(() => {
-      setIsInterShow(true);
-    }, 500);
-  };
-
   const handleNext = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     if (activeStep === steps.length - 1) {
       setIsEntireScreenSelected(false);
       setIsApplicationWindowSelected(false);
@@ -141,34 +114,23 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, [activeStep, steps]);
 
   const handleNextEntireScreen = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setIsEntireScreenSelected(true);
   }, []);
 
   const handleNextApplicationWindow = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setIsApplicationWindowSelected(true);
   }, []);
 
   const handleBack = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   }, []);
 
   const handleReset = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     setActiveStep(0);
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
-
-    // const sharingSession =
-    //   sharingSessionService.waitingForConnectionSharingSession;
-    // sharingSession?.disconnectByHostMachineUser();
-    // sharingSession?.destory();
-    // sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
-    // sharingSessionService.waitingForConnectionSharingSession = null;
 
     sharingSessionService
       .createWaitingForConnectionSharingSession()
@@ -184,7 +146,6 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   const handleResetWithSharingSessionRestart = useCallback(() => {
-    makeSmoothIntermediateStepTransition();
     setActiveStep(0);
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
@@ -275,39 +236,30 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   const renderIntermediateOrSuccessStepContent = useCallback(() => {
     return activeStep === steps.length ? (
       <div style={{ width: '100%' }}>
-        <Zoom duration={300} when={isInterShow} style={{ width: '100%' }}>
-          <Row middle="xs" center="xs">
-            <SuccessStep handleReset={handleReset} />
-          </Row>
-        </Zoom>
+        <Row middle="xs" center="xs">
+          <SuccessStep handleReset={handleReset} />
+        </Row>
       </div>
     ) : (
       <div id="intermediate-step-container" style={{ width: '100%' }}>
-        <Fade
-          duration={isProduction() ? 300 : 0}
-          when={isInterShow}
-          style={{ width: '100%' }}
-        >
-          <IntermediateStep
-            activeStep={activeStep}
-            steps={steps}
-            handleNext={handleNext}
-            handleBack={handleBack}
-            handleNextEntireScreen={handleNextEntireScreen}
-            handleNextApplicationWindow={handleNextApplicationWindow}
-            resetPendingConnectionDevice={
-              () => setPendingConnectionDevice(null)
-              // eslint-disable-next-line react/jsx-curly-newline
-            }
-            resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
-          />
-        </Fade>
+        <IntermediateStep
+          activeStep={activeStep}
+          steps={steps}
+          handleNext={handleNext}
+          handleBack={handleBack}
+          handleNextEntireScreen={handleNextEntireScreen}
+          handleNextApplicationWindow={handleNextApplicationWindow}
+          resetPendingConnectionDevice={
+            () => setPendingConnectionDevice(null)
+            // eslint-disable-next-line react/jsx-curly-newline
+          }
+          resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
+        />
       </div>
     );
   }, [
     activeStep,
     steps,
-    isInterShow,
     handleReset,
     handleNext,
     handleBack,
@@ -354,19 +306,17 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     <>
       <Row style={{ width: '100%' }}>
         <Col xs={12}>
-          <Pulse top duration={isProduction() ? 1500 : 0}>
-            <Stepper
-              className={classes.stepperComponent}
-              activeStep={activeStep}
-              alternativeLabel
-              style={{ background: 'transparent' }}
-              connector={<ColorlibConnector />}
-            >
-              {steps.map((label, idx) => (
-                <Step key={label}>{renderStepLabelContent(label, idx)}</Step>
-              ))}
-            </Stepper>
-          </Pulse>
+          <Stepper
+            className={classes.stepperComponent}
+            activeStep={activeStep}
+            alternativeLabel
+            style={{ background: 'transparent' }}
+            connector={<ColorlibConnector />}
+          >
+            {steps.map((label, idx) => (
+              <Step key={label}>{renderStepLabelContent(label, idx)}</Step>
+            ))}
+          </Stepper>
         </Col>
         <Col className={classes.stepContent} xs={12}>
           {renderIntermediateOrSuccessStepContent()}

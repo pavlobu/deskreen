@@ -42,7 +42,7 @@ export const process = (payload: any, privateKeyString: string) =>
             key.sessionKey
           );
           signingHMACKey = crypto.unwrapKey(privateKey, key.signingKey);
-          resolvePayload();
+          resolvePayload(undefined);
         } catch (e) {
           console.error(e);
         }

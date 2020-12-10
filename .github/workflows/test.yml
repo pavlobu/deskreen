@@ -16,37 +16,20 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2.3.1
 
-      - name: Install Node.js, NPM and Yarn
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        uses: actions/setup-node@v1.4.2
+      - name: install yarn dependencies in app/client using cache
+        uses: bahmutov/npm-install@v1.6.0
         with:
-          node-version: 14
+          working-directory: ./app/client
 
-      - name: yarn install from npmjs registry
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: |
-          npm config set registry https://registry.npmjs.org
-          cd app/client
-          yarn install --no-lockfile
-          cd ..
-          yarn install --no-lockfile
-          cd ..
-          yarn install --no-lockfile
+      - name: install yarn dependencies in ./ using cache
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          working-directory: ./
 
-      - name: Configure private AWS npm registry and install packages from it
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        if: ${{ failure() }}
-        run: |
-          npm config set registry https://packages.deskreen.com/
-          npm set //packages.deskreen.com/:_authToken="${{ secrets.NPMRC_USER_TOKEN }}"
-          npm config set always-auth true
-          cd app/client
-          yarn install --frozen-lockfile
-          cd ../..
-          yarn install --frozen-lockfile
+      - name: install yarn dependencies in ./app using cache
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          working-directory: ./app
 
       # following step does code signing when `electron-builder --publish always` (look in package.json)
       - name: yarn package-ci

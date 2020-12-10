@@ -4,9 +4,9 @@ import { H3, Card, Dialog } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from '../../CloseOverlayButton';
-import isProduction from '../../../utils/isProduction';
 import PreviewGridList from './PreviewGridList';
 import DesktopCapturerSources from '../../../features/DesktopCapturerSourcesService';
+import isWithReactRevealAnimations from '../../../utils/isWithReactRevealAnimations';
 
 const desktopCapturerSourcesService = remote.getGlobal(
   'desktopCapturerSourcesService'
@@ -104,15 +104,15 @@ export default function ChooseAppOrScreenOverlay(
       hasBackdrop
       isOpen={isChooseAppOrScreenOverlayOpen}
       usePortal
-      transitionDuration={isProduction() ? 750 : 0}
+      transitionDuration={isWithReactRevealAnimations() ? 750 : 0}
     >
       <div
         id="choose-app-or-screen-overlay-container"
         style={{ minHeight: '95%' }}
       >
         <Fade
-          duration={isProduction() ? 1000 : 0}
-          delay={isProduction() ? 1000 : 0}
+          duration={isWithReactRevealAnimations() ? 1000 : 0}
+          delay={isWithReactRevealAnimations() ? 1000 : 0}
         >
           <div
             style={{
@@ -172,7 +172,7 @@ export default function ChooseAppOrScreenOverlay(
         </Fade>
 
         <Zoom
-          duration={isProduction() ? 750 : 0}
+          duration={isWithReactRevealAnimations() ? 750 : 0}
           style={{
             position: 'relative',
             zIndex: '1',

@@ -8,13 +8,9 @@ import { Col, Row } from 'react-flexbox-grid';
 import SettingsOverlay from './SettingsOverlay/SettingsOverlay';
 import ConnectedDevicesListDrawer from './ConnectedDevicesListDrawer';
 import { SettingsContext } from '../containers/SettingsProvider';
-import isProduction from '../utils/isProduction';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore fine import here
 import RedHeartTwemojiPNG from '../images/red_heart_2764_twemoji_120x120.png';
-
-const Zoom = require('react-reveal/Zoom');
-const Fade = require('react-reveal/Fade');
 
 const useStylesWithTheme = (isDarkTheme: boolean) =>
   makeStyles(() =>
@@ -82,7 +78,13 @@ export default function TopPanel(props: any) {
         content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
         position={Position.BOTTOM}
       >
-        <Button style={{ transform: 'translateY(2px)', marginRight: '10px' }}>
+        <Button
+          style={{
+            transform: 'translateY(2px)',
+            marginRight: '10px',
+            borderRadius: '100px',
+          }}
+        >
           <Row start="xs">
             <Col xs>
               <img
@@ -167,24 +169,22 @@ export default function TopPanel(props: any) {
 
   const renderLogoWithAppName = useCallback(() => {
     return (
-      <Zoom top duration={isProduction() ? 3000 : 0}>
-        <div
-          id="logo-with-popover-visit-website"
-          className={getClassesCallback().logoWithAppName}
+      <div
+        id="logo-with-popover-visit-website"
+        className={getClassesCallback().logoWithAppName}
+      >
+        <Tooltip
+          content="Click to visit our website"
+          position={Position.BOTTOM}
         >
-          <Tooltip
-            content="Click to visit our website"
-            position={Position.BOTTOM}
+          <h4
+            id="deskreen-top-app-name-header"
+            className={getClassesCallback().appNameHeader}
           >
-            <h4
-              id="deskreen-top-app-name-header"
-              className={getClassesCallback().appNameHeader}
-            >
-              Deskreen
-            </h4>
-          </Tooltip>
-        </div>
-      </Zoom>
+            Deskreen
+          </h4>
+        </Tooltip>
+      </div>
     );
   }, [getClassesCallback]);
 
@@ -200,11 +200,9 @@ export default function TopPanel(props: any) {
           <Col>{renderLogoWithAppName()}</Col>
         </Row>
         <div className={getClassesCallback().topPanelControlButtonsRoot}>
-          <Fade right duration={isProduction() ? 2000 : 0}>
-            {renderConnectedDevicesListButton()}
-            {renderHelpButton()}
-            {renderSettingsButton()}
-          </Fade>
+          {renderConnectedDevicesListButton()}
+          {renderHelpButton()}
+          {renderSettingsButton()}
         </div>
       </div>
       <SettingsOverlay

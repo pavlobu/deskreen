@@ -3,7 +3,7 @@
 /* eslint-disable no-async-promise-executor */
 import forge from 'node-forge';
 import Crypto from './crypto';
-import Logger from './logger';
+import Logger from './LoggerWithFilePrefix';
 
 const log = new Logger(__filename);
 

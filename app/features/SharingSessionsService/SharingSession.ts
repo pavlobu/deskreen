@@ -134,7 +134,7 @@ export default class SharingSession {
       for (let i = 0; i < this.statusChangeListeners.length; i += 1) {
         this.statusChangeListeners[i](this.id);
       }
-      resolve();
+      resolve(undefined);
     });
   }
 

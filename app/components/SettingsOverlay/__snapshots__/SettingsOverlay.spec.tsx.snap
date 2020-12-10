@@ -1035,6 +1035,7 @@ exports[`should match exact snapshot 1`] = `
                     onKeyDown={[Function]}
                   >
                     <CSSTransition
+                      addEndListener={[Function]}
                       classNames="bp3-overlay"
                       in={true}
                       key=".$__backdrop"
@@ -1042,6 +1043,7 @@ exports[`should match exact snapshot 1`] = `
                       timeout={0}
                     >
                       <Transition
+                        addEndListener={[Function]}
                         appear={false}
                         enter={true}
                         exit={true}
@@ -1064,6 +1066,7 @@ exports[`should match exact snapshot 1`] = `
                       </Transition>
                     </CSSTransition>
                     <CSSTransition
+                      addEndListener={[Function]}
                       classNames="bp3-overlay"
                       in={true}
                       key=".$.0"
@@ -1071,6 +1074,7 @@ exports[`should match exact snapshot 1`] = `
                       timeout={0}
                     >
                       <Transition
+                        addEndListener={[Function]}
                         appear={false}
                         enter={true}
                         exit={true}
@@ -1144,6 +1148,7 @@ exports[`should match exact snapshot 1`] = `
                                     <button
                                       className="bp3-button makeStyles-closeButton-13 makeStyles-absoluteCloseButton-23"
                                       id="close-overlay-button"
+                                      onBlur={[Function]}
                                       onClick={[Function]}
                                       onKeyDown={[Function]}
                                       onKeyUp={[Function]}
@@ -1275,6 +1280,8 @@ exports[`should match exact snapshot 1`] = `
                                               </Blueprint3.Icon>
                                               <Blueprint3.Text
                                                 className="bp3-text-large"
+                                                ellipsize={false}
+                                                tagName="div"
                                               >
                                                 <div
                                                   className="bp3-text-large"
@@ -1342,6 +1349,8 @@ exports[`should match exact snapshot 1`] = `
                                               </Blueprint3.Icon>
                                               <Blueprint3.Text
                                                 className="bp3-text-large"
+                                                ellipsize={false}
+                                                tagName="div"
                                               >
                                                 <div
                                                   className="bp3-text-large"
@@ -1407,6 +1416,8 @@ exports[`should match exact snapshot 1`] = `
                                               </Blueprint3.Icon>
                                               <Blueprint3.Text
                                                 className="bp3-text-large"
+                                                ellipsize={false}
+                                                tagName="div"
                                               >
                                                 <div
                                                   className="bp3-text-large"
@@ -1531,7 +1542,10 @@ exports[`should match exact snapshot 1`] = `
                                                         <div
                                                           className=""
                                                         >
-                                                          <Blueprint3.Text>
+                                                          <Blueprint3.Text
+                                                            ellipsize={false}
+                                                            tagName="div"
+                                                          >
                                                             <div
                                                               className=""
                                                             >
@@ -1569,6 +1583,7 @@ exports[`should match exact snapshot 1`] = `
                                                           >
                                                             <button
                                                               className="bp3-button bp3-active"
+                                                              onBlur={[Function]}
                                                               onClick={[Function]}
                                                               onKeyDown={[Function]}
                                                               onKeyUp={[Function]}
@@ -1618,6 +1633,7 @@ exports[`should match exact snapshot 1`] = `
                                                           >
                                                             <button
                                                               className="bp3-button"
+                                                              onBlur={[Function]}
                                                               onClick={[Function]}
                                                               onKeyDown={[Function]}
                                                               onKeyUp={[Function]}
@@ -1740,7 +1756,10 @@ exports[`should match exact snapshot 1`] = `
                                                         <div
                                                           className=""
                                                         >
-                                                          <Blueprint3.Text>
+                                                          <Blueprint3.Text
+                                                            ellipsize={false}
+                                                            tagName="div"
+                                                          >
                                                             <div
                                                               className=""
                                                             >
@@ -1899,7 +1918,10 @@ exports[`should match exact snapshot 1`] = `
                                                         <div
                                                           className=""
                                                         >
-                                                          <Blueprint3.Text>
+                                                          <Blueprint3.Text
+                                                            ellipsize={false}
+                                                            tagName="div"
+                                                          >
                                                             <div
                                                               className=""
                                                             >

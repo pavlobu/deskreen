@@ -1,3 +1,4 @@
+// @ts-ignore
 import { UAParser } from 'ua-parser-js';
 
 export function getOSFromUAParser(uaParser: UAParser) {

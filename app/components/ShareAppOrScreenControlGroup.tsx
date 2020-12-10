@@ -3,7 +3,7 @@ import { Button, Icon, ControlGroup, Text } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ChooseAppOrScreenOverlay from './StepsOfStepper/ChooseAppOrScreenOverlay/ChooseAppOrScreenOverlay';
 
-interface ShareEntireScreenOrAppWindowProps {
+interface ShareAppOrScreenControlGroupProps {
   handleNextEntireScreen: () => void;
   handleNextApplicationWindow: () => void;
 }
@@ -50,8 +50,8 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function ShareEntireScreenOrAppWindowControlGroup(
-  props: ShareEntireScreenOrAppWindowProps
+export default function ShareAppOrScreenControlGroup(
+  props: ShareAppOrScreenControlGroupProps
 ) {
   const { handleNextEntireScreen, handleNextApplicationWindow } = props;
   const classes = useStyles();

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from '@blueprintjs/core';
 import { Row } from 'react-flexbox-grid';
 import ConnectingIndicatorIcon from './ConnectingIndicatorIcon';
-import SelectSharingIcon from './SelectSharingIcon';
+import LoadingSharingIcon from './LoadingSharingIcon';
 
 const basePulsingCircleStyles = {
   borderRadius: '100%',
@@ -18,9 +18,9 @@ const basePulsingCircleStyles = {
 
 function getConnectingStepContent(
   currentStep: number,
-  connectionIconType: 'feed' | 'feed-subscribed',
-  selectingSharingIconType: 'desktop' | 'application',
-  isShownSelectingSharingIcon: boolean,
+  connectionIconType: ConnectionIconType,
+  loadingSharingIconType: LoadingSharingIconType,
+  isShownLoadingSharingIcon: boolean,
 ) {
 
   const pulsingCircle1Styles = {
@@ -68,9 +68,9 @@ function getConnectingStepContent(
       );
     case 3:
       return (
-        <SelectSharingIcon
-          isShownSelectingSharingIcon={isShownSelectingSharingIcon}
-          selectingSharingIconType={selectingSharingIconType}
+        <LoadingSharingIcon
+          isShownLoadingSharingIcon={isShownLoadingSharingIcon}
+          loadingSharingIconType={loadingSharingIconType}
         />
       );
     default:
@@ -80,9 +80,9 @@ function getConnectingStepContent(
 
 interface ConnectingIndicatorProps {
   currentStep: number;
-  connectionIconType: 'feed' | 'feed-subscribed';
+  connectionIconType: ConnectionIconType;
   isShownSelectingSharingIcon: boolean;
-  selectingSharingIconType: 'desktop' | 'application';
+  selectingSharingIconType: LoadingSharingIconType;
 }
 
 function ConnectingIndicator(props: ConnectingIndicatorProps) {

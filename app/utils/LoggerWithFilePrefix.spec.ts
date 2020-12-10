@@ -1,4 +1,4 @@
-import Logger from './logger';
+import Logger from './LoggerWithFilePrefix';
 
 describe('LoggerWithFilePrefix that uses electron-log', () => {
   const filePath = 'some/file/path';

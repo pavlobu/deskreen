@@ -1,7 +1,7 @@
 import React from 'react';
 import { Intent, Alert, H4 } from '@blueprintjs/core';
-import isProduction from '../utils/isProduction';
 import DeviceInfoCallout from './DeviceInfoCallout';
+import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 
 interface AllowConnectionForDeviceAlertProps {
   device: Device | null;
@@ -25,7 +25,10 @@ export default function AllowConnectionForDeviceAlert(
       isOpen={isOpen}
       onCancel={onCancel}
       onConfirm={onConfirm}
-      transitionDuration={isProduction() ? 700 : 0}
+      transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      usePortal={false}
     >
       <H4>Device is trying to connect, do you allow?</H4>
       <DeviceInfoCallout

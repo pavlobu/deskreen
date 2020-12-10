@@ -311,6 +311,7 @@ exports[`should match exact snapshot 1`] = `
                   onKeyDown={[Function]}
                 >
                   <CSSTransition
+                    addEndListener={[Function]}
                     appear={true}
                     classNames="bp3-overlay"
                     in={true}
@@ -319,6 +320,7 @@ exports[`should match exact snapshot 1`] = `
                     timeout={0}
                   >
                     <Transition
+                      addEndListener={[Function]}
                       appear={true}
                       enter={true}
                       exit={true}
@@ -341,6 +343,7 @@ exports[`should match exact snapshot 1`] = `
                     </Transition>
                   </CSSTransition>
                   <CSSTransition
+                    addEndListener={[Function]}
                     appear={true}
                     classNames="bp3-overlay"
                     in={true}
@@ -349,6 +352,7 @@ exports[`should match exact snapshot 1`] = `
                     timeout={0}
                   >
                     <Transition
+                      addEndListener={[Function]}
                       appear={true}
                       enter={true}
                       exit={true}
@@ -397,6 +401,8 @@ exports[`should match exact snapshot 1`] = `
                                     >
                                       <Blueprint3.Text
                                         className="bp3-text-muted"
+                                        ellipsize={false}
+                                        tagName="div"
                                       >
                                         <div
                                           className="bp3-text-muted"
@@ -414,6 +420,7 @@ exports[`should match exact snapshot 1`] = `
                                       <button
                                         className="bp3-button bp3-disabled bp3-intent-danger"
                                         disabled={true}
+                                        onBlur={[Function]}
                                         onKeyDown={[Function]}
                                         onKeyUp={[Function]}
                                         tabIndex={-1}
@@ -477,6 +484,7 @@ exports[`should match exact snapshot 1`] = `
                                     <button
                                       className="bp3-button makeStyles-closeButton-6 undefined"
                                       id="close-overlay-button"
+                                      onBlur={[Function]}
                                       onClick={[Function]}
                                       onKeyDown={[Function]}
                                       onKeyUp={[Function]}

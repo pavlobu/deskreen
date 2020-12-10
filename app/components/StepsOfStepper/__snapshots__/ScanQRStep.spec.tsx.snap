@@ -9,7 +9,10 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       }
     }
   >
-    <Blueprint3.Text>
+    <Blueprint3.Text
+      ellipsize={false}
+      tagName="div"
+    >
       <span
         style={
           Object {
@@ -26,6 +29,8 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
     </Blueprint3.Text>
     <Blueprint3.Text
       className="bp3-text"
+      ellipsize={false}
+      tagName="div"
     />
   </div>
   <div>
@@ -33,6 +38,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       content="Click to make bigger"
       hoverCloseDelay={0}
       hoverOpenDelay={100}
+      minimal={false}
       position="left"
       transitionDuration={100}
     >
@@ -69,6 +75,8 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
   >
     <Blueprint3.Text
       className="bp3-text-muted"
+      ellipsize={false}
+      tagName="div"
     >
       or type the following address manualy in browser address bar on any device:
     </Blueprint3.Text>
@@ -77,6 +85,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
     content="Click to copy"
     hoverCloseDelay={0}
     hoverOpenDelay={100}
+    minimal={false}
     position="left"
     transitionDuration={100}
   >
@@ -107,6 +116,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       }
     }
     transitionDuration={0}
+    usePortal={false}
   >
     <Row
       center="xs"

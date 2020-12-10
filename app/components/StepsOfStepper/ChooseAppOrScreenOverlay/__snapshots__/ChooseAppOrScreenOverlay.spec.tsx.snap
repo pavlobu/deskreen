@@ -298,6 +298,7 @@ exports[`should match exact snapshot 1`] = `
                   onKeyDown={[Function]}
                 >
                   <CSSTransition
+                    addEndListener={[Function]}
                     appear={true}
                     classNames="bp3-overlay"
                     in={true}
@@ -306,6 +307,7 @@ exports[`should match exact snapshot 1`] = `
                     timeout={0}
                   >
                     <Transition
+                      addEndListener={[Function]}
                       appear={true}
                       enter={true}
                       exit={true}
@@ -328,6 +330,7 @@ exports[`should match exact snapshot 1`] = `
                     </Transition>
                   </CSSTransition>
                   <CSSTransition
+                    addEndListener={[Function]}
                     appear={true}
                     classNames="bp3-overlay"
                     in={true}
@@ -336,6 +339,7 @@ exports[`should match exact snapshot 1`] = `
                     timeout={0}
                   >
                     <Transition
+                      addEndListener={[Function]}
                       appear={true}
                       enter={true}
                       exit={true}
@@ -512,6 +516,7 @@ exports[`should match exact snapshot 1`] = `
                                                   <button
                                                     className="bp3-button"
                                                     id="close-overlay-button"
+                                                    onBlur={[Function]}
                                                     onClick={[Function]}
                                                     onKeyDown={[Function]}
                                                     onKeyUp={[Function]}

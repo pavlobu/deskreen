@@ -90,27 +90,13 @@ export default function IntermediateStep(props: IntermediateStepProps) {
       )}
 
       {
-        // TODO: uncomment this for TRUE production use ! no Connect Test Device buttons in production!
-        // // eslint-disable-next-line no-nested-ternary
-        // process.env.NODE_ENV === 'production' &&
-        // process.env.RUN_MODE !== 'dev' &&
-        // process.env.RUN_MODE !== 'test' ? (
-        //   <></>
-        // ) : activeStep === 0 ? (
-        //   // eslint-disable-next-line react/jsx-indent
-        //   <Button
-        //     onClick={() => {
-        //       connectDevice(
-        //         DEVICES[Math.floor(Math.random() * DEVICES.length)]
-        //       );
-        //     }}
-        //   >
-        //     Connect Test Device
-        //   </Button>
-        // ) : (
-        //   <></>
-        // )
-        activeStep === 0 ? (
+        // eslint-disable-next-line no-nested-ternary
+        process.env.NODE_ENV === 'production' &&
+        process.env.RUN_MODE !== 'dev' &&
+        process.env.RUN_MODE !== 'test' ? (
+          <></>
+        ) : activeStep === 0 ? (
+          // eslint-disable-next-line react/jsx-indent
           <Button
             onClick={() => {
               connectDevice(
@@ -125,6 +111,21 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         ) : (
           <></>
         )
+        // activeStep === 0 ? (
+        //   <Button
+        //     onClick={() => {
+        //       connectDevice(
+        //         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //         // @ts-ignore
+        //         DEVICES[Math.floor(Math.random() * DEVICES.length)]
+        //       );
+        //     }}
+        //   >
+        //     Connect Test Device
+        //   </Button>
+        // ) : (
+        //   <></>
+        // )
       }
       {
         /**/

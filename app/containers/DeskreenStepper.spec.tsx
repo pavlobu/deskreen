@@ -4,7 +4,7 @@ import EnzymeToJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
-import DeskreenStepper from './Stepper';
+import DeskreenStepper from './DeskreenStepper';
 
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();

@@ -3,12 +3,12 @@ export default {
     if (name === 'appLanguage') {
       return true;
     }
-    return true;
+    return false;
   },
   getSync: (name: string) => {
     if (name === 'appLanguage') {
       return 'en';
     }
-    return 'en';
+    return '';
   },
 };
