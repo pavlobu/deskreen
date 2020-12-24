@@ -37,12 +37,12 @@ jobs:
         with:
           working-directory: ./
 
-      - name: ./app/client yarn install
-        run: yarn install --frozen-lockfile
-        working-directory: ./app/client
-      - name: ./ yarn install
-        run: yarn install --frozen-lockfile
-        working-directory: ./
+      # - name: ./app/client yarn install
+      #   run: yarn install --frozen-lockfile
+      #   working-directory: ./app/client
+      # - name: ./ yarn install
+      #   run: yarn install --frozen-lockfile
+      #   working-directory: ./
 
       # - name: Configure private AWS npm registry and install packages from it
       #   env:
