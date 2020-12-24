@@ -1,4 +1,4 @@
-import pollForInactiveRooms from './inactiveRooms';
+import pollForInactiveRooms from './pollForInactiveRooms';
 import getStore from './store';
 
 const TEN_DAYS_PERIOD_IN_MILLISECONDS = 1000 * 60 * 60 * 24 * 10;

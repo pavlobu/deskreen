@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import { Icon, Text, Button, Popover, Tooltip } from '@blueprintjs/core';
-import isProduction from '../../utils/isProduction';
 import DeviceInfoCallout from '../DeviceInfoCallout';
+import isWithReactRevealAnimations from '../../utils/isWithReactRevealAnimations';
 
 interface DeviceConnectedInfoButtonProps {
   device: Device;
@@ -55,7 +55,7 @@ export default function DeviceConnectedInfoButton(
         content={getDeviceConnectedPopoverContent(device, onDisconnect)}
         position="bottom"
         inheritDarkTheme={false}
-        transitionDuration={isProduction() ? 700 : 0}
+        transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
       >
         <Tooltip
           content={<Text>Click to manage</Text>}

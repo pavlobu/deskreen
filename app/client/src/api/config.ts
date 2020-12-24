@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 let host;
 let protocol;
 let port;

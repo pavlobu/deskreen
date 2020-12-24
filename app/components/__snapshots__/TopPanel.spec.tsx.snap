@@ -20,12 +20,14 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
           content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
           hoverCloseDelay={0}
           hoverOpenDelay={100}
+          minimal={false}
           position="bottom"
           transitionDuration={100}
         >
           <Blueprint3.Button
             style={
               Object {
+                "borderRadius": "100px",
                 "marginRight": "10px",
                 "transform": "translateY(2px)",
               }
@@ -59,7 +61,10 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
                     }
                   }
                 >
-                  <Blueprint3.Text>
+                  <Blueprint3.Text
+                    ellipsize={false}
+                    tagName="div"
+                  >
                     Donate!
                   </Blueprint3.Text>
                 </div>
@@ -69,110 +74,104 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
         </Blueprint3.Tooltip>
       </Col>
       <Col>
-        <Zoom
-          duration={0}
-          top={true}
+        <div
+          className="makeStyles-logoWithAppName-9"
+          id="logo-with-popover-visit-website"
         >
-          <div
-            className="makeStyles-logoWithAppName-9"
-            id="logo-with-popover-visit-website"
+          <Blueprint3.Tooltip
+            content="Click to visit our website"
+            hoverCloseDelay={0}
+            hoverOpenDelay={100}
+            minimal={false}
+            position="bottom"
+            transitionDuration={100}
           >
-            <Blueprint3.Tooltip
-              content="Click to visit our website"
-              hoverCloseDelay={0}
-              hoverOpenDelay={100}
-              position="bottom"
-              transitionDuration={100}
+            <h4
+              className="makeStyles-appNameHeader-17"
+              id="deskreen-top-app-name-header"
             >
-              <h4
-                className="makeStyles-appNameHeader-17"
-                id="deskreen-top-app-name-header"
-              >
-                Deskreen
-              </h4>
-            </Blueprint3.Tooltip>
-          </div>
-        </Zoom>
+              Deskreen
+            </h4>
+          </Blueprint3.Tooltip>
+        </div>
       </Col>
     </Row>
     <div
       className="makeStyles-topPanelControlButtonsRoot-25"
     >
-      <Fade
-        duration={0}
-        right={true}
+      <div
+        className="makeStyles-topPanelControlButtonMargin-34"
       >
-        <div
-          className="makeStyles-topPanelControlButtonMargin-34"
+        <Blueprint3.Tooltip
+          content="Connected Devices"
+          hoverCloseDelay={0}
+          hoverOpenDelay={100}
+          minimal={false}
+          position="bottom"
+          transitionDuration={100}
         >
-          <Blueprint3.Tooltip
-            content="Connected Devices"
-            hoverCloseDelay={0}
-            hoverOpenDelay={100}
-            position="bottom"
-            transitionDuration={100}
+          <Blueprint3.Button
+            className="makeStyles-topPanelControlButton-40"
+            id="top-panel-connected-devices-list-button"
+            intent="primary"
+            onClick={[Function]}
           >
-            <Blueprint3.Button
-              className="makeStyles-topPanelControlButton-40"
-              id="top-panel-connected-devices-list-button"
-              intent="primary"
-              onClick={[Function]}
-            >
-              <Blueprint3.Icon
-                className="makeStyles-topPanelIconOfControlButton-49"
-                icon="th-list"
-                iconSize={20}
-              />
-            </Blueprint3.Button>
-          </Blueprint3.Tooltip>
-        </div>
-        <div
-          className="makeStyles-topPanelControlButtonMargin-55"
+            <Blueprint3.Icon
+              className="makeStyles-topPanelIconOfControlButton-49"
+              icon="th-list"
+              iconSize={20}
+            />
+          </Blueprint3.Button>
+        </Blueprint3.Tooltip>
+      </div>
+      <div
+        className="makeStyles-topPanelControlButtonMargin-55"
+      >
+        <Blueprint3.Tooltip
+          content="Tutorial"
+          hoverCloseDelay={0}
+          hoverOpenDelay={100}
+          minimal={false}
+          position="bottom"
+          transitionDuration={100}
         >
-          <Blueprint3.Tooltip
-            content="Tutorial"
-            hoverCloseDelay={0}
-            hoverOpenDelay={100}
-            position="bottom"
-            transitionDuration={100}
+          <Blueprint3.Button
+            className="makeStyles-topPanelControlButton-61"
+            id="top-panel-help-button"
+            intent="none"
           >
-            <Blueprint3.Button
-              className="makeStyles-topPanelControlButton-61"
-              id="top-panel-help-button"
-              intent="none"
-            >
-              <Blueprint3.Icon
-                className="makeStyles-topPanelIconOfControlButton-70"
-                icon="learning"
-                iconSize={22}
-              />
-            </Blueprint3.Button>
-          </Blueprint3.Tooltip>
-        </div>
-        <div
-          className="makeStyles-topPanelControlButtonMargin-76"
+            <Blueprint3.Icon
+              className="makeStyles-topPanelIconOfControlButton-70"
+              icon="learning"
+              iconSize={22}
+            />
+          </Blueprint3.Button>
+        </Blueprint3.Tooltip>
+      </div>
+      <div
+        className="makeStyles-topPanelControlButtonMargin-76"
+      >
+        <Blueprint3.Tooltip
+          content="Settings"
+          hoverCloseDelay={0}
+          hoverOpenDelay={100}
+          minimal={false}
+          position="bottom"
+          transitionDuration={100}
         >
-          <Blueprint3.Tooltip
-            content="Settings"
-            hoverCloseDelay={0}
-            hoverOpenDelay={100}
-            position="bottom"
-            transitionDuration={100}
+          <Blueprint3.Button
+            className="makeStyles-topPanelControlButton-82"
+            id="top-panel-settings-button"
+            onClick={[Function]}
           >
-            <Blueprint3.Button
-              className="makeStyles-topPanelControlButton-82"
-              id="top-panel-settings-button"
-              onClick={[Function]}
-            >
-              <Blueprint3.Icon
-                className="makeStyles-topPanelIconOfControlButton-91"
-                icon="cog"
-                iconSize={22}
-              />
-            </Blueprint3.Button>
-          </Blueprint3.Tooltip>
-        </div>
-      </Fade>
+            <Blueprint3.Icon
+              className="makeStyles-topPanelIconOfControlButton-91"
+              icon="cog"
+              iconSize={22}
+            />
+          </Blueprint3.Button>
+        </Blueprint3.Tooltip>
+      </div>
     </div>
   </div>
   <SettingsOverlay

@@ -74,7 +74,10 @@ exports[`should match exact snapshot on each step 1`] = `
                 }
               }
             >
-              <Blueprint3.Text>
+              <Blueprint3.Text
+                ellipsize={false}
+                tagName="div"
+              >
                 <div
                   className=""
                 >
@@ -95,6 +98,8 @@ exports[`should match exact snapshot on each step 1`] = `
               </Blueprint3.Text>
               <Blueprint3.Text
                 className="bp3-text"
+                ellipsize={false}
+                tagName="div"
               >
                 <div
                   className="bp3-text"
@@ -106,6 +111,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 content="Click to make bigger"
                 hoverCloseDelay={0}
                 hoverOpenDelay={100}
+                minimal={false}
                 position="left"
                 transitionDuration={100}
               >
@@ -126,7 +132,13 @@ exports[`should match exact snapshot on each step 1`] = `
                   interactionKind="hover-target"
                   lazy={true}
                   minimal={false}
-                  modifiers={Object {}}
+                  modifiers={
+                    Object {
+                      "arrow": Object {
+                        "enabled": true,
+                      },
+                    }
+                  }
                   openOnTargetFocus={true}
                   popoverClassName="bp3-tooltip"
                   position="left"
@@ -166,6 +178,7 @@ exports[`should match exact snapshot on each step 1`] = `
                                 <button
                                   className="bp3-button makeStyles-smallQRCode-1"
                                   id="magnify-qr-code-button"
+                                  onBlur={[Function]}
                                   onClick={[Function]}
                                   onKeyDown={[Function]}
                                   onKeyUp={[Function]}
@@ -274,6 +287,8 @@ exports[`should match exact snapshot on each step 1`] = `
             >
               <Blueprint3.Text
                 className="bp3-text-muted"
+                ellipsize={false}
+                tagName="div"
               >
                 <div
                   className="bp3-text-muted"
@@ -286,6 +301,7 @@ exports[`should match exact snapshot on each step 1`] = `
               content="Click to copy"
               hoverCloseDelay={0}
               hoverOpenDelay={100}
+              minimal={false}
               position="left"
               transitionDuration={100}
             >
@@ -306,7 +322,13 @@ exports[`should match exact snapshot on each step 1`] = `
                 interactionKind="hover-target"
                 lazy={true}
                 minimal={false}
-                modifiers={Object {}}
+                modifiers={
+                  Object {
+                    "arrow": Object {
+                      "enabled": true,
+                    },
+                  }
+                }
                 openOnTargetFocus={true}
                 popoverClassName="bp3-tooltip"
                 position="left"
@@ -351,6 +373,7 @@ exports[`should match exact snapshot on each step 1`] = `
                             >
                               <button
                                 className="bp3-button bp3-intent-primary"
+                                onBlur={[Function]}
                                 onClick={[Function]}
                                 onKeyDown={[Function]}
                                 onKeyUp={[Function]}
@@ -435,6 +458,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 }
               }
               transitionDuration={0}
+              usePortal={false}
             >
               <Blueprint3.Overlay
                 autoFocus={true}
@@ -456,7 +480,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 }
                 transitionDuration={0}
                 transitionName="bp3-overlay"
-                usePortal={true}
+                usePortal={false}
               />
             </Blueprint3.Dialog>
           </ScanQRStep>
@@ -465,6 +489,7 @@ exports[`should match exact snapshot on each step 1`] = `
           >
             <button
               className="bp3-button"
+              onBlur={[Function]}
               onClick={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
@@ -513,6 +538,7 @@ exports[`should match exact snapshot on each step 1`] = `
               >
                 <button
                   className="bp3-button bp3-intent-danger"
+                  onBlur={[Function]}
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   onKeyUp={[Function]}
@@ -679,7 +705,10 @@ exports[`should match exact snapshot on each step 2`] = `
                                 }
                               }
                             >
-                              <Blueprint3.Text>
+                              <Blueprint3.Text
+                                ellipsize={false}
+                                tagName="div"
+                              >
                                 <div
                                   className=""
                                 >
@@ -697,7 +726,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                   <div
                                     className=""
                                   >
-                                    <ShareEntireScreenOrAppWindowControlGroup
+                                    <ShareAppOrScreenControlGroup
                                       handleNextApplicationWindow={[Function]}
                                       handleNextEntireScreen={[Function]}
                                     >
@@ -728,6 +757,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                           >
                                             <button
                                               className="bp3-button bp3-intent-primary makeStyles-shareEntireScreenButton-5"
+                                              onBlur={[Function]}
                                               onClick={[Function]}
                                               onKeyDown={[Function]}
                                               onKeyUp={[Function]}
@@ -770,6 +800,8 @@ exports[`should match exact snapshot on each step 2`] = `
                                                 </Blueprint3.Icon>
                                                 <Blueprint3.Text
                                                   className="bp3-running-text"
+                                                  ellipsize={false}
+                                                  tagName="div"
                                                 >
                                                   <div
                                                     className="bp3-running-text"
@@ -790,6 +822,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                           >
                                             <button
                                               className="bp3-button bp3-intent-primary makeStyles-shareAppButton-7"
+                                              onBlur={[Function]}
                                               onClick={[Function]}
                                               onKeyDown={[Function]}
                                               onKeyUp={[Function]}
@@ -832,6 +865,8 @@ exports[`should match exact snapshot on each step 2`] = `
                                                 </Blueprint3.Icon>
                                                 <Blueprint3.Text
                                                   className="bp3-running-text"
+                                                  ellipsize={false}
+                                                  tagName="div"
                                                 >
                                                   <div
                                                     className="bp3-running-text"
@@ -856,6 +891,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                           >
                                             <button
                                               className="bp3-button bp3-active makeStyles-orDecorationButton-9"
+                                              onBlur={[Function]}
                                               onKeyDown={[Function]}
                                               onKeyUp={[Function]}
                                               style={
@@ -917,7 +953,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                           />
                                         </Blueprint3.Dialog>
                                       </ChooseAppOrScreenOverlay>
-                                    </ShareEntireScreenOrAppWindowControlGroup>
+                                    </ShareAppOrScreenControlGroup>
                                   </div>
                                 </Col>
                               </div>
@@ -956,6 +992,7 @@ exports[`should match exact snapshot on each step 2`] = `
                   >
                     <button
                       className="bp3-button"
+                      onBlur={[Function]}
                       onClick={[Function]}
                       onKeyDown={[Function]}
                       onKeyUp={[Function]}
@@ -1038,6 +1075,7 @@ exports[`should match exact snapshot on each step 2`] = `
               >
                 <button
                   className="bp3-button bp3-intent-danger"
+                  onBlur={[Function]}
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   onKeyUp={[Function]}
@@ -1200,7 +1238,10 @@ exports[`should match exact snapshot on each step 3`] = `
                         }
                       }
                     >
-                      <Blueprint3.Text>
+                      <Blueprint3.Text
+                        ellipsize={false}
+                        tagName="div"
+                      >
                         <div
                           className=""
                         >
@@ -1264,7 +1305,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                   <div
                                     className="col-xs-12"
                                   >
-                                    <Blueprint3.Text>
+                                    <Blueprint3.Text
+                                      ellipsize={false}
+                                      tagName="div"
+                                    >
                                       <div
                                         className=""
                                       >
@@ -1275,7 +1319,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                     <Blueprint3.Tooltip
                                       content={
                                         <React.Fragment>
-                                          <Blueprint3.Text>
+                                          <Blueprint3.Text
+                                            ellipsize={false}
+                                            tagName="div"
+                                          >
                                             This should match with 'Device IP' displayed on the screen of device
         that is trying to connect.
                                           </Blueprint3.Text>
@@ -1286,7 +1333,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                               }
                                             }
                                           >
-                                            <Blueprint3.Text>
+                                            <Blueprint3.Text
+                                              ellipsize={false}
+                                              tagName="div"
+                                            >
                                               If IPs don't match click 'Deny' or 'Disconnect' button immediately to
           secure your computer!
                                             </Blueprint3.Text>
@@ -1295,6 +1345,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                       }
                                       hoverCloseDelay={0}
                                       hoverOpenDelay={100}
+                                      minimal={false}
                                       position="top"
                                       transitionDuration={100}
                                     >
@@ -1305,7 +1356,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                         captureDismiss={false}
                                         content={
                                           <React.Fragment>
-                                            <Blueprint3.Text>
+                                            <Blueprint3.Text
+                                              ellipsize={false}
+                                              tagName="div"
+                                            >
                                               This should match with 'Device IP' displayed on the screen of device
         that is trying to connect.
                                             </Blueprint3.Text>
@@ -1316,7 +1370,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                                 }
                                               }
                                             >
-                                              <Blueprint3.Text>
+                                              <Blueprint3.Text
+                                                ellipsize={false}
+                                                tagName="div"
+                                              >
                                                 If IPs don't match click 'Deny' or 'Disconnect' button immediately to
           secure your computer!
                                               </Blueprint3.Text>
@@ -1334,7 +1391,13 @@ exports[`should match exact snapshot on each step 3`] = `
                                         interactionKind="hover-target"
                                         lazy={true}
                                         minimal={false}
-                                        modifiers={Object {}}
+                                        modifiers={
+                                          Object {
+                                            "arrow": Object {
+                                              "enabled": true,
+                                            },
+                                          }
+                                        }
                                         openOnTargetFocus={true}
                                         popoverClassName="bp3-tooltip"
                                         position="top"
@@ -1380,6 +1443,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                                     >
                                                       <Blueprint3.Text
                                                         className="bp3-text-large"
+                                                        ellipsize={false}
+                                                        tagName="div"
                                                       >
                                                         <div
                                                           className="bp3-text-large"
@@ -1414,7 +1479,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                         </Manager>
                                       </Blueprint3.Popover>
                                     </Blueprint3.Tooltip>
-                                    <Blueprint3.Text>
+                                    <Blueprint3.Text
+                                      ellipsize={false}
+                                      tagName="div"
+                                    >
                                       <div
                                         className=""
                                       >
@@ -1422,7 +1490,10 @@ exports[`should match exact snapshot on each step 3`] = `
                                         <span />
                                       </div>
                                     </Blueprint3.Text>
-                                    <Blueprint3.Text>
+                                    <Blueprint3.Text
+                                      ellipsize={false}
+                                      tagName="div"
+                                    >
                                       <div
                                         className=""
                                       >
@@ -1441,6 +1512,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                       <Blueprint3.Text
                                         className="bp3-text-muted"
                                         ellipsize={true}
+                                        tagName="div"
                                       >
                                         <div
                                           className="bp3-text-overflow-ellipsis bp3-text-muted"
@@ -1583,6 +1655,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                   >
                                     <Blueprint3.Text
                                       ellipsize={true}
+                                      tagName="div"
                                     >
                                       <div
                                         className="bp3-text-overflow-ellipsis"
@@ -1632,6 +1705,8 @@ exports[`should match exact snapshot on each step 3`] = `
                     >
                       <Blueprint3.Text
                         className="bp3-text-muted"
+                        ellipsize={false}
+                        tagName="div"
                       >
                         <div
                           className="bp3-text-muted"
@@ -1670,6 +1745,7 @@ exports[`should match exact snapshot on each step 3`] = `
                   >
                     <button
                       className="bp3-button bp3-intent-success"
+                      onBlur={[Function]}
                       onClick={[Function]}
                       onKeyDown={[Function]}
                       onKeyUp={[Function]}
@@ -1752,6 +1828,7 @@ exports[`should match exact snapshot on each step 3`] = `
               >
                 <button
                   className="bp3-button bp3-intent-danger"
+                  onBlur={[Function]}
                   onClick={[Function]}
                   onKeyDown={[Function]}
                   onKeyUp={[Function]}

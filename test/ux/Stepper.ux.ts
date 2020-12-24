@@ -20,10 +20,6 @@ fixture`Main App UX Test`
 const connectTestDeviceButton = Selector('button').withText(
   'Connect Test Device'
 );
-const crossCloseDialogButton = Selector('svg').withAttribute(
-  'data-icon',
-  'cross'
-);
 const allowToConnectButton = Selector('button').withText('Allow');
 const denyToConnectButton = Selector('button').withText('Deny');
 const shareEntireScreenButton = Selector('button').withText('Entire Screen');

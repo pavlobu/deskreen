@@ -29,8 +29,8 @@ import i18n_client, {
   getLangFullNameToLangISOKeyMap,
   getLangISOKeyToLangFullNameMap,
 } from '../../configs/i18next.config.client';
-import isProduction from '../../utils/isProduction';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
+import isWithReactRevealAnimations from '../../utils/isWithReactRevealAnimations';
 
 const Fade = require('react-reveal/Fade');
 
@@ -259,7 +259,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       transitionDuration={0}
     >
       <div className={getClassesCallback().overlayInnerRoot}>
-        <Fade duration={isProduction() ? 700 : 0}>
+        <Fade duration={isWithReactRevealAnimations() ? 700 : 0}>
           <div
             id="settings-overlay-inner"
             className={`${getClassesCallback().overlayInsideFade} ${

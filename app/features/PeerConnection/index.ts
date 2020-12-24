@@ -14,7 +14,7 @@ import SharingSessionStatusEnum from '../SharingSessionsService/SharingSessionSt
 import RoomIDService from '../../server/RoomIDService';
 import SharingSessionsService from '../SharingSessionsService';
 import connectSocket from '../../server/connectSocket';
-import Logger from '../../utils/logger';
+import Logger from '../../utils/LoggerWithFilePrefix';
 import DesktopCapturerSources from '../DesktopCapturerSourcesService';
 import setSdpMediaBitrate from './setSdpMediaBitrate';
 import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID';
@@ -150,8 +150,9 @@ export default class PeerConnection {
             }
             return size;
           })
-          .then(() => {
-            this.createPeer();
+          .then(async () => {
+            await this.createPeer();
+            this.setDisplaySizeFromLocalStream();
             return undefined;
           });
       }
@@ -162,6 +163,20 @@ export default class PeerConnection {
 
   setOnDeviceConnectedCallback(callback: (device: Device) => void) {
     this.onDeviceConnectedCallback = callback;
+  }
+
+  setDisplaySizeFromLocalStream() {
+    if (!this.localStream || !this.localStream.getVideoTracks()[0]) return;
+    if (!this.localStream.getVideoTracks()[0].getSettings().width) return;
+    if (!this.localStream.getVideoTracks()[0].getSettings().height) return;
+    this.sourceDisplaySize = {
+      width: this.localStream.getVideoTracks()[0].getSettings().width
+        ? (this.localStream.getVideoTracks()[0].getSettings().width as number)
+        : 640,
+      height: this.localStream.getVideoTracks()[0].getSettings().height
+        ? (this.localStream.getVideoTracks()[0].getSettings().height as number)
+        : 480,
+    };
   }
 
   denyConnectionForPartner() {
@@ -208,7 +223,7 @@ export default class PeerConnection {
     this.partnerDeviceDetails = {} as Device;
   }
 
-  private initSocketWhenUserCreatedCallback() {
+  initSocketWhenUserCreatedCallback() {
     this.socket.removeAllListeners();
 
     this.socket.on('disconnect', () => {
@@ -282,7 +297,7 @@ export default class PeerConnection {
     });
   }
 
-  private selfDestrory() {
+  selfDestrory() {
     this.partner = nullUser;
     this.connectedDevicesService.removeDeviceByID(this.partnerDeviceDetails.id);
     if (this.peer !== nullSimplePeer) {
@@ -306,7 +321,7 @@ export default class PeerConnection {
     this.roomIDService.unmarkRoomIDAsTaken(this.roomID);
   }
 
-  private emitUserEnter() {
+  emitUserEnter() {
     if (!this.socket) return;
     this.socket.emit('USER_ENTER', {
       username: this.user.username,
@@ -378,70 +393,79 @@ export default class PeerConnection {
   }
 
   createPeer() {
-    this.createDesktopCapturerStream(this.desktopCapturerSourceID).then(() => {
-      const peer = new SimplePeer({
-        initiator: true,
-        // trickle: true,
-        // stream: this.localStream,
-        // allowHalfTrickle: false,
-        config: { iceServers: [] },
-        sdpTransform: (sdp) => {
-          let newSDP = sdp;
-          newSDP = setSdpMediaBitrate(
-            newSDP as string,
-            'video',
-            500000
-          ) as typeof sdp;
-          return newSDP;
-        },
-      });
+    return new Promise((resolve) => {
+      this.createDesktopCapturerStream(this.desktopCapturerSourceID).then(
+        () => {
+          const peer = new SimplePeer({
+            initiator: true,
+            // trickle: true,
+            // stream: this.localStream,
+            // allowHalfTrickle: false,
+            config: { iceServers: [] },
+            sdpTransform: (sdp) => {
+              let newSDP = sdp;
+              newSDP = setSdpMediaBitrate(
+                newSDP as string,
+                'video',
+                500000
+              ) as typeof sdp;
+              return newSDP;
+            },
+          });
 
-      if (this.localStream !== null) {
-        peer.addStream(this.localStream);
-      }
-
-      peer.on('signal', (data: string) => {
-        // fired when simple peer and webrtc done preparation to start call on this machine
-        this.signalsDataToCallUser.push(data);
-      });
-
-      this.peer = peer;
-
-      this.peer.on('data', async (data) => {
-        const dataJSON = JSON.parse(data);
-
-        if (dataJSON.type === 'set_video_quality') {
-          const maxVideoQualityMultiplier = dataJSON.payload.value;
-          const minVideoQualityMultiplier =
-            maxVideoQualityMultiplier === 1 ? 0.5 : maxVideoQualityMultiplier;
-
-          if (!this.desktopCapturerSourceID.includes('screen')) return;
-
-          const newStream = await getDesktopSourceStreamBySourceID(
-            this.desktopCapturerSourceID,
-            this.sourceDisplaySize?.width,
-            this.sourceDisplaySize?.height,
-            minVideoQualityMultiplier,
-            maxVideoQualityMultiplier
-          );
-          const newVideoTrack = newStream.getVideoTracks()[0];
-          const oldTrack = this.localStream?.getVideoTracks()[0];
-
-          if (oldTrack && this.localStream) {
-            peer.replaceTrack(oldTrack, newVideoTrack, this.localStream);
-            oldTrack.stop();
+          // eslint-disable-next-line promise/always-return
+          if (this.localStream !== null) {
+            peer.addStream(this.localStream);
           }
-        }
 
-        if (dataJSON.type === 'get_sharing_source_type') {
-          const sourceType = this.desktopCapturerSourceID.includes('screen')
-            ? 'screen'
-            : 'window';
+          peer.on('signal', (data: string) => {
+            // fired when simple peer and webrtc done preparation to start call on this machine
+            this.signalsDataToCallUser.push(data);
+          });
 
-          this.peer.send(prepareDataMessageToSendScreenSourceType(sourceType));
+          this.peer = peer;
+
+          this.peer.on('data', async (data) => {
+            const dataJSON = JSON.parse(data);
+
+            if (dataJSON.type === 'set_video_quality') {
+              const maxVideoQualityMultiplier = dataJSON.payload.value;
+              const minVideoQualityMultiplier =
+                maxVideoQualityMultiplier === 1
+                  ? 0.5
+                  : maxVideoQualityMultiplier;
+
+              if (!this.desktopCapturerSourceID.includes('screen')) return;
+
+              const newStream = await getDesktopSourceStreamBySourceID(
+                this.desktopCapturerSourceID,
+                this.sourceDisplaySize?.width,
+                this.sourceDisplaySize?.height,
+                minVideoQualityMultiplier,
+                maxVideoQualityMultiplier
+              );
+              const newVideoTrack = newStream.getVideoTracks()[0];
+              const oldTrack = this.localStream?.getVideoTracks()[0];
+
+              if (oldTrack && this.localStream) {
+                peer.replaceTrack(oldTrack, newVideoTrack, this.localStream);
+                oldTrack.stop();
+              }
+            }
+
+            if (dataJSON.type === 'get_sharing_source_type') {
+              const sourceType = this.desktopCapturerSourceID.includes('screen')
+                ? 'screen'
+                : 'window';
+
+              this.peer.send(
+                prepareDataMessageToSendScreenSourceType(sourceType)
+              );
+            }
+          });
+          resolve(undefined);
         }
-      });
-      return peer;
+      );
     });
   }
 
@@ -449,12 +473,12 @@ export default class PeerConnection {
   createDesktopCapturerStream(sourceID: string) {
     return new Promise((resolve) => {
       try {
-        if (process.env.RUN_MODE === 'test') resolve();
+        if (process.env.RUN_MODE === 'test') resolve(undefined);
 
         if (!sourceID.includes('screen')) {
           getDesktopSourceStreamBySourceID(sourceID).then((stream) => {
             this.localStream = stream;
-            resolve();
+            resolve(undefined);
             return stream;
           });
         } else {
@@ -467,7 +491,7 @@ export default class PeerConnection {
             1
           ).then((stream) => {
             this.localStream = stream;
-            resolve();
+            resolve(undefined);
             return stream;
           });
         }

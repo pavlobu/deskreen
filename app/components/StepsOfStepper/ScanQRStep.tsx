@@ -155,6 +155,7 @@ const ScanQRStep: React.FC = () => {
         canOutsideClickClose
         transitionDuration={isProduction() ? 700 : 0}
         style={{ position: 'relative', top: '0px' }}
+        usePortal={false}
       >
         <Row
           id="qr-code-dialog-inner"

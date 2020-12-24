@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import config from './config';
 
 export default (resourceName = '') => {

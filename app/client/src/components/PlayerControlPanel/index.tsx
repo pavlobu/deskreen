@@ -1,9 +1,8 @@
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-} from 'react';
+/* istanbul ignore file */
+
+// IMPORTANT! leave upper blank line so this file is ignored for coverage!!! More on this issue here
+// https://github.com/facebook/create-react-app/issues/6106#issuecomment-550076629
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   Alignment,
   Button,
@@ -26,8 +25,9 @@ import DeskreenIconPNG from '../../images/deskreen_logo_128x128.png';
 import RedHeartTwemojiPNG from '../../images/red_heart_2764_twemoji_120x120.png';
 import { Col, Row } from 'react-flexbox-grid';
 import screenfull from 'screenfull';
-import { VideoQuality } from '../../features/PeerConnection/VideoQualityEnum';
-import { REACT_PLAYER_WRAPPER_ID } from '../../constants/appConstants';
+import { VideoQuality } from '../../features/VideoAutoQualityOptimizer/VideoQualityEnum';
+import handlePlayerToggleFullscreen from './handlePlayerToggleFullscreen';
+import initScreenfullOnChange from './initScreenfullOnChange';
 
 const videoQualityButtonStyle: React.CSSProperties = {
   width: '100%',
@@ -42,12 +42,11 @@ interface PlayerControlPanelProps {
   handleClickPlayPause: () => void;
   setVideoQuality: (q: VideoQuality) => void;
   selectedVideoQuality: VideoQuality;
-  screenSharingSourceType: 'screen' | 'window';
+  screenSharingSourceType: ScreenSharingSourceType;
   toaster: undefined | Toaster;
 }
 
 function PlayerControlPanel(props: PlayerControlPanelProps) {
-
   const {
     isPlaying,
     onSwitchChangedCallback,
@@ -65,40 +64,11 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
   const [isFullScreenOn, setIsFullScreenOn] = useState(false);
 
   useEffect(() => {
-    if (!screenfull.isEnabled) return;
-    // @ts-ignore
-    screenfull.on('change', () => {
-      // @ts-ignore
-      setIsFullScreenOn(screenfull.isFullscreen);
-    });
+    initScreenfullOnChange(setIsFullScreenOn);
   }, []);
 
   const handleClickFullscreenWhenDefaultPlayerIsOn = useCallback(() => {
-    const player = document.querySelector(
-      `#${REACT_PLAYER_WRAPPER_ID} > video`
-    );
-    if (!player) return;
-    // @ts-ignore
-    if (player.requestFullScreen) {
-      // @ts-ignore
-      player.requestFullScreen();
-      // @ts-ignore
-    } else if (player.webkitRequestFullScreen) {
-      // @ts-ignore
-      player.webkitRequestFullScreen();
-      // @ts-ignore
-    } else if (player.mozRequestFullScreen) {
-      // @ts-ignore
-      player.mozRequestFullScreen();
-      // @ts-ignore
-    } else if (player.msRequestFullscreen) {
-      // @ts-ignore
-      player.msRequestFullscreen();
-      // @ts-ignore
-    } else if (player.webkitEnterFullscreen) {
-      // @ts-ignore
-      player.webkitEnterFullscreen(); //for iphone this code worked
-    }
+    handlePlayerToggleFullscreen();
   }, []);
 
   return (
@@ -113,7 +83,12 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               <Button minimal>
                 <Row middle="xs" style={{ opacity: '0.75' }}>
                   <Col xs={4}>
-                    <img src={DeskreenIconPNG} width={42} height={42} alt="logo" />
+                    <img
+                      src={DeskreenIconPNG}
+                      width={42}
+                      height={42}
+                      alt="logo"
+                    />
                   </Col>
                   <Col xs={8}>
                     <H5 style={{ marginBottom: '0px' }}>Deskreen</H5>
@@ -125,7 +100,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
               position={Position.BOTTOM}
             >
-              <Button>
+              <Button style={{ borderRadius: '100px' }}>
                 <Row start="xs">
                   <Col xs>
                     <img
@@ -217,7 +192,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                           {Object.values(VideoQuality).map(
                             (q: VideoQuality) => {
                               return (
-                                <Row>
+                                <Row key={q}>
                                   <Button
                                     minimal
                                     active={selectedVideoQuality === q}

@@ -15,11 +15,12 @@ import {
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from './CloseOverlayButton';
-import isProduction from '../utils/isProduction';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import SharingSessionsService from '../features/SharingSessionsService';
 import DeviceInfoCallout from './DeviceInfoCallout';
 import SharingSourcePreviewCard from './SharingSourcePreviewCard';
+import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
+import isProduction from '../utils/isProduction';
 
 const sharingSessionsService = remote.getGlobal(
   'sharingSessionService'
@@ -149,7 +150,7 @@ export default function ConnectedDevicesListDrawer(
         size={Drawer.SIZE_LARGE}
         isOpen={props.isOpen}
         onClose={props.handleToggle}
-        transitionDuration={isProduction() ? 700 : 0}
+        transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
         // transitionDuration={0}
       >
         <Row between="xs" middle="xs" className={classes.drawerInnerTopPanel}>
@@ -176,7 +177,11 @@ export default function ConnectedDevicesListDrawer(
         </Row>
         <Row className={classes.connectedDevicesRoot}>
           <Col xs={12}>
-            <Fade bottom cascade duration={isProduction() ? 700 : 0}>
+            <Fade
+              bottom
+              cascade
+              duration={isWithReactRevealAnimations() ? 700 : 0}
+            >
               <div className={classes.zoomFullWidth}>
                 {connectedDevicesService.getDevices().map((device) => {
                   return (
@@ -245,7 +250,7 @@ export default function ConnectedDevicesListDrawer(
           setIsAlertDisconectAllOpen(false);
         }}
         onConfirm={handleDisconnectAndHideAllDevices}
-        transitionDuration={isProduction() ? 700 : 0}
+        transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
       >
         <H4>
           Are you sure you want to disconnect all connected viewing devices?

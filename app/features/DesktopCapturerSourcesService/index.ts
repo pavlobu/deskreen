@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable class-methods-use-this */
 import { desktopCapturer, DesktopCapturerSource } from 'electron';
-import Logger from '../../utils/logger';
+import Logger from '../../utils/LoggerWithFilePrefix';
 import DesktopCapturerSourceType from './DesktopCapturerSourceType';
 
 const log = new Logger(__filename);

@@ -1,5 +1,5 @@
-type CallAcceptedMessageWithPayload = {
-  type: 'CALL_ACCEPTED';
+type CallUserMessageWithPayload = {
+  type: 'CALL_USER';
   payload: {
     signalData: string;
   };
@@ -17,6 +17,41 @@ type DeviceDetailsMessageWithPayload = {
   };
 };
 
+type DenyToConnectMessageWithPayload = {
+  type: 'DENY_TO_CONNECT';
+  payload: {};
+};
+
+type DisconnectByHostMachineUserMessageWithPayload = {
+  type: 'DISCONNECT_BY_HOST_MACHINE_USER';
+  payload: {};
+};
+
+type AllowedToConnectMessageWithPayload = {
+  type: 'ALLOWED_TO_CONNECT';
+  payload: {};
+};
+
+type AppThemeMessageWithPayload = {
+  type: 'APP_THEME';
+  payload: {
+    value: boolean,
+  };
+};
+
+type AppLanguageMessageWithPayload = {
+  type: 'APP_LANGUAGE';
+  payload: {
+    value: string,
+  };
+};
+
+
 type ProcessedMessage =
-  | CallAcceptedMessageWithPayload
-  | DeviceDetailsMessageWithPayload;
+  | CallUserMessageWithPayload
+  | DeviceDetailsMessageWithPayload
+  | DenyToConnectMessageWithPayload
+  | DisconnectByHostMachineUserMessageWithPayload
+  | AllowedToConnectMessageWithPayload
+  | AppThemeMessageWithPayload
+  | AppLanguageMessageWithPayload;

@@ -1,4 +1,4 @@
-import MemoryStore from './Memory';
+import MemoryStore from './MemoryStore';
 
 let store: MemoryStore;
 

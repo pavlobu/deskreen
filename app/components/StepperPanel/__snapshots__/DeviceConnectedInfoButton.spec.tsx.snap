@@ -110,13 +110,17 @@ exports[`should match exact snapshot 1`] = `
                     <Blueprint3.Tooltip
                       className=""
                       content={
-                        <Blueprint3.Text>
+                        <Blueprint3.Text
+                          ellipsize={false}
+                          tagName="div"
+                        >
                           Click to manage
                         </Blueprint3.Text>
                       }
                       hoverCloseDelay={0}
                       hoverOpenDelay={400}
                       key=".0"
+                      minimal={false}
                       position="right"
                       transitionDuration={100}
                     >
@@ -127,7 +131,10 @@ exports[`should match exact snapshot 1`] = `
                         captureDismiss={false}
                         className=""
                         content={
-                          <Blueprint3.Text>
+                          <Blueprint3.Text
+                            ellipsize={false}
+                            tagName="div"
+                          >
                             Click to manage
                           </Blueprint3.Text>
                         }
@@ -142,7 +149,13 @@ exports[`should match exact snapshot 1`] = `
                         interactionKind="hover-target"
                         lazy={true}
                         minimal={false}
-                        modifiers={Object {}}
+                        modifiers={
+                          Object {
+                            "arrow": Object {
+                              "enabled": true,
+                            },
+                          }
+                        }
                         openOnTargetFocus={true}
                         popoverClassName="bp3-tooltip"
                         position="right"
@@ -191,6 +204,7 @@ exports[`should match exact snapshot 1`] = `
                                       <button
                                         className="bp3-button bp3-intent-success"
                                         id="connected-device-info-stepper-button"
+                                        onBlur={[Function]}
                                         onKeyDown={[Function]}
                                         onKeyUp={[Function]}
                                         style={
@@ -254,7 +268,10 @@ exports[`should match exact snapshot 1`] = `
                                                 <div
                                                   className="col-xs"
                                                 >
-                                                  <Blueprint3.Text>
+                                                  <Blueprint3.Text
+                                                    ellipsize={false}
+                                                    tagName="div"
+                                                  >
                                                     <div
                                                       className=""
                                                     >
