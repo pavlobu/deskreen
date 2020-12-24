@@ -27,7 +27,7 @@ jobs:
       #     cd ..
       #     yarn install --no-lockfile
 
-      - name: configure app/client for yarn cache
+      - name: configure app/client for yarn cacheeee
         uses: bahmutov/npm-install@v1.6.0
         with:
           working-directory: ./app/client
