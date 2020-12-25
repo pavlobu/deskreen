@@ -1,4 +1,7 @@
-import { remote } from 'electron';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { ipcRenderer, remote, shell } from 'electron';
 import React, { useContext, useCallback, useEffect, useState } from 'react';
 import {
   Button,
@@ -6,6 +9,7 @@ import {
   Classes,
   H3,
   H6,
+  H4,
   Tabs,
   Tab,
   Icon,
@@ -15,10 +19,10 @@ import {
   Checkbox,
 } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
-import { Row } from 'react-flexbox-grid';
+import { Col, Row } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import i18n from 'i18next';
-import SharingSessionsService from '../../features/SharingSessionsService';
+import SharingSessionService from '../../features/SharingSessionService';
 import {
   DARK_UI_BACKGROUND,
   LIGHT_UI_BACKGROUND,
@@ -31,12 +35,15 @@ import i18n_client, {
 } from '../../configs/i18next.config.client';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
 import isWithReactRevealAnimations from '../../utils/isWithReactRevealAnimations';
+import config from '../../api/config';
+
+const { port } = config;
 
 const Fade = require('react-reveal/Fade');
 
-const sharingSessionsService = remote.getGlobal(
+const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
-) as SharingSessionsService;
+) as SharingSessionService;
 
 interface SettingsOverlayProps {
   isSettingsOpen: boolean;
@@ -63,6 +70,9 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
 
   const { handleClose, isSettingsOpen } = props;
 
+  const [latestVersion, setLatestVersion] = useState('');
+  const [currentVersion, setCurrentVersion] = useState('');
+
   const {
     isDarkTheme,
     setIsDarkThemeHook,
@@ -70,6 +80,23 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
   } = useContext(SettingsContext);
 
   const [languagesList, setLanguagesList] = useState([] as string[]);
+
+  useEffect(() => {
+    const getLatestVersion = async () => {
+      const gotLatestVersion = await ipcRenderer.invoke('get-latest-version');
+      if (gotLatestVersion !== '') {
+        setLatestVersion(gotLatestVersion);
+      }
+    };
+    getLatestVersion();
+    const getCurrentVersion = async () => {
+      const gotCurrentVersion = await ipcRenderer.invoke('get-current-version');
+      if (gotCurrentVersion !== '') {
+        setCurrentVersion(gotCurrentVersion);
+      }
+    };
+    getCurrentVersion();
+  }, []);
 
   useEffect(() => {
     const tmp: string[] = [];
@@ -88,10 +115,10 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       setIsDarkThemeHook(true);
     }
     // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+    sharingSessionService.sharingSessions.forEach((sharingSession) => {
       sharingSession?.appThemeChanged(true);
     });
-    sharingSessionsService.setAppTheme(true);
+    sharingSessionService.setAppTheme(true);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const handleToggleLightTheme = useCallback(() => {
@@ -100,10 +127,10 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
       setIsDarkThemeHook(false);
     }
     // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+    sharingSessionService.sharingSessions.forEach((sharingSession) => {
       sharingSession?.appThemeChanged(false);
     });
-    sharingSessionsService.setAppTheme(false);
+    sharingSessionService.setAppTheme(false);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const onChangeLangueageHTMLSelectHandler = (
@@ -118,10 +145,10 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
         'English';
       i18n.changeLanguage(newLang);
       // TODO: call sharing sessions service here to notify all connected clients about language change
-      sharingSessionsService.sharingSessions.forEach((sharingSession) => {
+      sharingSessionService.sharingSessions.forEach((sharingSession) => {
         sharingSession?.appLanguageChanged(newLang);
       });
-      sharingSessionsService.setAppLanguage(newLang);
+      sharingSessionService.setAppLanguage(newLang);
     }
   };
 
@@ -147,6 +174,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
   const getLanguageChangingHTMLSelect = () => {
     return (
       <HTMLSelect
+        disabled // TODO: remove when tranlations are ready
         defaultValue={getLangISOKeyToLangFullNameMap().get(i18n.language)}
         options={languagesList}
         onChange={onChangeLangueageHTMLSelectHandler}
@@ -157,9 +185,9 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
   const getAutomaticUpdatesCheckboxInput = () => {
     return (
       <Checkbox
-        checked
+        disabled
         className={getClassesCallback().checkboxSettings}
-        label="Enabled"
+        label="Disabled"
       />
     );
   };
@@ -209,6 +237,64 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     </div>
   );
 
+  const AboutPanel: React.FC = () => (
+    <Row center="xs" middle="xs" style={{ height: 'calc(100vh - 40%)' }}>
+      <div>
+        <Col xs={12}>
+          <img
+            src={`http://127.0.0.1:${port}/logo512.png`}
+            alt="logo"
+            style={{ width: '100px' }}
+          />
+        </Col>
+        <Col xs={12}>
+          <H3>About Deskreen</H3>
+        </Col>
+        <Col xs={12}>
+          <Text>{`Version: ${currentVersion} (${currentVersion})`}</Text>
+        </Col>
+        <Col xs={12}>
+          <Text>
+            {`Copyright © ${new Date().getFullYear()} `}
+            <a
+              onClick={() => {
+                shell.openExternal('https://linkedin.com/in/pavlobu');
+              }}
+              style={
+                isDarkTheme
+                  ? {}
+                  : {
+                      color: 'blue',
+                    }
+              }
+            >
+              Pavlo (Paul) Buidenkov
+            </a>
+          </Text>
+        </Col>
+        <Col xs={12}>
+          <Text>
+            {`Website: `}
+            <a
+              onClick={() => {
+                shell.openExternal('https://www.deskreen.com');
+              }}
+              style={
+                isDarkTheme
+                  ? {}
+                  : {
+                      color: 'blue',
+                    }
+              }
+            >
+              https://www.deskreen.com
+            </a>
+          </Text>
+        </Col>
+      </div>
+    </Row>
+  );
+
   const getTabNavBlockedIPsButton = () => {
     return (
       <Row middle="xs" className={getClassesCallback().tabNavigationRowButton}>
@@ -245,6 +331,18 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     );
   };
 
+  const getTabNavAboutButton = () => {
+    return (
+      <Row middle="xs" className={getClassesCallback().tabNavigationRowButton}>
+        <Icon
+          icon="info-sign"
+          className={getClassesCallback().iconInTablLeftButton}
+        />
+        <Text className="bp3-text-large">About</Text>
+      </Row>
+    );
+  };
+
   return (
     <Overlay
       onClose={handleClose}
@@ -271,6 +369,24 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
               onClick={handleClose}
               isDefaultStyles
             />
+            {latestVersion !== '' &&
+            currentVersion !== '' &&
+            latestVersion !== currentVersion ? (
+              <H4
+                id="new-version-header"
+                onClick={(e) => {
+                  e.preventDefault();
+                  shell.openExternal(
+                    'https://github.com/pavlobu/deskreen/releases/'
+                  );
+                }}
+              >
+                {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+                New version {latestVersion} is available! Click to download.
+              </H4>
+            ) : (
+              <></>
+            )}
             <Tabs
               animate
               id="TabsExample"
@@ -281,11 +397,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
               <Tab id="rx" title="" panel={<GeneralSettingsPanel />}>
                 {getTabNavGeneralSettingsButton()}
               </Tab>
-              <Tab id="ng" title="" panel={<SecurityPanel />}>
+              <Tab id="ng" disabled title="" panel={<SecurityPanel />}>
                 {getTabNavSecurityButton()}
               </Tab>
               <Tab id="bb" disabled title="" panel={<BlockedIPsPanel />}>
                 {getTabNavBlockedIPsButton()}
+              </Tab>
+              <Tab id="cc" title="" panel={<AboutPanel />}>
+                {getTabNavAboutButton()}
               </Tab>
               <Tabs.Expander />
             </Tabs>

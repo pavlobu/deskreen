@@ -1,4 +1,3 @@
-import PeerConnection from '.';
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
 
 export default (peerConnection: PeerConnection, errorMessage: ErrorMessage) => {

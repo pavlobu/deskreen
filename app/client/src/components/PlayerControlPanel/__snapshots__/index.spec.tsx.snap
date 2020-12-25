@@ -23,6 +23,7 @@ exports[`should match exact snapshot 1`] = `
           <button
             className="bp3-button bp3-minimal"
             onBlur={[Function]}
+            onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
             tabIndex={0}
@@ -45,7 +46,7 @@ exports[`should match exact snapshot 1`] = `
                   <img
                     alt="logo"
                     height={42}
-                    src="deskreen_logo_128x128.png"
+                    src="http://localhost/logo192.png"
                     width={42}
                   />
                 </div>
@@ -81,6 +82,7 @@ exports[`should match exact snapshot 1`] = `
           <button
             className="bp3-button"
             onBlur={[Function]}
+            onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
             style={

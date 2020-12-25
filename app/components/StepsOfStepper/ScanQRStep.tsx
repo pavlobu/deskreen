@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { clipboard, remote } from 'electron';
+import { clipboard, remote, ipcRenderer } from 'electron';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,19 +15,17 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { SettingsContext } from '../../containers/SettingsProvider';
 import isProduction from '../../utils/isProduction';
-import SharingSessionService from '../../features/SharingSessionsService';
+import SharingSessionService from '../../features/SharingSessionService';
+import config from '../../api/config';
+
+const { port } = config;
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
 ) as SharingSessionService;
 
-const LOCAL_LAN_IP =
-  process.env.RUN_MODE === 'dev' || process.env.NODE_ENV === 'production'
-    ? require('internal-ip').v4.sync()
-    : '255.255.255.255';
-
-// TODO: change 3131 to user defined port, if it is really defined
-const CLIENT_VIEWER_PORT = isProduction() ? '3131' : '3000';
+// TODO: change port to user defined port, if it is really defined
+const CLIENT_VIEWER_PORT = isProduction() ? port : '3000';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -64,6 +62,7 @@ const ScanQRStep: React.FC = () => {
   const { isDarkTheme } = useContext(SettingsContext);
 
   const [roomID, setRoomID] = useState('');
+  const [LOCAL_LAN_IP, setLocalLanIP] = useState('');
 
   useEffect(() => {
     const thisInterval = setInterval(() => {
@@ -74,8 +73,16 @@ const ScanQRStep: React.FC = () => {
       }
     }, 1000);
 
+    const ipInterval = setInterval(async () => {
+      const gotIP = await ipcRenderer.invoke('get-local-lan-ip');
+      if (gotIP) {
+        setLocalLanIP(gotIP);
+      }
+    }, 1000);
+
     return () => {
       clearInterval(thisInterval);
+      clearInterval(ipInterval);
     };
   }, []);
 
@@ -94,7 +101,7 @@ const ScanQRStep: React.FC = () => {
               borderRadius: '20px',
             }}
           >
-            make sure your computer and device are connected to same WiFi
+            Make sure your computer and device are connected to same WiFi
           </span>
         </Text>
         <Text className="bp3-text">{t('Scan the QR code')}</Text>
@@ -114,8 +121,7 @@ const ScanQRStep: React.FC = () => {
               fgColor={isDarkTheme ? '#ffffff' : '#000000'}
               imageSettings={{
                 // TODO: change image to app icon
-                src:
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
+                src: `http://127.0.0.1:${CLIENT_VIEWER_PORT}/logo192.png`,
                 width: 40,
                 height: 40,
               }}
@@ -171,8 +177,7 @@ const ScanQRStep: React.FC = () => {
               renderAs="svg"
               imageSettings={{
                 // TODO: change image to app icon
-                src:
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png',
+                src: `http://127.0.0.1:${CLIENT_VIEWER_PORT}/logo192.png`,
                 width: 25,
                 height: 25,
               }}

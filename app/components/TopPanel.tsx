@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
+import { shell } from 'electron';
 import React, { useCallback, useContext } from 'react';
 import { Button, Text, Icon, Position, Tooltip } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
@@ -80,9 +81,11 @@ export default function TopPanel(props: any) {
       >
         <Button
           style={{
-            transform: 'translateY(2px)',
             marginRight: '10px',
             borderRadius: '100px',
+          }}
+          onClick={() => {
+            shell.openExternal('https://www.patreon.com/deskreen');
           }}
         >
           <Row start="xs">
@@ -135,6 +138,9 @@ export default function TopPanel(props: any) {
             id="top-panel-help-button"
             intent="none"
             className={getClassesCallback().topPanelControlButton}
+            onClick={() => {
+              shell.openExternal('https://www.deskreen.com/#howtos');
+            }}
           >
             <Icon
               className={getClassesCallback().topPanelIconOfControlButton}
@@ -177,12 +183,25 @@ export default function TopPanel(props: any) {
           content="Click to visit our website"
           position={Position.BOTTOM}
         >
-          <h4
-            id="deskreen-top-app-name-header"
-            className={getClassesCallback().appNameHeader}
+          <Button
+            minimal
+            onClick={() => {
+              shell.openExternal('https://www.deskreen.com');
+            }}
+            style={{
+              borderRadius: '100px',
+            }}
           >
-            Deskreen
-          </h4>
+            <h4
+              id="deskreen-top-app-name-header"
+              className={getClassesCallback().appNameHeader}
+              style={{
+                transform: 'translateY(-3px)',
+              }}
+            >
+              Deskreen
+            </h4>
+          </Button>
         </Tooltip>
       </div>
     );

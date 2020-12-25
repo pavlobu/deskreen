@@ -16,15 +16,15 @@ import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from './CloseOverlayButton';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
-import SharingSessionsService from '../features/SharingSessionsService';
+import SharingSessionService from '../features/SharingSessionService';
 import DeviceInfoCallout from './DeviceInfoCallout';
 import SharingSourcePreviewCard from './SharingSourcePreviewCard';
 import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 import isProduction from '../utils/isProduction';
 
-const sharingSessionsService = remote.getGlobal(
+const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
-) as SharingSessionsService;
+) as SharingSessionService;
 const connectedDevicesService = remote.getGlobal(
   'connectedDevicesService'
 ) as ConnectedDevicesService;
@@ -34,12 +34,12 @@ const Fade = require('react-reveal/Fade');
 const disconnectPeerAndDestroySharingSessionBySessionID = (
   sharingSessionID: string
 ) => {
-  const sharingSession = sharingSessionsService.sharingSessions.get(
+  const sharingSession = sharingSessionService.sharingSessions.get(
     sharingSessionID
   );
   sharingSession?.disconnectByHostMachineUser();
-  sharingSession?.destory();
-  sharingSessionsService.sharingSessions.delete(sharingSessionID);
+  sharingSession?.destroy();
+  sharingSessionService.sharingSessions.delete(sharingSessionID);
 };
 
 interface ConnectedDevicesListDrawerProps {
@@ -206,7 +206,7 @@ export default function ConnectedDevicesListDrawer(
                             <Col xs={6}>
                               <SharingSourcePreviewCard
                                 sharingSourceID={
-                                  sharingSessionsService.sharingSessions.get(
+                                  sharingSessionService.sharingSessions.get(
                                     device.sharingSessionID
                                   )?.desktopCapturerSourceID
                                 }

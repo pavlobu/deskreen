@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export default {
   fallbackLng: 'en',
   namespace: 'translation',

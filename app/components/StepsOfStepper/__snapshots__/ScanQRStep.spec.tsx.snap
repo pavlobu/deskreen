@@ -24,7 +24,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           }
         }
       >
-        make sure your computer and device are connected to same WiFi
+        Make sure your computer and device are connected to same WiFi
       </span>
     </Blueprint3.Text>
     <Blueprint3.Text
@@ -53,7 +53,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           imageSettings={
             Object {
               "height": 40,
-              "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+              "src": "http://127.0.0.1:3000/logo192.png",
               "width": 40,
             }
           }
@@ -61,7 +61,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           level="H"
           renderAs="svg"
           size={128}
-          value="http://255.255.255.255:3000/"
+          value="http://:3000/"
         />
       </Blueprint3.Button>
     </Blueprint3.Tooltip>
@@ -99,7 +99,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
         }
       }
     >
-      http://255.255.255.255:3000/
+      http://:3000/
     </Blueprint3.Button>
   </Blueprint3.Tooltip>
   <Blueprint3.Dialog
@@ -136,7 +136,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           imageSettings={
             Object {
               "height": 25,
-              "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+              "src": "http://127.0.0.1:3000/logo192.png",
               "width": 25,
             }
           }
@@ -144,7 +144,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
           level="H"
           renderAs="svg"
           size={128}
-          value="http://255.255.255.255:3000/"
+          value="http://:3000/"
           width="390px"
         />
       </Col>

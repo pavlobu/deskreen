@@ -66,6 +66,7 @@ export default class RendererWebrtcHelpersService {
     if (process.env.NODE_ENV === 'dev') {
       helperRendererWindow.webContents.toggleDevTools();
     }
+    // helperRendererWindow.webContents.toggleDevTools();
 
     return helperRendererWindow;
   }

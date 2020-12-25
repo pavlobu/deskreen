@@ -4,6 +4,7 @@ import getRoomIDOfCurrentBrowserWindow from '../../utils/getRoomIDOfCurrentBrows
 import Crypto from '../../utils/crypto';
 import VideoAutoQualityOptimizer from '../../features/VideoAutoQualityOptimizer';
 import changeLanguage from './changeLanguage';
+import ConnectionIcon from './ConnectionIconEnum';
 
 export default (params: CreatePeerConnectionUseEffectParams) => {
   const {
@@ -27,7 +28,7 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
         isDarkTheme,
         setMyDeviceDetails,
         () => {
-          setConnectionIconType('feed-subscribed');
+          setConnectionIconType(ConnectionIcon.FEED_SUBSCRIBED);
 
           setIsShownTextPrompt(false);
           setIsShownTextPrompt(true);

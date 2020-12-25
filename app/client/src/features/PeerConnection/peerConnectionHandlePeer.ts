@@ -1,10 +1,10 @@
-import PeerConnection from '.';
 import {
   prepareDataMessageToChangeQuality,
   prepareDataMessageToGetSharingSourceType,
 } from './simplePeerDataMessages';
 import { VideoQuality } from '../VideoAutoQualityOptimizer/VideoQualityEnum';
 import PeerConnectionPeerIsNullError from './errors/PeerConnectionPeerIsNullError';
+import ScreenSharingSource from './ScreenSharingSourceEnum';
 
 export function getSharingShourceType(peerConnection: PeerConnection) {
   try {
@@ -21,25 +21,27 @@ export default (peerConnection: PeerConnection) => {
   peerConnection.peer.on('stream', (stream) => {
     peerConnection.setUrlCallback(stream);
 
-    peerConnection.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
-      if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
-        try {
-          peerConnection.peer?.send(prepareDataMessageToChangeQuality(1));
-        } catch (e) {
-          console.log(e);
+    setTimeout(() => {
+      peerConnection.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
+        if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
+          try {
+            peerConnection.peer?.send(prepareDataMessageToChangeQuality(1));
+          } catch (e) {
+            console.log(e);
+          }
         }
-      }
-    });
+      });
 
-    peerConnection.videoAutoQualityOptimizer.setHalfQualityCallbak(() => {
-      if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
-        try {
-          peerConnection.peer?.send(prepareDataMessageToChangeQuality(0.5));
-        } catch (e) {
-          console.log(e);
+      peerConnection.videoAutoQualityOptimizer.setHalfQualityCallbak(() => {
+        if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
+          try {
+            peerConnection.peer?.send(prepareDataMessageToChangeQuality(0.5));
+          } catch (e) {
+            console.log(e);
+          }
         }
-      }
-    });
+      });
+    }, 1000);
 
     peerConnection.videoAutoQualityOptimizer.startOptimizationLoop();
 
@@ -64,8 +66,8 @@ export default (peerConnection: PeerConnection) => {
     if (dataJSON.type === 'screen_sharing_source_type') {
       peerConnection.screenSharingSourceType = dataJSON.payload.value;
       if (
-        peerConnection.screenSharingSourceType === 'screen' ||
-        peerConnection.screenSharingSourceType === 'window'
+        peerConnection.screenSharingSourceType === ScreenSharingSource.SCREEN ||
+        peerConnection.screenSharingSourceType === ScreenSharingSource.WINDOW
       ) {
         peerConnection.UIHandler.setScreenSharingSourceTypeCallback(
           peerConnection.screenSharingSourceType

@@ -154,7 +154,9 @@ div.class-allow-device-to-connect-alert
   > svg
   > path {
   color: #a82a2a;
-  -webkit-animation: blink 0.75s infinite alternate; /* to blink 3 times instead of infinite write just 3 */
+  -webkit-animation: blink 0.75s infinite alternate;
+
+  /* to blink 3 times instead of infinite write just 3 */
   -moz-animation: blink 0.75s infinite alternate;
   -ms-animation: blink 0.75s infinite alternate;
   -o-animation: blink 0.75s infinite alternate;
@@ -165,38 +167,47 @@ div.class-allow-device-to-connect-alert
   from {
     color: #a82a2a;
   }
+
   to {
     color: #f55656;
   }
 }
+
 @-moz-keyframes blink {
   from {
     color: #a82a2a;
   }
+
   to {
     color: #f55656;
   }
 }
+
 @-ms-keyframes blink {
   from {
     color: #a82a2a;
   }
+
   to {
     color: #f55656;
   }
 }
+
 @-o-keyframes blink {
   from {
     color: #a82a2a;
   }
+
   to {
     color: #f55656;
   }
 }
+
 @keyframes blink {
   from {
     color: #a82a2a;
   }
+
   to {
     color: #f55656;
   }
@@ -411,4 +422,20 @@ a:hover {
   opacity: 1;
   text-decoration: none;
   cursor: pointer;
+}
+
+#new-version-header {
+  background: rgba(0, 255, 54, 0.48);
+  width: fit-content;
+  border-radius: 100px;
+  padding: 5px;
+}
+
+#new-version-header:hover {
+  background: rgba(0, 255, 54, 0.78);
+  cursor: pointer;
+}
+
+.bp3-tab-list {
+  height: calc(100vh - 30%);
 }

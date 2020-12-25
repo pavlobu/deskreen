@@ -1,32 +1,17 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /*
  * original JS code from darkwire.io
- * translated to typescript for Deskreen app
+ * translated and adapted to typescript for Deskreen app
  * */
 
 /* eslint-disable no-async-promise-executor */
 import _ from 'lodash';
 import Io from 'socket.io';
-// eslint-disable-next-line import/no-cycle
-import { getIO } from '.';
 import socketsIPService from './socketsIPService';
 import getStore from './store';
+import socketIOServerStore from './store/socketIOServerStore';
 
-const LOCALHOST_SOCKET_IP = '::1';
-
-interface User {
-  socketId: string;
-  publicKey: string;
-  isOwner: boolean;
-  ip: string;
-}
-
-interface Room {
-  id: string;
-  users: User[];
-  isLocked: boolean;
-  createdAt: number;
-}
+const LOCALHOST_SOCKET_IP = '127.0.0.1';
 
 interface SocketOPTS {
   roomId: string;
@@ -56,13 +41,12 @@ export default class Socket implements SocketOPTS {
       return;
     }
 
-    this.init(opts);
+    this.init();
   }
 
-  async init(opts: SocketOPTS) {
-    const { roomId, socket } = opts;
-    await this.joinRoom(roomId, socket);
-    this.handleSocket(socket);
+  async init() {
+    await this.joinRoom();
+    this.handleSocket();
   }
 
   sendRoomLocked() {
@@ -74,7 +58,6 @@ export default class Socket implements SocketOPTS {
       ...room,
       updatedAt: Date.now(),
     };
-
     return getStore().set('rooms', this.roomId, JSON.stringify(json));
   }
 
@@ -90,48 +73,50 @@ export default class Socket implements SocketOPTS {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  joinRoom(roomId: string, socket: Io.Socket) {
+  joinRoom() {
     return new Promise((resolve, reject) => {
-      socket.join(roomId, (err) => {
+      this.socket.join(this.roomId, (err) => {
         if (err) {
           reject();
         }
-        resolve();
+        resolve(undefined);
       });
     });
   }
 
-  async handleSocket(socket: Io.Socket) {
-    socket.on('GET_MY_IP', (acknowledgeFunction) => {
-      acknowledgeFunction(socketsIPService.getSocketIPByID(socket.id));
+  handleSocket() {
+    this.socket.on('GET_MY_IP', (acknowledgeFunction) => {
+      acknowledgeFunction(socketsIPService.getSocketIPByID(this.socket.id));
     });
 
-    socket.on('GET_IP_BY_SOCKET_ID', (socketID, acknowledgeFunction) => {
+    this.socket.on('GET_IP_BY_SOCKET_ID', (socketID, acknowledgeFunction) => {
       acknowledgeFunction(socketsIPService.getSocketIPByID(socketID));
     });
 
-    socket.on('IS_ROOM_LOCKED', async (acknowledgeFunction) => {
+    this.socket.on('IS_ROOM_LOCKED', async (acknowledgeFunction) => {
       const room: Room = (await this.fetchRoom()) as Room;
       acknowledgeFunction(room.isLocked);
     });
 
-    socket.on('ENCRYPTED_MESSAGE', (payload) => {
-      socket.to(this.roomId).emit('ENCRYPTED_MESSAGE', payload);
+    this.socket.on('ENCRYPTED_MESSAGE', (payload) => {
+      this.socket.to(this.roomId).emit('ENCRYPTED_MESSAGE', payload);
     });
 
-    socket.on('DISCONNECT_SOCKET_BY_DEVICE_IP', async (payload) => {
+    this.socket.on('DISCONNECT_SOCKET_BY_DEVICE_IP', async (payload) => {
       const room: Room = (await this.fetchRoom()) as Room;
       const ownerUser = (room.users || []).find(
-        (u) => u.socketId === socket.id && u.isOwner
+        (u) => u.socketId === this.socket.id && u.isOwner
       );
       if (!ownerUser) return;
       const socketIDToDisconnect = socketsIPService.getSocketIDByIP(payload.ip);
       if (!socketIDToDisconnect) return;
 
-      this.handleDisconnect(getIO().sockets.connected[socketIDToDisconnect]);
+      this.handleDisconnect(
+        socketIOServerStore.getServer().sockets.connected[socketIDToDisconnect]
+      );
     });
 
-    socket.on('USER_ENTER', async (payload) => {
+    this.socket.on('USER_ENTER', async (payload) => {
       let room: Room = (await this.fetchRoom()) as Room;
       if (_.isEmpty(room)) {
         room = {
@@ -152,17 +137,19 @@ export default class Socket implements SocketOPTS {
         users: [
           ...(room.users || []),
           {
-            socketId: socket.id,
+            socketId: this.socket.id,
             publicKey: payload.publicKey,
-            isOwner:
-              LOCALHOST_SOCKET_IP === socket.request.connection.remoteAddress,
+            isOwner: this.socket.request.connection.remoteAddress.includes(
+              LOCALHOST_SOCKET_IP
+            ),
             ip: payload.ip ? payload.ip : '',
           },
         ],
       };
       await this.saveRoom(newRoom);
 
-      getIO()
+      socketIOServerStore
+        .getServer()
         .to(this.roomId)
         .emit('USER_ENTER', {
           ...newRoom,
@@ -170,17 +157,13 @@ export default class Socket implements SocketOPTS {
         });
     });
 
-    socket.on('TOGGLE_LOCK_ROOM', async (__, callback) => {
+    this.socket.on('TOGGLE_LOCK_ROOM', async () => {
       const room: Room = (await this.fetchRoom()) as Room;
       const user = (room.users || []).find(
-        (u) => u.socketId === socket.id && u.isOwner
+        (u) => u.socketId === this.socket.id && u.isOwner
       );
 
       if (!user) {
-        // @ts-ignore
-        callback({
-          isLocked: room.isLocked,
-        });
         return;
       }
 
@@ -188,29 +171,20 @@ export default class Socket implements SocketOPTS {
         ...room,
         isLocked: !room.isLocked,
       });
-
-      socket.to(this.roomId).emit('TOGGLE_LOCK_ROOM', {
-        locked: !room.isLocked,
-        publicKey: user && user.publicKey,
-      });
-
-      callback({
-        isLocked: !room.isLocked,
-      });
     });
 
-    socket.on('disconnect', () => {
-      this.handleDisconnect(socket);
+    this.socket.on('disconnect', () => {
+      this.handleDisconnect(this.socket);
     });
 
-    socket.on('USER_DISCONNECT', () => {
-      this.handleDisconnect(socket);
+    this.socket.on('USER_DISCONNECT', () => {
+      this.handleDisconnect(this.socket);
     });
   }
 
   async handleDisconnect(socket: Io.Socket) {
     const room: Room = (await this.fetchRoom()) as Room;
-    const ownerUser = (room.users || []).find(
+    const isOwnerUser = !!(room.users || []).find(
       (u) => u.socketId === socket.id && u.isOwner
     );
 
@@ -224,24 +198,29 @@ export default class Socket implements SocketOPTS {
         })),
     };
 
-    if (ownerUser) {
-      // if owner left diconnect all users
-      newRoom.users.forEach((u) => {
-        if (getIO().sockets.connected[u.socketId]) {
-          getIO().sockets.connected[u.socketId].disconnect();
-        }
-      });
-      newRoom.users = [];
-    }
-
-    await this.saveRoom(newRoom);
-
-    getIO().to(this.roomId).emit('USER_EXIT', newRoom.users);
-
-    if (newRoom.users && newRoom.users.length === 0) {
+    if (isOwnerUser) {
+      this.disconnectAllUsers(newRoom);
       await this.destroyRoom();
+    } else {
+      await this.saveRoom(newRoom);
     }
+
+    socketIOServerStore
+      .getServer()
+      .to(this.roomId)
+      .emit('USER_EXIT', newRoom.users);
 
     socket.disconnect(true);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  disconnectAllUsers(room: Room) {
+    room.users.forEach((u) => {
+      if (socketIOServerStore.getServer().sockets.connected[u.socketId]) {
+        socketIOServerStore
+          .getServer()
+          .sockets.connected[u.socketId].disconnect();
+      }
+    });
   }
 }

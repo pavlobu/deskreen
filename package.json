@@ -49,7 +49,7 @@
     "test-ux": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test RUN_MODE=test testcafe --skip-js-errors electron:./app ./test/ux/Stepper.ux.ts",
     "test-ux-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test RUN_MODE=test testcafe --live electron:./app ./test/ux/Stepper.ux.ts",
     "test-watch": "yarn jest --watch --silent",
-    "test-watch-no-silent": "yarn jest --watch",
+    "test-watch-not-silent": "yarn jest --watch",
     "sonar": "concurrently \"sonar-scanner\" \"cd app/client && sonar-scanner\" "
   },
   "lint-staged": {

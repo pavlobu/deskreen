@@ -4,93 +4,35 @@
  * by Pavlo (Paul) Buidenkov
  * */
 
-import http, { Server } from 'http';
+import http from 'http';
 import express from 'express';
 import Koa from 'koa';
+import crypto from 'crypto';
 import Io from 'socket.io';
 import cors from 'kcors';
 import Router from 'koa-router';
-import crypto from 'crypto';
 import koaStatic from 'koa-static';
 import koaSend from 'koa-send';
-import getPort from 'get-port';
-// eslint-disable-next-line import/no-cycle
-import DarkwireSocket from './darkwireSocket';
+import config from '../api/config';
+// import getPort from 'get-port';
 import pollForInactiveRooms from './pollForInactiveRooms';
-import getStore from './store';
-
 import Logger from '../utils/LoggerWithFilePrefix';
 import isProduction from '../utils/isProduction';
 import SocketsIPService from './socketsIPService';
-import getDeskreenGlobal from '../mainProcessHelpers/getDeskreenGlobal';
+import socketIOServerStore from './store/socketIOServerStore';
+import getDeskreenGlobal from '../utils/mainProcessHelpers/getDeskreenGlobal';
+import DarkwireSocket from './darkwireSocket';
+import getStore from './store';
 
-const log = new Logger('app/server/index.ts');
-
-const app = new Koa();
-
-const router = new Router();
-
-const store = getStore();
-
-app.use(cors());
-app.use(router.routes());
-
-function setStaticFileHeaders(
-  ctx: Koa.ParameterizedContext<Koa.DefaultState, Koa.DefaultContext>
-) {
-  ctx.set({
-    'strict-transport-security': 'max-age=31536000',
-    'X-Frame-Options': 'deny',
-    'X-XSS-Protection': '1; mode=block',
-    'X-Content-Type-Options': 'nosniff',
-    'Referrer-Policy': 'no-referrer',
-    'Feature-Policy':
-      "geolocation 'none'; vr 'none'; payment 'none'; microphone 'none'",
-    // 'Cache-Control': 'max-age=0', // make browser get fresh files and make new connection when client connected
-  });
-}
-
-const clientDistDirectory = isProduction()
-  ? `${__dirname}/client/build`
-  : `${__dirname}/../client/build`;
-
-if (clientDistDirectory) {
-  app.use(async (ctx, next) => {
-    setStaticFileHeaders(ctx);
-    await koaStatic(clientDistDirectory)(ctx, next);
-  });
-
-  app.use(async (ctx) => {
-    setStaticFileHeaders(ctx);
-    await koaSend(ctx, 'index.html', { root: clientDistDirectory });
-  });
-} else {
-  app.use(async (ctx) => {
-    ctx.body = { ready: true };
-  });
-}
-
-const protocol = http;
-
-const server = protocol.createServer(app.callback());
-const io = Io(server, {
-  pingInterval: 20000,
-  pingTimeout: 5000,
-  serveClient: false,
-});
+const { port } = config;
 
 const getRoomIdHash = (id: string) => {
   return crypto.createHash('sha256').update(id).digest('hex');
 };
 
-io.sockets.on('connection', (socket) => {
-  const socketId = socket.id;
-  const clientIp = socket.request.connection.remoteAddress;
-  SocketsIPService.setIPOfSocketID(socketId, clientIp);
-});
-
-io.on('connection', async (socket) => {
+const ioHandleOnConnection = (socket: Io.Socket) => {
   const { roomId } = socket.handshake.query;
+  const store = getStore();
 
   setTimeout(async () => {
     if (!getDeskreenGlobal().roomIDService.isRoomIDTaken(roomId)) {
@@ -112,52 +54,108 @@ io.on('connection', async (socket) => {
         room,
       });
     }
-  }, 1000); // timeout 1 second for throttling malitios connections
-});
-
-const init = async (PORT: number) => {
-  pollForInactiveRooms();
-
-  return server.listen(PORT, () => {
-    log.info(`Deskreen signaling server is online at port ${PORT}`);
-  });
+  }, 500); // timeout 500 millisecond for throttling malitios connections
 };
 
-class SignalingServer {
-  private static instance: SignalingServer;
+function setStaticFileHeaders(
+  ctx: Koa.ParameterizedContext<Koa.DefaultState, Koa.DefaultContext>
+) {
+  ctx.set({
+    'strict-transport-security': 'max-age=31536000',
+    'X-Frame-Options': 'deny',
+    'X-XSS-Protection': '1; mode=block',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'no-referrer',
+    'Feature-Policy':
+      "geolocation 'none'; vr 'none'; payment 'none'; microphone 'none'",
+    // 'Cache-Control': 'max-age=0', // make browser get fresh files and make new connection when client connected
+  });
+}
 
-  public expressApp: express.Application;
+class DeskreenSignalingServer {
+  log = new Logger(__filename);
 
-  public server: Server;
+  expressApp: express.Application;
 
-  public port: number;
+  server = ({} as unknown) as http.Server;
+
+  port: number;
+
+  app: Koa | undefined;
 
   constructor() {
     this.expressApp = express();
-    this.server = new Server();
-    this.port = 3131;
+    this.port = parseInt((port as unknown) as string, 10);
+    this.init();
   }
 
-  public async start(): Promise<Server> {
-    this.port = await getPort({ port: 3131 });
-    this.server = await init(this.port);
-    log.info(`Deskreen signaling server started at port: ${this.port}`);
+  init() {
+    this.app = new Koa();
+    const router = new Router();
+
+    this.app.use(cors());
+    this.app.use(router.routes());
+
+    const clientDistDirectory = isProduction()
+      ? `${__dirname}/client/build`
+      : `${__dirname}/../client/build`;
+
+    if (clientDistDirectory) {
+      this.app.use(async (ctx, next) => {
+        setStaticFileHeaders(ctx);
+        await koaStatic(clientDistDirectory)(ctx, next);
+      });
+
+      this.app.use(async (ctx) => {
+        setStaticFileHeaders(ctx);
+        await koaSend(ctx, 'index.html', { root: clientDistDirectory });
+      });
+    } else {
+      this.app.use(async (ctx) => {
+        ctx.body = { ready: true };
+      });
+    }
+
+    const protocol = http;
+
+    this.server = protocol.createServer(this.app.callback());
+    const io = Io(this.server, {
+      pingInterval: 20000,
+      pingTimeout: 5000,
+      serveClient: false,
+    });
+
+    io.sockets.on('connection', (socket) => {
+      const socketId = socket.id;
+      const clientIp = socket.request.connection.remoteAddress;
+      SocketsIPService.setIPOfSocketID(socketId, clientIp);
+    });
+
+    io.on('connection', (socket) => {
+      ioHandleOnConnection(socket);
+    });
+
+    socketIOServerStore.setServer(io);
+  }
+
+  async start() {
+    pollForInactiveRooms();
+    this.port = parseInt((port as unknown) as string, 10);
+    this.server = this.callListenOnHttpServer();
     return this.server;
   }
 
-  public stop(): void {
-    this.server.close();
+  callListenOnHttpServer() {
+    return this.server.listen(this.port, () => {
+      this.log.info(`Deskreen signaling server is online at port ${this.port}`);
+    });
   }
 
-  public static getInstance(): SignalingServer {
-    if (!SignalingServer.instance) {
-      SignalingServer.instance = new SignalingServer();
-    }
-
-    return SignalingServer.instance;
+  stop(): void {
+    this.server.close();
   }
 }
 
-export const getIO = () => io;
+const deskreenServer = new DeskreenSignalingServer();
 
-export default SignalingServer.getInstance();
+export default deskreenServer;

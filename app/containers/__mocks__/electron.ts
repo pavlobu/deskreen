@@ -8,3 +8,4 @@ export const remote = {
     return '';
   },
 };
+export const ipcRenderer = jest.fn();

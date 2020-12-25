@@ -1,7 +1,7 @@
 import { remote } from 'electron';
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import SharingSessionService from '../../../features/SharingSessionsService';
+import SharingSessionService from '../../../features/SharingSessionService';
 import SharingSourcePreviewCard from '../../SharingSourcePreviewCard';
 
 const sharingSessionService = remote.getGlobal(

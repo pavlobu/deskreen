@@ -1,4 +1,4 @@
-const nullDevice: Device = {
+export const nullDevice: Device = {
   id: '',
   sharingSessionID: '',
   deviceOS: '',
@@ -33,7 +33,7 @@ class ConnectedDevices {
       this.devices = this.devices.filter((d) => {
         return d.id !== deviceIDToRemove;
       });
-      resolve();
+      resolve(undefined);
     });
   }
 
@@ -50,7 +50,7 @@ class ConnectedDevices {
     this.emitPendingConnectionDeviceConnected();
   }
 
-  private emitPendingConnectionDeviceConnected() {
+  emitPendingConnectionDeviceConnected() {
     this.pendingDeviceConnectedListeners.forEach(
       (callback: (device: Device) => void) => {
         callback(this.pendingConnectionDevice);

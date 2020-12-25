@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import i18n from 'i18next';
 import i18nextBackend from 'i18next-node-fs-backend';
 import { join } from 'path';

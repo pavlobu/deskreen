@@ -12,6 +12,7 @@ import {
   prepareDataMessageToChangeQuality,
   prepareDataMessageToGetSharingSourceType,
 } from './simplePeerDataMessages';
+import ScreenSharingSource from './ScreenSharingSourceEnum';
 
 jest.useFakeTimers();
 
@@ -180,6 +181,7 @@ describe('peerConnectionHandlePeer callback', () => {
           peerConnectionHandlePeer(peerConnection);
           peerConnection.peer?.emit('stream');
 
+          jest.advanceTimersByTime(2000);
           peerConnection.videoAutoQualityOptimizer.goodQualityCallback();
 
           expect(peerConnection.videoQuality).toBe(VideoQuality.Q_AUTO);
@@ -206,6 +208,7 @@ describe('peerConnectionHandlePeer callback', () => {
           peerConnectionHandlePeer(peerConnection);
           peerConnection.peer?.emit('stream');
 
+          jest.advanceTimersByTime(2000);
           peerConnection.videoAutoQualityOptimizer.halfQualityCallbak();
 
           expect(peerConnection.videoQuality).toBe(VideoQuality.Q_AUTO);
@@ -250,7 +253,7 @@ describe('peerConnectionHandlePeer callback', () => {
 
             expect(
               peerConnection.UIHandler.setScreenSharingSourceTypeCallback
-            ).toBeCalledWith('screen');
+            ).toBeCalledWith(ScreenSharingSource.SCREEN);
           });
         });
 
@@ -265,7 +268,7 @@ describe('peerConnectionHandlePeer callback', () => {
 
             expect(
               peerConnection.UIHandler.setScreenSharingSourceTypeCallback
-            ).toBeCalledWith('window');
+            ).toBeCalledWith(ScreenSharingSource.WINDOW);
           });
         });
 

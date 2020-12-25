@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { remote, ipcRenderer } from 'electron';
 import i18n from 'i18next';
@@ -8,7 +10,6 @@ import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 
-// TODO: move this outside this file!
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
   // eslint-disable-next-line no-restricted-syntax
@@ -20,7 +21,6 @@ export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   return res;
 };
 
-// TODO: move this outside this file!
 export const getLangISOKeyToLangFullNameMap = (): Map<string, string> => {
   const res = new Map<string, string>();
   // eslint-disable-next-line no-restricted-syntax

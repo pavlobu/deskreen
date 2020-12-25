@@ -25,11 +25,11 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
           transitionDuration={100}
         >
           <Blueprint3.Button
+            onClick={[Function]}
             style={
               Object {
                 "borderRadius": "100px",
                 "marginRight": "10px",
-                "transform": "translateY(2px)",
               }
             }
           >
@@ -86,12 +86,27 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
             position="bottom"
             transitionDuration={100}
           >
-            <h4
-              className="makeStyles-appNameHeader-17"
-              id="deskreen-top-app-name-header"
+            <Blueprint3.Button
+              minimal={true}
+              onClick={[Function]}
+              style={
+                Object {
+                  "borderRadius": "100px",
+                }
+              }
             >
-              Deskreen
-            </h4>
+              <h4
+                className="makeStyles-appNameHeader-17"
+                id="deskreen-top-app-name-header"
+                style={
+                  Object {
+                    "transform": "translateY(-3px)",
+                  }
+                }
+              >
+                Deskreen
+              </h4>
+            </Blueprint3.Button>
           </Blueprint3.Tooltip>
         </div>
       </Col>
@@ -139,6 +154,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
             className="makeStyles-topPanelControlButton-61"
             id="top-panel-help-button"
             intent="none"
+            onClick={[Function]}
           >
             <Blueprint3.Icon
               className="makeStyles-topPanelIconOfControlButton-70"

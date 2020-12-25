@@ -1,6 +1,6 @@
-export default (
-  params: handleDisplayingLoadingSharingIconLoopParams
-) => {
+import LoadingSharingIconEnum from './LoadingSharingIconEnum';
+
+export default (params: handleDisplayingLoadingSharingIconLoopParams) => {
   const {
     promptStep,
     url,
@@ -21,7 +21,10 @@ export default (
         isShownIcon = !isShownIcon;
         setIsShownLoadingSharingIcon(isShownIcon);
         if (isShownWithFadingUIEffect) {
-          currentIcon = currentIcon === 'desktop' ? 'application' : 'desktop';
+          currentIcon =
+            currentIcon === LoadingSharingIconEnum.DESKTOP
+              ? LoadingSharingIconEnum.APPLICATION
+              : LoadingSharingIconEnum.DESKTOP;
           setLoadingSharingIconType(currentIcon);
           isShownWithFadingUIEffect = false;
         } else {
