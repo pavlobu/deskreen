@@ -76,7 +76,7 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ## Maintainer
 
-- [Pavlo (Paul) Buidenkov](https://github.com/pavlobu)
+- [Pavlo (Paul) Buidenkov](https://www.linkedin.com/in/pavlobu)
 
 ## License
 
