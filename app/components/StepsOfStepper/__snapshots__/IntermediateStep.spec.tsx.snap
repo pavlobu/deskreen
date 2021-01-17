@@ -92,7 +92,7 @@ exports[`should match exact snapshot on each step 1`] = `
                       }
                     }
                   >
-                    make sure your computer and device are connected to same WiFi
+                    Make sure your computer and device are connected to same WiFi
                   </span>
                 </div>
               </Blueprint3.Text>
@@ -198,7 +198,7 @@ exports[`should match exact snapshot on each step 1`] = `
                                       imageSettings={
                                         Object {
                                           "height": 40,
-                                          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+                                          "src": "http://127.0.0.1:3000/logo192.png",
                                           "width": 40,
                                         }
                                       }
@@ -206,7 +206,7 @@ exports[`should match exact snapshot on each step 1`] = `
                                       level="H"
                                       renderAs="svg"
                                       size={128}
-                                      value="http://255.255.255.255:3000/"
+                                      value="http://:3000/"
                                     >
                                       <QRCodeSVG
                                         bgColor="rgba(0,0,0,0.0)"
@@ -214,36 +214,36 @@ exports[`should match exact snapshot on each step 1`] = `
                                         imageSettings={
                                           Object {
                                             "height": 40,
-                                            "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png",
+                                            "src": "http://127.0.0.1:3000/logo192.png",
                                             "width": 40,
                                           }
                                         }
                                         includeMargin={false}
                                         level="H"
                                         size={128}
-                                        value="http://255.255.255.255:3000/"
+                                        value="http://:3000/"
                                       >
                                         <svg
                                           height={128}
                                           shapeRendering="crispEdges"
-                                          viewBox="0 0 33 33"
+                                          viewBox="0 0 25 25"
                                           width={128}
                                         >
                                           <path
-                                            d="M0,0 h33v33H0z"
+                                            d="M0,0 h25v25H0z"
                                             fill="rgba(0,0,0,0.0)"
                                           />
                                           <path
-                                            d="M0 0h7v1H0zM8 0h1v1H8zM10 0h1v1H10zM12 0h2v1H12zM15 0h2v1H15zM20 0h1v1H20zM23 0h2v1H23zM26,0 h7v1H26zM0 1h1v1H0zM6 1h1v1H6zM8 1h2v1H8zM12 1h1v1H12zM15 1h4v1H15zM22 1h1v1H22zM26 1h1v1H26zM32,1 h1v1H32zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM8 2h1v1H8zM10 2h1v1H10zM12 2h1v1H12zM14 2h1v1H14zM17 2h2v1H17zM20 2h2v1H20zM23 2h1v1H23zM26 2h1v1H26zM28 2h3v1H28zM32,2 h1v1H32zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM9 3h1v1H9zM11 3h1v1H11zM14 3h1v1H14zM16 3h3v1H16zM23 3h1v1H23zM26 3h1v1H26zM28 3h3v1H28zM32,3 h1v1H32zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM9 4h1v1H9zM11 4h1v1H11zM15 4h3v1H15zM20 4h3v1H20zM24 4h1v1H24zM26 4h1v1H26zM28 4h3v1H28zM32,4 h1v1H32zM0 5h1v1H0zM6 5h1v1H6zM8 5h2v1H8zM11 5h4v1H11zM19 5h1v1H19zM26 5h1v1H26zM32,5 h1v1H32zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18 6h1v1H18zM20 6h1v1H20zM22 6h1v1H22zM24 6h1v1H24zM26,6 h7v1H26zM8 7h3v1H8zM12 7h3v1H12zM17 7h1v1H17zM19 7h4v1H19zM24 7h1v1H24zM2 8h3v1H2zM6 8h1v1H6zM8 8h4v1H8zM13 8h2v1H13zM19 8h1v1H19zM25 8h3v1H25zM30,8 h3v1H30zM0 9h1v1H0zM2 9h1v1H2zM8 9h1v1H8zM10 9h2v1H10zM14 9h1v1H14zM17 9h2v1H17zM20 9h1v1H20zM22 9h5v1H22zM29,9 h4v1H29zM0 10h4v1H0zM5 10h2v1H5zM8 10h4v1H8zM13 10h1v1H13zM16 10h5v1H16zM22 10h1v1H22zM24 10h1v1H24zM27 10h1v1H27zM29 10h2v1H29zM1 11h1v1H1zM8 11h2v1H8zM11 11h3v1H11zM16 11h1v1H16zM18 11h1v1H18zM20 11h1v1H20zM23 11h2v1H23zM26 11h1v1H26zM30 11h2v1H30zM1 12h1v1H1zM6 12h1v1H6zM8 12h2v1H8zM12 12h2v1H12zM15 12h2v1H15zM18 12h1v1H18zM20 12h5v1H20zM27 12h1v1H27zM31 12h1v1H31zM4 13h2v1H4zM7 13h1v1H7zM9 13h1v1H9zM13 13h2v1H13zM17 13h1v1H17zM19 13h1v1H19zM23 13h4v1H23zM28 13h1v1H28zM30 13h1v1H30zM32,13 h1v1H32zM0 14h3v1H0zM6 14h3v1H6zM10 14h1v1H10zM12 14h1v1H12zM16 14h2v1H16zM19 14h1v1H19zM22 14h1v1H22zM25 14h1v1H25zM27 14h2v1H27zM30 14h2v1H30zM0 15h6v1H0zM8 15h2v1H8zM12 15h4v1H12zM17 15h1v1H17zM19 15h4v1H19zM25 15h1v1H25zM28 15h1v1H28zM30 15h1v1H30zM0 16h4v1H0zM6 16h3v1H6zM10 16h1v1H10zM13 16h1v1H13zM15 16h3v1H15zM19 16h2v1H19zM24 16h1v1H24zM28 16h1v1H28zM31,16 h2v1H31zM1 17h3v1H1zM9 17h1v1H9zM11 17h2v1H11zM15 17h2v1H15zM20 17h8v1H20zM31,17 h2v1H31zM2 18h2v1H2zM5 18h3v1H5zM9 18h1v1H9zM11 18h2v1H11zM14 18h2v1H14zM18 18h3v1H18zM24 18h1v1H24zM27 18h2v1H27zM30 18h1v1H30zM1 19h2v1H1zM4 19h1v1H4zM8 19h3v1H8zM12 19h3v1H12zM17 19h1v1H17zM19 19h1v1H19zM21 19h1v1H21zM23 19h3v1H23zM27 19h1v1H27zM29 19h2v1H29zM0 20h1v1H0zM3 20h1v1H3zM5 20h2v1H5zM8 20h3v1H8zM12 20h5v1H12zM18 20h1v1H18zM20 20h1v1H20zM23 20h2v1H23zM28 20h2v1H28zM0 21h1v1H0zM2 21h2v1H2zM5 21h1v1H5zM8 21h2v1H8zM11 21h3v1H11zM15 21h2v1H15zM18 21h1v1H18zM21 21h2v1H21zM25 21h1v1H25zM27 21h1v1H27zM29,21 h4v1H29zM0 22h1v1H0zM4 22h3v1H4zM8 22h1v1H8zM11 22h4v1H11zM16 22h2v1H16zM19 22h1v1H19zM21 22h1v1H21zM23 22h2v1H23zM27 22h4v1H27zM0 23h1v1H0zM2 23h1v1H2zM4 23h1v1H4zM7 23h1v1H7zM9 23h1v1H9zM11 23h2v1H11zM14 23h2v1H14zM19 23h3v1H19zM23 23h1v1H23zM28 23h1v1H28zM30 23h2v1H30zM0 24h1v1H0zM2 24h1v1H2zM6 24h2v1H6zM9 24h2v1H9zM13 24h1v1H13zM15 24h2v1H15zM20 24h1v1H20zM23 24h6v1H23zM31 24h1v1H31zM8 25h3v1H8zM13 25h1v1H13zM15 25h3v1H15zM21 25h4v1H21zM28 25h2v1H28zM31,25 h2v1H31zM0 26h7v1H0zM10 26h1v1H10zM12 26h2v1H12zM15 26h1v1H15zM18 26h1v1H18zM20 26h2v1H20zM23 26h2v1H23zM26 26h1v1H26zM28 26h1v1H28zM0 27h1v1H0zM6 27h1v1H6zM9 27h1v1H9zM11 27h1v1H11zM15 27h1v1H15zM18 27h1v1H18zM20 27h3v1H20zM24 27h1v1H24zM28 27h1v1H28zM30 27h1v1H30zM32,27 h1v1H32zM0 28h1v1H0zM2 28h3v1H2zM6 28h1v1H6zM8 28h1v1H8zM11 28h1v1H11zM14 28h1v1H14zM17 28h2v1H17zM20 28h2v1H20zM24 28h6v1H24zM0 29h1v1H0zM2 29h3v1H2zM6 29h1v1H6zM8 29h3v1H8zM13 29h1v1H13zM15 29h2v1H15zM18 29h2v1H18zM21 29h4v1H21zM28 29h2v1H28zM31 29h1v1H31zM0 30h1v1H0zM2 30h3v1H2zM6 30h1v1H6zM8 30h1v1H8zM10 30h1v1H10zM12 30h2v1H12zM17 30h1v1H17zM20 30h2v1H20zM23 30h4v1H23zM29 30h1v1H29zM0 31h1v1H0zM6 31h1v1H6zM9 31h1v1H9zM13 31h2v1H13zM16 31h2v1H16zM20 31h4v1H20zM25 31h1v1H25zM27 31h1v1H27zM30 31h1v1H30zM0 32h7v1H0zM9 32h2v1H9zM12 32h1v1H12zM15 32h1v1H15zM17 32h6v1H17zM24 32h2v1H24zM30 32h2v1H30z"
+                                            d="M0 0h7v1H0zM8 0h1v1H8zM10 0h1v1H10zM12 0h1v1H12zM14 0h2v1H14zM18,0 h7v1H18zM0 1h1v1H0zM6 1h1v1H6zM13 1h1v1H13zM15 1h2v1H15zM18 1h1v1H18zM24,1 h1v1H24zM0 2h1v1H0zM2 2h3v1H2zM6 2h1v1H6zM8 2h3v1H8zM12 2h1v1H12zM14 2h2v1H14zM18 2h1v1H18zM20 2h3v1H20zM24,2 h1v1H24zM0 3h1v1H0zM2 3h3v1H2zM6 3h1v1H6zM9 3h4v1H9zM16 3h1v1H16zM18 3h1v1H18zM20 3h3v1H20zM24,3 h1v1H24zM0 4h1v1H0zM2 4h3v1H2zM6 4h1v1H6zM8 4h3v1H8zM15 4h1v1H15zM18 4h1v1H18zM20 4h3v1H20zM24,4 h1v1H24zM0 5h1v1H0zM6 5h1v1H6zM9 5h1v1H9zM11 5h1v1H11zM13 5h1v1H13zM18 5h1v1H18zM24,5 h1v1H24zM0 6h7v1H0zM8 6h1v1H8zM10 6h1v1H10zM12 6h1v1H12zM14 6h1v1H14zM16 6h1v1H16zM18,6 h7v1H18zM8 7h2v1H8zM12 7h4v1H12zM5 8h2v1H5zM10 8h5v1H10zM18 8h1v1H18zM20 8h1v1H20zM22 8h1v1H22zM24,8 h1v1H24zM1 9h1v1H1zM3 9h2v1H3zM7 9h2v1H7zM11 9h1v1H11zM13 9h1v1H13zM16 9h2v1H16zM20 9h4v1H20zM3 10h4v1H3zM11 10h4v1H11zM16 10h1v1H16zM18 10h4v1H18zM23,10 h2v1H23zM2 11h1v1H2zM8 11h3v1H8zM12 11h1v1H12zM14 11h3v1H14zM18 11h1v1H18zM21 11h1v1H21zM24,11 h1v1H24zM0 12h2v1H0zM6 12h1v1H6zM8 12h1v1H8zM10 12h3v1H10zM16 12h3v1H16zM24,12 h1v1H24zM0 13h1v1H0zM4 13h1v1H4zM7 13h1v1H7zM11 13h1v1H11zM14 13h1v1H14zM16 13h2v1H16zM23 13h1v1H23zM0 14h1v1H0zM6 14h3v1H6zM11 14h1v1H11zM13 14h2v1H13zM18 14h1v1H18zM20 14h2v1H20zM23,14 h2v1H23zM0 15h1v1H0zM2 15h1v1H2zM5 15h1v1H5zM8 15h4v1H8zM13 15h1v1H13zM15 15h1v1H15zM18 15h1v1H18zM22 15h1v1H22zM24,15 h1v1H24zM0 16h1v1H0zM2 16h1v1H2zM5 16h3v1H5zM10 16h1v1H10zM12 16h1v1H12zM14 16h1v1H14zM16 16h5v1H16zM22 16h1v1H22zM8 17h1v1H8zM10 17h2v1H10zM14 17h1v1H14zM16 17h1v1H16zM20 17h1v1H20zM22 17h1v1H22zM0 18h7v1H0zM14 18h3v1H14zM18 18h1v1H18zM20 18h2v1H20zM24,18 h1v1H24zM0 19h1v1H0zM6 19h1v1H6zM8 19h1v1H8zM10 19h2v1H10zM14 19h1v1H14zM16 19h1v1H16zM20 19h1v1H20zM23,19 h2v1H23zM0 20h1v1H0zM2 20h3v1H2zM6 20h1v1H6zM9 20h3v1H9zM15 20h9v1H15zM0 21h1v1H0zM2 21h3v1H2zM6 21h1v1H6zM12 21h4v1H12zM18 21h2v1H18zM21 21h1v1H21zM24,21 h1v1H24zM0 22h1v1H0zM2 22h3v1H2zM6 22h1v1H6zM9 22h1v1H9zM13 22h1v1H13zM16 22h2v1H16zM22 22h1v1H22zM24,22 h1v1H24zM0 23h1v1H0zM6 23h1v1H6zM10 23h1v1H10zM12 23h2v1H12zM16 23h1v1H16zM18 23h3v1H18zM24,23 h1v1H24zM0 24h7v1H0zM12 24h2v1H12zM15 24h4v1H15zM21 24h1v1H21zM24,24 h1v1H24z"
                                             fill="#000000"
                                           />
                                           <image
-                                            height={10.3125}
+                                            height={7.8125}
                                             preserveAspectRatio="none"
-                                            width={10.3125}
-                                            x={11.34375}
-                                            xlinkHref="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Electron_Software_Framework_Logo.svg/256px-Electron_Software_Framework_Logo.svg.png"
-                                            y={11.34375}
+                                            width={7.8125}
+                                            x={8.59375}
+                                            xlinkHref="http://127.0.0.1:3000/logo192.png"
+                                            y={8.59375}
                                           />
                                         </svg>
                                       </QRCodeSVG>
@@ -414,7 +414,7 @@ exports[`should match exact snapshot on each step 1`] = `
                                   className="bp3-button-text"
                                   key="text"
                                 >
-                                  http://255.255.255.255:3000/
+                                  http://:3000/
                                 </span>
                                 <Blueprint3.Icon
                                   key="rightIcon"

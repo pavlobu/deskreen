@@ -1,0 +1,1 @@
+type PeerConnection = import('.').default;

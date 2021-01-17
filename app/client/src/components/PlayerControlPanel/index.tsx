@@ -21,13 +21,13 @@ import {
 } from '@blueprintjs/core';
 import FullScreenEnter from '../../images/fullscreen_24px.svg';
 import FullScreenExit from '../../images/fullscreen_exit-24px.svg';
-import DeskreenIconPNG from '../../images/deskreen_logo_128x128.png';
 import RedHeartTwemojiPNG from '../../images/red_heart_2764_twemoji_120x120.png';
 import { Col, Row } from 'react-flexbox-grid';
 import screenfull from 'screenfull';
 import { VideoQuality } from '../../features/VideoAutoQualityOptimizer/VideoQualityEnum';
 import handlePlayerToggleFullscreen from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
+import ScreenSharingSource from '../../features/PeerConnection/ScreenSharingSourceEnum';
 
 const videoQualityButtonStyle: React.CSSProperties = {
   width: '100%',
@@ -80,11 +80,16 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               content="Click to visit our website"
               position={Position.BOTTOM}
             >
-              <Button minimal>
+              <Button
+                minimal
+                onClick={() => {
+                  window.open('https://www.deskreen.com', '_blank');
+                }}
+              >
                 <Row middle="xs" style={{ opacity: '0.75' }}>
                   <Col xs={4}>
                     <img
-                      src={DeskreenIconPNG}
+                      src={window.location.origin + '/logo192.png'}
                       width={42}
                       height={42}
                       alt="logo"
@@ -100,7 +105,12 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
               position={Position.BOTTOM}
             >
-              <Button style={{ borderRadius: '100px' }}>
+              <Button
+                style={{ borderRadius: '100px' }}
+                onClick={() => {
+                  window.open('https://www.patreon.com/deskreen', '_blank');
+                }}
+              >
                 <Row start="xs">
                   <Col xs>
                     <img
@@ -174,7 +184,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                       borderBottom: '1px solid #ffffffa8',
                     }}
                   />
-                  {screenSharingSourceType === 'window' ? (
+                  {screenSharingSourceType === ScreenSharingSource.WINDOW ? (
                     <Tooltip
                       content="You can't change video quality when sharing a window. You can change quality only when shering entire screen."
                       position={Position.BOTTOM}

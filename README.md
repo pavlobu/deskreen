@@ -5,6 +5,8 @@
 
 ## Howto:
 
+# trigger
+
 ### to generate test coverage results
 
 ```

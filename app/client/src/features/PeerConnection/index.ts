@@ -96,12 +96,12 @@ export default class PeerConnection {
     this.videoQualityChangedCallback();
   }
 
-
   videoQualityChangedCallback() {
+    if (!this.peer) return;
     if (this.videoQuality === VideoQuality.Q_AUTO) {
-      this.peer?.send(prepareDataMessageToChangeQuality(1));
+      this.peer.send(prepareDataMessageToChangeQuality(1));
     } else {
-      this.peer?.send(
+      this.peer.send(
         prepareDataMessageToChangeQuality(
           VIDEO_QUALITY_TO_DECIMAL[this.videoQuality]
         )
@@ -128,6 +128,10 @@ export default class PeerConnection {
     });
 
     this.peer = peer;
+    this.peer.on('error', (e) => {
+      console.error('error in simple peer happened!');
+      console.error(e);
+    });
     peerConnectionHandlePeer(this);
   }
 
@@ -174,7 +178,7 @@ export default class PeerConnection {
     }
     prepareMessage(payload, this.user, this.partner).then((msg: any) => {
       this.socket.emit('ENCRYPTED_MESSAGE', msg.toSend);
-    })
+    });
   }
 
   receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload) {

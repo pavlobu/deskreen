@@ -3,9 +3,9 @@ import { remote } from 'electron';
 import { Text } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import SharingSourcePreviewCard from '../SharingSourcePreviewCard';
-import SharingSessionService from '../../features/SharingSessionsService';
+import SharingSessionService from '../../features/SharingSessionService';
 import DeviceInfoCallout from '../DeviceInfoCallout';
-import SharingSession from '../../features/SharingSessionsService/SharingSession';
+import SharingSession from '../../features/SharingSessionService/SharingSession';
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'

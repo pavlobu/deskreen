@@ -1,4 +1,5 @@
 import handleDisplayingLoadingSharingIconLoop from './handleDisplayingLoadingSharingIconLoop';
+import LoadingSharingIconEnum from './LoadingSharingIconEnum';
 
 jest.useFakeTimers();
 
@@ -11,7 +12,7 @@ describe('handleDisplayingLoadingSharingIconLoop callback', () => {
       url: undefined,
       setIsShownLoadingSharingIcon: jest.fn(),
       setLoadingSharingIconType: jest.fn(),
-      loadingSharingIconType: 'desktop',
+      loadingSharingIconType: LoadingSharingIconEnum.DESKTOP,
       isShownLoadingSharingIcon: false,
     } as handleDisplayingLoadingSharingIconLoopParams
   });
@@ -35,13 +36,13 @@ describe('handleDisplayingLoadingSharingIconLoop callback', () => {
       jest.advanceTimersByTime(2000);
 
       expect(testParams.setIsShownLoadingSharingIcon).toBeCalledWith(false);
-      expect(testParams.setLoadingSharingIconType).toBeCalledWith('application');
+      expect(testParams.setLoadingSharingIconType).toBeCalledWith(LoadingSharingIconEnum.APPLICATION);
       jest.clearAllMocks();
 
       jest.advanceTimersByTime(2000);
 
       expect(testParams.setIsShownLoadingSharingIcon).toBeCalledWith(true);
-      expect(testParams.setLoadingSharingIconType).toBeCalledWith('desktop');
+      expect(testParams.setLoadingSharingIconType).toBeCalledWith(LoadingSharingIconEnum.DESKTOP);
       jest.clearAllMocks();
 
       // ... by this time we are sure, this function works!

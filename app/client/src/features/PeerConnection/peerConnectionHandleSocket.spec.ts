@@ -110,6 +110,8 @@ describe('peerConnectionHandleSocket callback', () => {
 
         peerConnection.socket.emit('connect');
 
+        jest.advanceTimersByTime(600);
+
         expect(peerConnection.socket.emit).toBeCalledWith(
           'GET_MY_IP',
           expect.anything()

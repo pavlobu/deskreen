@@ -12,11 +12,7 @@ export default class Crypto {
 
   createEncryptDecryptKeys() {
     return new Promise<forge.pki.rsa.KeyPair>((resolve) => {
-      const keypair = forge.pki.rsa.generateKeyPair({
-        bits: 2048,
-        e: 0x10001,
-        workers: -1,
-      });
+      const keypair = forge.pki.rsa.generateKeyPair(1024);
       resolve(keypair);
     });
   }

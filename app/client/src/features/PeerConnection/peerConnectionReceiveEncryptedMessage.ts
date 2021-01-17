@@ -1,4 +1,3 @@
-import PeerConnection from '.';
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
 import { process as processMessage } from '../../utils/message';
 import NullUser from './NullUser';

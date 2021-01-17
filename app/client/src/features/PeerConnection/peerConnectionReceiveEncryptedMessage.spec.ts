@@ -192,6 +192,7 @@ describe('peerConnectionReceiveEncryptedMessage', () => {
           peerConnection,
           CALL_USER_PAYLOAD
         );
+        jest.advanceTimersByTime(2000);
 
         expect(peerConnection.peer?.signal).toBeCalledWith('1signal');
       });

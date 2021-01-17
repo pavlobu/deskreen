@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`app menu MenyBuilder tests when MenyBuilder created properly when menu from buildDarwinTemplate was created should match a snapshot 1`] = `
+Array [
+  Object {
+    "label": "Deskreen",
+    "submenu": Array [
+      Object {
+        "label": "About Deskreen",
+        "selector": "orderFrontStandardAboutPanel:",
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "label": "Services",
+        "submenu": Array [],
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "accelerator": "Command+H",
+        "label": "Hide Deskreen",
+        "selector": "hide:",
+      },
+      Object {
+        "accelerator": "Command+Shift+H",
+        "label": "Hide Others",
+        "selector": "hideOtherApplications:",
+      },
+      Object {
+        "label": "Show All",
+        "selector": "unhideAllApplications:",
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "accelerator": "Command+Q",
+        "click": [Function],
+        "label": "Quit",
+      },
+    ],
+  },
+  Object {
+    "label": "Edit",
+    "submenu": Array [
+      Object {
+        "accelerator": "Command+Z",
+        "label": "Undo",
+        "selector": "undo:",
+      },
+      Object {
+        "accelerator": "Shift+Command+Z",
+        "label": "Redo",
+        "selector": "redo:",
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "accelerator": "Command+X",
+        "label": "Cut",
+        "selector": "cut:",
+      },
+      Object {
+        "accelerator": "Command+C",
+        "label": "Copy",
+        "selector": "copy:",
+      },
+      Object {
+        "accelerator": "Command+V",
+        "label": "Paste",
+        "selector": "paste:",
+      },
+      Object {
+        "accelerator": "Command+A",
+        "label": "Select All",
+        "selector": "selectAll:",
+      },
+    ],
+  },
+  Object {
+    "label": "View",
+    "submenu": Array [
+      Object {
+        "accelerator": "Ctrl+Command+F",
+        "click": [Function],
+        "label": "Toggle Full Screen",
+      },
+    ],
+  },
+  Object {
+    "label": "Window",
+    "submenu": Array [
+      Object {
+        "accelerator": "Command+M",
+        "label": "Minimize",
+        "selector": "performMiniaturize:",
+      },
+      Object {
+        "accelerator": "Command+W",
+        "label": "Close",
+        "selector": "performClose:",
+      },
+      Object {
+        "type": "separator",
+      },
+      Object {
+        "label": "Bring All to Front",
+        "selector": "arrangeInFront:",
+      },
+    ],
+  },
+  Object {
+    "label": "Help",
+    "submenu": Array [
+      Object {
+        "click": [Function],
+        "label": "Learn More",
+      },
+      Object {
+        "click": [Function],
+        "label": "Documentation",
+      },
+      Object {
+        "click": [Function],
+        "label": "Community Discussions",
+      },
+      Object {
+        "click": [Function],
+        "label": "Search Issues",
+      },
+    ],
+  },
+]
+`;

@@ -7,7 +7,7 @@ import ScanQRStep from './ScanQRStep';
 import ChooseAppOrScreeenStep from './ChooseAppOrScreeenStep';
 import ConfirmStep from './ConfirmStep';
 import ConnectedDevicesService from '../../features/ConnectedDevicesService';
-import SharingSessionService from '../../features/SharingSessionsService';
+import SharingSessionService from '../../features/SharingSessionService';
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'

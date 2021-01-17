@@ -15,6 +15,9 @@ import handleNoConnectionTimeout from './handleNoConnectionTimeout';
 import handleCreatePeerConnection from './handleCreatePeerConnection';
 import handleRemoveDanglingReactRevealContainer from './handleRemoveDanglingReactRevealContainer';
 import handleDisplayingLoadingSharingIconLoop from './handleDisplayingLoadingSharingIconLoop';
+import ScreenSharingSource from '../../features/PeerConnection/ScreenSharingSourceEnum';
+import ConnectionIcon from './ConnectionIconEnum';
+import LoadingSharingIconEnum from './LoadingSharingIconEnum';
 
 function MainView() {
   const { isDarkTheme, setIsDarkThemeHook } = useContext(AppContext);
@@ -26,7 +29,7 @@ function MainView() {
   );
   const [connectionIconType, setConnectionIconType] = useState<
     ConnectionIconType
-  >('feed');
+  >(ConnectionIcon.FEED);
   const [myDeviceDetails, setMyDeviceDetails] = useState<DeviceDetails>(
     DUMMY_MY_DEVICE_DETAILS
   );
@@ -36,7 +39,7 @@ function MainView() {
   const [url, setUrl] = useState<undefined | MediaStream>(undefined);
   const [screenSharingSourceType, setScreenSharingSourceType] = useState<
     ScreenSharingSourceType
-  >('screen');
+  >(ScreenSharingSource.SCREEN);
   const [isWithControls, setIsWithControls] = useState(!screenfull.isEnabled);
   const [isShownTextPrompt, setIsShownTextPrompt] = useState(false);
   const [isShownLoadingSharingIcon, setIsShownLoadingSharingIcon] = useState(
@@ -44,7 +47,7 @@ function MainView() {
   );
   const [loadingSharingIconType, setLoadingSharingIconType] = useState<
     LoadingSharingIconType
-  >('desktop');
+  >(LoadingSharingIconEnum.DESKTOP);
   const [videoQuality, setVideoQuality] = useState<VideoQuality>(
     VideoQuality.Q_AUTO
   );

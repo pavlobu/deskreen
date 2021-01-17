@@ -1,6 +1,6 @@
 import { remote } from 'electron';
-import React, { useEffect, useState } from 'react';
-import { H3, Card, Dialog } from '@blueprintjs/core';
+import React, { useCallback, useEffect, useState } from 'react';
+import { H3, Card, Dialog, Button } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from '../../CloseOverlayButton';
@@ -69,7 +69,7 @@ export default function ChooseAppOrScreenOverlay(
     setAppsWindowsViewSharingObjectsMap,
   ] = useState<Map<string, ViewSharingObject>>(new Map());
 
-  useEffect(() => {
+  const handleRefreshSources = useCallback(() => {
     if (isEntireScreenToShareChosen) {
       const sourcesToShare = desktopCapturerSourcesService.getScreenSources();
       const screenViewMap = new Map<string, ViewSharingObject>();
@@ -92,6 +92,10 @@ export default function ChooseAppOrScreenOverlay(
       setAppsWindowsViewSharingObjectsMap(appViewMap);
     }
   }, [isEntireScreenToShareChosen]);
+
+  useEffect(() => {
+    handleRefreshSources();
+  }, [handleRefreshSources, isEntireScreenToShareChosen]);
 
   return (
     <Dialog
@@ -140,7 +144,7 @@ export default function ChooseAppOrScreenOverlay(
                   width: '100%',
                 }}
               >
-                <Col xs={11}>
+                <Col xs={9}>
                   {isEntireScreenToShareChosen ? (
                     <div>
                       <H3 style={{ marginBottom: '0px' }}>
@@ -154,6 +158,18 @@ export default function ChooseAppOrScreenOverlay(
                       </H3>
                     </div>
                   )}
+                </Col>
+                <Col xs={2}>
+                  <Button
+                    icon="refresh"
+                    intent="warning"
+                    onClick={handleRefreshSources}
+                    style={{
+                      borderRadius: '100px',
+                    }}
+                  >
+                    Refresh
+                  </Button>
                 </Col>
 
                 <Col xs={1}>

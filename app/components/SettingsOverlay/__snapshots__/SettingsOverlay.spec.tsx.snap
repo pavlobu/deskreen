@@ -161,14 +161,13 @@ exports[`should match exact snapshot 1`] = `
                               </div>
                               <div
                                 aria-controls="bp3-tab-panel_TabsExample_ng"
-                                aria-disabled="false"
+                                aria-disabled="true"
                                 aria-expanded="false"
                                 aria-selected="false"
                                 class="bp3-tab"
                                 data-tab-id="ng"
                                 id="bp3-tab-title_TabsExample_ng"
                                 role="tab"
-                                tabindex="0"
                               >
                                 
                                 <div
@@ -237,6 +236,47 @@ exports[`should match exact snapshot 1`] = `
                                     class="bp3-text-large"
                                   >
                                     Blackilsted IPs
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                aria-controls="bp3-tab-panel_TabsExample_cc"
+                                aria-disabled="false"
+                                aria-expanded="false"
+                                aria-selected="false"
+                                class="bp3-tab"
+                                data-tab-id="cc"
+                                id="bp3-tab-title_TabsExample_cc"
+                                role="tab"
+                                tabindex="0"
+                              >
+                                
+                                <div
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
+                                >
+                                  <span
+                                    class="bp3-icon bp3-icon-info-sign makeStyles-iconInTablLeftButton-25"
+                                    icon="info-sign"
+                                  >
+                                    <svg
+                                      data-icon="info-sign"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                      width="16"
+                                    >
+                                      <desc>
+                                        info-sign
+                                      </desc>
+                                      <path
+                                        d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zM7 3h2v2H7V3zm3 10H6v-1h1V7H6V6h3v6h1v1z"
+                                        fill-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <div
+                                    class="bp3-text-large"
+                                  >
+                                    About
                                   </div>
                                 </div>
                               </div>
@@ -424,9 +464,11 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <div
-                                      class="bp3-html-select"
+                                      class="bp3-html-select bp3-disabled"
                                     >
-                                      <select>
+                                      <select
+                                        disabled=""
+                                      >
                                         <option
                                           value="English"
                                         >
@@ -516,16 +558,16 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <label
-                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
+                                      class="bp3-control bp3-checkbox bp3-disabled makeStyles-checkboxSettings-20"
                                     >
                                       <input
-                                        checked=""
+                                        disabled=""
                                         type="checkbox"
                                       />
                                       <span
                                         class="bp3-control-indicator"
                                       />
-                                      Enabled
+                                      Disabled
                                     </label>
                                   </div>
                                 </div>
@@ -646,14 +688,13 @@ exports[`should match exact snapshot 1`] = `
                               </div>
                               <div
                                 aria-controls="bp3-tab-panel_TabsExample_ng"
-                                aria-disabled="false"
+                                aria-disabled="true"
                                 aria-expanded="false"
                                 aria-selected="false"
                                 class="bp3-tab"
                                 data-tab-id="ng"
                                 id="bp3-tab-title_TabsExample_ng"
                                 role="tab"
-                                tabindex="0"
                               >
                                 
                                 <div
@@ -722,6 +763,47 @@ exports[`should match exact snapshot 1`] = `
                                     class="bp3-text-large"
                                   >
                                     Blackilsted IPs
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                aria-controls="bp3-tab-panel_TabsExample_cc"
+                                aria-disabled="false"
+                                aria-expanded="false"
+                                aria-selected="false"
+                                class="bp3-tab"
+                                data-tab-id="cc"
+                                id="bp3-tab-title_TabsExample_cc"
+                                role="tab"
+                                tabindex="0"
+                              >
+                                
+                                <div
+                                  class="makeStyles-tabNavigationRowButton-24 row middle-xs"
+                                >
+                                  <span
+                                    class="bp3-icon bp3-icon-info-sign makeStyles-iconInTablLeftButton-25"
+                                    icon="info-sign"
+                                  >
+                                    <svg
+                                      data-icon="info-sign"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                      width="16"
+                                    >
+                                      <desc>
+                                        info-sign
+                                      </desc>
+                                      <path
+                                        d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zM7 3h2v2H7V3zm3 10H6v-1h1V7H6V6h3v6h1v1z"
+                                        fill-rule="evenodd"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <div
+                                    class="bp3-text-large"
+                                  >
+                                    About
                                   </div>
                                 </div>
                               </div>
@@ -909,9 +991,11 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <div
-                                      class="bp3-html-select"
+                                      class="bp3-html-select bp3-disabled"
                                     >
-                                      <select>
+                                      <select
+                                        disabled=""
+                                      >
                                         <option
                                           value="English"
                                         >
@@ -1001,16 +1085,16 @@ exports[`should match exact snapshot 1`] = `
                                     class="row"
                                   >
                                     <label
-                                      class="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
+                                      class="bp3-control bp3-checkbox bp3-disabled makeStyles-checkboxSettings-20"
                                     >
                                       <input
-                                        checked=""
+                                        disabled=""
                                         type="checkbox"
                                       />
                                       <span
                                         class="bp3-control-indicator"
                                       />
-                                      Enabled
+                                      Disabled
                                     </label>
                                   </div>
                                 </div>
@@ -1294,7 +1378,7 @@ exports[`should match exact snapshot 1`] = `
                                         </div>
                                       </Blueprint3.TabTitle>
                                       <Blueprint3.TabTitle
-                                        disabled={false}
+                                        disabled={true}
                                         id="ng"
                                         key=".1"
                                         onClick={[Function]}
@@ -1305,15 +1389,13 @@ exports[`should match exact snapshot 1`] = `
                                       >
                                         <div
                                           aria-controls="bp3-tab-panel_TabsExample_ng"
-                                          aria-disabled={false}
+                                          aria-disabled={true}
                                           aria-expanded={false}
                                           aria-selected={false}
                                           className="bp3-tab"
                                           data-tab-id="ng"
                                           id="bp3-tab-title_TabsExample_ng"
-                                          onClick={[Function]}
                                           role="tab"
-                                          tabIndex={0}
                                         >
                                           <Row
                                             className="makeStyles-tabNavigationRowButton-24"
@@ -1429,8 +1511,77 @@ exports[`should match exact snapshot 1`] = `
                                           </Row>
                                         </div>
                                       </Blueprint3.TabTitle>
-                                      <Component
+                                      <Blueprint3.TabTitle
+                                        disabled={false}
+                                        id="cc"
                                         key=".3"
+                                        onClick={[Function]}
+                                        panel={<AboutPanel />}
+                                        parentId="TabsExample"
+                                        selected={false}
+                                        title=""
+                                      >
+                                        <div
+                                          aria-controls="bp3-tab-panel_TabsExample_cc"
+                                          aria-disabled={false}
+                                          aria-expanded={false}
+                                          aria-selected={false}
+                                          className="bp3-tab"
+                                          data-tab-id="cc"
+                                          id="bp3-tab-title_TabsExample_cc"
+                                          onClick={[Function]}
+                                          role="tab"
+                                          tabIndex={0}
+                                        >
+                                          <Row
+                                            className="makeStyles-tabNavigationRowButton-24"
+                                            middle="xs"
+                                          >
+                                            <div
+                                              className="makeStyles-tabNavigationRowButton-24 row middle-xs"
+                                            >
+                                              <Blueprint3.Icon
+                                                className="makeStyles-iconInTablLeftButton-25"
+                                                icon="info-sign"
+                                              >
+                                                <span
+                                                  className="bp3-icon bp3-icon-info-sign makeStyles-iconInTablLeftButton-25"
+                                                  icon="info-sign"
+                                                >
+                                                  <svg
+                                                    data-icon="info-sign"
+                                                    height={16}
+                                                    viewBox="0 0 16 16"
+                                                    width={16}
+                                                  >
+                                                    <desc>
+                                                      info-sign
+                                                    </desc>
+                                                    <path
+                                                      d="M8 0C3.58 0 0 3.58 0 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zM7 3h2v2H7V3zm3 10H6v-1h1V7H6V6h3v6h1v1z"
+                                                      fillRule="evenodd"
+                                                      key="0"
+                                                    />
+                                                  </svg>
+                                                </span>
+                                              </Blueprint3.Icon>
+                                              <Blueprint3.Text
+                                                className="bp3-text-large"
+                                                ellipsize={false}
+                                                tagName="div"
+                                              >
+                                                <div
+                                                  className="bp3-text-large"
+                                                >
+                                                  About
+                                                </div>
+                                              </Blueprint3.Text>
+                                            </div>
+                                          </Row>
+                                        </div>
+                                      </Blueprint3.TabTitle>
+                                      <Component
+                                        key=".4"
                                       >
                                         <div
                                           className="bp3-flex-expander"
@@ -1688,6 +1839,7 @@ exports[`should match exact snapshot 1`] = `
                                           icon="translate"
                                           input={
                                             <HTMLSelect
+                                              disabled={true}
                                               onChange={[Function]}
                                               options={
                                                 Array [
@@ -1783,6 +1935,7 @@ exports[`should match exact snapshot 1`] = `
                                                       className="row"
                                                     >
                                                       <HTMLSelect
+                                                        disabled={true}
                                                         onChange={[Function]}
                                                         options={
                                                           Array [
@@ -1793,9 +1946,10 @@ exports[`should match exact snapshot 1`] = `
                                                         }
                                                       >
                                                         <div
-                                                          className="bp3-html-select"
+                                                          className="bp3-html-select bp3-disabled"
                                                         >
                                                           <select
+                                                            disabled={true}
                                                             multiple={false}
                                                             onChange={[Function]}
                                                           >
@@ -1855,9 +2009,9 @@ exports[`should match exact snapshot 1`] = `
                                           icon="automatic-updates"
                                           input={
                                             <Blueprint3.Checkbox
-                                              checked={true}
                                               className="makeStyles-checkboxSettings-20"
-                                              label="Enabled"
+                                              disabled={true}
+                                              label="Disabled"
                                             />
                                           }
                                           label="Automatic Updates"
@@ -1945,31 +2099,31 @@ exports[`should match exact snapshot 1`] = `
                                                       className="row"
                                                     >
                                                       <Blueprint3.Checkbox
-                                                        checked={true}
                                                         className="makeStyles-checkboxSettings-20"
-                                                        label="Enabled"
+                                                        disabled={true}
+                                                        label="Disabled"
                                                       >
                                                         <Control
-                                                          checked={true}
                                                           className="makeStyles-checkboxSettings-20"
+                                                          disabled={true}
                                                           inputRef={[Function]}
-                                                          label="Enabled"
+                                                          label="Disabled"
                                                           onChange={[Function]}
                                                           type="checkbox"
                                                           typeClassName="bp3-checkbox"
                                                         >
                                                           <label
-                                                            className="bp3-control bp3-checkbox makeStyles-checkboxSettings-20"
+                                                            className="bp3-control bp3-checkbox bp3-disabled makeStyles-checkboxSettings-20"
                                                           >
                                                             <input
-                                                              checked={true}
+                                                              disabled={true}
                                                               onChange={[Function]}
                                                               type="checkbox"
                                                             />
                                                             <span
                                                               className="bp3-control-indicator"
                                                             />
-                                                            Enabled
+                                                            Disabled
                                                           </label>
                                                         </Control>
                                                       </Blueprint3.Checkbox>

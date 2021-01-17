@@ -1,4 +1,3 @@
-import PeerConnection from '.';
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
 import {
   getBrowserFromUAParser,
@@ -39,9 +38,11 @@ export default (peerConnection: PeerConnection) => {
   });
 
   peerConnection.socket.on('connect', () => {
-    peerConnection.socket.emit('GET_MY_IP', (ip: string) => {
-      getMyIPCallback(peerConnection, ip, window.navigator.userAgent);
-    });
+    setTimeout(() => {
+      peerConnection.socket.emit('GET_MY_IP', (ip: string) => {
+        getMyIPCallback(peerConnection, ip, window.navigator.userAgent);
+      });
+    }, 500);
   });
 
   peerConnection.socket.on('NOT_ALLOWED', () => {

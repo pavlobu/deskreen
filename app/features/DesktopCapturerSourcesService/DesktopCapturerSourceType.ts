@@ -1,12 +1,6 @@
 enum DesktopCapturerSourceType {
-  WINDOW,
-  SCREEN,
+  WINDOW = 'window',
+  SCREEN = 'screen',
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const getDesktopCapturerSourceTypeFromSourceID = (_id: string) => {
-  // TODO: implement this function!
-  return DesktopCapturerSourceType.WINDOW;
-};
 
 export default DesktopCapturerSourceType;

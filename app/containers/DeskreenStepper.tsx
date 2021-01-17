@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { remote } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import { Row, Col } from 'react-flexbox-grid';
-import { Text } from '@blueprintjs/core';
+import { Row, Col, Grid } from 'react-flexbox-grid';
+import { Dialog, H3, H4, H5, Icon, Spinner, Text } from '@blueprintjs/core';
 
 import { useToasts } from 'react-toast-notifications';
 
@@ -19,9 +19,9 @@ import ColorlibStepIcon, {
 } from '../components/StepperPanel/ColorlibStepIcon';
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
-import SharingSessionService from '../features/SharingSessionsService';
+import SharingSessionService from '../features/SharingSessionService';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
-import SharingSessionStatusEnum from '../features/SharingSessionsService/SharingSessionStatusEnum';
+import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
 import Logger from '../utils/LoggerWithFilePrefix';
 
 const log = new Logger(__filename);
@@ -65,11 +65,27 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isUserAllowedConnection, setIsUserAllowedConnection] = useState(false);
+  const [isNoWiFiError, setisNoWiFiError] = useState(false);
 
   const [
     pendingConnectionDevice,
     setPendingConnectionDevice,
   ] = useState<Device | null>(null);
+
+  useEffect(() => {
+    const ipInterval = setInterval(async () => {
+      const gotIP = await ipcRenderer.invoke('get-local-lan-ip');
+      if (gotIP === undefined) {
+        setisNoWiFiError(true);
+      } else {
+        setisNoWiFiError(false);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(ipInterval);
+    };
+  }, []);
 
   useEffect(() => {
     sharingSessionService
@@ -153,7 +169,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     const sharingSession =
       sharingSessionService.waitingForConnectionSharingSession;
     sharingSession?.disconnectByHostMachineUser();
-    sharingSession?.destory();
+    sharingSession?.destroy();
     sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
     sharingSessionService.waitingForConnectionSharingSession = null;
 
@@ -183,7 +199,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
       const sharingSession =
         sharingSessionService.waitingForConnectionSharingSession;
       sharingSession.denyConnectionForPartner();
-      sharingSession.destory();
+      sharingSession.destroy();
       sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
       sharingSessionService.sharingSessions.delete(sharingSession.id);
 
@@ -328,6 +344,27 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
         onCancel={handleCancelAlert}
         onConfirm={handleConfirmAlert}
       />
+      <Dialog isOpen={isNoWiFiError} autoFocus usePortal>
+        <Grid>
+          <div style={{ padding: '10px' }}>
+            <Row center="xs" style={{ marginTop: '10px' }}>
+              <Icon icon="offline" iconSize={50} color="#8A9BA8" />
+            </Row>
+            <Row center="xs" style={{ marginTop: '10px' }}>
+              <H3>No WiFi and LAN connection.</H3>
+            </Row>
+            <Row center="xs">
+              <H5>Deskreen works only with WiFi and LAN networks.</H5>
+            </Row>
+            <Row center="xs">
+              <Spinner size={50} />
+            </Row>
+            <Row center="xs" style={{ marginTop: '10px' }}>
+              <H4>Waiting for connection.</H4>
+            </Row>
+          </div>
+        </Grid>
+      </Dialog>
     </>
   );
 });

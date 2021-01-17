@@ -5,19 +5,15 @@ import { desktopCapturer, DesktopCapturerSource } from 'electron';
 import Logger from '../../utils/LoggerWithFilePrefix';
 import DesktopCapturerSourceType from './DesktopCapturerSourceType';
 
-const log = new Logger(__filename);
-
-const getSourceTypeFromSourceID = (id: string): DesktopCapturerSourceType => {
-  if (id.includes('screen')) {
+export function getSourceTypeFromSourceID(
+  id: string
+): DesktopCapturerSourceType {
+  if (id.includes(DesktopCapturerSourceType.SCREEN)) {
     return DesktopCapturerSourceType.SCREEN;
   }
   return DesktopCapturerSourceType.WINDOW;
-};
+}
 
-type DesktopCapturerSourceWithType = {
-  type: DesktopCapturerSourceType;
-  source: DesktopCapturerSource;
-};
 type SourcesDisappearListener = (ids: string[]) => void;
 type SharingSessionID = string;
 
@@ -35,6 +31,8 @@ class DesktopCapturerSources {
     SourcesDisappearListener[]
   >;
 
+  log = new Logger(__filename);
+
   constructor() {
     this.sources = new Map<string, DesktopCapturerSourceWithType>();
     this.lastAvailableScreenIDs = [];
@@ -48,16 +46,18 @@ class DesktopCapturerSources {
       SourcesDisappearListener[]
     >();
 
-    setTimeout(() => {
-      setInterval(() => {
-        this.refreshDesktopCapturerSources();
-      }, 5000);
-    }, 4000);
-    this.pollForInactiveListeners();
+    this.startRefreshDesktopCapturerSourcesLoop();
+    this.startPollForInactiveListenersLoop();
   }
 
   getSourcesMap(): Map<string, DesktopCapturerSourceWithType> {
     return this.sources;
+  }
+
+  startRefreshDesktopCapturerSourcesLoop() {
+    setInterval(() => {
+      this.refreshDesktopCapturerSources();
+    }, 5000);
   }
 
   getScreenSources(): DesktopCapturerSource[] {
@@ -110,25 +110,27 @@ class DesktopCapturerSources {
     // TODO: implement logic
   }
 
-  private async updateDesktopCapturerSources() {
-    this.lastAvailableScreenIDs = [];
-    this.lastAvailableWindowIDs = [];
+  async updateDesktopCapturerSources() {
+    // TODO: implement logic of checking if last sources match new sources,
+    // TODO: if source is gone, do proper actions and notify user if needed
+    // this.lastAvailableScreenIDs = [];
+    // this.lastAvailableWindowIDs = [];
 
-    [...this.sources.keys()].forEach((key) => {
-      const oldSource = this.sources.get(key);
-      if (!oldSource) return;
-      if (oldSource.type === DesktopCapturerSourceType.WINDOW) {
-        this.lastAvailableWindowIDs.push(oldSource.source.id);
-      } else if (oldSource.type === DesktopCapturerSourceType.SCREEN) {
-        this.lastAvailableScreenIDs.push(oldSource.source.id);
-      }
-    });
+    // [...this.sources.keys()].forEach((key) => {
+    //   const oldSource = this.sources.get(key);
+    //   if (!oldSource) return;
+    //   if (oldSource.type === DesktopCapturerSourceType.WINDOW) {
+    //     this.lastAvailableWindowIDs.push(oldSource.source.id);
+    //   } else if (oldSource.type === DesktopCapturerSourceType.SCREEN) {
+    //     this.lastAvailableScreenIDs.push(oldSource.source.id);
+    //   }
+    // });
 
     this.sources = await this.getDesktopCapturerSources();
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private getDesktopCapturerSources(): Promise<
+  getDesktopCapturerSources(): Promise<
     Map<string, DesktopCapturerSourceWithType>
   > {
     return new Promise<Map<string, DesktopCapturerSourceWithType>>(
@@ -136,27 +138,19 @@ class DesktopCapturerSources {
         const newSources = new Map<string, DesktopCapturerSourceWithType>();
         try {
           const capturerSources = await desktopCapturer.getSources({
-            types: ['window', 'screen'],
+            types: [
+              DesktopCapturerSourceType.WINDOW,
+              DesktopCapturerSourceType.SCREEN,
+            ],
             thumbnailSize: { width: 500, height: 500 },
             fetchWindowIcons: true, // TODO: use window icons in app UI !
           });
-          // for (const source of capturerSources) {
-          //   newSources.set(source.id, {
-          //     type: getSourceTypeFromSourceID(source.id),
-          //     source,
-          //   });
-          // }
-
           capturerSources.forEach((source) => {
             newSources.set(source.id, {
               type: getSourceTypeFromSourceID(source.id),
               source,
             });
           });
-          // .catch((e) => {
-          //   console.error(e);
-          //   throw new Error('error getting desktopCapturer sources');
-          // });
           resolve(newSources);
         } catch (e) {
           reject();
@@ -165,56 +159,49 @@ class DesktopCapturerSources {
     );
   }
 
-  private refreshDesktopCapturerSources() {
+  async refreshDesktopCapturerSources() {
     // TODO: implement get available sources logic here;
-    this.updateDesktopCapturerSources()
+    try {
+      await this.updateDesktopCapturerSources();
       // eslint-disable-next-line promise/always-return
-      .then(() => {
-        // eventually run checkers that emit events
-        this.checkForClosedWindows();
-        this.checkForScreensDisconnected();
-      })
-      .catch((e) => {
-        log.error(e);
-      });
+      // eventually run checkers that emit events
+      this.checkForClosedWindows();
+      this.checkForScreensDisconnected();
+    } catch (e) {
+      this.log.error(e);
+    }
   }
 
-  private pollForInactiveListeners() {
-    // TODO: implement logic
-    // if session ID no longer exists in SharingSessionsService -> remove its listener object
-
-    setTimeout(() => {
-      this.pollForInactiveListeners();
+  startPollForInactiveListenersLoop() {
+    setInterval(() => {
+      // TODO: implement logic
+      // if session ID no longer exists in SharingSessionsService -> remove its listener object
     }, 1000 * 60 * 60); // runs every hour in infinite loop
   }
 
-  private checkForClosedWindows() {
+  checkForClosedWindows() {
     // TODO: implement logic
-    const isSomeWindowsClosed = false;
-    const closedWindowsIDs: string[] = [];
-
-    if (isSomeWindowsClosed) {
-      this.notifyOnWindowsClosedListeners(closedWindowsIDs);
-    }
+    // const isSomeWindowsClosed = false;
+    // const closedWindowsIDs: string[] = [];
+    // if (isSomeWindowsClosed) {
+    //   this.notifyOnWindowsClosedListeners(closedWindowsIDs);
+    // }
   }
 
-  private notifyOnWindowsClosedListeners(_closedWindowsIDs: string[]) {
+  notifyOnWindowsClosedListeners(_closedWindowsIDs: string[]) {
     // TODO: implement logic
   }
 
-  private checkForScreensDisconnected() {
+  checkForScreensDisconnected() {
     // TODO: implement logic
-    const isSomeScreensDisconnected = false;
-    const disconnectedScreensIDs: string[] = [];
-
-    if (isSomeScreensDisconnected) {
-      this.notifyOnScreensDisconnectedListeners(disconnectedScreensIDs);
-    }
+    // const isSomeScreensDisconnected = false;
+    // const disconnectedScreensIDs: string[] = [];
+    // if (isSomeScreensDisconnected) {
+    //   this.notifyOnScreensDisconnectedListeners(disconnectedScreensIDs);
+    // }
   }
 
-  private notifyOnScreensDisconnectedListeners(
-    _disconnectedScreensIDs: string[]
-  ) {
+  notifyOnScreensDisconnectedListeners(_disconnectedScreensIDs: string[]) {
     // TODO: implement logic
   }
 }

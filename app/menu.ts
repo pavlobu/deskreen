@@ -7,7 +7,7 @@ import {
   MenuItemConstructorOptions,
 } from 'electron';
 
-import config from './configs/app.lang.config';
+// import config from './configs/app.lang.config';
 
 import signalingServer from './server';
 
@@ -36,9 +36,6 @@ export default class MenuBuilder {
 
     if (process.platform === 'darwin') {
       const menu = Menu.buildFromTemplate(this.buildDarwinTemplate());
-      Menu.setApplicationMenu(menu);
-    } else if (process.env.NODE_ENV === 'development') {
-      const menu = Menu.buildFromTemplate(this.buildDefaultTemplate());
       Menu.setApplicationMenu(menu);
     } else {
       // for production, no menu for non MacOS app
@@ -146,14 +143,6 @@ export default class MenuBuilder {
             this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
           },
         },
-        // TODO: remove this toggle dev menu in production!!!!!!!
-        {
-          label: 'Toggle Developer Tools',
-          accelerator: 'Alt+Command+I',
-          click: () => {
-            this.mainWindow.webContents.toggleDevTools();
-          },
-        },
       ],
     };
     const subMenuWindow: DarwinMenuItemConstructorOptions = {
@@ -175,27 +164,27 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('https://electronjs.org');
+            shell.openExternal('https://www.deskreen.com/');
           },
         },
         {
           label: 'Documentation',
           click() {
             shell.openExternal(
-              'https://github.com/electron/electron/tree/master/docs#readme'
+              'https://github.com/pavlobu/deskreen/blob/master/README.md'
             );
           },
         },
         {
           label: 'Community Discussions',
           click() {
-            shell.openExternal('https://www.electronjs.org/community');
+            shell.openExternal('https://github.com/pavlobu/deskreen/issues');
           },
         },
         {
           label: 'Search Issues',
           click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
+            shell.openExternal('https://github.com/pavlobu/deskreen/issues');
           },
         },
       ],
@@ -207,27 +196,27 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    const languageSubmenu = config.languages.map((languageCode) => {
-      return {
-        label: this.i18n.t(languageCode),
-        type: 'radio',
-        checked: this.i18n.language === languageCode,
-        click: () => {
-          this.i18n.changeLanguage(languageCode);
-          setTimeout(() => {
-            // to fix for MacOS bug, not picking up new language on first click
-            if (this.i18n.language !== languageCode) {
-              this.i18n.changeLanguage(languageCode);
-            }
-          }, 500);
-        },
-      };
-    });
+    // const languageSubmenu = config.languages.map((languageCode) => {
+    //   return {
+    //     label: this.i18n.t(languageCode),
+    //     type: 'radio',
+    //     checked: this.i18n.language === languageCode,
+    //     click: () => {
+    //       this.i18n.changeLanguage(languageCode);
+    //       setTimeout(() => {
+    //         // to fix for MacOS bug, not picking up new language on first click
+    //         if (this.i18n.language !== languageCode) {
+    //           this.i18n.changeLanguage(languageCode);
+    //         }
+    //       }, 500);
+    //     },
+    //   };
+    // });
 
-    const languageMenu: MenuItemConstructorOptions = {
-      label: this.i18n.t('Language'),
-      submenu: languageSubmenu as MenuItemConstructorOptions[],
-    };
+    // const languageMenu: MenuItemConstructorOptions = {
+    //   label: this.i18n.t('Language'),
+    //   submenu: languageSubmenu as MenuItemConstructorOptions[],
+    // };
 
     return [
       subMenuAbout,
@@ -235,121 +224,7 @@ export default class MenuBuilder {
       subMenuView,
       subMenuWindow,
       subMenuHelp,
-      languageMenu,
+      // languageMenu,
     ];
-  }
-
-  buildDefaultTemplate() {
-    const templateDefault = [
-      {
-        label: '&File',
-        submenu: [
-          {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              this.mainWindow.close();
-            },
-          },
-        ],
-      },
-      {
-        label: '&View',
-        submenu:
-          process.env.NODE_ENV === 'development' ||
-          process.env.DEBUG_PROD === 'true'
-            ? [
-                {
-                  label: '&Reload',
-                  accelerator: 'Ctrl+R',
-                  click: () => {
-                    this.mainWindow.webContents.reload();
-                  },
-                },
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
-                    );
-                  },
-                },
-                {
-                  label: 'Toggle &Developer Tools',
-                  accelerator: 'Alt+Ctrl+I',
-                  click: () => {
-                    this.mainWindow.webContents.toggleDevTools();
-                  },
-                },
-              ]
-            : [
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
-                    );
-                  },
-                },
-              ],
-      },
-      {
-        label: 'Help',
-        submenu: [
-          {
-            label: 'Learn More',
-            click() {
-              shell.openExternal('https://electronjs.org');
-            },
-          },
-          {
-            label: 'Documentation',
-            click() {
-              shell.openExternal(
-                'https://github.com/electron/electron/tree/master/docs#readme'
-              );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
-            },
-          },
-          {
-            label: 'Search Issues',
-            click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
-            },
-          },
-        ],
-      },
-    ];
-
-    const languageSubmenu = config.languages.map((languageCode) => {
-      return {
-        label: this.i18n.t(languageCode),
-        type: 'radio',
-        checked: this.i18n.language === languageCode,
-        click: () => {
-          this.i18n.changeLanguage(languageCode);
-        },
-      };
-    });
-
-    const languageMenu = {
-      label: this.i18n.t('Language'),
-      submenu: languageSubmenu,
-    };
-
-    templateDefault.push(languageMenu);
-
-    return templateDefault;
   }
 }
