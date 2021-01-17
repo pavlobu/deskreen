@@ -63,13 +63,15 @@ export default class DeskreenApp {
         const showNotification = () => {
           const notification = {
             title: 'Deskreen Update is Available!',
-            body: `Your current version is ${this.appVersion} Click to download new 1.0.1 updated version.`,
+            body: `Your current version is ${this.appVersion} Click to download new ${this.latestVersion} updated version.`,
           };
           const notificationInstance = new Notification(notification);
           notificationInstance.show();
           notificationInstance.on('click', (event) => {
             event.preventDefault(); // prevent the browser from focusing the Notification's tab
-            shell.openExternal('https://github.com/pavlobu/deskreen/releases/');
+            shell.openExternal(
+              'https://github.com/pavlobu/deskreen/releases/latest'
+            );
           });
         };
 

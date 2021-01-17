@@ -74,6 +74,15 @@ create two separate projects in SonarCube panel.
 First project for host app, and second project for client viewer app.
 TODO: add how to get started with local SonarCube for Deskreen in details.
 
+## Note on versioning:
+
+- All versions git tags should start with `v` ex. `v1.0.0`
+- Before making a new release with `git push <version-tagname>` set version
+  to `<version-tagname>` ! without `v` in the beginning! (ex. `1.0.0` -- not start with `v`) in these three files:
+  - `package.json` -- in `version` key ex. `1.0.0`
+  - `app/package.json` -- in `version` key ex. `1.0.0`
+  - `app/package-lock.json` -- in `version` key ex. `1.0.0`
+
 ## Maintainer
 
 - [Pavlo (Paul) Buidenkov](https://www.linkedin.com/in/pavlobu)

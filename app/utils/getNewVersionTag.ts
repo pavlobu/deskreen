@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const githubApiRepoTagsUrl =
-  'https://api.github.com/repos/pavlobu/circleCInodeapp/tags';
+  'https://api.github.com/repos/pavlobu/deskreen/tags';
 
 export default async function getNewVersionTag() {
   let latestVersionTag = '';
@@ -18,6 +18,7 @@ export default async function getNewVersionTag() {
   });
 
   latestVersionTag = foundTag ? foundTag.name : '';
+  latestVersionTag = latestVersionTag.slice(1);
 
   return latestVersionTag;
 }

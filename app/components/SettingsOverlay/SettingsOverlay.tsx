@@ -377,7 +377,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                 onClick={(e) => {
                   e.preventDefault();
                   shell.openExternal(
-                    'https://github.com/pavlobu/deskreen/releases/'
+                    'https://github.com/pavlobu/deskreen/releases/latest'
                   );
                 }}
               >

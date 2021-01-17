@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.0-alfa-beta",
+  "version": "1.0.0",
   "description": "Deskreen makes any device a second screen for your computer",
   "scripts": {
     "build": "yarn build-main && yarn build-renderer && yarn build-client",
