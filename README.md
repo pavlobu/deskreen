@@ -93,8 +93,11 @@ AGPL-3.0 License © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen
 
 ## Copyright
 
-MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 Deskreen Logo PNG Image -- © [Nadiia Plaunova](https://www.artstation.com/nadiiia)
+
+Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
+
+MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 
 ## Donate
 
