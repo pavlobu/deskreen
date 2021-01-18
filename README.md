@@ -1,5 +1,7 @@
 # Deskreen
 
+![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
+
 ### Website: https://www.deskreen.com
 
 ## Deskreen turns any device with a web browser to a second screen for your computer
