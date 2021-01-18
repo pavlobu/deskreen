@@ -1,8 +1,3 @@
-[![codecov](https://codecov.io/gh/pavlobu/test-electron-boilerplate-ci/branch/master/graph/badge.svg)](https://codecov.io/gh/pavlobu/deskreen)
-![build and test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg?event=pull_request)
-![release all os -- no code signing](https://github.com/pavlobu/deskreen/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
-![codecov generate](https://github.com/pavlobu/deskreen/workflows/codecov%20generate/badge.svg)
-
 # Deskreen
 
 ### Website: https://www.deskreen.com
