@@ -100,4 +100,4 @@ simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/).
 
 ## Donate
 
-Click to donate on Deskreen's Patreon page: [DONATE!](https://github.com/electron-react-boilerplate)
+Click to donate on Deskreen's Patreon page: [DONATE!](https://patreon.com/deskreen)
