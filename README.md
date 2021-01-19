@@ -96,6 +96,8 @@ Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 
 MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 
+simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/).
+
 ## Donate
 
 Click to donate on Deskreen's Patreon page: [DONATE!](https://github.com/electron-react-boilerplate)
