@@ -11,7 +11,7 @@ desktop to a web browser on any device.
 It is built on top of [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 For better security mechanism, end-to-end encrytpion is implemented, which is inspired by
 [darkwire.io](https://github.com/darkwire/darkwire.io) , the difference is, that it is rewritten
-in `Typescript` and trnasformed to use `node-forge` instead of `window.crypto.subtle`.
+in `Typescript` and transformed to use `node-forge` instead of `window.crypto.subtle`.
 Why this was made? Because a client served with `http` without SSL, which makes `window.crypto. subtle` unavailable.
 (TODO: write more docs about Deskreen architecture)
 
