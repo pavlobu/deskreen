@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Deskreen makes any device a second screen for your computer",
   "scripts": {
-    "build": "yarn build-main && yarn build-renderer && yarn build-client",
+    "build": "yarn build-client && yarn build-main && yarn build-renderer",
     "build-test": "yarn build-main-test && yarn build-renderer-test && yarn build-client",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-e2e": "cross-env E2E_BUILD=true yarn build",
