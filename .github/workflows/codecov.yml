@@ -1,29 +1,48 @@
-name: codecov generate
+name: codecov
+
 on: [pull_request]
+
 jobs:
   run:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and release workflows! this is for making shure cahes used in most efficient way
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2.3.4
 
-      - name: install yarn dependencies in app/client using cache
-        uses: bahmutov/npm-install@v1.6.0
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.4
         with:
-          working-directory: ./app/client
+          node-version: '12'
 
-      - name: install yarn dependencies in ./ using cache
-        uses: bahmutov/npm-install@v1.6.0
-        with:
-          working-directory: ./
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: install yarn dependencies in ./app using cache
-        uses: bahmutov/npm-install@v1.6.0
+      - uses: actions/cache@v2.1.3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          working-directory: ./app
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ubuntu-18.04-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ubuntu-18.04-yarn-
+
+      - name: yarn install in ./app/client
+        run: |
+          cd ./app/client
+          yarn install
+
+      - name: yarn install in ./
+        run: yarn install
+
+      - name: yarn install in ./app
+        run: |
+          cd ./app
+          yarn install
 
       - name: yarn build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn build
 
       - name: yarn test

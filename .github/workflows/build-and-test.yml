@@ -1,44 +1,17 @@
-on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+name: build and test
 
-name: release all os -- no code signing
+on: [pull_request]
 
 jobs:
-  create-release:
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.3.1
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-  release:
-    name: Release
+  build-and-test:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        include:
-          - os: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and covecov workflows! this is for making shure cahes used in most efficient way
-            artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
-          - os: windows-2019
-            artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
-          - os: macos-10.15
-            artifact_name: 'release/{*.zip,*.dmg,*.blockmap,*.yml}'
+        os: [macos-10.15, windows-2019, ubuntu-18.04] # IMPORTANT!!! here ubuntu-18.04 should be same as in codecov and release workflows, this is for making shure cahes used in most efficient way
 
     steps:
-      - name: Checkout code
+      - name: Check out Git repository
         uses: actions/checkout@v2.3.4
 
       - name: Setup Node.js environment
@@ -76,6 +49,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn build
 
+      # following step does code signing when `electron-builder --publish always` (look in package.json)
+      - name: yarn package-ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn package-ci
+
       - name: yarn lint
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -102,17 +81,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           run: yarn test-ux
-
-      - name: yarn package-ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn package-ci
-
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref }}
-          file: ${{ matrix.artifact_name }}
-          overwrite: true
-          file_glob: true
