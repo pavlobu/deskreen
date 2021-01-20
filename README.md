@@ -4,6 +4,10 @@
 
 ### Website: https://www.deskreen.com
 
+![build-and-test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)
+![codecov-generate](https://github.com/pavlobu/deskreen/workflows/codecov/badge.svg)
+[![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
+
 ## Deskreen turns any device with a web browser to a second screen for your computer
 
 Deskreen is an `electron.js` based application that uses `WebRTC` to make a live stream of your
