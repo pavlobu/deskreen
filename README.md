@@ -75,6 +75,12 @@ create two separate projects in SonarCube panel.
 First project for host app, and second project for client viewer app.
 TODO: add how to get started with local SonarCube for Deskreen in details.
 
+## Documentation
+
+### High level design
+
+![high-level-design](./doc/architecture/deskreen-arch-pavlobu-21012021.svg)
+
 ## Note on versioning:
 
 - All versions git tags should start with `v` ex. `v1.0.0`
