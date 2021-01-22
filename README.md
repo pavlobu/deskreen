@@ -16,8 +16,7 @@ It is built on top of [Electron React Boilerplate](https://github.com/electron-r
 For better security mechanism, end-to-end encryption is implemented, which is inspired by
 [darkwire.io](https://github.com/darkwire/darkwire.io). The difference is that it is rewritten
 in `Typescript` and transformed to use `node-forge` instead of `window.crypto.subtle`.
-Why this was made? Because a client served with `http` without SSL, which makes `window.crypto. subtle` unavailable.
-(TODO: write more docs about Deskreen architecture)
+Why this was made? Because a client served with `http` without SSL, which makes `window.crypto.subtle` unavailable.
 
 ## Get Started for Developers
 
@@ -77,9 +76,13 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ## Documentation
 
-### High level design
+### High level architecture design
 
 ![high-level-design](./doc/architecture/deskreen-arch-pavlobu-21012021.svg)
+
+### WebRTC Screen Sharing Session Initiation Step by Step
+
+![sharng-session-init](./doc/init-sharing-session/deskreen-webrtc-screen-sharing-session-initiation-pavlobu-22012021.svg)
 
 ## Note on versioning:
 
