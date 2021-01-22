@@ -90,6 +90,7 @@ export default class Socket implements SocketOPTS {
     });
 
     this.socket.on('GET_IP_BY_SOCKET_ID', (socketID, acknowledgeFunction) => {
+      // TODO: for security only allow localhost to use this socket event! right now it may be emitted by client which may be not secure. The purpose of this event is for host to get the actual IP of connected client socket and compare them with what was sent by client in DEVICE_DETAILS.
       acknowledgeFunction(socketsIPService.getSocketIPByID(socketID));
     });
 
@@ -142,7 +143,7 @@ export default class Socket implements SocketOPTS {
             isOwner: this.socket.request.connection.remoteAddress.includes(
               LOCALHOST_SOCKET_IP
             ),
-            ip: payload.ip ? payload.ip : '',
+            ip: payload.ip ? payload.ip : '', // TODO: remove as it is not used
           },
         ],
       };
@@ -158,6 +159,7 @@ export default class Socket implements SocketOPTS {
     });
 
     this.socket.on('TOGGLE_LOCK_ROOM', async () => {
+      // TODO: in here if there is somehow already more than ONE client connected, then we were spoofed! Need to add code to interrupt connection immediately.
       const room: Room = (await this.fetchRoom()) as Room;
       const user = (room.users || []).find(
         (u) => u.socketId === this.socket.id && u.isOwner

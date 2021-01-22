@@ -142,7 +142,7 @@ export default class PeerConnection {
     this.socket.emit('USER_ENTER', {
       username: user.username,
       publicKey: user.publicKey,
-      ip: myIP,
+      ip: myIP, // TODO: remove as it is not used
     });
   }
 

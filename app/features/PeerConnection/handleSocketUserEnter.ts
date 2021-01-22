@@ -10,6 +10,7 @@ export default (
 
   [peerConnection.partner] = filteredPartner;
 
+  // TODO: ADD_USER is actually not used, so will remove this code from host and client, this is no use...
   peerConnection.sendEncryptedMessage({
     type: 'ADD_USER',
     payload: {
