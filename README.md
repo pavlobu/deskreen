@@ -125,6 +125,12 @@ MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplat
 
 simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/).
 
+## Thanks
+
+Thanks to Github workflows for enabling a robust CI pipeline for Deskreen creating needs.
+
+Many thanks to all open source community members and maintainers of libraries used in this project.
+
 ## Donate
 
 Click to donate on Deskreen's Patreon page: [DONATE!](https://patreon.com/deskreen)
