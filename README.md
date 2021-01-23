@@ -27,8 +27,8 @@ On a long run Deskreen seeks for getting rid of Display Dummy Plugs, because mos
 There are already working commercial solutions out there with their own drivers which they don't disclose, but this task is doable with a help of entire community.
 The goal of Deskreen is to enable community power and knowledge to overcome these technical challanges and make it a go-to second screen solution, that everyone will benefit from!
 
-We plan on making virtual display driver support for each of three main operating systems and place all OS related codes in `./drivers` subdirectory of this project.
-You can find brief requirements for driver API in `./drivers/README.md`.
+We plan on making virtual display driver support for each of three main operating systems and place all OS related codes in **[`./drivers`](drivers)** subdirectory of this project.
+You can find brief requirements for driver API in **[`./drivers/README.md`](drivers)**.
 
 Thank you in advance!
 
