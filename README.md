@@ -30,6 +30,8 @@ The goal of Deskreen is to enable community power and knowledge to overcome thes
 We plan on making virtual display driver support for each of three main operating systems and place all OS related codes in **[`./drivers`](drivers)** subdirectory of this project.
 You can find brief requirements for driver API in **[`./drivers/README.md`](drivers)**.
 
+Share your valuable knowledge on how to create virtual desktop **without a Dummy Display Plug [in this discussion thread.](https://github.com/pavlobu/deskreen/discussions/37#discussion-2016522)**
+
 Thank you in advance!
 
 ## Get Started for Developers
