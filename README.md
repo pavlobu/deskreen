@@ -25,7 +25,7 @@ If you are a seasoned Windows or Linux or MacOS hacker with a knowledge of low l
 On a long run Deskreen seeks for getting rid of Display Dummy Plugs, because most people don't like using them. Sometimes they can't use them because all available display ports are already taken.
 **So we need to have native drivers for Win / Mac / Linux that will help to enable virtual display wihtout Dummy Display Plugs.**
 There are already working commercial solutions out there with their own drivers which they don't disclose, but this task is doable with a help of entire community.
-The goal of Deskreen is to enable community power and knowledge to overcome these technical challanges and make it a go-to second screen solution, that everyone will benefit from!
+The goal of Deskreen is to enable community power and knowledge to overcome these technical challenges and make it a go-to second screen solution that everyone will benefit from!
 
 We plan on making virtual display driver support for each of three main operating systems and place all OS related codes in **[`./drivers`](drivers)** subdirectory of this project.
 You can find brief requirements for driver API in **[`./drivers/README.md`](drivers)**.
