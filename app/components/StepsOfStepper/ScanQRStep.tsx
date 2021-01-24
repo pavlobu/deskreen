@@ -131,7 +131,7 @@ const ScanQRStep: React.FC = () => {
       </div>
       <div style={{ marginBottom: '10px' }}>
         <Text className="bp3-text-muted">
-          or type the following address manualy in browser address bar on any
+          or type the following address manually in browser address bar on any
           device:
         </Text>
       </div>

@@ -176,7 +176,7 @@ describe('peerConnectionHandlePeer callback', () => {
         );
       });
 
-      describe('when quality is AUTO and when video quality optimizer requiests GOOD quality', () => {
+      describe('when quality is AUTO and when video quality optimizer requests GOOD quality', () => {
         it('should call .send with proper data message', () => {
           peerConnectionHandlePeer(peerConnection);
           peerConnection.peer?.emit('stream');
@@ -191,7 +191,7 @@ describe('peerConnectionHandlePeer callback', () => {
         });
       });
 
-      describe('when quality is NOT AUTO and when video quality optimizer requiests GOOD quality', () => {
+      describe('when quality is NOT AUTO and when video quality optimizer requests GOOD quality', () => {
         it('should call NOT .send with proper data message', () => {
           peerConnection.videoQuality = VideoQuality.Q_25_PERCENT;
           peerConnectionHandlePeer(peerConnection);
@@ -203,7 +203,7 @@ describe('peerConnectionHandlePeer callback', () => {
         });
       });
 
-      describe('when quality is AUTO and when video quality optimizer requiests HALF quality', () => {
+      describe('when quality is AUTO and when video quality optimizer requests HALF quality', () => {
         it('should call .send with proper data message', () => {
           peerConnectionHandlePeer(peerConnection);
           peerConnection.peer?.emit('stream');
@@ -219,7 +219,7 @@ describe('peerConnectionHandlePeer callback', () => {
       });
     });
 
-    describe('when quality is NOT AUTO and when video quality optimizer requiests GOOD quality', () => {
+    describe('when quality is NOT AUTO and when video quality optimizer requests GOOD quality', () => {
       it('should call NOT .send with proper data message', () => {
         peerConnection.videoQuality = VideoQuality.Q_25_PERCENT;
         peerConnectionHandlePeer(peerConnection);

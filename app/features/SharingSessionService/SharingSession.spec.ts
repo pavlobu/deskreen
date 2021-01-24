@@ -84,7 +84,7 @@ describe('SharingSession unit tests', () => {
       expect(sharingSession.statusChangeListeners.length).toBe(1);
     });
 
-    describe('when .peerConnectionHelperRenderer.webContents.on(did-finish-load event occured', () => {
+    describe('when .peerConnectionHelperRenderer.webContents.on(did-finish-load event occurred', () => {
       it('should call .peerConnectionHelperRenderer?.webContents.send( with proper parameters', () => {
         const callback =
           // @ts-ignore
@@ -105,7 +105,7 @@ describe('SharingSession unit tests', () => {
       });
     });
 
-    describe('when .peerConnectionHelperRenderer.webContents.on("ipc-message" event occured on "peer-connected" channel and when onDeviceConnectedCallback is defined', () => {
+    describe('when .peerConnectionHelperRenderer.webContents.on("ipc-message" event occurred on "peer-connected" channel and when onDeviceConnectedCallback is defined', () => {
       it('should call .onDeviceConnectedCallback(data) with proper data', () => {
         const testData = 'alsi33i223';
         const testCallback = jest.fn();
@@ -121,7 +121,7 @@ describe('SharingSession unit tests', () => {
       });
     });
 
-    describe('when .peerConnectionHelperRenderer.webContents.on("ipc-message" event occured NOT on "peer-connected" channel or when .onDeviceConnectedCallback is UNdefined', () => {
+    describe('when .peerConnectionHelperRenderer.webContents.on("ipc-message" event occurred NOT on "peer-connected" channel or when .onDeviceConnectedCallback is UNdefined', () => {
       it('should call .onDeviceConnectedCallback()', () => {
         const testData = 'alsi33i223';
         const testCallback = jest.fn();

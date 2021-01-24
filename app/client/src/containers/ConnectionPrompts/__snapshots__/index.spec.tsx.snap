@@ -153,7 +153,7 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
             <h3
               className="bp3-heading"
             >
-              Error occured :(
+              Error occurred :(
             </h3>
           </div>
         </div>
@@ -175,7 +175,7 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
     <div
       className=""
     >
-      Error occured :(
+      Error occurred :(
     </div>
   </div>
 </div>
@@ -820,7 +820,7 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
             <h3
               className="bp3-heading"
             >
-              Wating for user to select source to share from screen sharing device...
+              Waiting for user to select source to share from screen sharing device...
             </h3>
           </div>
         </div>

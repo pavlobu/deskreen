@@ -103,7 +103,7 @@ describe('ConnectedDevicesService tests', () => {
     });
 
     describe('when .setPendingConnectionDevice() was called', () => {
-      it('should set passed device as pendingConnectionDevice adn call .emitPendingConnectionDeviceConnected', () => {
+      it('should set passed device as pendingConnectionDevice and call .emitPendingConnectionDeviceConnected', () => {
         service.emitPendingConnectionDeviceConnected = jest.fn();
 
         service.setPendingConnectionDevice(testDevice);

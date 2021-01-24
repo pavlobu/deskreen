@@ -74,7 +74,7 @@ function getConnectingStepContent(
         />
       );
     default:
-      return <Text>Error occured :(</Text>;
+      return <Text>Error occurred :(</Text>;
   }
 }
 

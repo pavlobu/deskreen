@@ -34,7 +34,7 @@ export default class Crypto {
       const input = forge.util.createBuffer(data);
       const decipher = forge.cipher.createDecipher('AES-CBC', secretKey);
       decipher.start({ iv });
-      decipher.update(input); // input should be a strng here
+      decipher.update(input); // input should be a string here
       decipher.finish();
       const decryptedPayload = decipher.output.toString();
       resolve(decryptedPayload);

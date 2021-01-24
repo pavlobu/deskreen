@@ -6,8 +6,8 @@ import ConnectedDevicesService from '../ConnectedDevicesService';
 import PeerConnectionHelperRendererService from '../PeerConnectionHelperRendererService';
 
 // this may look as an ugly mock, but hey, this works! and don't forget that it is a unit test
-// why do we make it like that ? bacuse jest doesnt allow ex.
-// duplicated __mock__/electron in different subfolders of the project, so.. better do mainual mock in a test file itself
+// why do we make it like that ? because jest doesn't allow ex.
+// duplicated __mock__/electron in different subfolders of the project, so.. better do manual mock in a test file itself
 // jest bug reference on duplicated mocks found: https://github.com/facebook/jest/issues/2070
 // it is a bad design of jest itself by default, so this is the best workaround, simply by making manual mock in this way:
 jest.mock('../PeerConnectionHelperRendererService', () => {
