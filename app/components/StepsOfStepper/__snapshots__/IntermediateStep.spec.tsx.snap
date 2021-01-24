@@ -293,7 +293,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 <div
                   className="bp3-text-muted"
                 >
-                  or type the following address manualy in browser address bar on any device:
+                  or type the following address manually in browser address bar on any device:
                 </div>
               </Blueprint3.Text>
             </div>

@@ -10,7 +10,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and release workflows! this is for making shure cahes used in most efficient way
+    runs-on: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and release workflows! this is for making sure caches are used in most efficient way
 
     steps:
       - name: Check out Git repository

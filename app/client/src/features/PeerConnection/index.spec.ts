@@ -85,8 +85,8 @@ describe('PeerConnection class', () => {
     jest.restoreAllMocks();
   });
 
-  describe('when new PeerConnection is created with not corrent roomId', () => {
-    it('should change UI accordingly and notify user that error occured', () => {
+  describe('when new PeerConnection is created with incorrect roomId', () => {
+    it('should change UI accordingly and notify user that error occurred', () => {
       peerConnection = new PeerConnection(
         '',
         jest.fn(),

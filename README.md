@@ -21,9 +21,9 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 ## NOTE: We are looking for a solution to get rid from Dummy Display Plugs while using Deskreen as a second screen. Your code support is highly valuable and welcome in Deskreen!
 
 Display Dummy Plugs are good temporary solution, but it is not that good for everyone.
-If you are a seasoned Windows or Linux or MacOS hacker with a knowledge of low level tweaks and triks, you can help us to make Deskreen better!
+If you are a seasoned Windows or Linux or MacOS hacker with a knowledge of low level tweaks and tricks, you can help us to make Deskreen better!
 On a long run Deskreen seeks for getting rid of Display Dummy Plugs, because most people don't like using them. Sometimes they can't use them because all available display ports are already taken.
-**So we need to have native drivers for Win / Mac / Linux that will help to enable virtual display wihtout Dummy Display Plugs.**
+**So we need to have native drivers for Win / Mac / Linux that will help to enable virtual display without Dummy Display Plugs.**
 There are already working commercial solutions out there with their own drivers which they don't disclose, but this task is doable with a help of entire community.
 The goal of Deskreen is to enable community power and knowledge to overcome these technical challenges and make it a go-to second screen solution that everyone will benefit from!
 

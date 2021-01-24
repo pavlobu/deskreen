@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and covecov workflows! this is for making shure cahes used in most efficient way
+          - os: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and covecov workflows! this is for making sure caches are used in most efficient way
             artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: windows-2019
             artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'

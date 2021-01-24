@@ -39,12 +39,12 @@ function getPromptContent(step: number, t: TFunction) {
       return (
         <H3>
           {t(
-            'Wating for user to select source to share from screen sharing device...'
+            'Waiting for user to select source to share from screen sharing device...'
           )}
         </H3>
       );
     default:
-      return <H3>Error occured :(</H3>;
+      return <H3>Error occurred :(</H3>;
   }
 }
 

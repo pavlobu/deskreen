@@ -61,7 +61,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
       );
     });
 
-    describe('when ipcRenderer.on("start-peer-connection" callback occured', () => {
+    describe('when ipcRenderer.on("start-peer-connection" callback occurred', () => {
       it('should set ipcRenderer.on("create-peer-connection-with-data"', () => {
         handleIpcRenderer();
 
@@ -126,8 +126,8 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         );
       });
 
-      describe('when ipcRenderer.on("create-peer-connection-with-data" callback occured', () => {
-        it('should intialize PeerConnection', () => {
+      describe('when ipcRenderer.on("create-peer-connection-with-data" callback occurred', () => {
+        it('should initialize PeerConnection', () => {
           handleIpcRenderer();
           // @ts-ignore
           let callback = ipcRenderer.on.mock.calls[0][1];
@@ -154,7 +154,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
           ).toBeCalled();
         });
 
-        describe('when on device connected callback occured', () => {
+        describe('when on device connected callback occurred', () => {
           it('should call ipcRenderer.send("peer-connected" with device data', () => {
             const peerConnectionInstance = mockAndGetPeerConnectionInstance();
             // eslint-disable-next-line prefer-destructuring
@@ -174,7 +174,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("set-desktop-capturer-source-id" callback occured', () => {
+      describe('when ipcRenderer.on("set-desktop-capturer-source-id" callback occurred', () => {
         it('should call peerConnection.setDesktopCapturerSourceID(id) with proper source id', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -191,7 +191,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("call-peer" callback occured', () => {
+      describe('when ipcRenderer.on("call-peer" callback occurred', () => {
         it('should call peerConnection.callPeer()', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -205,7 +205,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("disconnect-by-host-machine-user" callback occured', () => {
+      describe('when ipcRenderer.on("disconnect-by-host-machine-user" callback occurred', () => {
         it('should call peerConnection.disconnectByHostMachineUser()', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -221,7 +221,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("deny-connection-for-partner" callback occured', () => {
+      describe('when ipcRenderer.on("deny-connection-for-partner" callback occurred', () => {
         it('should call peerConnection.denyConnectionForPartner()', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -237,7 +237,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("send-user-allowed-to-connect" callback occured', () => {
+      describe('when ipcRenderer.on("send-user-allowed-to-connect" callback occurred', () => {
         it('should call peerConnection.sendUserAllowedToConnect()', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -253,7 +253,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("app-color-theme-changed" callback occured', () => {
+      describe('when ipcRenderer.on("app-color-theme-changed" callback occurred', () => {
         it('should call peerConnection.setAppTheme(newTheme)', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
@@ -270,7 +270,7 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
         });
       });
 
-      describe('when ipcRenderer.on("app-language-changed" callback occured', () => {
+      describe('when ipcRenderer.on("app-language-changed" callback occurred', () => {
         it('should call peerConnection.testAppLang(newLang)', () => {
           const peerConnectionInstance = mockAndGetPeerConnectionInstance();
 
