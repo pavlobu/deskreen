@@ -130,6 +130,10 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
   - `app/package.json` -- in `version` key ex. `1.0.0`
   - `app/package-lock.json` -- in `version` key ex. `1.0.0`
 
+## Found typo on https://deskreen.com ?
+
+You can submit your pull request with fix on [Deskreen website repo](https://github.com/Deskreen/deskreen-website)
+
 ## Maintainer
 
 - [Pavlo (Paul) Buidenkov](https://www.linkedin.com/in/pavlobu)
@@ -146,7 +150,11 @@ Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 
 MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
 
-simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/).
+simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/)
+
+GNU General Public License (GPL) Version 2 [node-forge](https://github.com/digitalbazaar/forge)
+
+Copyright (c) 2019, Mapbox [pixelmatch](https://github.com/mapbox/pixelmatch)
 
 ## Thanks
 
