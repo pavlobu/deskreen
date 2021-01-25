@@ -21,7 +21,7 @@ jest.mock('electron', () => {
   };
 });
 
-const testAppPath = '/a/b/c/descreen_app';
+const testAppPath = '/a/b/c/deskreen_app';
 const testBrowserWindowParams = {
   show: false,
   // width: 300,
