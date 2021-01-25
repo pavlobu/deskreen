@@ -34,6 +34,26 @@ Share your valuable knowledge on how to create virtual desktop **without a Dummy
 
 Thank you in advance!
 
+## Installing with binaries
+
+### Windows
+
+- Get the .msi or .exe file from Releases
+
+### Mac
+
+- Get the .dmg file from Releases
+
+### Linux
+
+- Debian and Ubuntu based distributions (deb)
+
+- Enterprise Linux based distributions (rpm)
+
+- Arch Linux [AUR Package](https://aur.archlinux.org/packages/deskreen/)
+
+- AppImage for other distributions
+
 ## Get Started for Developers
 
 ### Prerequisites
@@ -42,7 +62,7 @@ You will need to have `node` `npm` and `yarn` installed
 globally on your machine.
 
 1. git clone this repo
-2. `yarn install`
+2. `cd app/client; yarn install ; cd ../../ ; yarn install`
 3. `yarn dev` -- run in dev mode with live updates
 
 ### Useful yarn commands
