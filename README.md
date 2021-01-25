@@ -4,6 +4,7 @@
 
 ### Website: https://www.deskreen.com
 
+![release all os -- no code signing](https://github.com/pavlobu/deskreen/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
 ![build-and-test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)
 ![codecov-generate](https://github.com/pavlobu/deskreen/workflows/codecov/badge.svg)
 [![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
