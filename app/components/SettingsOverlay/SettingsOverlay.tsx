@@ -302,7 +302,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           icon="blocked-person"
           className={getClassesCallback().iconInTablLeftButton}
         />
-        <Text className="bp3-text-large">Blackilsted IPs</Text>
+        <Text className="bp3-text-large">Blacklisted IPs</Text>
       </Row>
     );
   };
