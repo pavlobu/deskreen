@@ -235,7 +235,7 @@ exports[`should match exact snapshot 1`] = `
                                   <div
                                     class="bp3-text-large"
                                   >
-                                    Blackilsted IPs
+                                    Blacklisted IPs
                                   </div>
                                 </div>
                               </div>
@@ -762,7 +762,7 @@ exports[`should match exact snapshot 1`] = `
                                   <div
                                     class="bp3-text-large"
                                   >
-                                    Blackilsted IPs
+                                    Blacklisted IPs
                                   </div>
                                 </div>
                               </div>
@@ -1504,7 +1504,7 @@ exports[`should match exact snapshot 1`] = `
                                                 <div
                                                   className="bp3-text-large"
                                                 >
-                                                  Blackilsted IPs
+                                                  Blacklisted IPs
                                                 </div>
                                               </Blueprint3.Text>
                                             </div>
