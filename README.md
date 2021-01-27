@@ -28,11 +28,9 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 
 [Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.md)
 
-Don't create your own discussion thread. Discuss with the project owner first if you really think we need to create another thread. We already have enough threads to discuss all important stuff.
-
 ---
 
-- [Q&A General](https://github.com/pavlobu/deskreen/discussions/66) - for general questions about Deskreen. **Please no questions like:** when will you add this feature? or when will you fix that bug? Be patient and patience will pay in full. Also no questions like: did you know other commercial app already has this feature? Otherwise - ban.
+- [Q&A General](https://github.com/pavlobu/deskreen/discussions/66) - for general questions about Deskreen.
 
 ---
 
@@ -41,26 +39,15 @@ Don't create your own discussion thread. Discuss with the project owner first if
 
 ---
 
-- [General Discussion Thread](https://github.com/pavlobu/deskreen/discussions/49) - for general discussion. For example how did you find out about Deskreen? Or send cheers and thanks to anyone in Deskreen's community. Tolerance, politeness and patience is encouraged. Otherwise - ban.
+- [General](https://github.com/pavlobu/deskreen/discussions/49) - for general discussion. For example how did you find out about Deskreen? Or send cheers and thanks to anyone in Deskreen's community.🎉
 
 ---
 
-- [Use Cases for Deskreen Discussion Thread](https://github.com/pavlobu/deskreen/discussions/48) - let our community know how you use Deskreen in this thread. Tolerance, politeness and patience is encouraged. Otherwise - ban.
+- [Use Cases for Deskreen](https://github.com/pavlobu/deskreen/discussions/48) - let our community know how you use Deskreen in this thread.
 
 ---
 
-- [Enhancements and New Features for Deskreen Discussion Thread](https://github.com/pavlobu/deskreen/discussions/50) - share your ideas of what you will see here. Issues created with enhancement tag should be related to some concrete example of change in UI, Security patch, Performance improvement with some notes on how do you think the problem should be approach. Other stuff please post in [Enhancements and New Features for Deskreen](https://github.com/pavlobu/deskreen/discussions/50) discussion thread.
-  Tolerance, politeness and patience is encouraged. Otherwise - ban.
-
-**IMPORTANT NOTE about Enhancements and New Features for Deskreen Discussion Thread:** by [Pavlo (Paul) Buidenkov](https://www.linkedin.com/in/pavlobu/):
-
-> This is not a feature request channel. So far I'm the main contributor and I have my own agenda. I'm developing Deskreen in my
-> spare time out of my main work duties. If you want some feature to appear in soonest release of Deskreen there are there are two options for you:
->
-> 1. Become a business partner on [Opencollective](https://opencollective.com/deskreen) or [Patreon](https://www.patreon.com/deskreen) and have an exlusive right to request this feature. It will be then prioritized as important and made in next release if other security issues don't come up. Remarks are: the feature should not be an R&D related one (like add touch and drawing support for tablets or add driver support for some operating system); the feature will be created in my spare time with no crunches or rushes from anyone's side.
-> 2. Contribute with code and cooperate with me. The most active code contributors will be the successors of this repo and will get
->    owner privileges for this repo. How to become an active contributor? - By implementing features or doing bug fixes. Just open an
->    issue and we will discuss what you can help with.
+- [Enhancements and New Features for Deskreen](https://github.com/pavlobu/deskreen/discussions/50) - share your ideas of what improvements can be done to Deskreen. Issues created with enhancement tag should be related to some concrete example of change in UI, Security patch, Performance improvement with some concrete notes on how you think the problem should be approached. Otherwise for general improvements with short paragraphs post your thoughts [here](https://github.com/pavlobu/deskreen/discussions/50).
 
 ---
 
