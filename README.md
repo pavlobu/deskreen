@@ -9,6 +9,8 @@
 ![codecov-generate](https://github.com/pavlobu/deskreen/workflows/codecov/badge.svg)
 [![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
 
+### ▶️ [Deskreen Youtube channel](https://www.youtube.com/channel/UCyiTK98gjDKGNNjUk9ynzxQ) (video tutorials, demos, use cases for Deskreen day to day usage)
+
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
 
 Deskreen is an `electron.js` based application that uses `WebRTC` to make a live stream of your
@@ -18,6 +20,52 @@ For better security mechanism, end-to-end encryption is implemented, which is in
 [darkwire.io](https://github.com/darkwire/darkwire.io). The difference is that it is rewritten
 in `Typescript` and transformed to use `node-forge` instead of `window.crypto.subtle`.
 Why this was made? Because a client served with `http` without SSL, which makes `window.crypto.subtle` unavailable.
+
+<br/>
+<br/>
+
+## Deskreen Github Discussion Threads
+
+[Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.md)
+
+Don't create your own discussion thread. Discuss with the project owner first if you really think we need to create another thread. We already have enough threads to discuss all important stuff.
+
+---
+
+- [Q&A General](https://github.com/pavlobu/deskreen/discussions/66) - for general questions about Deskreen. **Please no questions like:** when will you add this feature? or when will you fix that bug? Be patient and patience will pay in full. Also no questions like: did you know other commercial app already has this feature? Otherwise - ban.
+
+---
+
+- [Bugs General](https://github.com/pavlobu/deskreen/discussions/68) - for general bug reports if you don't know dev environment details. Please include Deskreen version!
+  If you saw a bug and know your dev environment, and how to reproduce it, please consider opening a new Issue labeled as Bug and provide full details.
+
+---
+
+- [General Discussion Thread](https://github.com/pavlobu/deskreen/discussions/49) - for general discussion. For example how did you find out about Deskreen? Or send cheers and thanks to anyone in Deskreen's community. Tolerance, politeness and patience is encouraged. Otherwise - ban.
+
+---
+
+- [Use Cases for Deskreen Discussion Thread](https://github.com/pavlobu/deskreen/discussions/48) - let our community know how you use Deskreen in this thread. Tolerance, politeness and patience is encouraged. Otherwise - ban.
+
+---
+
+- [Enhancements and New Features for Deskreen Discussion Thread](https://github.com/pavlobu/deskreen/discussions/50) - share your ideas of what you will see here. Issues created with enhancement tag should be related to some concrete example of change in UI, Security patch, Performance improvement with some notes on how do you think the problem should be approach. Other stuff please post in [Enhancements and New Features for Deskreen](https://github.com/pavlobu/deskreen/discussions/50) discussion thread.
+  Tolerance, politeness and patience is encouraged. Otherwise - ban.
+
+**IMPORTANT NOTE about Enhancements and New Features for Deskreen Discussion Thread:** by [Pavlo (Paul) Buidenkov](https://www.linkedin.com/in/pavlobu/):
+
+> This is not a feature request channel. So far I'm the main contributor and I have my own agenda. I'm developing Deskreen in my
+> spare time out of my main work duties. If you want some feature to appear in soonest release of Deskreen there are there are two options for you:
+>
+> 1. Become a business partner on [Opencollective](https://opencollective.com/deskreen) or [Patreon](https://www.patreon.com/deskreen) and have an exlusive right to request this feature. It will be then prioritized as important and made in next release if other security issues don't come up. Remarks are: the feature should not be an R&D related one (like add touch and drawing support for tablets or add driver support for some operating system); the feature will be created in my spare time with no crunches or rushes from anyone's side.
+> 2. Contribute with code and cooperate with me. The most active code contributors will be the successors of this repo and will get
+>    owner privileges for this repo. How to become an active contributor? - By implementing features or doing bug fixes. Just open an
+>    issue and we will discuss what you can help with.
+
+---
+
+<br/>
+<br/>
 
 ## NOTE: We are looking for a solution to get rid from Dummy Display Plugs while using Deskreen as a second screen. Your code support is highly valuable and welcome in Deskreen!
 
@@ -154,14 +202,17 @@ simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/)
 
 GNU General Public License (GPL) Version 2 [node-forge](https://github.com/digitalbazaar/forge)
 
-Copyright (c) 2019, Mapbox [pixelmatch](https://github.com/mapbox/pixelmatch)
+ISC Copyright (c) 2019, Mapbox [pixelmatch](https://github.com/mapbox/pixelmatch)
 
 ## Thanks
 
-Thanks to Github workflows for enabling a robust CI pipeline for Deskreen creating needs.
+🙏 Special thanks to [Electron React Boilerplate community](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for providing a good kickstart template boilerplate code for electron project, that really helped a lot to get started with development of Deskreen.
 
-Many thanks to all open source community members and maintainers of libraries used in this project.
+🙏 Thanks to Github workflows for enabling a robust CI pipeline for the needs of 'forging' 🛠️ Deskreen.
+
+🙏 Many thanks to all 🌍 open source community members and maintainers of libraries used in this project.
 
 ## Donate
 
-Click to donate on Deskreen's Patreon page: [DONATE!](https://patreon.com/deskreen)
+[Click to donate on Deskreen's Patreon page](https://patreon.com/deskreen)
+[Click to donate on Deskreen's Opencollective page](https://opencollective.com/deskreen)
