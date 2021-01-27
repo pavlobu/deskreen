@@ -2,7 +2,7 @@
   "name": "deskreen",
   "productName": "Deskreen",
   "version": "1.0.2",
-  "description": "Deskreen turns any device into a second screen for your computer",
+  "description": "Deskreen turns any device into a secondary screen for your computer",
   "scripts": {
     "build": "yarn build-client && yarn build-main && yarn build-renderer",
     "build-test": "yarn build-main-test && yarn build-renderer-test && yarn build-client",
