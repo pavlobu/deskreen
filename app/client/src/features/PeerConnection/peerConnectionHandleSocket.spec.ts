@@ -162,19 +162,6 @@ describe('peerConnectionHandleSocket callback', () => {
         expect(peerConnection.UIHandler.setMyDeviceDetails).toBeCalled();
       });
 
-      it('should call sendEncryptedMessage with ADD_USER type', () => {
-        peerConnectionHandleSocket(peerConnection);
-
-        peerConnection.socket.emit('USER_ENTER', {
-          users: [{ username: 'asdf', publicKey: '1234' }],
-        });
-
-        expect(peerConnection.sendEncryptedMessage).toBeCalledWith({
-          type: 'ADD_USER',
-          payload: expect.anything(),
-        });
-      });
-
       it('should call sendEncryptedMessage with DEVICE_DETAILS type', () => {
         peerConnectionHandleSocket(peerConnection);
 

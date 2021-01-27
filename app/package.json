@@ -1,8 +1,8 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.1",
-  "description": "Deskreen makes any device a second screen for your computer",
+  "version": "1.0.2",
+  "description": "Deskreen turns any device into a second screen for your computer",
   "main": "./main.prod.js",
   "author": {
     "name": "Pavlo (Paul) Buidenkov",

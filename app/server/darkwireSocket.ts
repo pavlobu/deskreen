@@ -20,6 +20,10 @@ interface SocketOPTS {
   roomIdOriginal: string;
 }
 
+function isLocalhostSocket(socket: Io.Socket) {
+  return socket.request.connection.remoteAddress.includes(LOCALHOST_SOCKET_IP);
+}
+
 export default class Socket implements SocketOPTS {
   roomId: string;
 
@@ -90,7 +94,9 @@ export default class Socket implements SocketOPTS {
     });
 
     this.socket.on('GET_IP_BY_SOCKET_ID', (socketID, acknowledgeFunction) => {
-      // TODO: for security only allow localhost to use this socket event! right now it may be emitted by client which may be not secure. The purpose of this event is for host to get the actual IP of connected client socket and compare them with what was sent by client in DEVICE_DETAILS.
+      if (!isLocalhostSocket(this.socket)) {
+        return;
+      }
       acknowledgeFunction(socketsIPService.getSocketIPByID(socketID));
     });
 
@@ -100,6 +106,7 @@ export default class Socket implements SocketOPTS {
     });
 
     this.socket.on('ENCRYPTED_MESSAGE', (payload) => {
+      payload.fromSocketID = this.socket.id;
       this.socket.to(this.roomId).emit('ENCRYPTED_MESSAGE', payload);
     });
 
@@ -140,9 +147,7 @@ export default class Socket implements SocketOPTS {
           {
             socketId: this.socket.id,
             publicKey: payload.publicKey,
-            isOwner: this.socket.request.connection.remoteAddress.includes(
-              LOCALHOST_SOCKET_IP
-            ),
+            isOwner: isLocalhostSocket(this.socket),
             ip: payload.ip ? payload.ip : '', // TODO: remove as it is not used
           },
         ],

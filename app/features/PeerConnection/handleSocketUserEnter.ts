@@ -10,17 +10,6 @@ export default (
 
   [peerConnection.partner] = filteredPartner;
 
-  // TODO: ADD_USER is actually not used, so will remove this code from host and client, this is no use...
-  peerConnection.sendEncryptedMessage({
-    type: 'ADD_USER',
-    payload: {
-      username: peerConnection.user.username,
-      publicKey: peerConnection.user.publicKey,
-      isOwner: true,
-      id: peerConnection.user.username,
-    },
-  });
-
   if (peerConnection.partner.publicKey !== '') {
     // peerConnection.socket.emit('TOGGLE_LOCK_ROOM', null, () => {});
     // peerConnection.isSocketRoomLocked = true;

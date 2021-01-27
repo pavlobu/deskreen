@@ -8,7 +8,6 @@ type CallAcceptedMessageWithPayload = {
 type DeviceDetailsMessageWithPayload = {
   type: 'DEVICE_DETAILS';
   payload: {
-    socketID: string;
     deviceType: string;
     os: string;
     browser: string;
