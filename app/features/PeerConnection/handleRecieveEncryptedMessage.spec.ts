@@ -39,7 +39,9 @@ const TEST_DEVICE_DETAILS_PAYLOAD = {
   deviceScreenHeight: 480,
 };
 
-const TEST_DUMMY_ENCRYPTED_MESSAGE_PAYLOAD = ({} as unknown) as ReceiveEncryptedMessagePayload;
+const TEST_DUMMY_ENCRYPTED_MESSAGE_PAYLOAD = ({
+  fromSocketID: '2411',
+} as unknown) as ReceiveEncryptedMessagePayload;
 
 describe('handleRecieveEncryptedMessage.ts', () => {
   let peerConnection: PeerConnection;

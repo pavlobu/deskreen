@@ -60,22 +60,10 @@ export default (peerConnection: PeerConnection) => {
 
       if (!peerConnection.partner) return;
 
-      // TODO: ADD_USER is actually not used, so will remove this code from host and client, this is no use...
-      peerConnection.sendEncryptedMessage({
-        type: 'ADD_USER',
-        payload: {
-          username: peerConnection.user.username,
-          publicKey: peerConnection.user.publicKey,
-          isOwner: true,
-          id: peerConnection.user.username,
-        },
-      });
-
       peerConnection.sendEncryptedMessage({
         type: 'DEVICE_DETAILS',
         // TODO: add deviceIP in this payload
         payload: {
-          socketID: peerConnection.socket.io.engine.id, // TODO: maybe this socketID can be actually retrieved by host? so there will be no use for client to send it? need to check
           os: peerConnection.myDeviceDetails.myOS,
           deviceType: peerConnection.myDeviceDetails.myDeviceType,
           browser: peerConnection.myDeviceDetails.myBrowser,

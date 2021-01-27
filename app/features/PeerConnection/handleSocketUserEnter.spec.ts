@@ -81,25 +81,6 @@ describe('handleSocketUserEnter callback', () => {
       expect(peerConnection.partner).toBe(TEST_PARTNER_USER);
     });
 
-    it('should set .sendEncryptedMessage with proper payload as it is an owner of room', () => {
-      const TEST_SEND_MESSAGE_PAYLOAD = {
-        type: 'ADD_USER',
-        payload: {
-          username: peerConnection.user.username,
-          publicKey: peerConnection.user.publicKey,
-          isOwner: true,
-          id: peerConnection.user.username,
-        },
-      };
-      peerConnection.sendEncryptedMessage = jest.fn();
-
-      handleSocketUserEnter(peerConnection, TEST_PAYLOAD);
-
-      expect(peerConnection.sendEncryptedMessage).toBeCalledWith(
-        TEST_SEND_MESSAGE_PAYLOAD
-      );
-    });
-
     it('should call toggleLockRoom with true', () => {
       peerConnection.toggleLockRoom = jest.fn();
 

@@ -1,8 +1,8 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.1",
-  "description": "Deskreen makes any device a second screen for your computer",
+  "version": "1.0.2",
+  "description": "Deskreen turns any device into a second screen for your computer",
   "scripts": {
     "build": "yarn build-client && yarn build-main && yarn build-renderer",
     "build-test": "yarn build-main-test && yarn build-renderer-test && yarn build-client",
@@ -327,7 +327,7 @@
     "classnames": "^2.2.6",
     "clsx": "^1.1.1",
     "connected-react-router": "^6.6.1",
-    "electron": "^10.1.5",
+    "electron": "^11.2.1",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.2",
     "electron-settings": "^4.0.2",
@@ -376,7 +376,7 @@
     "yarn": ">=0.21.3"
   },
   "collective": {
-    "url": "TODO: add collective page"
+    "url": "https://opencollective.com/deskreen"
   },
   "browserslist": [],
   "prettier": {

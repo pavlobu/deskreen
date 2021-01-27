@@ -393,22 +393,50 @@ describe('DarkwireSocket tests', () => {
       });
 
       describe('when socket.on("GET_IP_BY_SOCKET_ID" callback occured', () => {
-        it('should call acknowledgeFunction with proper ip', () => {
-          const testIP = '123.231.121.111';
-          // @ts-ignore
-          socketsIPService.getSocketIPByID.mockImplementationOnce(() => testIP);
-          const darkwireSocket = new DarkwireSocket(
-            makeTestDarkwireSocketOPTS()
-          );
-          darkwireSocket.handleSocket();
-          const getMyIpBySocketIdCallback =
+        describe('when it was called by localhost(127.0.0.1) socket IP', () => {
+          it('should call acknowledgeFunction with proper ip', () => {
+            const testIP = '123.231.121.111';
             // @ts-ignore
-            darkwireSocket.socket.on.mock.calls[1][1];
-          const acknowledgeFunctionMock = jest.fn();
+            socketsIPService.getSocketIPByID.mockImplementationOnce(
+              () => testIP
+            );
+            const darkwireSocket = new DarkwireSocket(
+              makeTestDarkwireSocketOPTS()
+            );
+            darkwireSocket.socket.request.connection.remoteAddress =
+              '127.0.0.1';
+            darkwireSocket.handleSocket();
+            const getIpBySocketIdCallback =
+              // @ts-ignore
+              darkwireSocket.socket.on.mock.calls[1][1];
+            const acknowledgeFunctionMock = jest.fn();
 
-          getMyIpBySocketIdCallback(undefined, acknowledgeFunctionMock);
+            getIpBySocketIdCallback(undefined, acknowledgeFunctionMock);
+            expect(acknowledgeFunctionMock).toBeCalledWith(testIP);
+          });
+        });
 
-          expect(acknowledgeFunctionMock).toBeCalledWith(testIP);
+        describe('when it was called by NOT localhost(127.0.0.1) socket IP', () => {
+          it('should NOT call acknowledgeFunction with proper ip', () => {
+            const testIP = '123.231.121.111';
+            // @ts-ignore
+            socketsIPService.getSocketIPByID.mockImplementationOnce(
+              () => testIP
+            );
+            const darkwireSocket = new DarkwireSocket(
+              makeTestDarkwireSocketOPTS()
+            );
+            darkwireSocket.socket.request.connection.remoteAddress =
+              '192.168.45.123';
+            darkwireSocket.handleSocket();
+            const getIpBySocketIdCallback =
+              // @ts-ignore
+              darkwireSocket.socket.on.mock.calls[1][1];
+            const acknowledgeFunctionMock = jest.fn();
+
+            getIpBySocketIdCallback(undefined, acknowledgeFunctionMock);
+            expect(acknowledgeFunctionMock).not.toBeCalledWith(testIP);
+          });
         });
       });
 

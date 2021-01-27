@@ -32,7 +32,7 @@ export default async function handleRecieveEncryptedMessage(
   if (message.type === 'DEVICE_DETAILS') {
     peerConnection.socket.emit(
       'GET_IP_BY_SOCKET_ID',
-      message.payload.socketID,
+      payload.fromSocketID,
       (deviceIP: string) => {
         // TODO: need to add myIP in client message.payload.myIP, then if retrieved deviceIP and myIP from client don't match, we were spoofed, then we can interrupt connection immediately!
         handleDeviceIPMessage(deviceIP, peerConnection, message);

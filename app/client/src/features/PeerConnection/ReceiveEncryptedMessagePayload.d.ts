@@ -1,4 +1,5 @@
 interface ReceiveEncryptedMessagePayload {
+  fromSocketID: string;
   payload: string;
   signature: string;
   iv: string;
