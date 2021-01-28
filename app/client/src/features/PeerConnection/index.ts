@@ -21,6 +21,7 @@ import setAndShowErrorDialogMessage from './setAndShowErrorDialogMessage';
 import PeerConnectionSocketNotDefined from './errors/PeerConnectionSocketNotDefined';
 import PeerConnectionUserIsNotDefinedError from './errors/PeerConnectionUserIsNotDefinedError';
 import PeerConnectionPartnerIsNotDefinedError from './errors/PeerConnectionPartnerIsNotDefinedError';
+import { CodecsHandler } from './CodecHandler';
 
 interface LocalPeerUser {
   username: string;
@@ -118,11 +119,22 @@ export default class PeerConnection {
       config: { iceServers: [] },
       sdpTransform: (sdp) => {
         let newSDP = sdp;
-        newSDP = (setSdpMediaBitrate(
-          (newSDP as unknown) as string,
-          'video',
-          500000
-        ) as unknown) as typeof sdp;
+        // newSDP = (setSdpMediaBitrate(
+        //   (newSDP as unknown) as string,
+        //   'video',
+        //   500000
+        // ) as unknown) as typeof sdp;
+        // https://stackoverflow.com/questions/42857702/split-sdp-string-for-m-line-to-change-video-codecs
+        // newSDP = CodecsHandler.removeVPX(newSDP);
+
+        newSDP = CodecsHandler.preferVP9(newSDP);
+        newSDP = CodecsHandler.disableNACK(newSDP);
+        newSDP = CodecsHandler.setVideoBitrates(newSDP, {
+          min: 800000,
+          max: 1000000,
+        });
+        newSDP = CodecsHandler.setApplicationSpecificBandwidth(newSDP, { screen: 800000 }, true);
+
         return newSDP;
       },
     });

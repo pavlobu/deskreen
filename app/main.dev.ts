@@ -97,6 +97,10 @@ export default class DeskreenApp {
       'webrtc-max-cpu-consumption-percentage',
       '100'
     );
+    app.commandLine.appendSwitch(
+      'force-fieldtrials',
+      'WebRTC-SupportVP9SVC/EnabledByFlag_3SL3TL'
+    );
   }
 
   initIpcMain() {
