@@ -28,6 +28,10 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 
 [Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.md)
 
+### [Announcements Channel in Discussions](https://github.com/pavlobu/deskreen/discussions/71)
+
+Some progress and updates on Deskreen can be found [here](https://github.com/pavlobu/deskreen/discussions/71).
+
 ---
 
 - [Q&A General](https://github.com/pavlobu/deskreen/discussions/66) - for general questions about Deskreen.
