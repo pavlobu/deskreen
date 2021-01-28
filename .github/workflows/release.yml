@@ -20,7 +20,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Deskreen Release ${{ github.ref }}
-          draft: false
+          draft: true
           prerelease: false
 
   release:
@@ -35,7 +35,7 @@ jobs:
           - os: windows-2019
             artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
           - os: macos-10.15
-            artifact_name: 'release/{*.zip,*.dmg,*.blockmap,*.yml}'
+            artifact_name: 'release/{*.dmg,*.blockmap,*.yml}'
 
     steps:
       - name: Checkout code

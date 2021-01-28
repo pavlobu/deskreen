@@ -98,8 +98,12 @@
     "win": {
       "target": [
         "nsis",
-        "msi"
+        "msi",
+        "portable"
       ]
+    },
+    "portable": {
+      "artifactName": "${name}_${version}_Windows_portable.exe"
     },
     "linux": {
       "target": [
