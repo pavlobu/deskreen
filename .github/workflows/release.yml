@@ -108,15 +108,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn package-ci
 
-      # - name: Upload binaries to release
-      #   uses: svenstaro/upload-release-action@v2
-      #   with:
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     tag: ${{ github.ref }}
-      #     file: ${{ matrix.artifact_name }}
-      #     overwrite: true
-      #     file_glob: true
-
       - name: Upload binaries to release
         uses: xresloader/upload-to-github-release@v1
         env:
@@ -125,14 +116,3 @@ jobs:
           file: ${{ matrix.artifact_name }}
           tags: true
           draft: true
-
-      # - name: Upload Release Asset
-      #   id: upload-release-asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-      #     asset_path: ./my-artifact.zip
-      #     asset_name: my-artifact.zip
-      #     asset_content_type: application/zip
