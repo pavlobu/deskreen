@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Deskreen turns any device into a secondary screen for your computer",
   "scripts": {
     "build": "yarn build-client && yarn build-main && yarn build-renderer",
@@ -70,6 +70,7 @@
   "build": {
     "productName": "Deskreen",
     "appId": "com.pavlobu.Deskreen",
+    "copyright": "Copyright © 2020-present Pavlo (Paul) Buidenkov",
     "files": [
       "dist/",
       "node_modules/",
@@ -98,8 +99,12 @@
     "win": {
       "target": [
         "nsis",
-        "msi"
+        "msi",
+        "portable"
       ]
+    },
+    "portable": {
+      "artifactName": "${name}_${version}_Windows_portable.exe"
     },
     "linux": {
       "target": [
@@ -136,7 +141,7 @@
       "url": "https://github.com/pavlobu"
     }
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0 License",
   "bugs": {
     "url": "https://github.com/pavlobu/deskreen/issues"
   },

@@ -70,7 +70,7 @@ export default function ColorlibStepIcon(props: StepIconPropsDeskreen) {
       className={`${clsx(classes.root, {
         [classes.active]: active,
         [classes.completed]: completed,
-      })} ${active ? 'active-stepper-pulse-icon' : ''}`}
+      })}`}
     >
       {icons[String(icon)]}
     </div>
