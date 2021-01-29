@@ -1,5 +1,7 @@
 # Deskreen
 
+[![Github All Releases](https://img.shields.io/github/downloads/pavlobu/deskreen/total.svg)]()
+
 ![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
 
 ### Website: https://deskreen.com
