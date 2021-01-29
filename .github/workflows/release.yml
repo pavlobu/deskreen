@@ -20,7 +20,11 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Deskreen Release ${{ github.ref }}
-          draft: true
+          body: |
+            ⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️
+            WAIT FOR FILES TO APPEAR HERE ~20 minutes
+            ⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️⌛️
+          draft: false
           prerelease: false
 
   release:
