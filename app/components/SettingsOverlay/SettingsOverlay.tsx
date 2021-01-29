@@ -376,9 +376,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                 id="new-version-header"
                 onClick={(e) => {
                   e.preventDefault();
-                  shell.openExternal(
-                    'https://github.com/pavlobu/deskreen/releases/latest'
-                  );
+                  shell.openExternal('https://deskreen.com');
                 }}
               >
                 {/* eslint-disable-next-line react/jsx-one-expression-per-line */}

@@ -2,7 +2,7 @@
 
 ![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
 
-### Website: https://www.deskreen.com
+### Website: https://deskreen.com
 
 ![release all os -- no code signing](https://github.com/pavlobu/deskreen/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
 ![build-and-test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)

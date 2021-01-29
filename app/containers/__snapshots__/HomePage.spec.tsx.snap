@@ -1181,7 +1181,7 @@ exports[`should match exact snapshot 1`] = `
                                                   isEntireScreenSelected={false}
                                                 >
                                                   <div
-                                                    className="makeStyles-root-106 makeStyles-active-107 active-stepper-pulse-icon"
+                                                    className="makeStyles-root-106 makeStyles-active-107"
                                                   >
                                                     <Blueprint3.Icon
                                                       color="#fff"
@@ -1453,7 +1453,7 @@ exports[`should match exact snapshot 1`] = `
                                                   isEntireScreenSelected={false}
                                                 >
                                                   <div
-                                                    className="makeStyles-root-106 "
+                                                    className="makeStyles-root-106"
                                                   >
                                                     <Blueprint3.Icon
                                                       color="#5C7080"
@@ -1725,7 +1725,7 @@ exports[`should match exact snapshot 1`] = `
                                                   isEntireScreenSelected={false}
                                                 >
                                                   <div
-                                                    className="makeStyles-root-106 "
+                                                    className="makeStyles-root-106"
                                                   >
                                                     <Blueprint3.Icon
                                                       color="#5C7080"

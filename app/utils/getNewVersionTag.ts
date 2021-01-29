@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const githubApiRepoTagsUrl =
-  'https://api.github.com/repos/pavlobu/deskreen/tags';
+  'https://api.github.com/repos/pavlobu/deskreen/releases/latest';
 
 export default async function getNewVersionTag() {
   let latestVersionTag = '';
@@ -13,12 +13,9 @@ export default async function getNewVersionTag() {
     headers: { 'User-Agent': 'node.js' },
   });
 
-  const foundTag = response.data.find((tagData: any) => {
-    return (tagData.name as string).startsWith('v');
-  });
+  const tagName = response.data.tag_name;
 
-  latestVersionTag = foundTag ? foundTag.name : '';
-  latestVersionTag = latestVersionTag.slice(1);
+  latestVersionTag = tagName.slice(1);
 
   return latestVersionTag;
 }
