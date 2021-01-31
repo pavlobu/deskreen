@@ -36,7 +36,7 @@ Some progress and updates on Deskreen can be found [here](https://github.com/pav
 
 ---
 
-- [Q&A General](https://github.com/pavlobu/deskreen/discussions/66) - for general questions about Deskreen.
+- [Q&A General](https://github.com/pavlobu/deskreen/discussions/89) - for general questions about Deskreen.
 
 ---
 
@@ -45,7 +45,7 @@ Some progress and updates on Deskreen can be found [here](https://github.com/pav
 
 ---
 
-- [General](https://github.com/pavlobu/deskreen/discussions/49) - for general discussion. For example how did you find out about Deskreen? Or send cheers and thanks to anyone in Deskreen's community.🎉
+- [General Discussion](https://github.com/pavlobu/deskreen/discussions/88) - for general discussion. For example how did you find out about Deskreen? Or send cheers and thanks to anyone in Deskreen's community members. 🎉
 
 ---
 
@@ -54,6 +54,10 @@ Some progress and updates on Deskreen can be found [here](https://github.com/pav
 ---
 
 - [Enhancements and New Features for Deskreen](https://github.com/pavlobu/deskreen/discussions/50) - share your ideas of what improvements can be done to Deskreen. Issues created with enhancement tag should be related to some concrete example of change in UI, Security patch, Performance improvement with some concrete notes on how you think the problem should be approached. Otherwise for general improvements with short paragraphs post your thoughts [here](https://github.com/pavlobu/deskreen/discussions/50).
+
+---
+
+- [Virtual Display Drivers Knowledge Base | Getting Rid From Virtual Display Plugs](https://github.com/pavlobu/deskreen/discussions/86) - share your knowledge or useful links on how to create a virtual display for any operating system. Links to source code are highly appreciated.
 
 ---
 
