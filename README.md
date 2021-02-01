@@ -61,6 +61,10 @@ Some progress and updates on Deskreen can be found [here](https://github.com/pav
 
 ---
 
+- [Cast Audio with Video when screen sharing using WebRTC in Electron | Drivers to pipe audio output as an audio input source that can be read by ElectronJS WebRTC and streamed to client along with video](https://github.com/pavlobu/deskreen/discussions/92) - this feature has been requested multiple times, but it has a long way to go. Share your knowledge or useful links on how to get built in system audio output and put it to WebRTC stream so that client viewing device will be able to play it along with the video stream.
+
+---
+
 <br/>
 <br/>
 
