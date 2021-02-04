@@ -28,6 +28,7 @@ import { VideoQuality } from '../../features/VideoAutoQualityOptimizer/VideoQual
 import handlePlayerToggleFullscreen from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
 import ScreenSharingSource from '../../features/PeerConnection/ScreenSharingSourceEnum';
+import { REACT_PLAYER_WRAPPER_ID } from '../../constants/appConstants';
 
 const videoQualityButtonStyle: React.CSSProperties = {
   width: '100%',
@@ -46,6 +47,8 @@ interface PlayerControlPanelProps {
   toaster: undefined | Toaster;
 }
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 function PlayerControlPanel(props: PlayerControlPanelProps) {
   const {
     isPlaying,
@@ -62,6 +65,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
   const isFullScreenAPIAvailable = useMemo(() => screenfull.isEnabled, []);
 
   const [isFullScreenOn, setIsFullScreenOn] = useState(false);
+  const [isVideoFlipped, setIsVideoFlipped] = useState(false);
 
   useEffect(() => {
     initScreenfullOnChange(setIsFullScreenOn);
@@ -70,6 +74,27 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
   const handleClickFullscreenWhenDefaultPlayerIsOn = useCallback(() => {
     handlePlayerToggleFullscreen();
   }, []);
+
+  const toggleFlipVideo = useCallback(() => {
+    const videoElement = isSafari
+      ? document.querySelector(`#${REACT_PLAYER_WRAPPER_ID}`)
+      : document.querySelector(`#${REACT_PLAYER_WRAPPER_ID} > video`);
+    if (isVideoFlipped) {
+      // @ts-ignore
+      videoElement.style.transform = '';
+      setIsVideoFlipped(false);
+    } else {
+      // @ts-ignore
+      videoElement.style.transform = 'rotateY(180deg)';
+      setIsVideoFlipped(true);
+    }
+
+    toaster?.show({
+      icon: 'clean',
+      intent: Intent.PRIMARY,
+      message: `Video is flipped horizontally`,
+    });
+  }, [isVideoFlipped, toaster]);
 
   return (
     <>
@@ -184,59 +209,60 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                       borderBottom: '1px solid #ffffffa8',
                     }}
                   />
-                  {screenSharingSourceType === ScreenSharingSource.WINDOW ? (
-                    <Tooltip
-                      content="You can't change video quality when sharing a window. You can change quality only when shering entire screen."
-                      position={Position.BOTTOM}
-                    >
-                      <Button minimal disabled>
-                        <Icon icon="cog" color="#A7B6C2" />
+                  <Popover
+                    content={
+                      <>
+                        <H5>Video Settings:</H5>
+                        <Divider />
+                        <Row>
+                          <Button
+                            icon="key-tab"
+                            minimal
+                            active={isVideoFlipped}
+                            style={videoQualityButtonStyle}
+                            onClick={toggleFlipVideo}
+                          >
+                            Flip
+                          </Button>
+                        </Row>
+                        <Divider />
+                        {Object.values(VideoQuality).map((q: VideoQuality) => {
+                          return (
+                            <Row key={q}>
+                              <Button
+                                minimal
+                                active={selectedVideoQuality === q}
+                                style={videoQualityButtonStyle}
+                                disabled={
+                                  screenSharingSourceType ===
+                                  ScreenSharingSource.WINDOW
+                                }
+                                onClick={() => {
+                                  setVideoQuality(q);
+                                  toaster?.show({
+                                    icon: 'clean',
+                                    intent: Intent.PRIMARY,
+                                    message: `Video quality has been changed to ${q}`,
+                                  });
+                                }}
+                              >
+                                {q}
+                              </Button>
+                            </Row>
+                          );
+                        })}
+                      </>
+                    }
+                    position={Position.BOTTOM}
+                    popoverClassName={Classes.POPOVER_CONTENT_SIZING}
+                  >
+                    <Tooltip content="Video Quality" position={Position.BOTTOM}>
+                      <Button minimal>
+                        <Icon icon="cog" color="white" />
                       </Button>
                     </Tooltip>
-                  ) : (
-                    <Popover
-                      content={
-                        <>
-                          <H5>Video Quality:</H5>
-                          <Divider />
-                          {Object.values(VideoQuality).map(
-                            (q: VideoQuality) => {
-                              return (
-                                <Row key={q}>
-                                  <Button
-                                    minimal
-                                    active={selectedVideoQuality === q}
-                                    style={videoQualityButtonStyle}
-                                    onClick={() => {
-                                      setVideoQuality(q);
-                                      toaster?.show({
-                                        icon: 'clean',
-                                        intent: Intent.PRIMARY,
-                                        message: `Video quality has been changed to ${q}`,
-                                      });
-                                    }}
-                                  >
-                                    {q}
-                                  </Button>
-                                </Row>
-                              );
-                            }
-                          )}
-                        </>
-                      }
-                      position={Position.BOTTOM}
-                      popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-                    >
-                      <Tooltip
-                        content="Video Quality"
-                        position={Position.BOTTOM}
-                      >
-                        <Button minimal>
-                          <Icon icon="cog" color="white" />
-                        </Button>
-                      </Tooltip>
-                    </Popover>
-                  )}
+                  </Popover>
+
                   <Divider
                     style={{
                       height: '20px',

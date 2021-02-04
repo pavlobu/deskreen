@@ -49,7 +49,7 @@ function MainView() {
     LoadingSharingIconType
   >(LoadingSharingIconEnum.DESKTOP);
   const [videoQuality, setVideoQuality] = useState<VideoQuality>(
-    VideoQuality.Q_AUTO
+    VideoQuality.Q_100_PERCENT
   );
   const [peer, setPeer] = useState<undefined | PeerConnection>();
 
