@@ -18,6 +18,7 @@
     "node-forge": "^0.9.1",
     "pixelmatch": "^5.2.1",
     "react": "^16.13.1",
+    "react-app-polyfill": "^2.0.0",
     "react-dom": "^16.13.1",
     "react-flexbox-grid": "^2.1.2",
     "react-i18next": "^11.7.4",

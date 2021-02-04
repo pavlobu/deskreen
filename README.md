@@ -24,6 +24,10 @@ in `Typescript` and transformed to use `node-forge` instead of `window.crypto.su
 Why this was made? Because a client served with `http` without SSL, which makes `window.crypto.subtle` unavailable.
 
 <br/>
+
+## [Deskreen FAQ](https://deskreen.com/#faq)
+
+<br/>
 <br/>
 
 ## Deskreen Github Discussion Threads
@@ -218,4 +222,5 @@ ISC Copyright (c) 2019, Mapbox [pixelmatch](https://github.com/mapbox/pixelmatch
 ## Donate
 
 [Click to donate on Deskreen's Patreon page](https://patreon.com/deskreen)
+
 [Click to donate on Deskreen's Opencollective page](https://opencollective.com/deskreen)

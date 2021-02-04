@@ -131,6 +131,7 @@ export default class PeerConnection {
     this.peer.on('error', (e) => {
       console.error('error in simple peer happened!');
       console.error(e);
+      setAndShowErrorDialogMessage(this, ErrorMessage.WEBRTC_ERROR);
     });
     peerConnectionHandlePeer(this);
   }
