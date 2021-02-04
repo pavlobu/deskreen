@@ -1,3 +1,4 @@
+import './polyfills';
 import React, { Suspense } from 'react';
 import './config/i18n';
 import ReactDOM from 'react-dom';
