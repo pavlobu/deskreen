@@ -94,6 +94,8 @@ Thank you in advance!
 
 - Get the .dmg file from Releases
 
+- Or get from [Homebrew](https://brew.sh/): `brew install --cask deskreen`
+
 ### Linux
 
 - Debian and Ubuntu based distributions (deb)
