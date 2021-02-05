@@ -7,112 +7,18 @@ on:
 name: release all os -- no code signing
 
 jobs:
-  create-release:
-    runs-on: ubuntu-18.04
+  homebrew-pr:
+    runs-on: macos-10.15
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.3.1
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Deskreen Release ${{ github.ref }}
-          draft: true
-          prerelease: false
+      # https://github.community/t/how-to-get-just-the-tag-name/16241
+      # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
+      - name: Set $VERSION without preifx v
+        run: echo VERSION=$(echo ${GITHUB_REF##*/} | cut -c2-) >> $GITHUB_ENV
 
-  release:
-    name: Deskreen Release
-    runs-on: ${{ matrix.os }}
+      # https://brew.sh/
+      - name: Install Homebrew
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and covecov workflows! this is for making sure caches are used in most efficient way
-            artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
-          - os: windows-2019
-            artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
-          - os: macos-10.15
-            artifact_name: 'release/{*.dmg,*.blockmap,*.yml}'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2.3.4
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.4
-        with:
-          node-version: '12'
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v2.1.3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-yarn-
-
-      - name: yarn install in ./app/client
-        run: |
-          cd ./app/client
-          yarn install
-
-      - name: yarn install in ./
-        run: yarn install
-
-      - name: yarn install in ./app
-        run: |
-          cd ./app
-          yarn install
-
-      - name: yarn build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build
-
-      - name: yarn lint
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn lint
-
-      - name: yarn tsc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn tsc
-
-      - name: yarn test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn test
-
-      - name: yarn build-ux
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build-ux
-
-      - name: yarn test-ux
-        uses: GabrielBB/xvfb-action@v1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          run: yarn test-ux
-
-      - name: yarn package-ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn package-ci
-
-      - name: Upload binaries to release
-        uses: xresloader/upload-to-github-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          file: ${{ matrix.artifact_name }}
-          tags: true
-          draft: true
+      # https://github.com/Homebrew/homebrew-cask/blob/master/CONTRIBUTING.md#updating-a-cask
+      - name: Updating cask Deskreen
+        run: brew bump-cask-pr --version $VERSION deskreen
