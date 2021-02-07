@@ -10,6 +10,7 @@
 ![build-and-test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)
 ![codecov-generate](https://github.com/pavlobu/deskreen/workflows/codecov/badge.svg)
 [![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
+![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
 
 ### ▶️ [Deskreen Youtube channel](https://www.youtube.com/channel/UCyiTK98gjDKGNNjUk9ynzxQ) (video tutorials, demos, use cases for Deskreen day to day usage)
 

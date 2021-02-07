@@ -178,13 +178,14 @@ describe('peerConnectionHandlePeer callback', () => {
 
       describe('when quality is AUTO and when video quality optimizer requests GOOD quality', () => {
         it('should call .send with proper data message', () => {
+          peerConnection.videoQuality = VideoQuality.Q_AUTO;
           peerConnectionHandlePeer(peerConnection);
+
           peerConnection.peer?.emit('stream');
 
           jest.advanceTimersByTime(2000);
           peerConnection.videoAutoQualityOptimizer.goodQualityCallback();
 
-          expect(peerConnection.videoQuality).toBe(VideoQuality.Q_AUTO);
           expect(peerConnection.peer?.send).toBeCalledWith(
             prepareDataMessageToChangeQuality(1)
           );
@@ -205,13 +206,14 @@ describe('peerConnectionHandlePeer callback', () => {
 
       describe('when quality is AUTO and when video quality optimizer requests HALF quality', () => {
         it('should call .send with proper data message', () => {
+          peerConnection.videoQuality = VideoQuality.Q_AUTO;
           peerConnectionHandlePeer(peerConnection);
+
           peerConnection.peer?.emit('stream');
 
           jest.advanceTimersByTime(2000);
           peerConnection.videoAutoQualityOptimizer.halfQualityCallbak();
 
-          expect(peerConnection.videoQuality).toBe(VideoQuality.Q_AUTO);
           expect(peerConnection.peer?.send).toBeCalledWith(
             prepareDataMessageToChangeQuality(0.5)
           );

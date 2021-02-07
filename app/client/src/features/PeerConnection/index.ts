@@ -59,7 +59,7 @@ export default class PeerConnection {
 
   screenSharingSourceType: string | undefined = undefined;
 
-  videoQuality = VideoQuality.Q_AUTO;
+  videoQuality = VideoQuality.Q_100_PERCENT;
 
   videoAutoQualityOptimizer: VideoAutoQualityOptimizer;
 
