@@ -116,24 +116,3 @@ jobs:
           file: ${{ matrix.artifact_name }}
           tags: true
           draft: true
-
-  homebrew-pr:
-    runs-on: macos-10.15
-    steps:
-      - name: Set $VERSION without preifx v
-        # https://github.community/t/how-to-get-just-the-tag-name/16241
-        # https://stackoverflow.com/questions/57968497/how-do-i-set-an-env-var-with-a-bash-expression-in-github-actions
-        run: echo VERSION=$(echo ${GITHUB_REF##*/} | cut -c2-) >> $GITHUB_ENV
-
-      - name: Install Homebrew
-        # Command from https://brew.sh/
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-      # https://github.com/Homebrew/homebrew-cask/blob/master/CONTRIBUTING.md#updating-a-cask
-      - name: Updating cask Deskreen
-        run: brew bump-cask-pr --version $VERSION deskreen
-        env:
-          # First, create a personal access token: (url from Homebrew's output)
-          # https://github.com/settings/tokens/new?scopes=gist,public_repo&description=Homebrew
-          # Then, go repo settings -> Secrets -> New repository secret -> HOMEBREW_GITHUB_API_TOKEN : <secret value>.
-          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
