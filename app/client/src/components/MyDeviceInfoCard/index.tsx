@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Callout, Card, H3, Text, Tooltip, Position } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 import { AppContext } from '../../providers/AppContextProvider';
 import {
   DARK_UI_BACKGROUND,
@@ -11,6 +12,7 @@ interface MyDeviceDetailsCardProps {
 }
 
 function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
+  const { t } = useTranslation();
   const { isDarkTheme } = useContext(AppContext);
 
   const { deviceDetails } = props;
@@ -24,11 +26,11 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
         marginBottom: '30px',
       }}
     >
-      <H3>My Device Info:</H3>
+      <H3>{`${t('My Device Info')}:`}</H3>
       <Callout>
-        <Text>Device Type: {myDeviceType}</Text>
+        <Text>{`${t('Device Type')}: ${myDeviceType}`}</Text>
         <Tooltip
-          content="This should match with 'Device IP' in alert popup appeared on your computer, where Deskreen is running."
+          content={t('Your Device IP should match with Device IP in alert popup appeared on your computer, where Deskreen is running')}
           position={Position.TOP}
         >
           <div
@@ -40,15 +42,14 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
               borderRadius: '20px',
             }}
           >
-            <Text>Device IP: {myIP}</Text>
+            <Text>{`${t('Device IP')}: ${myIP}`}</Text>
           </div>
         </Tooltip>
-        <Text>Device Browser: {myBrowser}</Text>
-        <Text>Device OS: {myOS}</Text>
+        <Text>{`${t('Device Browser')}: ${myBrowser}`}</Text>
+        <Text>{`${t('Device OS')}: ${myOS}`}</Text>
       </Callout>
       <Text className="bp3-text-muted">
-        These details should match with the ones that you see in alert popup on
-        screen sharing device.
+        {t('These details should match with the ones that you see in alert popup on computer screen, where Deskreen is running')}
       </Text>
     </Card>
   );

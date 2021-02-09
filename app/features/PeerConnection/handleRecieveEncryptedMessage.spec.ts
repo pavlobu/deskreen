@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import uuid from 'uuid';
 import {
-  TEST_APP_LANGUAGE,
-  TEST_APP_THEME,
   TEST_ROOM_ID,
   TEST_SHARING_SESSION_ID,
   TEST_USER,
@@ -17,6 +15,8 @@ import handleRecieveEncryptedMessage, {
   handleDeviceIPMessage,
 } from './handleRecieveEncryptedMessage';
 import DesktopCapturerSourcesService from '../DesktopCapturerSourcesService';
+import getAppTheme from '../../utils/getAppTheme';
+import getAppLanguage from '../../utils/getAppLanguage';
 
 jest.useFakeTimers();
 
@@ -51,8 +51,6 @@ describe('handleRecieveEncryptedMessage.ts', () => {
       TEST_ROOM_ID,
       TEST_SHARING_SESSION_ID,
       TEST_USER,
-      TEST_APP_THEME,
-      TEST_APP_LANGUAGE,
       {} as RoomIDService,
       {} as ConnectedDevicesService,
       {} as SharingSessionService,
@@ -123,7 +121,7 @@ describe('handleRecieveEncryptedMessage.ts', () => {
         peerConnection.sendEncryptedMessage = jest.fn();
         const TEST_GET_APP_THEME_PAYLOAD = {
           type: 'APP_THEME',
-          payload: { value: peerConnection.appColorTheme },
+          payload: { value: getAppTheme() },
         };
         // @ts-ignore
         processMessage.mockImplementation(() => {
@@ -149,7 +147,7 @@ describe('handleRecieveEncryptedMessage.ts', () => {
         peerConnection.sendEncryptedMessage = jest.fn();
         const TEST_GET_APP_LANGUAGE_PAYLOAD = {
           type: 'APP_LANGUAGE',
-          payload: { value: peerConnection.appLanguage },
+          payload: { value: getAppLanguage() },
         };
         // @ts-ignore
         processMessage.mockImplementation(() => {

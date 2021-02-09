@@ -72,9 +72,7 @@ exports[`should match exact snapshot 1`] = `
                 >
                   <div
                     className=""
-                  >
-                    Check if all is OK and click "Confirm"
-                  </div>
+                  />
                 </Blueprint3.Text>
               </div>
             </Col>
@@ -111,15 +109,25 @@ exports[`should match exact snapshot 1`] = `
                         }
                       }
                     >
-                      Partner Device Info:
+                      :
                     </h4>
                   </Component>
                   <Blueprint3.Callout
                     id="device-info-callout"
+                    style={
+                      Object {
+                        "borderRadius": "8px",
+                      }
+                    }
                   >
                     <div
                       className="bp3-callout"
                       id="device-info-callout"
+                      style={
+                        Object {
+                          "borderRadius": "8px",
+                        }
+                      }
                     >
                       <Row
                         center="xs"
@@ -140,7 +148,8 @@ exports[`should match exact snapshot 1`] = `
                                 <div
                                   className=""
                                 >
-                                  Device Type: 
+                                  :
+                                   
                                   <span />
                                 </div>
                               </Blueprint3.Text>
@@ -151,8 +160,7 @@ exports[`should match exact snapshot 1`] = `
                                       ellipsize={false}
                                       tagName="div"
                                     >
-                                      This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                      
                                     </Blueprint3.Text>
                                     <span
                                       style={
@@ -165,8 +173,7 @@ exports[`should match exact snapshot 1`] = `
                                         ellipsize={false}
                                         tagName="div"
                                       >
-                                        If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                        
                                       </Blueprint3.Text>
                                     </span>
                                   </React.Fragment>
@@ -188,8 +195,7 @@ exports[`should match exact snapshot 1`] = `
                                         ellipsize={false}
                                         tagName="div"
                                       >
-                                        This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                        
                                       </Blueprint3.Text>
                                       <span
                                         style={
@@ -202,8 +208,7 @@ exports[`should match exact snapshot 1`] = `
                                           ellipsize={false}
                                           tagName="div"
                                         >
-                                          If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                          
                                         </Blueprint3.Text>
                                       </span>
                                     </React.Fragment>
@@ -277,7 +282,8 @@ exports[`should match exact snapshot 1`] = `
                                                   <div
                                                     className="bp3-text-large"
                                                   >
-                                                    Device IP: 
+                                                    :
+                                                     
                                                     <span
                                                       className="device-ip-span"
                                                     />
@@ -314,7 +320,8 @@ exports[`should match exact snapshot 1`] = `
                                 <div
                                   className=""
                                 >
-                                  Device Browser: 
+                                  :
+                                   
                                   <span />
                                 </div>
                               </Blueprint3.Text>
@@ -325,7 +332,8 @@ exports[`should match exact snapshot 1`] = `
                                 <div
                                   className=""
                                 >
-                                  Device OS: 
+                                  :
+                                   
                                   <span />
                                 </div>
                               </Blueprint3.Text>
@@ -345,7 +353,8 @@ exports[`should match exact snapshot 1`] = `
                                   <div
                                     className="bp3-text-overflow-ellipsis bp3-text-muted"
                                   >
-                                    Session ID: 
+                                    :
+                                     
                                     <span />
                                   </div>
                                 </Blueprint3.Text>
@@ -496,52 +505,6 @@ exports[`should match exact snapshot 1`] = `
                     </div>
                   </Blueprint3.Card>
                 </SharingSourcePreviewCard>
-              </div>
-            </Col>
-          </div>
-        </Row>
-        <Row
-          style={
-            Object {
-              "marginBottom": "10px",
-            }
-          }
-        >
-          <div
-            className="row"
-            style={
-              Object {
-                "marginBottom": "10px",
-              }
-            }
-          >
-            <Col
-              style={
-                Object {
-                  "textAlign": "center",
-                }
-              }
-              xs={12}
-            >
-              <div
-                className="col-xs-12"
-                style={
-                  Object {
-                    "textAlign": "center",
-                  }
-                }
-              >
-                <Blueprint3.Text
-                  className="bp3-text-muted"
-                  ellipsize={false}
-                  tagName="div"
-                >
-                  <div
-                    className="bp3-text-muted"
-                  >
-                    Click "Back" if you need to change something
-                  </div>
-                </Blueprint3.Text>
               </div>
             </Col>
           </div>

@@ -6,8 +6,6 @@ import ConnectedDevicesService from '../ConnectedDevicesService';
 import SharingSessionService from '../SharingSessionService';
 import DesktopCapturerSourcesService from '../DesktopCapturerSourcesService';
 import {
-  TEST_APP_LANGUAGE,
-  TEST_APP_THEME,
   TEST_ROOM_ID,
   TEST_SHARING_SESSION_ID,
   TEST_USER,
@@ -17,6 +15,8 @@ import handleSelfDestroy from './handleSelfDestroy';
 import handleRecieveEncryptedMessage from './handleRecieveEncryptedMessage';
 import handleCreatePeer from './handleCreatePeer';
 import { prepare as prepareMessage } from '../../utils/message';
+import getAppLanguage from '../../utils/getAppLanguage';
+import getAppTheme from '../../utils/getAppTheme';
 
 jest.useFakeTimers();
 
@@ -60,8 +60,6 @@ describe('PeerConnection index.ts tests', () => {
       TEST_ROOM_ID,
       TEST_SHARING_SESSION_ID,
       TEST_USER,
-      TEST_APP_THEME, // TODO getAppTheme
-      TEST_APP_LANGUAGE, // TODO getLanguage
       {} as RoomIDService,
       {} as ConnectedDevicesService,
       {} as SharingSessionService,
@@ -82,32 +80,6 @@ describe('PeerConnection index.ts tests', () => {
       expect(peerConnection.sharingSessionService).toBeDefined();
     });
 
-    describe('when setAppLanguage was called', () => {
-      it('should set peerConnection app language and call notifyClientWithNewLanguage', () => {
-        const TEST_APP_LANG = 'ua';
-        const mockNotify = jest.fn();
-        peerConnection.notifyClientWithNewLanguage = mockNotify;
-
-        peerConnection.setAppLanguage(TEST_APP_LANG);
-
-        expect(mockNotify).toBeCalled();
-        expect(peerConnection.appLanguage).toBe(TEST_APP_LANG);
-      });
-    });
-
-    describe('when setAppTheme was called', () => {
-      it('should set peerConnection theme and call notifyClientWithNewColorTheme', () => {
-        const APP_THEME = true;
-        const mockNotify = jest.fn();
-        peerConnection.notifyClientWithNewColorTheme = mockNotify;
-
-        peerConnection.setAppTheme(APP_THEME);
-
-        expect(mockNotify).toBeCalled();
-        expect(peerConnection.appColorTheme).toBe(APP_THEME);
-      });
-    });
-
     describe('when notifyClientWithNewLanguage was called', () => {
       it('should call sendEncryptedMessage with proper payload', () => {
         peerConnection.sendEncryptedMessage = jest.fn();
@@ -116,7 +88,7 @@ describe('PeerConnection index.ts tests', () => {
 
         expect(peerConnection.sendEncryptedMessage).toBeCalledWith({
           type: 'APP_LANGUAGE',
-          payload: { value: peerConnection.appLanguage },
+          payload: { value: getAppLanguage() },
         });
       });
     });
@@ -129,7 +101,7 @@ describe('PeerConnection index.ts tests', () => {
 
         expect(peerConnection.sendEncryptedMessage).toBeCalledWith({
           type: 'APP_THEME',
-          payload: { value: peerConnection.appColorTheme },
+          payload: { value: getAppTheme() },
         });
       });
     });

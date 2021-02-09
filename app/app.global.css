@@ -147,6 +147,10 @@ div.class-allow-device-to-connect-alert {
   z-index: 9999;
 }
 
+.class-allow-device-to-connect-alert > div > .bp3-button {
+  border-radius: 50px;
+}
+
 /* ALLOW CONNECTION ALERT BLINK ANIMATION START */
 div.class-allow-device-to-connect-alert
   > div.bp3-alert-body

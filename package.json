@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Deskreen turns any device into a secondary screen for your computer",
   "scripts": {
     "build": "yarn build-client && yarn build-main && yarn build-renderer",
@@ -70,7 +70,7 @@
   "build": {
     "productName": "Deskreen",
     "appId": "com.pavlobu.Deskreen",
-    "copyright": "Copyright © 2020-present Pavlo (Paul) Buidenkov",
+    "copyright": "Copyright © 2020-present Pavlo Buidenkov (Paul)",
     "files": [
       "dist/",
       "node_modules/",
@@ -141,7 +141,7 @@
       "url": "https://github.com/pavlobu"
     }
   ],
-  "license": "AGPL-3.0 License",
+  "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/pavlobu/deskreen/issues"
   },
@@ -308,9 +308,9 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
     "terser-webpack-plugin": "^3.0.7",
-    "testcafe": "^1.9.2",
-    "testcafe-browser-provider-electron": "^0.0.15",
-    "testcafe-react-selectors": "^4.0.0",
+    "testcafe": "^1.10.1",
+    "testcafe-browser-provider-electron": "^0.0.16",
+    "testcafe-react-selectors": "^4.1.4",
     "ts-jest": "^26.1.4",
     "typescript": "^3.9.7",
     "typings-for-css-modules-loader": "^1.7.0",

@@ -17,7 +17,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
     >
       <Col>
         <Blueprint3.Tooltip
-          content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+          content=""
           hoverCloseDelay={0}
           hoverOpenDelay={100}
           minimal={false}
@@ -64,9 +64,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
                   <Blueprint3.Text
                     ellipsize={false}
                     tagName="div"
-                  >
-                    Donate!
-                  </Blueprint3.Text>
+                  />
                 </div>
               </Col>
             </Row>
@@ -79,7 +77,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
           id="logo-with-popover-visit-website"
         >
           <Blueprint3.Tooltip
-            content="Click to visit our website"
+            content=""
             hoverCloseDelay={0}
             hoverOpenDelay={100}
             minimal={false}
@@ -118,7 +116,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
         className="makeStyles-topPanelControlButtonMargin-34"
       >
         <Blueprint3.Tooltip
-          content="Connected Devices"
+          content=""
           hoverCloseDelay={0}
           hoverOpenDelay={100}
           minimal={false}
@@ -143,7 +141,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
         className="makeStyles-topPanelControlButtonMargin-55"
       >
         <Blueprint3.Tooltip
-          content="Tutorial"
+          content=""
           hoverCloseDelay={0}
           hoverOpenDelay={100}
           minimal={false}
@@ -168,7 +166,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
         className="makeStyles-topPanelControlButtonMargin-76"
       >
         <Blueprint3.Tooltip
-          content="Settings"
+          content=""
           hoverCloseDelay={0}
           hoverOpenDelay={100}
           minimal={false}

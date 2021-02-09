@@ -104,26 +104,6 @@ describe('SharingSessionService unit tests', () => {
     });
   });
 
-  describe('when setAppLanguage is called', () => {
-    it('should set app language accordingly', () => {
-      const testLang = 'be';
-
-      sharingSessionService.setAppLanguage(testLang);
-
-      expect(sharingSessionService.appLanguage).toBe(testLang);
-    });
-  });
-
-  describe('when setAppTheme is called', () => {
-    it('should set app language accordingly', () => {
-      const testTheme = true;
-
-      sharingSessionService.setAppTheme(testTheme);
-
-      expect(sharingSessionService.isDarkTheme).toBe(testTheme);
-    });
-  });
-
   describe('when createWaitingForConnectionSharingSession is called', () => {
     it('should call waitWhileUserIsNotCreated', async () => {
       sharingSessionService.waitWhileUserIsNotCreated = jest

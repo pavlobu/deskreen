@@ -6,10 +6,21 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Row, Col, Grid } from 'react-flexbox-grid';
-import { Dialog, H3, H4, H5, Icon, Spinner, Text } from '@blueprintjs/core';
-
+import settings from 'electron-settings';
+import {
+  Button,
+  Dialog,
+  H1,
+  H3,
+  H4,
+  H5,
+  Icon,
+  Spinner,
+  Text,
+} from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import { useToasts } from 'react-toast-notifications';
-
 import SuccessStep from '../components/StepsOfStepper/SuccessStep';
 import IntermediateStep from '../components/StepsOfStepper/IntermediateStep';
 import AllowConnectionForDeviceAlert from '../components/AllowConnectionForDeviceAlert';
@@ -23,6 +34,9 @@ import SharingSessionService from '../features/SharingSessionService';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
 import Logger from '../utils/LoggerWithFilePrefix';
+import LanguageSelector from '../components/LanguageSelector';
+import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
+import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
 
 const log = new Logger(__filename);
 
@@ -32,6 +46,8 @@ const sharingSessionService = remote.getGlobal(
 const connectedDevicesService = remote.getGlobal(
   'connectedDevicesService'
 ) as ConnectedDevicesService;
+
+const Fade = require('react-reveal/Fade');
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -51,21 +67,28 @@ const useStyles = makeStyles(() =>
   })
 );
 
-function getSteps() {
-  return ['Connect', 'Select', 'Confirm'];
+function getSteps(t: TFunction) {
+  return [t('Connect'), t('Select'), t('Confirm')];
 }
 
 // eslint-disable-next-line react/display-name
 const DeskreenStepper = React.forwardRef((_props, ref) => {
+  const { t } = useTranslation();
+
   const classes = useStyles();
 
-  const { isDarkTheme, currentLanguage } = useContext(SettingsContext);
+  const { isDarkTheme } = useContext(SettingsContext);
 
   const { addToast } = useToasts();
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isUserAllowedConnection, setIsUserAllowedConnection] = useState(false);
   const [isNoWiFiError, setisNoWiFiError] = useState(false);
+  const [isSelectLanguageDialogOpen, setIsSelectLanguageDialogOpen] = useState(
+    false
+  );
+  const [isDisplayHelloWord, setIsDisplayHelloWord] = useState(true);
+  const [helloWord, setHelloWord] = useState('Hello');
 
   const [
     pendingConnectionDevice,
@@ -109,9 +132,29 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   useEffect(() => {
-    sharingSessionService.setAppLanguage(currentLanguage);
-    sharingSessionService.setAppTheme(isDarkTheme);
-  }, [currentLanguage, isDarkTheme]);
+    const isFirstTimeStart = !settings.hasSync('isNotFirstTimeAppStart');
+    setIsSelectLanguageDialogOpen(isFirstTimeStart);
+
+    if (!isFirstTimeStart) return () => {};
+
+    const helloWords = getShuffledArrayOfHello();
+
+    let pos = 0;
+    const helloInterval = setInterval(() => {
+      setIsDisplayHelloWord(false);
+      if (pos + 1 === helloWords.length) {
+        pos = 0;
+      } else {
+        pos += 1;
+      }
+      setHelloWord(helloWords[pos]);
+      setIsDisplayHelloWord(true);
+    }, 4000);
+
+    return () => {
+      clearInterval(helloInterval);
+    };
+  }, []);
 
   const [activeStep, setActiveStep] = useState(0);
   const [isEntireScreenSelected, setIsEntireScreenSelected] = useState(false);
@@ -119,7 +162,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     isApplicationWindowSelected,
     setIsApplicationWindowSelected,
   ] = useState(false);
-  const steps = getSteps();
+  const steps = getSteps(t);
 
   const handleNext = useCallback(() => {
     if (activeStep === steps.length - 1) {
@@ -238,7 +281,9 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
     addToast(
       <Text>
-        Device is successfully disconnected by you. You can connect new device
+        {t(
+          'Device is successfully disconnected by you You can connect a new device'
+        )}
       </Text>,
       {
         appearance: 'info',
@@ -247,7 +292,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
         isdarktheme: `${isDarkTheme}`,
       }
     );
-  }, [addToast, handleResetWithSharingSessionRestart, isDarkTheme]);
+  }, [addToast, handleResetWithSharingSessionRestart, isDarkTheme, t]);
 
   const renderIntermediateOrSuccessStepContent = useCallback(() => {
     return activeStep === steps.length ? (
@@ -361,6 +406,54 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
             </Row>
             <Row center="xs" style={{ marginTop: '10px' }}>
               <H4>Waiting for connection.</H4>
+            </Row>
+          </div>
+        </Grid>
+      </Dialog>
+      <Dialog isOpen={isSelectLanguageDialogOpen} autoFocus usePortal>
+        <Grid>
+          <div style={{ padding: '10px' }}>
+            <Row center="xs" style={{ marginTop: '10px' }}>
+              <Fade collapse opposite when={isDisplayHelloWord} duration={700}>
+                <H1>{helloWord}</H1>
+              </Fade>
+            </Row>
+            <Row>
+              <Col xs>
+                <Row center="xs" style={{ marginTop: '20px' }}>
+                  <Icon icon="translate" iconSize={50} color="#8A9BA8" />
+                </Row>
+                <Row center="xs" style={{ marginTop: '20px' }}>
+                  <H5>{t('Language')}</H5>
+                </Row>
+                <Row center="xs" style={{ marginTop: '10px' }}>
+                  <LanguageSelector />
+                </Row>
+              </Col>
+              <Col xs>
+                <Row center="xs" style={{ marginTop: '20px' }}>
+                  <Icon icon="style" iconSize={50} color="#8A9BA8" />
+                </Row>
+                <Row center="xs" style={{ marginTop: '20px' }}>
+                  <H5>{t('Color Theme')}</H5>
+                </Row>
+                <Row center="xs" style={{ marginTop: '10px' }}>
+                  <ToggleThemeBtnGroup />
+                </Row>
+              </Col>
+            </Row>
+            <Row center="xs" style={{ marginTop: '20px' }}>
+              <Button
+                minimal
+                rightIcon="chevron-right"
+                onClick={() => {
+                  setIsSelectLanguageDialogOpen(false);
+                  settings.setSync('isNotFirstTimeAppStart', true);
+                }}
+                style={{ borderRadius: '50px' }}
+              >
+                {t('Continue')}
+              </Button>
             </Row>
           </div>
         </Grid>

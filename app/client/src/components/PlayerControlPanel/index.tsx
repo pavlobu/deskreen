@@ -19,6 +19,7 @@ import {
   Toaster,
   Intent,
 } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 import FullScreenEnter from '../../images/fullscreen_24px.svg';
 import FullScreenExit from '../../images/fullscreen_exit-24px.svg';
 import RedHeartTwemojiPNG from '../../images/red_heart_2764_twemoji_120x120.png';
@@ -50,6 +51,7 @@ interface PlayerControlPanelProps {
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 function PlayerControlPanel(props: PlayerControlPanelProps) {
+  const { t } = useTranslation();
   const {
     isPlaying,
     onSwitchChangedCallback,
@@ -92,9 +94,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
     toaster?.show({
       icon: 'clean',
       intent: Intent.PRIMARY,
-      message: `Video is flipped horizontally`,
+      message: t('Video is flipped horizontally'),
     });
-  }, [isVideoFlipped, toaster]);
+  }, [isVideoFlipped, toaster, t]);
 
   return (
     <>
@@ -102,7 +104,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
         <Row between="xs" middle="xs">
           <Col xs={12} md={3}>
             <Tooltip
-              content="Click to visit our website"
+              content={t('Click to visit our website')}
               position={Position.BOTTOM}
             >
               <Button
@@ -127,7 +129,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               </Button>
             </Tooltip>
             <Tooltip
-              content="If you like Deskreen, consider donating! Deskreen is free and opensource forever! You can help us to make Deskreen even better!"
+              content={t(
+                'If you like Deskreen consider contributing financially Deskreen is open-source Your donations keep us motivated to make Deskreen even better'
+              )}
               position={Position.BOTTOM}
             >
               <Button
@@ -150,7 +154,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     <div
                       style={{ transform: 'translateY(2px) translateX(-5px)' }}
                     >
-                      <Text>Donate!</Text>
+                      <Text>{t('Donate')}</Text>
                     </div>
                   </Col>
                 </Row>
@@ -178,8 +182,8 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                         icon: isPlaying ? 'pause' : 'play',
                         intent: Intent.PRIMARY,
                         message: isPlaying
-                          ? 'Video stream is paused.'
-                          : 'Video stream is playing',
+                          ? t('Video stream is paused')
+                          : t('Video stream is playing'),
                       });
                     }}
                     style={{
@@ -197,7 +201,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                       </Col>
                       <Col xs>
                         <Text className="bp3-text-large">
-                          {isPlaying ? 'Pause' : 'Play'}
+                          {isPlaying ? t('Pause') : t('Play')}
                         </Text>
                       </Col>
                     </Row>
@@ -212,7 +216,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                   <Popover
                     content={
                       <>
-                        <H5>Video Settings:</H5>
+                        <H5>{`${t('Video Settings')}:`}</H5>
                         <Divider />
                         <Row>
                           <Button
@@ -222,7 +226,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                             style={videoQualityButtonStyle}
                             onClick={toggleFlipVideo}
                           >
-                            Flip
+                            {t('Flip')}
                           </Button>
                         </Row>
                         <Divider />
@@ -242,7 +246,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                                   toaster?.show({
                                     icon: 'clean',
                                     intent: Intent.PRIMARY,
-                                    message: `Video quality has been changed to ${q}`,
+                                    message: `${t('Video quality has been changed to')} ${q}`,
                                   });
                                 }}
                               >
@@ -256,7 +260,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     position={Position.BOTTOM}
                     popoverClassName={Classes.POPOVER_CONTENT_SIZING}
                   >
-                    <Tooltip content="Video Quality" position={Position.BOTTOM}>
+                    <Tooltip content={t('Click to Open Video Settings')} position={Position.BOTTOM}>
                       <Button minimal>
                         <Icon icon="cog" color="white" />
                       </Button>
@@ -271,7 +275,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     }}
                   />
                   <Tooltip
-                    content="Enter Full Screen Mode"
+                    content={t('Click to Enter Full Screen Mode')}
                     position={Position.BOTTOM}
                   >
                     <Button
@@ -310,14 +314,14 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     toaster?.show({
                       icon: 'video',
                       intent: Intent.PRIMARY,
-                      message: `Default video player has been turned ${
-                        isDefaultPlayerTurnedOn ? 'OFF' : 'ON'
+                      message: `${
+                        isDefaultPlayerTurnedOn ? t('Default video player has been turned OFF') : t('Default video player has been turned ON')
                       }`,
                     });
                   }}
-                  innerLabel={isDefaultPlayerTurnedOn ? 'ON' : 'OFF'}
+                  innerLabel={isDefaultPlayerTurnedOn ? t('ON') : t('OFF')}
                   inline
-                  label={`Default Video Player`}
+                  label={t('Default Video Player')}
                   alignIndicator={Alignment.RIGHT}
                   checked={isDefaultPlayerTurnedOn}
                   disabled={!isFullScreenAPIAvailable}

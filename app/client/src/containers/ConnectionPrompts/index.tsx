@@ -8,7 +8,7 @@ import {
 } from '../../constants/styleConstants';
 import MyDeviceInfoCard from '../../components/MyDeviceInfoCard';
 import { TFunction } from 'i18next';
-import { H3 } from '@blueprintjs/core';
+import { H2, H3 } from '@blueprintjs/core';
 import ConnectingIndicator from '../../components/ConnectingIndicator';
 
 const Slide = require('react-reveal/Slide');
@@ -23,7 +23,7 @@ interface ConnectionPropmptsProps {
   isOpen: boolean;
 }
 
-function getPromptContent(step: number, t: TFunction) {
+function getPromptContent(t: TFunction, step: number) {
   switch (step) {
     case 1:
       return (
@@ -34,7 +34,7 @@ function getPromptContent(step: number, t: TFunction) {
         </H3>
       );
     case 2:
-      return <H3>Connected!</H3>;
+      return <H3>{t('Connected!')}</H3>;
     case 3:
       return (
         <H3>
@@ -44,7 +44,7 @@ function getPromptContent(step: number, t: TFunction) {
         </H3>
       );
     default:
-      return <H3>Error occurred :(</H3>;
+      return <H3>{`${t('Error occurred')} :(`}</H3>;
   }
 }
 
@@ -55,69 +55,69 @@ function ConnectionPropmpts(props: ConnectionPropmptsProps) {
     connectionIconType,
     isShownSpinnerIcon,
     spinnerIconType,
-    isOpen
+    isOpen,
   } = props;
 
   const { t } = useTranslation();
   const { isDarkTheme } = useContext(AppContext);
 
   return (
-    <Slide
-    id="connection-prompts-slide"
-    bottom
-    when={isOpen}
-    duration={1000}
-  >
-    <div
-      style={{
-        position: 'absolute',
-        zIndex: 10,
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100vh',
-        boxShadow: `0 0 0 5px ${isDarkTheme ? '#000' : '#A7B6C2'}`,
-        backgroundColor: isDarkTheme ? DARK_UI_BACKGROUND : LIGHT_UI_BACKGROUND,
-      }}
-    >
-      <Row
-        bottom="xs"
+    <Slide id="connection-prompts-slide" bottom when={isOpen} duration={1000}>
+      <div
         style={{
-          height: '50vh',
+          position: 'absolute',
+          zIndex: 10,
+          top: 0,
+          left: 0,
           width: '100%',
-          marginRight: '0px',
-          marginLeft: '0px',
+          height: '100vh',
+          boxShadow: `0 0 0 5px ${isDarkTheme ? '#000' : '#A7B6C2'}`,
+          backgroundColor: isDarkTheme
+            ? DARK_UI_BACKGROUND
+            : LIGHT_UI_BACKGROUND,
         }}
       >
-        <Row center="xs" style={{ width: '100%', margin: '0 auto' }}>
-          <Col
-            xs={12}
-            style={{
-              marginBottom: '50px',
-              textAlign: 'center',
-              width: '100%',
-            }}
-          >
-            <div style={{ width: '100%' }}>
-              <Row center="xs" style={{ width: '100%', margin: '0 auto' }}>
-                <Col md={6} xl={4}>
-                  <MyDeviceInfoCard deviceDetails={myDeviceDetails} />
-                </Col>
-              </Row>
+        <Row
+          bottom="xs"
+          style={{
+            height: '50vh',
+            width: '100%',
+            marginRight: '0px',
+            marginLeft: '0px',
+          }}
+        >
+          <Row center="xs" style={{ width: '100%', margin: '0 auto' }}>
+            <Col
+              xs={12}
+              style={{
+                marginBottom: '50px',
+                textAlign: 'center',
+                width: '100%',
+              }}
+            >
+              <div style={{ width: '100%' }}>
+                <Row center="xs">
+                  <H2 className="bp3-text-muted">{t('Deskreen Screen Viewer')}</H2>
+                </Row>
+                <Row center="xs" style={{ width: '100%', margin: '0 auto' }}>
+                  <Col md={6} xl={4}>
+                    <MyDeviceInfoCard deviceDetails={myDeviceDetails} />
+                  </Col>
+                </Row>
                 <div id="prompt-text" style={{ fontSize: '20px' }}>
-                  {getPromptContent(promptStep, t)}
+                  {getPromptContent(t, promptStep)}
                 </div>
-            </div>
-          </Col>
+              </div>
+            </Col>
+          </Row>
         </Row>
-      </Row>
-      <ConnectingIndicator
-        currentStep={promptStep}
-        connectionIconType={connectionIconType}
-        isShownSelectingSharingIcon={isShownSpinnerIcon}
-        selectingSharingIconType={spinnerIconType}
-      />
-    </div>
+        <ConnectingIndicator
+          currentStep={promptStep}
+          connectionIconType={connectionIconType}
+          isShownSelectingSharingIcon={isShownSpinnerIcon}
+          selectingSharingIconType={spinnerIconType}
+        />
+      </div>
     </Slide>
   );
 }

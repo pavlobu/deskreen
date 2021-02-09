@@ -93,9 +93,7 @@ exports[`should match exact snapshot 1`] = `
                             >
                               <div
                                 class="bp3-text-muted"
-                              >
-                                Connected Devices
-                              </div>
+                              />
                             </div>
                             <button
                               class="bp3-button bp3-disabled bp3-intent-danger"
@@ -121,11 +119,6 @@ exports[`should match exact snapshot 1`] = `
                                     fill-rule="evenodd"
                                   />
                                 </svg>
-                              </span>
-                              <span
-                                class="bp3-button-text"
-                              >
-                                Disconnect all devices
                               </span>
                             </button>
                           </div>
@@ -212,9 +205,7 @@ exports[`should match exact snapshot 1`] = `
                             >
                               <div
                                 class="bp3-text-muted"
-                              >
-                                Connected Devices
-                              </div>
+                              />
                             </div>
                             <button
                               class="bp3-button bp3-disabled bp3-intent-danger"
@@ -240,11 +231,6 @@ exports[`should match exact snapshot 1`] = `
                                     fill-rule="evenodd"
                                   />
                                 </svg>
-                              </span>
-                              <span
-                                class="bp3-button-text"
-                              >
-                                Disconnect all devices
                               </span>
                             </button>
                           </div>
@@ -406,9 +392,7 @@ exports[`should match exact snapshot 1`] = `
                                       >
                                         <div
                                           className="bp3-text-muted"
-                                        >
-                                          Connected Devices
-                                        </div>
+                                        />
                                       </Blueprint3.Text>
                                     </div>
                                     <Blueprint3.Button
@@ -451,12 +435,6 @@ exports[`should match exact snapshot 1`] = `
                                             </svg>
                                           </span>
                                         </Blueprint3.Icon>
-                                        <span
-                                          className="bp3-button-text"
-                                          key="text"
-                                        >
-                                          Disconnect all devices
-                                        </span>
                                         <Blueprint3.Icon
                                           key="rightIcon"
                                         />
@@ -608,8 +586,8 @@ exports[`should match exact snapshot 1`] = `
       <Blueprint3.Alert
         canEscapeKeyCancel={true}
         canOutsideClickCancel={true}
-        cancelButtonText="No, Cancel"
-        confirmButtonText="Yes, Disconnect All"
+        cancelButtonText=""
+        confirmButtonText=""
         icon="warning-sign"
         intent="danger"
         isOpen={false}

@@ -17,8 +17,6 @@ export default class SharingSessionService {
   connectedDevicesService: ConnectedDevicesService;
   rendererWebrtcHelpersService: RendererWebrtcHelpersService;
   isCreatingNewSharingSession: boolean;
-  appLanguage = 'en';
-  isDarkTheme = false;
 
   constructor(
     _roomIDService: RoomIDService,
@@ -38,14 +36,6 @@ export default class SharingSessionService {
     setInterval(() => {
       this.pollForInactiveSessions();
     }, 1000 * 60 * 60); // every hour
-  }
-
-  setAppLanguage(newLang: string): void {
-    this.appLanguage = newLang;
-  }
-
-  setAppTheme(isDarkTheme: boolean): void {
-    this.isDarkTheme = isDarkTheme;
   }
 
   createUser(): Promise<undefined> {
@@ -90,9 +80,7 @@ export default class SharingSessionService {
     const sharingSession = new SharingSession(
       roomID,
       this.user as LocalPeerUser,
-      this.rendererWebrtcHelpersService,
-      this.appLanguage,
-      this.isDarkTheme
+      this.rendererWebrtcHelpersService
     );
     this.sharingSessions.set(sharingSession.id, sharingSession);
     return sharingSession;

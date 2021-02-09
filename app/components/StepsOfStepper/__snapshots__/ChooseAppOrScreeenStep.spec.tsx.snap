@@ -61,24 +61,6 @@ exports[`should match exact snapshot 1`] = `
                     <div
                       className="col-xs-6"
                     >
-                      <div
-                        style={
-                          Object {
-                            "marginBottom": "10px",
-                          }
-                        }
-                      >
-                        <Blueprint3.Text
-                          ellipsize={false}
-                          tagName="div"
-                        >
-                          <div
-                            className=""
-                          >
-                            Choose Entire Screen or App window you want to share
-                          </div>
-                        </Blueprint3.Text>
-                      </div>
                       <Row
                         center="xs"
                       >
@@ -168,9 +150,7 @@ exports[`should match exact snapshot 1`] = `
                                           >
                                             <div
                                               className="bp3-running-text"
-                                            >
-                                              Entire Screen
-                                            </div>
+                                            />
                                           </Blueprint3.Text>
                                         </span>
                                         <Blueprint3.Icon
@@ -233,9 +213,7 @@ exports[`should match exact snapshot 1`] = `
                                           >
                                             <div
                                               className="bp3-running-text"
-                                            >
-                                              Application Window
-                                            </div>
+                                            />
                                           </Blueprint3.Text>
                                         </span>
                                         <Blueprint3.Icon
@@ -267,12 +245,6 @@ exports[`should match exact snapshot 1`] = `
                                         <Blueprint3.Icon
                                           key="leftIcon"
                                         />
-                                        <span
-                                          className="bp3-button-text"
-                                          key="text"
-                                        >
-                                          OR
-                                        </span>
                                         <Blueprint3.Icon
                                           key="rightIcon"
                                         />

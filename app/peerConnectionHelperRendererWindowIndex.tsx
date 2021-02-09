@@ -26,8 +26,6 @@ export function handleIpcRenderer() {
         data.roomID,
         data.sharingSessionID,
         data.user,
-        data.appTheme, // TODO getAppTheme
-        data.appLanguage, // TODO getLanguage
         roomIDService,
         connectedDevicesService,
         sharingSessionService,
@@ -59,12 +57,12 @@ export function handleIpcRenderer() {
       peerConnection.sendUserAllowedToConnect();
     });
 
-    ipcRenderer.on('app-color-theme-changed', (_, newTheme: boolean) => {
-      peerConnection.setAppTheme(newTheme);
+    ipcRenderer.on('app-color-theme-changed', () => {
+      peerConnection.notifyClientWithNewColorTheme();
     });
 
-    ipcRenderer.on('app-language-changed', (_, newLang: string) => {
-      peerConnection.setAppLanguage(newLang);
+    ipcRenderer.on('app-language-changed', () => {
+      peerConnection.notifyClientWithNewLanguage();
     });
   });
 }

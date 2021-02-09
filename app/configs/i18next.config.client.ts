@@ -10,6 +10,10 @@ import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 
+import translationEN from '../locales/en/translation.json';
+import translationUA from '../locales/ua/translation.json';
+import translationRU from '../locales/ru/translation.json';
+
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
   // eslint-disable-next-line no-restricted-syntax
@@ -29,6 +33,27 @@ export const getLangISOKeyToLangFullNameMap = (): Map<string, string> => {
   )) {
     res.set(key, value);
   }
+  return res;
+};
+
+function shuffleArray(array: any[]) {
+  // eslint-disable-next-line no-plusplus
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+export const getShuffledArrayOfHello = (): string[] => {
+  const res: string[] = [];
+
+  res.push(translationUA.Hello);
+  res.push(translationRU.Hello);
+
+  shuffleArray(res);
+
+  res.unshift(translationEN.Hello);
+
   return res;
 };
 

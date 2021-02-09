@@ -2,7 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 import { remote } from 'electron';
 import React, { useEffect, useState, useCallback } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Text,
@@ -68,6 +68,7 @@ const useStyles = makeStyles(() =>
 export default function ConnectedDevicesListDrawer(
   props: ConnectedDevicesListDrawerProps
 ) {
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const [isAlertDisconectAllOpen, setIsAlertDisconectAllOpen] = useState(false);
@@ -142,6 +143,9 @@ export default function ConnectedDevicesListDrawer(
     );
   }, [handleDisconnectAll, hideAllDevicesInDevicesDisplayed, props]);
 
+  const disconnectAllCancelButtonText = t('No, Cancel');
+  const disconnectAllConfirmButtonText = t('Yes, Disconnect All');
+
   return (
     <>
       <Drawer
@@ -157,7 +161,7 @@ export default function ConnectedDevicesListDrawer(
           <Col xs={11}>
             <Row middle="xs">
               <div className={classes.topHeader}>
-                <Text className="bp3-text-muted">Connected Devices</Text>
+                <Text className="bp3-text-muted">{t('Connected Devices')}</Text>
               </div>
               <Button
                 intent="danger"
@@ -167,7 +171,7 @@ export default function ConnectedDevicesListDrawer(
                 }}
                 icon="disable"
               >
-                Disconnect all devices
+                {t('Disconnect all devices')}
               </Button>
             </Row>
           </Col>
@@ -222,7 +226,7 @@ export default function ConnectedDevicesListDrawer(
                               }}
                               icon="disable"
                             >
-                              Disconnect
+                              {t('Disconnect')}
                             </Button>
                           </Row>
                         </Card>
@@ -241,8 +245,8 @@ export default function ConnectedDevicesListDrawer(
           setIsAlertDisconectAllOpen(false);
         }}
         icon="warning-sign"
-        cancelButtonText="No, Cancel"
-        confirmButtonText="Yes, Disconnect All"
+        cancelButtonText={disconnectAllCancelButtonText}
+        confirmButtonText={disconnectAllConfirmButtonText}
         intent="danger"
         canEscapeKeyCancel
         canOutsideClickCancel
@@ -253,10 +257,14 @@ export default function ConnectedDevicesListDrawer(
         transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
       >
         <H4>
-          Are you sure you want to disconnect all connected viewing devices?
+          {t(
+            'Are you sure you want to disconnect all connected viewing devices?'
+          )}
         </H4>
-        <Text>This step can not be reverted.</Text>
-        <Text>You will have to connect all devices manually again.</Text>
+        <Text>{`${t('This step can not be undone')}.`}</Text>
+        <Text>
+          {`${t('You will have to connect all devices manually again')}.`}
+        </Text>
       </Alert>
     </>
   );

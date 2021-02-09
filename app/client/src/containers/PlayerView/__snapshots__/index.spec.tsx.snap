@@ -139,7 +139,7 @@ exports[`should match exact snapshot 1`] = `
                       <div
                         className=""
                       >
-                        Donate!
+                        Donate
                       </div>
                     </div>
                   </div>

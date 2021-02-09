@@ -50,7 +50,7 @@ const headerWithTextSelectAppWindow = Selector('h3').withText(
 const previewShareButton = Selector('.preview-share-thumb-container');
 const step3ConfirmButton = Selector('button').withText('Confirm');
 const noINeedToShareOtherThingButton = Selector('button').withText(
-  'No, I need to share other thing'
+  'No, I need to choose other'
 );
 const step4ConnectNewDeviceButton = Selector('button').withText(
   'Connect New Device'
@@ -68,8 +68,8 @@ const yesDisconnectAllButton = Selector('button').withText(
 );
 const settingsButtonOfTopPanel = Selector('span').withAttribute('icon', 'cog');
 const openedSettingsOverlay = Selector('#settings-overlay-inner');
-const darkColorAppSettingButton = Selector('button').withText('Dark');
-const lightColorAppSettingButton = Selector('button').withText('Light');
+const darkColorAppSettingButton = '#dark-theme-toggle-btn';
+const lightColorAppSettingButton = '#light-theme-toggle-btn';
 const darkUIClassName = Selector('.bp3-dark');
 
 async function getConnecteddeviceIPFromAllowToConnectDeviceAlert() {
@@ -493,10 +493,10 @@ test(`when "Settings" Panel is opened,
   await t.click(settingsButtonOfTopPanel());
 
   // action and assertion 1
-  await t.click(darkColorAppSettingButton());
+  await t.click(darkColorAppSettingButton);
   await t.expect(darkUIClassName().exists).ok();
 
   // action and assertion 2
-  await t.click(lightColorAppSettingButton());
+  await t.click(lightColorAppSettingButton);
   await t.expect(darkUIClassName().exists).notOk();
 });

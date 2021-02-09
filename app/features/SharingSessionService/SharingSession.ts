@@ -5,8 +5,6 @@ import SharingSessionStatusEnum from './SharingSessionStatusEnum';
 import SharingTypeEnum from './SharingTypeEnum';
 import PeerConnectionHelperRendererService from '../PeerConnectionHelperRendererService';
 
-// type OnDeviceConnectedCallbackType = undefined | (device: Device) => void;
-
 export default class SharingSession {
   id: string;
   deviceID: string;
@@ -24,9 +22,7 @@ export default class SharingSession {
   constructor(
     _roomID: string,
     user: LocalPeerUser,
-    peerConnectionHelperRendererService: PeerConnectionHelperRendererService,
-    appLanguage: string,
-    isDarkTheme: boolean
+    peerConnectionHelperRendererService: PeerConnectionHelperRendererService
   ) {
     this.id = uuid.v4();
     this.deviceID = '';
@@ -51,8 +47,6 @@ export default class SharingSession {
           roomID: this.roomID,
           sharingSessionID: this.id,
           user,
-          appTheme: isDarkTheme,
-          appLanguage,
         }
       );
     });
@@ -111,17 +105,13 @@ export default class SharingSession {
     );
   }
 
-  appLanguageChanged(newLang: string) {
-    this.peerConnectionHelperRenderer?.webContents.send(
-      'app-language-changed',
-      newLang
-    );
+  appLanguageChanged() {
+    this.peerConnectionHelperRenderer?.webContents.send('app-language-changed');
   }
 
-  appThemeChanged(isDarkTheme: boolean) {
+  appThemeChanged() {
     this.peerConnectionHelperRenderer?.webContents.send(
-      'app-color-theme-changed',
-      isDarkTheme
+      'app-color-theme-changed'
     );
   }
 

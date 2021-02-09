@@ -3,8 +3,6 @@ import handlePeerOnData from './handlePeerOnData';
 import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID';
 
 import {
-  TEST_APP_LANGUAGE,
-  TEST_APP_THEME,
   TEST_ROOM_ID,
   TEST_SHARING_SESSION_ID,
   TEST_USER,
@@ -50,8 +48,6 @@ describe('handlePeerOnData callback', () => {
       TEST_ROOM_ID,
       TEST_SHARING_SESSION_ID,
       TEST_USER,
-      TEST_APP_THEME,
-      TEST_APP_LANGUAGE,
       {} as RoomIDService,
       {} as ConnectedDevicesService,
       {} as SharingSessionService,

@@ -103,9 +103,7 @@ exports[`should match exact snapshot 1`] = `
                                     <h3
                                       class="bp3-heading"
                                       style="margin-bottom: 0px;"
-                                    >
-                                      Select Entire Screen to Share
-                                    </h3>
+                                    />
                                   </div>
                                 </div>
                                 <div
@@ -134,11 +132,6 @@ exports[`should match exact snapshot 1`] = `
                                           fill-rule="evenodd"
                                         />
                                       </svg>
-                                    </span>
-                                    <span
-                                      class="bp3-button-text"
-                                    >
-                                      Refresh
                                     </span>
                                   </button>
                                 </div>
@@ -250,9 +243,7 @@ exports[`should match exact snapshot 1`] = `
                                     <h3
                                       class="bp3-heading"
                                       style="margin-bottom: 0px;"
-                                    >
-                                      Select Entire Screen to Share
-                                    </h3>
+                                    />
                                   </div>
                                 </div>
                                 <div
@@ -281,11 +272,6 @@ exports[`should match exact snapshot 1`] = `
                                           fill-rule="evenodd"
                                         />
                                       </svg>
-                                    </span>
-                                    <span
-                                      class="bp3-button-text"
-                                    >
-                                      Refresh
                                     </span>
                                   </button>
                                 </div>
@@ -546,9 +532,7 @@ exports[`should match exact snapshot 1`] = `
                                                         "marginBottom": "0px",
                                                       }
                                                     }
-                                                  >
-                                                    Select Entire Screen to Share
-                                                  </h3>
+                                                  />
                                                 </Component>
                                               </div>
                                             </div>
@@ -607,12 +591,6 @@ exports[`should match exact snapshot 1`] = `
                                                       </svg>
                                                     </span>
                                                   </Blueprint3.Icon>
-                                                  <span
-                                                    className="bp3-button-text"
-                                                    key="text"
-                                                  >
-                                                    Refresh
-                                                  </span>
                                                   <Blueprint3.Icon
                                                     key="rightIcon"
                                                   />
