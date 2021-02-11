@@ -313,7 +313,7 @@ describe('app menu MenyBuilder tests', () => {
       });
 
       describe('when Help submenu Community Discussions was clicked', () => {
-        it('shoud call shell open external with proper link to https://github.com/pavlobu/deskreen/issues', () => {
+        it('shoud call shell open external with proper link to https://github.com/pavlobu/deskreen/discussions', () => {
           const menu = menuBuilder.buildDarwinTemplate();
           const submenuView = menu[4];
           const learnMore =
@@ -323,7 +323,7 @@ describe('app menu MenyBuilder tests', () => {
           learnMore.click();
 
           expect(shell.openExternal).toBeCalledWith(
-            'https://github.com/pavlobu/deskreen/issues'
+            'https://github.com/pavlobu/deskreen/discussions'
           );
         });
       });

@@ -35,5 +35,11 @@
   "OFF": "OFF",
   "Default Video Player": "Default Video Player",
   "Click to visit our website": "Click to visit our website",
-  "Video is flipped horizontally": "Video is flipped horizontally"
+  "Video is flipped horizontally": "Video is flipped horizontally",
+  "TRANSLATIONS BELOW ARE NOT ADDED TO UI YET, BUT YOUR TRANSLATIONS ARE WELCOME! THE FEATURES WILL BE ADDED SOON SO YOUR TRANSLATIONS ARE NEEDED": "",
+  "Click to see connection info": "Click to see connection info",
+  "Pair ID": "Pair ID",
+  "Unpair": "Unpair",
+  "Session ID": "Session ID",
+  "Click to boost video stream if it is lagging": "Click to boost video stream if it is lagging"
 }

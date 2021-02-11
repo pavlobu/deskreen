@@ -35,5 +35,11 @@
   "OFF": "ВИМК",
   "Default Video Player": "Стандартний відеоплеєр браузера",
   "Click to visit our website": "Клацніть, щоб відвідати наш веб-сайт",
-  "Video is flipped horizontally": "Відео віддзеркалено"
+  "Video is flipped horizontally": "Відео віддзеркалено",
+  "TRANSLATIONS BELOW ARE NOT ADDED TO UI YET, BUT YOUR TRANSLATIONS ARE WELCOME! THE FEATURES WILL BE ADDED SOON SO YOUR TRANSLATIONS ARE NEEDED": "",
+  "Click to see connection info": "Click to see connection info",
+  "Pair ID": "Pair ID",
+  "Unpair": "Unpair",
+  "Session ID": "Session ID",
+  "Click to boost video stream if it is lagging": "Click to boost video stream if it is lagging"
 }

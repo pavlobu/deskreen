@@ -29,6 +29,16 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 ## [Deskreen FAQ](https://deskreen.com/#faq)
 
 <br/>
+
+## Get Started for translators
+
+Want to add a new language support for Deskreen?
+Or you found a typo in existing translations of Deskreen App or website?
+Here are step by step guides:
+
+- [How to add a new language to Deskreen App and Website](doc/translations-docs/how-to-add-new-language-translation-to-Deskreen.md)
+- [How to fix a typo in Deskreen App or Website](doc/translations-docs/fix-a-typo-in-existing-translation-of-Deskreen.md)
+
 <br/>
 
 ## Deskreen Github Discussion Threads
