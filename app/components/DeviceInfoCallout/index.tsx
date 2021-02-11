@@ -2,6 +2,8 @@
 import React from 'react';
 import { Callout, Text, H4, Tooltip, Position } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 interface DeviceInfoCalloutProps {
   deviceType: string | undefined;
@@ -11,24 +13,24 @@ interface DeviceInfoCalloutProps {
   deviceBrowser: string | undefined;
 }
 
-function getContentOfTooltip() {
+function getContentOfTooltip(t: TFunction) {
   return (
     <>
       <Text>
-        {`This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.`}
+        {t(
+          'This should match with Device IP displayed on the screen of device that is trying to connect'
+        )}
       </Text>
       <span style={{ fontWeight: 900 }}>
-        <Text>
-          {`If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!`}
-        </Text>
+        <Text>{t('If IP addresses dont match click Disconnect button')}</Text>
       </span>
     </>
   );
 }
 
 export default function DeviceInfoCallout(props: DeviceInfoCalloutProps) {
+  const { t } = useTranslation();
+
   const {
     deviceType,
     deviceIP,
@@ -40,15 +42,15 @@ export default function DeviceInfoCallout(props: DeviceInfoCalloutProps) {
   return (
     <>
       <H4 style={{ margin: '0 auto', textAlign: 'center' }}>
-        Partner Device Info:
+        {`${t('Partner Device Info')}:`}
       </H4>
-      <Callout id="device-info-callout">
+      <Callout id="device-info-callout" style={{ borderRadius: '8px' }}>
         <Row center="xs">
           <Col xs={12}>
             <Text>
-              Device Type: <span>{deviceType}</span>
+              {`${t('Device Type')}:`} <span>{deviceType}</span>
             </Text>
-            <Tooltip content={getContentOfTooltip()} position={Position.TOP}>
+            <Tooltip content={getContentOfTooltip(t)} position={Position.TOP}>
               <div
                 style={{
                   fontWeight: 900,
@@ -59,19 +61,20 @@ export default function DeviceInfoCallout(props: DeviceInfoCalloutProps) {
                 }}
               >
                 <Text className="bp3-text-large">
-                  Device IP: <span className="device-ip-span">{deviceIP}</span>
+                  {`${t('Device IP')}:`}{' '}
+                  <span className="device-ip-span">{deviceIP}</span>
                 </Text>
               </div>
             </Tooltip>
             <Text>
-              Device Browser: <span>{deviceBrowser}</span>
+              {`${t('Device Browser')}:`} <span>{deviceBrowser}</span>
             </Text>
             <Text>
-              Device OS: <span>{deviceOS}</span>
+              {`${t('Device OS')}:`} <span>{deviceOS}</span>
             </Text>
             <div style={{ width: '200px', margin: '0 auto' }}>
               <Text className="bp3-text-muted" ellipsize>
-                Session ID: <span>{sharingSessionID}</span>
+                {`${t('Session ID')}:`} <span>{sharingSessionID}</span>
               </Text>
             </div>
           </Col>

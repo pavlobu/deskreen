@@ -65,7 +65,7 @@ exports[`should match exact snapshot 1`] = `
                       }
                     }
                   >
-                    Disconnect
+                    
                   </Blueprint3.Button>
                 </Col>
               </Row>
@@ -114,7 +114,7 @@ exports[`should match exact snapshot 1`] = `
                           ellipsize={false}
                           tagName="div"
                         >
-                          Click to manage
+                          
                         </Blueprint3.Text>
                       }
                       hoverCloseDelay={0}
@@ -135,7 +135,7 @@ exports[`should match exact snapshot 1`] = `
                             ellipsize={false}
                             tagName="div"
                           >
-                            Click to manage
+                            
                           </Blueprint3.Text>
                         }
                         defaultIsOpen={false}
@@ -196,7 +196,7 @@ exports[`should match exact snapshot 1`] = `
                                           "height": "10px !important",
                                           "margin": "0 auto",
                                           "position": "relative",
-                                          "width": "120px",
+                                          "width": "150px",
                                         }
                                       }
                                       tabIndex={0}
@@ -213,7 +213,7 @@ exports[`should match exact snapshot 1`] = `
                                             "height": "10px !important",
                                             "margin": "0 auto",
                                             "position": "relative",
-                                            "width": "120px",
+                                            "width": "150px",
                                           }
                                         }
                                         tabIndex={0}
@@ -274,9 +274,7 @@ exports[`should match exact snapshot 1`] = `
                                                   >
                                                     <div
                                                       className=""
-                                                    >
-                                                      Connected
-                                                    </div>
+                                                    />
                                                   </Blueprint3.Text>
                                                 </div>
                                               </Col>

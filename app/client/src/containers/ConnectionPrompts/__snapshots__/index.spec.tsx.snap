@@ -56,6 +56,15 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
         >
           <div
             className="row center-xs"
+          >
+            <h2
+              className="bp3-heading bp3-text-muted"
+            >
+              Deskreen Screen Viewer
+            </h2>
+          </div>
+          <div
+            className="row center-xs"
             style={
               Object {
                 "margin": "0 auto",
@@ -87,7 +96,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Type: 
-                    
                   </div>
                   <span
                     className="bp3-popover-wrapper"
@@ -116,7 +124,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                           className=""
                         >
                           Device IP: 
-                          
                         </div>
                       </div>
                     </span>
@@ -125,19 +132,17 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Browser: 
-                    
                   </div>
                   <div
                     className=""
                   >
                     Device OS: 
-                    
                   </div>
                 </div>
                 <div
                   className="bp3-text-muted"
                 >
-                  These details should match with the ones that you see in alert popup on screen sharing device.
+                  These details should match with the ones that you see in alert popup on computer screen, where Deskreen is running
                 </div>
               </div>
             </div>
@@ -237,6 +242,15 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
         >
           <div
             className="row center-xs"
+          >
+            <h2
+              className="bp3-heading bp3-text-muted"
+            >
+              Deskreen Screen Viewer
+            </h2>
+          </div>
+          <div
+            className="row center-xs"
             style={
               Object {
                 "margin": "0 auto",
@@ -268,7 +282,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Type: 
-                    
                   </div>
                   <span
                     className="bp3-popover-wrapper"
@@ -297,7 +310,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                           className=""
                         >
                           Device IP: 
-                          
                         </div>
                       </div>
                     </span>
@@ -306,19 +318,17 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Browser: 
-                    
                   </div>
                   <div
                     className=""
                   >
                     Device OS: 
-                    
                   </div>
                 </div>
                 <div
                   className="bp3-text-muted"
                 >
-                  These details should match with the ones that you see in alert popup on screen sharing device.
+                  These details should match with the ones that you see in alert popup on computer screen, where Deskreen is running
                 </div>
               </div>
             </div>
@@ -489,6 +499,15 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
         >
           <div
             className="row center-xs"
+          >
+            <h2
+              className="bp3-heading bp3-text-muted"
+            >
+              Deskreen Screen Viewer
+            </h2>
+          </div>
+          <div
+            className="row center-xs"
             style={
               Object {
                 "margin": "0 auto",
@@ -520,7 +539,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Type: 
-                    
                   </div>
                   <span
                     className="bp3-popover-wrapper"
@@ -549,7 +567,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                           className=""
                         >
                           Device IP: 
-                          
                         </div>
                       </div>
                     </span>
@@ -558,19 +575,17 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Browser: 
-                    
                   </div>
                   <div
                     className=""
                   >
                     Device OS: 
-                    
                   </div>
                 </div>
                 <div
                   className="bp3-text-muted"
                 >
-                  These details should match with the ones that you see in alert popup on screen sharing device.
+                  These details should match with the ones that you see in alert popup on computer screen, where Deskreen is running
                 </div>
               </div>
             </div>
@@ -723,6 +738,15 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
         >
           <div
             className="row center-xs"
+          >
+            <h2
+              className="bp3-heading bp3-text-muted"
+            >
+              Deskreen Screen Viewer
+            </h2>
+          </div>
+          <div
+            className="row center-xs"
             style={
               Object {
                 "margin": "0 auto",
@@ -754,7 +778,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Type: 
-                    
                   </div>
                   <span
                     className="bp3-popover-wrapper"
@@ -783,7 +806,6 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                           className=""
                         >
                           Device IP: 
-                          
                         </div>
                       </div>
                     </span>
@@ -792,19 +814,17 @@ exports[`when getPromptContent is called should match exact snapshot on each ste
                     className=""
                   >
                     Device Browser: 
-                    
                   </div>
                   <div
                     className=""
                   >
                     Device OS: 
-                    
                   </div>
                 </div>
                 <div
                   className="bp3-text-muted"
                 >
-                  These details should match with the ones that you see in alert popup on screen sharing device.
+                  These details should match with the ones that you see in alert popup on computer screen, where Deskreen is running
                 </div>
               </div>
             </div>

@@ -6,8 +6,6 @@ import SharingType from './SharingTypeEnum';
 
 jest.useFakeTimers();
 
-const testAppLang = 'ua';
-const testAppTheme = true;
 const testUser = {
   username: '',
   privateKey: '',
@@ -19,24 +17,18 @@ describe('SharingSession unit tests', () => {
 
   beforeEach(() => {
     process.env.RUN_MODE = 'test-jest';
-    sharingSession = new SharingSession(
-      '1234',
-      testUser,
-      {
-        // @ts-ignore: fine here
-        createPeerConnectionHelperRenderer: () => {
-          return {
-            webContents: {
-              on: jest.fn(),
-              send: jest.fn(),
-            },
-            close: jest.fn(),
-          };
-        },
+    sharingSession = new SharingSession('1234', testUser, {
+      // @ts-ignore: fine here
+      createPeerConnectionHelperRenderer: () => {
+        return {
+          webContents: {
+            on: jest.fn(),
+            send: jest.fn(),
+          },
+          close: jest.fn(),
+        };
       },
-      testAppLang,
-      testAppTheme
-    );
+    });
   });
 
   afterEach(() => {
@@ -99,8 +91,6 @@ describe('SharingSession unit tests', () => {
           roomID: sharingSession.roomID,
           sharingSessionID: sharingSession.id,
           user: testUser,
-          appTheme: testAppTheme,
-          appLanguage: testAppLang,
         });
       });
     });
@@ -258,25 +248,21 @@ describe('SharingSession unit tests', () => {
 
   describe('when appLanguageChanged() is called', () => {
     it('should call .webContents.send with proper event name', () => {
-      const testLang = 'ua';
-
-      sharingSession.appLanguageChanged(testLang);
+      sharingSession.appLanguageChanged();
 
       expect(
         sharingSession.peerConnectionHelperRenderer?.webContents.send
-      ).toBeCalledWith('app-language-changed', testLang);
+      ).toBeCalledWith('app-language-changed');
     });
   });
 
   describe('when appThemeChanged() is called', () => {
     it('should call .webContents.send with proper event name', () => {
-      const testTheme = true;
-
-      sharingSession.appThemeChanged(testTheme);
+      sharingSession.appThemeChanged();
 
       expect(
         sharingSession.peerConnectionHelperRenderer?.webContents.send
-      ).toBeCalledWith('app-color-theme-changed', testTheme);
+      ).toBeCalledWith('app-color-theme-changed');
     });
   });
 });

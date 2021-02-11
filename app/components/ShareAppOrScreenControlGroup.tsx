@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Icon, ControlGroup, Text } from '@blueprintjs/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import ChooseAppOrScreenOverlay from './StepsOfStepper/ChooseAppOrScreenOverlay/ChooseAppOrScreenOverlay';
 
 interface ShareAppOrScreenControlGroupProps {
@@ -53,6 +54,7 @@ const useStyles = makeStyles(() =>
 export default function ShareAppOrScreenControlGroup(
   props: ShareAppOrScreenControlGroupProps
 ) {
+  const { t } = useTranslation();
   const { handleNextEntireScreen, handleNextApplicationWindow } = props;
   const classes = useStyles();
 
@@ -103,7 +105,7 @@ export default function ShareAppOrScreenControlGroup(
             iconSize={100}
             color="white"
           />
-          <Text className="bp3-running-text">Entire Screen</Text>
+          <Text className="bp3-running-text">{t('Entire Screen')}</Text>
         </Button>
         <Button
           className={classes.shareAppButton}
@@ -116,14 +118,14 @@ export default function ShareAppOrScreenControlGroup(
             iconSize={100}
             color="white"
           />
-          <Text className="bp3-running-text">Application Window</Text>
+          <Text className="bp3-running-text">{t('Application Window')}</Text>
         </Button>
         <Button
           active
           className={classes.orDecorationButton}
           style={{ zIndex: 999 }}
         >
-          OR
+          {t('OR')}
         </Button>
       </ControlGroup>
       <ChooseAppOrScreenOverlay

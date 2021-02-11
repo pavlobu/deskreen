@@ -17,6 +17,8 @@ import NullUser from './NullUser';
 import NullSimplePeer from './NullSimplePeer';
 import setDisplaySizeFromLocalStream from './handleSetDisplaySizeFromLocalStream';
 import DesktopCapturerSourceType from '../DesktopCapturerSourcesService/DesktopCapturerSourceType';
+import getAppLanguage from '../../utils/getAppLanguage';
+import getAppTheme from '../../utils/getAppTheme';
 
 type DisplaySize = { width: number; height: number };
 
@@ -41,15 +43,11 @@ export default class PeerConnection {
   onDeviceConnectedCallback: (device: Device) => void;
   displayID: string;
   sourceDisplaySize: DisplaySize | undefined;
-  appLanguage: string;
-  appColorTheme: boolean;
 
   constructor(
     roomID: string,
     sharingSessionID: string,
     user: LocalPeerUser,
-    appColorTheme: boolean,
-    appLanguage: string,
     roomIDService: RoomIDService,
     connectedDevicesService: ConnectedDevicesService,
     sharingSessionsService: SharingSessionService,
@@ -71,8 +69,6 @@ export default class PeerConnection {
     this.localStream = null;
     this.displayID = '';
     this.sourceDisplaySize = undefined;
-    this.appLanguage = appLanguage;
-    this.appColorTheme = appColorTheme;
     this.desktopCapturerSourcesService = desktopCapturerSourcesService;
     this.onDeviceConnectedCallback = () => {};
 
@@ -83,27 +79,19 @@ export default class PeerConnection {
     });
   }
 
-  setAppLanguage(lang: string) {
-    this.appLanguage = lang;
-    this.notifyClientWithNewLanguage();
-  }
-
-  setAppTheme(theme: boolean) {
-    this.appColorTheme = theme;
-    this.notifyClientWithNewColorTheme();
-  }
-
   notifyClientWithNewLanguage() {
     this.sendEncryptedMessage({
       type: 'APP_LANGUAGE',
-      payload: { value: this.appLanguage },
+      payload: {
+        value: getAppLanguage(),
+      },
     });
   }
 
   notifyClientWithNewColorTheme() {
     this.sendEncryptedMessage({
       type: 'APP_THEME',
-      payload: { value: this.appColorTheme },
+      payload: { value: getAppTheme() },
     });
   }
 

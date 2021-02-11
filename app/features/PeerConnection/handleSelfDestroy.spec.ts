@@ -1,7 +1,5 @@
 import handleSelfDestroy from './handleSelfDestroy';
 import {
-  TEST_APP_LANGUAGE,
-  TEST_APP_THEME,
   TEST_ROOM_ID,
   TEST_SHARING_SESSION_ID,
   TEST_USER,
@@ -38,8 +36,6 @@ describe('handleSelfDestroy callback', () => {
       TEST_ROOM_ID,
       TEST_SHARING_SESSION_ID,
       TEST_USER,
-      TEST_APP_THEME,
-      TEST_APP_LANGUAGE,
       ({
         unmarkRoomIDAsTaken: jest.fn(),
       } as unknown) as RoomIDService,

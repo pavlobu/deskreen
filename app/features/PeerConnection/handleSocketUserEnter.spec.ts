@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  TEST_APP_LANGUAGE,
-  TEST_APP_THEME,
   TEST_ROOM_ID,
   TEST_SHARING_SESSION_ID,
   TEST_USER,
@@ -55,8 +53,6 @@ describe('handleSocketUserEnter callback', () => {
       TEST_ROOM_ID,
       TEST_SHARING_SESSION_ID,
       TEST_USER,
-      TEST_APP_THEME,
-      TEST_APP_LANGUAGE,
       {} as RoomIDService,
       {} as ConnectedDevicesService,
       {} as SharingSessionService,

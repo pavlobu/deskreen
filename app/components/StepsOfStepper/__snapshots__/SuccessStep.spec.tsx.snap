@@ -90,9 +90,7 @@ exports[`should match exact snapshot 1`] = `
                   <Component>
                     <h5
                       className="bp3-heading"
-                    >
-                      Success!
-                    </h5>
+                    />
                   </Component>
                 </div>
               </Col>
@@ -123,10 +121,7 @@ exports[`should match exact snapshot 1`] = `
                     >
                       <div
                         className=""
-                      >
-                        You should see now sharing session started on device you've connected
-      with.
-                      </div>
+                      />
                     </Blueprint3.Text>
                   </div>
                   <div
@@ -147,12 +142,7 @@ exports[`should match exact snapshot 1`] = `
                     >
                       <div
                         className=""
-                      >
-                        
-              You can manage connected devices by clicking "Connected Devices"
-              button in top panel
-              
-                      </div>
+                      />
                     </Blueprint3.Text>
                   </div>
                 </div>
@@ -207,12 +197,6 @@ exports[`should match exact snapshot 1`] = `
                   </svg>
                 </span>
               </Blueprint3.Icon>
-              <span
-                className="bp3-button-text"
-                key="text"
-              >
-                Connect New Device
-              </span>
               <Blueprint3.Icon
                 key="rightIcon"
               />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import { Text } from '@blueprintjs/core';
 import ShareEntireScreenOrAppWindowControlGroup from '../ShareAppOrScreenControlGroup';
 
 interface ChooseAppOrScreeenStepProps {
@@ -18,9 +17,6 @@ const ChooseAppOrScreeenStep: React.FC<ChooseAppOrScreeenStepProps> = (
       <Col xs={12}>
         <Row center="xs">
           <Col xs={6}>
-            <div style={{ marginBottom: '10px' }}>
-              <Text>Choose Entire Screen or App window you want to share</Text>
-            </div>
             <Row center="xs">
               <Col>
                 <ShareEntireScreenOrAppWindowControlGroup

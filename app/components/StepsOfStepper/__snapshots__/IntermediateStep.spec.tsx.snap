@@ -91,9 +91,7 @@ exports[`should match exact snapshot on each step 1`] = `
                         "paddingRight": "8px",
                       }
                     }
-                  >
-                    Make sure your computer and device are connected to same WiFi
-                  </span>
+                  />
                 </div>
               </Blueprint3.Text>
               <Blueprint3.Text
@@ -108,7 +106,7 @@ exports[`should match exact snapshot on each step 1`] = `
             </div>
             <div>
               <Blueprint3.Tooltip
-                content="Click to make bigger"
+                content=""
                 hoverCloseDelay={0}
                 hoverOpenDelay={100}
                 minimal={false}
@@ -120,7 +118,7 @@ exports[`should match exact snapshot on each step 1`] = `
                   boundary="scrollParent"
                   canEscapeKeyClose={false}
                   captureDismiss={false}
-                  content="Click to make bigger"
+                  content=""
                   defaultIsOpen={false}
                   disabled={false}
                   enforceFocus={false}
@@ -293,12 +291,12 @@ exports[`should match exact snapshot on each step 1`] = `
                 <div
                   className="bp3-text-muted"
                 >
-                  or type the following address manually in browser address bar on any device:
+                  :
                 </div>
               </Blueprint3.Text>
             </div>
             <Blueprint3.Tooltip
-              content="Click to copy"
+              content=""
               hoverCloseDelay={0}
               hoverOpenDelay={100}
               minimal={false}
@@ -310,7 +308,7 @@ exports[`should match exact snapshot on each step 1`] = `
                 boundary="scrollParent"
                 canEscapeKeyClose={false}
                 captureDismiss={false}
-                content="Click to copy"
+                content=""
                 defaultIsOpen={false}
                 disabled={false}
                 enforceFocus={false}
@@ -534,7 +532,7 @@ exports[`should match exact snapshot on each step 1`] = `
                     "marginTop": "10px",
                   }
                 }
-                text="No, I need to share other thing"
+                text=""
               >
                 <button
                   className="bp3-button bp3-intent-danger"
@@ -575,12 +573,6 @@ exports[`should match exact snapshot on each step 1`] = `
                       </svg>
                     </span>
                   </Blueprint3.Icon>
-                  <span
-                    className="bp3-button-text"
-                    key="text"
-                  >
-                    No, I need to share other thing
-                  </span>
                   <Blueprint3.Icon
                     key="rightIcon"
                   />
@@ -661,6 +653,30 @@ exports[`should match exact snapshot on each step 2`] = `
             }
           }
         >
+          <Row
+            center="xs"
+          >
+            <div
+              className="row center-xs"
+            >
+              <div
+                style={
+                  Object {
+                    "marginBottom": "10px",
+                  }
+                }
+              >
+                <Blueprint3.Text
+                  ellipsize={false}
+                  tagName="div"
+                >
+                  <div
+                    className=""
+                  />
+                </Blueprint3.Text>
+              </div>
+            </div>
+          </Row>
           <ChooseAppOrScreeenStep
             handleNextApplicationWindow={[Function]}
             handleNextEntireScreen={[Function]}
@@ -698,24 +714,6 @@ exports[`should match exact snapshot on each step 2`] = `
                           <div
                             className="col-xs-6"
                           >
-                            <div
-                              style={
-                                Object {
-                                  "marginBottom": "10px",
-                                }
-                              }
-                            >
-                              <Blueprint3.Text
-                                ellipsize={false}
-                                tagName="div"
-                              >
-                                <div
-                                  className=""
-                                >
-                                  Choose Entire Screen or App window you want to share
-                                </div>
-                              </Blueprint3.Text>
-                            </div>
                             <Row
                               center="xs"
                             >
@@ -805,9 +803,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                                 >
                                                   <div
                                                     className="bp3-running-text"
-                                                  >
-                                                    Entire Screen
-                                                  </div>
+                                                  />
                                                 </Blueprint3.Text>
                                               </span>
                                               <Blueprint3.Icon
@@ -870,9 +866,7 @@ exports[`should match exact snapshot on each step 2`] = `
                                                 >
                                                   <div
                                                     className="bp3-running-text"
-                                                  >
-                                                    Application Window
-                                                  </div>
+                                                  />
                                                 </Blueprint3.Text>
                                               </span>
                                               <Blueprint3.Icon
@@ -904,12 +898,6 @@ exports[`should match exact snapshot on each step 2`] = `
                                               <Blueprint3.Icon
                                                 key="leftIcon"
                                               />
-                                              <span
-                                                className="bp3-button-text"
-                                                key="text"
-                                              >
-                                                OR
-                                              </span>
                                               <Blueprint3.Icon
                                                 key="rightIcon"
                                               />
@@ -1071,7 +1059,7 @@ exports[`should match exact snapshot on each step 2`] = `
                     "marginTop": "10px",
                   }
                 }
-                text="No, I need to share other thing"
+                text=""
               >
                 <button
                   className="bp3-button bp3-intent-danger"
@@ -1112,12 +1100,6 @@ exports[`should match exact snapshot on each step 2`] = `
                       </svg>
                     </span>
                   </Blueprint3.Icon>
-                  <span
-                    className="bp3-button-text"
-                    key="text"
-                  >
-                    No, I need to share other thing
-                  </span>
                   <Blueprint3.Icon
                     key="rightIcon"
                   />
@@ -1244,9 +1226,7 @@ exports[`should match exact snapshot on each step 3`] = `
                       >
                         <div
                           className=""
-                        >
-                          Check if all is OK and click "Confirm"
-                        </div>
+                        />
                       </Blueprint3.Text>
                     </div>
                   </Col>
@@ -1283,15 +1263,25 @@ exports[`should match exact snapshot on each step 3`] = `
                               }
                             }
                           >
-                            Partner Device Info:
+                            :
                           </h4>
                         </Component>
                         <Blueprint3.Callout
                           id="device-info-callout"
+                          style={
+                            Object {
+                              "borderRadius": "8px",
+                            }
+                          }
                         >
                           <div
                             className="bp3-callout"
                             id="device-info-callout"
+                            style={
+                              Object {
+                                "borderRadius": "8px",
+                              }
+                            }
                           >
                             <Row
                               center="xs"
@@ -1312,7 +1302,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                       <div
                                         className=""
                                       >
-                                        Device Type: 
+                                        :
+                                         
                                         <span />
                                       </div>
                                     </Blueprint3.Text>
@@ -1323,8 +1314,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                             ellipsize={false}
                                             tagName="div"
                                           >
-                                            This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                            
                                           </Blueprint3.Text>
                                           <span
                                             style={
@@ -1337,8 +1327,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                               ellipsize={false}
                                               tagName="div"
                                             >
-                                              If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                              
                                             </Blueprint3.Text>
                                           </span>
                                         </React.Fragment>
@@ -1360,8 +1349,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                               ellipsize={false}
                                               tagName="div"
                                             >
-                                              This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                              
                                             </Blueprint3.Text>
                                             <span
                                               style={
@@ -1374,8 +1362,7 @@ exports[`should match exact snapshot on each step 3`] = `
                                                 ellipsize={false}
                                                 tagName="div"
                                               >
-                                                If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                                
                                               </Blueprint3.Text>
                                             </span>
                                           </React.Fragment>
@@ -1449,7 +1436,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                                         <div
                                                           className="bp3-text-large"
                                                         >
-                                                          Device IP: 
+                                                          :
+                                                           
                                                           <span
                                                             className="device-ip-span"
                                                           />
@@ -1486,7 +1474,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                       <div
                                         className=""
                                       >
-                                        Device Browser: 
+                                        :
+                                         
                                         <span />
                                       </div>
                                     </Blueprint3.Text>
@@ -1497,7 +1486,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                       <div
                                         className=""
                                       >
-                                        Device OS: 
+                                        :
+                                         
                                         <span />
                                       </div>
                                     </Blueprint3.Text>
@@ -1517,7 +1507,8 @@ exports[`should match exact snapshot on each step 3`] = `
                                         <div
                                           className="bp3-text-overflow-ellipsis bp3-text-muted"
                                         >
-                                          Session ID: 
+                                          :
+                                           
                                           <span />
                                         </div>
                                       </Blueprint3.Text>
@@ -1672,52 +1663,6 @@ exports[`should match exact snapshot on each step 3`] = `
                   </Col>
                 </div>
               </Row>
-              <Row
-                style={
-                  Object {
-                    "marginBottom": "10px",
-                  }
-                }
-              >
-                <div
-                  className="row"
-                  style={
-                    Object {
-                      "marginBottom": "10px",
-                    }
-                  }
-                >
-                  <Col
-                    style={
-                      Object {
-                        "textAlign": "center",
-                      }
-                    }
-                    xs={12}
-                  >
-                    <div
-                      className="col-xs-12"
-                      style={
-                        Object {
-                          "textAlign": "center",
-                        }
-                      }
-                    >
-                      <Blueprint3.Text
-                        className="bp3-text-muted"
-                        ellipsize={false}
-                        tagName="div"
-                      >
-                        <div
-                          className="bp3-text-muted"
-                        >
-                          Click "Back" if you need to change something
-                        </div>
-                      </Blueprint3.Text>
-                    </div>
-                  </Col>
-                </div>
-              </Row>
             </div>
           </ConfirmStep>
           <Row>
@@ -1762,12 +1707,6 @@ exports[`should match exact snapshot on each step 3`] = `
                       <Blueprint3.Icon
                         key="leftIcon"
                       />
-                      <span
-                        className="bp3-button-text"
-                        key="text"
-                      >
-                        Confirm
-                      </span>
                       <Blueprint3.Icon
                         icon="small-tick"
                         key="rightIcon"
@@ -1824,7 +1763,7 @@ exports[`should match exact snapshot on each step 3`] = `
                     "marginTop": "10px",
                   }
                 }
-                text="No, I need to share other thing"
+                text=""
               >
                 <button
                   className="bp3-button bp3-intent-danger"
@@ -1865,12 +1804,6 @@ exports[`should match exact snapshot on each step 3`] = `
                       </svg>
                     </span>
                   </Blueprint3.Icon>
-                  <span
-                    className="bp3-button-text"
-                    key="text"
-                  >
-                    No, I need to share other thing
-                  </span>
                   <Blueprint3.Icon
                     key="rightIcon"
                   />

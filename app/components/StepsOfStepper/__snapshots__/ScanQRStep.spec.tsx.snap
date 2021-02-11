@@ -23,9 +23,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
             "paddingRight": "8px",
           }
         }
-      >
-        Make sure your computer and device are connected to same WiFi
-      </span>
+      />
     </Blueprint3.Text>
     <Blueprint3.Text
       className="bp3-text"
@@ -35,7 +33,7 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
   </div>
   <div>
     <Blueprint3.Tooltip
-      content="Click to make bigger"
+      content=""
       hoverCloseDelay={0}
       hoverOpenDelay={100}
       minimal={false}
@@ -78,11 +76,11 @@ exports[`<ScanQRStep /> when rendered should match exact snapshot 1`] = `
       ellipsize={false}
       tagName="div"
     >
-      or type the following address manually in browser address bar on any device:
+      :
     </Blueprint3.Text>
   </div>
   <Blueprint3.Tooltip
-    content="Click to copy"
+    content=""
     hoverCloseDelay={0}
     hoverOpenDelay={100}
     minimal={false}

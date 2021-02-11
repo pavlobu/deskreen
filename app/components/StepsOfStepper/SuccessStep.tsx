@@ -2,12 +2,15 @@
 import React, { useCallback, useEffect } from 'react';
 import { Button, H5, Icon, Text } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
+import { useTranslation } from 'react-i18next';
 
 interface SuccessStepProps {
   handleReset: () => void;
 }
 
 const SuccessStep: React.FC<SuccessStepProps> = (props: SuccessStepProps) => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     document
       .querySelector('#top-panel-connected-devices-list-button')
@@ -49,16 +52,13 @@ const SuccessStep: React.FC<SuccessStepProps> = (props: SuccessStepProps) => {
       <Row center="xs">
         <Col xs={12}>
           <Icon icon="endorsed" iconSize={35} color="#0F9960" />
-          <H5>Success!</H5>
+          <H5>{t('Done!')}</H5>
         </Col>
       </Row>
       <Row center="xs">
         <Col xs={10}>
           <div style={{ marginBottom: '10px' }}>
-            <Text>
-              {`You should see now sharing session started on device you've connected
-      with.`}
-            </Text>
+            <Text>{t('Now you can see your screen on other device')}</Text>
           </div>
           <div
             id="connected-devices-list-text-success"
@@ -70,10 +70,9 @@ const SuccessStep: React.FC<SuccessStepProps> = (props: SuccessStepProps) => {
             }}
           >
             <Text className="">
-              {`
-              You can manage connected devices by clicking "Connected Devices"
-              button in top panel
-              `}
+              {t(
+                'You can manage connected devices by clicking Connected Devices button in top panel'
+              )}
             </Text>
           </div>
         </Col>
@@ -84,7 +83,7 @@ const SuccessStep: React.FC<SuccessStepProps> = (props: SuccessStepProps) => {
         icon="repeat"
         style={{ borderRadius: '100px' }}
       >
-        Connect New Device
+        {t('Connect New Device')}
       </Button>
     </Col>
   );

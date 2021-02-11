@@ -33,9 +33,9 @@ exports[`should match exact snapshot 1`] = `
       <Blueprint3.Alert
         canEscapeKeyCancel={false}
         canOutsideClickCancel={false}
-        cancelButtonText="Deny"
+        cancelButtonText=""
         className="class-allow-device-to-connect-alert"
-        confirmButtonText="Allow"
+        confirmButtonText=""
         icon="feed"
         intent="danger"
         isOpen={true}
@@ -181,9 +181,7 @@ exports[`should match exact snapshot 1`] = `
                             <Component>
                               <h4
                                 className="bp3-heading"
-                              >
-                                Device is trying to connect, do you allow?
-                              </h4>
+                              />
                             </Component>
                             <DeviceInfoCallout>
                               <Component
@@ -203,15 +201,25 @@ exports[`should match exact snapshot 1`] = `
                                     }
                                   }
                                 >
-                                  Partner Device Info:
+                                  :
                                 </h4>
                               </Component>
                               <Blueprint3.Callout
                                 id="device-info-callout"
+                                style={
+                                  Object {
+                                    "borderRadius": "8px",
+                                  }
+                                }
                               >
                                 <div
                                   className="bp3-callout"
                                   id="device-info-callout"
+                                  style={
+                                    Object {
+                                      "borderRadius": "8px",
+                                    }
+                                  }
                                 >
                                   <Row
                                     center="xs"
@@ -232,7 +240,8 @@ exports[`should match exact snapshot 1`] = `
                                             <div
                                               className=""
                                             >
-                                              Device Type: 
+                                              :
+                                               
                                               <span />
                                             </div>
                                           </Blueprint3.Text>
@@ -243,8 +252,7 @@ exports[`should match exact snapshot 1`] = `
                                                   ellipsize={false}
                                                   tagName="div"
                                                 >
-                                                  This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                                  
                                                 </Blueprint3.Text>
                                                 <span
                                                   style={
@@ -257,8 +265,7 @@ exports[`should match exact snapshot 1`] = `
                                                     ellipsize={false}
                                                     tagName="div"
                                                   >
-                                                    If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                                    
                                                   </Blueprint3.Text>
                                                 </span>
                                               </React.Fragment>
@@ -280,8 +287,7 @@ exports[`should match exact snapshot 1`] = `
                                                     ellipsize={false}
                                                     tagName="div"
                                                   >
-                                                    This should match with 'Device IP' displayed on the screen of device
-        that is trying to connect.
+                                                    
                                                   </Blueprint3.Text>
                                                   <span
                                                     style={
@@ -294,8 +300,7 @@ exports[`should match exact snapshot 1`] = `
                                                       ellipsize={false}
                                                       tagName="div"
                                                     >
-                                                      If IPs don't match click 'Deny' or 'Disconnect' button immediately to
-          secure your computer!
+                                                      
                                                     </Blueprint3.Text>
                                                   </span>
                                                 </React.Fragment>
@@ -369,7 +374,8 @@ exports[`should match exact snapshot 1`] = `
                                                               <div
                                                                 className="bp3-text-large"
                                                               >
-                                                                Device IP: 
+                                                                :
+                                                                 
                                                                 <span
                                                                   className="device-ip-span"
                                                                 />
@@ -406,7 +412,8 @@ exports[`should match exact snapshot 1`] = `
                                             <div
                                               className=""
                                             >
-                                              Device Browser: 
+                                              :
+                                               
                                               <span />
                                             </div>
                                           </Blueprint3.Text>
@@ -417,7 +424,8 @@ exports[`should match exact snapshot 1`] = `
                                             <div
                                               className=""
                                             >
-                                              Device OS: 
+                                              :
+                                               
                                               <span />
                                             </div>
                                           </Blueprint3.Text>
@@ -437,7 +445,8 @@ exports[`should match exact snapshot 1`] = `
                                               <div
                                                 className="bp3-text-overflow-ellipsis bp3-text-muted"
                                               >
-                                                Session ID: 
+                                                :
+                                                 
                                                 <span />
                                               </div>
                                             </Blueprint3.Text>
@@ -457,7 +466,7 @@ exports[`should match exact snapshot 1`] = `
                           <Blueprint3.Button
                             intent="danger"
                             onClick={[Function]}
-                            text="Allow"
+                            text=""
                           >
                             <button
                               className="bp3-button bp3-intent-danger"
@@ -470,38 +479,6 @@ exports[`should match exact snapshot 1`] = `
                               <Blueprint3.Icon
                                 key="leftIcon"
                               />
-                              <span
-                                className="bp3-button-text"
-                                key="text"
-                              >
-                                Allow
-                              </span>
-                              <Blueprint3.Icon
-                                key="rightIcon"
-                              />
-                            </button>
-                          </Blueprint3.Button>
-                          <Blueprint3.Button
-                            onClick={[Function]}
-                            text="Deny"
-                          >
-                            <button
-                              className="bp3-button"
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onKeyDown={[Function]}
-                              onKeyUp={[Function]}
-                              type="button"
-                            >
-                              <Blueprint3.Icon
-                                key="leftIcon"
-                              />
-                              <span
-                                className="bp3-button-text"
-                                key="text"
-                              >
-                                Deny
-                              </span>
                               <Blueprint3.Icon
                                 key="rightIcon"
                               />

@@ -9,6 +9,7 @@ import {
   Icon,
 } from '@blueprintjs/core';
 import { Col, Row } from 'react-flexbox-grid';
+import { useTranslation } from 'react-i18next';
 import './index.css';
 import { ErrorMessage } from './ErrorMessageEnum';
 
@@ -18,6 +19,7 @@ interface ErrorDialogProps {
 }
 
 function ErrorDialog(props: ErrorDialogProps) {
+  const { t } = useTranslation();
   const { errorMessage, isOpen } = props;
 
   return (
@@ -37,7 +39,7 @@ function ErrorDialog(props: ErrorDialogProps) {
     >
       <Row center="xs" style={{ marginTop: '10px' }}>
         <Col xs={12}>
-          <H3 className={Classes.TEXT_MUTED}>Deskreen Error Dialog</H3>
+          <H3 className={Classes.TEXT_MUTED}>{t('Deskreen Error Dialog')}</H3>
         </Col>
       </Row>
       <Row middle="xs" center="xs" style={{ padding: '20px', width: '100%' }}>
@@ -51,7 +53,7 @@ function ErrorDialog(props: ErrorDialogProps) {
                 className={Classes.TEXT_DISABLED}
                 style={{ marginBottom: '0px' }}
               >
-                Something wrong happened :(
+                {`${t('Something went wrong')} :(`}
               </H1>
             </Col>
           </Row>
@@ -59,9 +61,9 @@ function ErrorDialog(props: ErrorDialogProps) {
       </Row>
       <Divider />
       <div className={Classes.DIALOG_BODY}>
-        <H3 className={Classes.TEXT_MUTED}>{errorMessage}</H3>
+        <H3 className={Classes.TEXT_MUTED}>{t(`${errorMessage}`)}</H3>
         <Divider />
-        <H2>You may close this browser window then try to connect again.</H2>
+        <H2>{`${t('You may close this browser window then try to connect again')}.`}</H2>
       </div>
     </Dialog>
   );

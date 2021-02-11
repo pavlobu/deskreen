@@ -103,9 +103,7 @@ exports[`should match exact snapshot 1`] = `
                 >
                   <div
                     className="bp3-running-text"
-                  >
-                    Entire Screen
-                  </div>
+                  />
                 </Blueprint3.Text>
               </span>
               <Blueprint3.Icon
@@ -168,9 +166,7 @@ exports[`should match exact snapshot 1`] = `
                 >
                   <div
                     className="bp3-running-text"
-                  >
-                    Application Window
-                  </div>
+                  />
                 </Blueprint3.Text>
               </span>
               <Blueprint3.Icon
@@ -202,12 +198,6 @@ exports[`should match exact snapshot 1`] = `
               <Blueprint3.Icon
                 key="leftIcon"
               />
-              <span
-                className="bp3-button-text"
-                key="text"
-              >
-                OR
-              </span>
               <Blueprint3.Icon
                 key="rightIcon"
               />

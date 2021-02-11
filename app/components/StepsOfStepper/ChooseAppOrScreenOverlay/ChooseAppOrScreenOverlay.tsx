@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { H3, Card, Dialog, Button } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import CloseOverlayButton from '../../CloseOverlayButton';
 import PreviewGridList from './PreviewGridList';
 import DesktopCapturerSources from '../../../features/DesktopCapturerSourcesService';
@@ -50,6 +51,8 @@ interface ChooseAppOrScreenOverlayProps {
 export default function ChooseAppOrScreenOverlay(
   props: ChooseAppOrScreenOverlayProps
 ) {
+  const { t } = useTranslation();
+
   const {
     handleClose,
     isChooseAppOrScreenOverlayOpen,
@@ -148,13 +151,13 @@ export default function ChooseAppOrScreenOverlay(
                   {isEntireScreenToShareChosen ? (
                     <div>
                       <H3 style={{ marginBottom: '0px' }}>
-                        Select Entire Screen to Share
+                        {t('Select Entire Screen to Share')}
                       </H3>
                     </div>
                   ) : (
                     <div>
                       <H3 style={{ marginBottom: '0px' }}>
-                        Select App Window to Share
+                        {t('Select App Window to Share')}
                       </H3>
                     </div>
                   )}
@@ -168,7 +171,7 @@ export default function ChooseAppOrScreenOverlay(
                       borderRadius: '100px',
                     }}
                   >
-                    Refresh
+                    {t('Refresh')}
                   </Button>
                 </Col>
 

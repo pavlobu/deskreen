@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { ipcRenderer, remote, shell } from 'electron';
-import React, { useContext, useCallback, useEffect, useState } from 'react';
+import { ipcRenderer, shell } from 'electron';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  Button,
   Overlay,
   Classes,
   H3,
@@ -13,37 +12,27 @@ import {
   Tabs,
   Tab,
   Icon,
-  HTMLSelect,
   Text,
-  ControlGroup,
   Checkbox,
 } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import i18n from 'i18next';
-import SharingSessionService from '../../features/SharingSessionService';
 import {
   DARK_UI_BACKGROUND,
   LIGHT_UI_BACKGROUND,
   SettingsContext,
 } from '../../containers/SettingsProvider';
 import CloseOverlayButton from '../CloseOverlayButton';
-import i18n_client, {
-  getLangFullNameToLangISOKeyMap,
-  getLangISOKeyToLangFullNameMap,
-} from '../../configs/i18next.config.client';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
 import isWithReactRevealAnimations from '../../utils/isWithReactRevealAnimations';
 import config from '../../api/config';
+import LanguageSelector from '../LanguageSelector';
+import ToggleThemeBtnGroup from '../ToggleThemeBtnGroup';
 
 const { port } = config;
 
 const Fade = require('react-reveal/Fade');
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
 
 interface SettingsOverlayProps {
   isSettingsOpen: boolean;
@@ -73,13 +62,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
   const [latestVersion, setLatestVersion] = useState('');
   const [currentVersion, setCurrentVersion] = useState('');
 
-  const {
-    isDarkTheme,
-    setIsDarkThemeHook,
-    setCurrentLanguageHook,
-  } = useContext(SettingsContext);
-
-  const [languagesList, setLanguagesList] = useState([] as string[]);
+  const { isDarkTheme } = useContext(SettingsContext);
 
   useEffect(() => {
     const getLatestVersion = async () => {
@@ -98,96 +81,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     getCurrentVersion();
   }, []);
 
-  useEffect(() => {
-    const tmp: string[] = [];
-    getLangFullNameToLangISOKeyMap().forEach((_, key) => {
-      tmp.push(key);
-    });
-    setLanguagesList(tmp);
-    setCurrentLanguageHook(i18n_client.language);
-  }, [setCurrentLanguageHook]);
-
   const getClassesCallback = useStylesWithTheme(isDarkTheme);
-
-  const handleToggleDarkTheme = useCallback(() => {
-    if (!isDarkTheme) {
-      document.body.classList.toggle(Classes.DARK);
-      setIsDarkThemeHook(true);
-    }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged(true);
-    });
-    sharingSessionService.setAppTheme(true);
-  }, [isDarkTheme, setIsDarkThemeHook]);
-
-  const handleToggleLightTheme = useCallback(() => {
-    if (isDarkTheme) {
-      document.body.classList.toggle(Classes.DARK);
-      setIsDarkThemeHook(false);
-    }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged(false);
-    });
-    sharingSessionService.setAppTheme(false);
-  }, [isDarkTheme, setIsDarkThemeHook]);
-
-  const onChangeLangueageHTMLSelectHandler = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    if (
-      event.currentTarget &&
-      getLangFullNameToLangISOKeyMap().has(event.currentTarget.value)
-    ) {
-      const newLang =
-        getLangFullNameToLangISOKeyMap().get(event.currentTarget.value) ||
-        'English';
-      i18n.changeLanguage(newLang);
-      // TODO: call sharing sessions service here to notify all connected clients about language change
-      sharingSessionService.sharingSessions.forEach((sharingSession) => {
-        sharingSession?.appLanguageChanged(newLang);
-      });
-      sharingSessionService.setAppLanguage(newLang);
-    }
-  };
-
-  const getThemeChangingControlGroupInput = () => {
-    return (
-      <ControlGroup fill vertical={false}>
-        <Button
-          icon="flash"
-          text="Light"
-          onClick={handleToggleLightTheme}
-          active={!isDarkTheme}
-        />
-        <Button
-          icon="moon"
-          text="Dark"
-          onClick={handleToggleDarkTheme}
-          active={isDarkTheme}
-        />
-      </ControlGroup>
-    );
-  };
-
-  const getLanguageChangingHTMLSelect = () => {
-    return (
-      <HTMLSelect
-        disabled // TODO: remove when tranlations are ready
-        defaultValue={getLangISOKeyToLangFullNameMap().get(i18n.language)}
-        options={languagesList}
-        onChange={onChangeLangueageHTMLSelectHandler}
-      />
-    );
-  };
 
   const getAutomaticUpdatesCheckboxInput = () => {
     return (
       <Checkbox
         disabled
         className={getClassesCallback().checkboxSettings}
-        label="Disabled"
+        label={t('Disabled')}
       />
     );
   };
@@ -195,21 +96,21 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
   const GeneralSettingsPanel: React.FC = () => (
     <>
       <Row middle="xs">
-        <H3 className="bp3-text-muted">General Settings</H3>
+        <H3 className="bp3-text-muted">{t('General Settings')}</H3>
       </Row>
       <SettingRowLabelAndInput
         icon="style"
-        label="Colors"
-        input={getThemeChangingControlGroupInput()}
+        label={t('Color Theme')}
+        input={<ToggleThemeBtnGroup />}
       />
       <SettingRowLabelAndInput
         icon="translate"
         label={t('Language')}
-        input={getLanguageChangingHTMLSelect()}
+        input={<LanguageSelector />}
       />
       <SettingRowLabelAndInput
         icon="automatic-updates"
-        label="Automatic Updates"
+        label={t('Automatic Updates')}
         input={getAutomaticUpdatesCheckboxInput()}
       />
     </>
@@ -219,7 +120,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
     <div>
       <H3>
         <Icon icon="shield" iconSize={20} />
-        Security
+        {t('Security Settings')}
       </H3>
       <H6 className={Classes.RUNNING_TEXT}>
         {`HTML is great for declaring static documents, but it falters when we try
@@ -228,12 +129,6 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
         environment is extraordinarily expressive, readable, and quick to
         develop.`}
       </H6>
-    </div>
-  );
-
-  const BlockedIPsPanel: React.FC = () => (
-    <div>
-      <H3>Blocked IPs</H3>
     </div>
   );
 
@@ -248,14 +143,16 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           />
         </Col>
         <Col xs={12}>
-          <H3>About Deskreen</H3>
-        </Col>
-        <Col xs={12}>
-          <Text>{`Version: ${currentVersion} (${currentVersion})`}</Text>
+          <H3>{t('About Deskreen')}</H3>
         </Col>
         <Col xs={12}>
           <Text>
-            {`Copyright © ${new Date().getFullYear()} `}
+            {`${t('Version')}: ${currentVersion} (${currentVersion})`}
+          </Text>
+        </Col>
+        <Col xs={12}>
+          <Text>
+            {`${t('Copyright')} © ${new Date().getFullYear()} `}
             <a
               onClick={() => {
                 shell.openExternal('https://linkedin.com/in/pavlobu');
@@ -268,16 +165,16 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                     }
               }
             >
-              Pavlo (Paul) Buidenkov
+              Pavlo Buidenkov (Paul)
             </a>
           </Text>
         </Col>
         <Col xs={12}>
           <Text>
-            {`Website: `}
+            {`${t('Website')}: `}
             <a
               onClick={() => {
-                shell.openExternal('https://www.deskreen.com');
+                shell.openExternal('https://deskreen.com');
               }}
               style={
                 isDarkTheme
@@ -287,25 +184,13 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                     }
               }
             >
-              https://www.deskreen.com
+              https://deskreen.com
             </a>
           </Text>
         </Col>
       </div>
     </Row>
   );
-
-  const getTabNavBlockedIPsButton = () => {
-    return (
-      <Row middle="xs" className={getClassesCallback().tabNavigationRowButton}>
-        <Icon
-          icon="blocked-person"
-          className={getClassesCallback().iconInTablLeftButton}
-        />
-        <Text className="bp3-text-large">Blacklisted IPs</Text>
-      </Row>
-    );
-  };
 
   const getTabNavSecurityButton = () => {
     return (
@@ -314,7 +199,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           icon="shield"
           className={getClassesCallback().iconInTablLeftButton}
         />
-        <Text className="bp3-text-large">Security</Text>
+        <Text className="bp3-text-large">{t('Security')}</Text>
       </Row>
     );
   };
@@ -326,7 +211,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           icon="wrench"
           className={getClassesCallback().iconInTablLeftButton}
         />
-        <Text className="bp3-text-large">General</Text>
+        <Text className="bp3-text-large">{t('General')}</Text>
       </Row>
     );
   };
@@ -338,7 +223,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
           icon="info-sign"
           className={getClassesCallback().iconInTablLeftButton}
         />
-        <Text className="bp3-text-large">About</Text>
+        <Text className="bp3-text-large">{t('About')}</Text>
       </Row>
     );
   };
@@ -378,9 +263,14 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
                   e.preventDefault();
                   shell.openExternal('https://deskreen.com');
                 }}
+                style={{
+                  width: 'calc(100% - 50px)',
+                }}
               >
                 {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-                New version {latestVersion} is available! Click to download.
+                {`${t(
+                  'A new version of Deskreen is available! Click to download new version'
+                )} ${latestVersion}`}
               </H4>
             ) : (
               <></>
@@ -397,9 +287,6 @@ export default function SettingsOverlay(props: SettingsOverlayProps) {
               </Tab>
               <Tab id="ng" disabled title="" panel={<SecurityPanel />}>
                 {getTabNavSecurityButton()}
-              </Tab>
-              <Tab id="bb" disabled title="" panel={<BlockedIPsPanel />}>
-                {getTabNavBlockedIPsButton()}
               </Tab>
               <Tab id="cc" title="" panel={<AboutPanel />}>
                 {getTabNavAboutButton()}

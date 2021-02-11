@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import { Icon, Text, Button, Popover, Tooltip } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 import DeviceInfoCallout from '../DeviceInfoCallout';
 import isWithReactRevealAnimations from '../../utils/isWithReactRevealAnimations';
 
@@ -10,9 +12,12 @@ interface DeviceConnectedInfoButtonProps {
 }
 
 const getDeviceConnectedPopoverContent = (
+  t: TFunction,
   pendingConnectionDevice: Device,
   handleDisconnect: () => void
 ) => {
+  const disconnectButtonText = t('Disconnect');
+
   return (
     <Row>
       <div style={{ padding: '20px', borderRadius: '100px' }}>
@@ -35,7 +40,7 @@ const getDeviceConnectedPopoverContent = (
               }}
               style={{ width: '100%', borderRadius: '5px' }}
             >
-              Disconnect
+              {disconnectButtonText}
             </Button>
           </Col>
         </Row>
@@ -47,18 +52,20 @@ const getDeviceConnectedPopoverContent = (
 export default function DeviceConnectedInfoButton(
   props: DeviceConnectedInfoButtonProps
 ) {
+  const { t } = useTranslation();
+
   const { device, onDisconnect } = props;
 
   return (
     <>
       <Popover
-        content={getDeviceConnectedPopoverContent(device, onDisconnect)}
+        content={getDeviceConnectedPopoverContent(t, device, onDisconnect)}
         position="bottom"
         inheritDarkTheme={false}
         transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
       >
         <Tooltip
-          content={<Text>Click to manage</Text>}
+          content={<Text>{t('Click to see more')}</Text>}
           position="right"
           hoverOpenDelay={400}
         >
@@ -66,7 +73,7 @@ export default function DeviceConnectedInfoButton(
             id="connected-device-info-stepper-button"
             intent="success"
             style={{
-              width: '120px',
+              width: '150px',
               height: '10px !important',
               borderRadius: '100px',
               position: 'relative',
@@ -78,7 +85,7 @@ export default function DeviceConnectedInfoButton(
                 <Icon icon="info-sign" />
               </Col>
               <Col xs>
-                <Text>Connected</Text>
+                <Text>{t('Connected')}</Text>
               </Col>
             </Row>
           </Button>

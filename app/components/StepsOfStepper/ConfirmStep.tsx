@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { remote } from 'electron';
 import { Text } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
+import { useTranslation } from 'react-i18next';
 import SharingSourcePreviewCard from '../SharingSourcePreviewCard';
 import SharingSessionService from '../../features/SharingSessionService';
 import DeviceInfoCallout from '../DeviceInfoCallout';
@@ -16,6 +17,7 @@ interface ConfirmStepProps {
 }
 
 export default function ConfirmStep(props: ConfirmStepProps) {
+  const { t } = useTranslation();
   const { device } = props;
   const [sharingSession, setSharingSession] = useState<
     SharingSession | undefined
@@ -34,7 +36,7 @@ export default function ConfirmStep(props: ConfirmStepProps) {
       <Row style={{ marginBottom: '10px' }}>
         <Col xs={12} style={{ textAlign: 'center' }}>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <Text>Check if all is OK and click "Confirm"</Text>
+          <Text>{t('Check if all is OK and click Confirm')}</Text>
         </Col>
       </Row>
       <Row middle="xs" center="xs">
@@ -51,14 +53,6 @@ export default function ConfirmStep(props: ConfirmStepProps) {
           <SharingSourcePreviewCard
             sharingSourceID={sharingSession?.desktopCapturerSourceID}
           />
-        </Col>
-      </Row>
-      <Row style={{ marginBottom: '10px' }}>
-        <Col xs={12} style={{ textAlign: 'center' }}>
-          <Text className="bp3-text-muted">
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            Click "Back" if you need to change something
-          </Text>
         </Col>
       </Row>
     </div>

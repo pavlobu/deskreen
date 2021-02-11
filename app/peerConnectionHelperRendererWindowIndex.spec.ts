@@ -252,40 +252,6 @@ describe('peerConnectionHelperRendererWindowIndex tests', () => {
           ).toHaveBeenCalled();
         });
       });
-
-      describe('when ipcRenderer.on("app-color-theme-changed" callback occurred', () => {
-        it('should call peerConnection.setAppTheme(newTheme)', () => {
-          const peerConnectionInstance = mockAndGetPeerConnectionInstance();
-
-          const setAppThemeCallback =
-            // @ts-ignore
-            ipcRenderer.on.mock.calls[6][1];
-          const testTheme = true;
-
-          setAppThemeCallback(undefined, testTheme);
-
-          expect(peerConnectionInstance.setAppTheme).toHaveBeenCalledWith(
-            testTheme
-          );
-        });
-      });
-
-      describe('when ipcRenderer.on("app-language-changed" callback occurred', () => {
-        it('should call peerConnection.testAppLang(newLang)', () => {
-          const peerConnectionInstance = mockAndGetPeerConnectionInstance();
-
-          const setAppLangCallback =
-            // @ts-ignore
-            ipcRenderer.on.mock.calls[7][1];
-          const testAppLang = 'eu';
-
-          setAppLangCallback(undefined, testAppLang);
-
-          expect(peerConnectionInstance.setAppLanguage).toHaveBeenCalledWith(
-            testAppLang
-          );
-        });
-      });
     });
   });
 });

@@ -62,8 +62,12 @@ export default class DeskreenApp {
 
         const showNotification = () => {
           const notification = {
-            title: 'Deskreen Update is Available!',
-            body: `Your current version is ${this.appVersion} Click to download new ${this.latestVersion} updated version.`,
+            title: i18n.t('Deskreen Update is Available!'),
+            body: `${i18n.t('Your current version is')} ${
+              this.appVersion
+            } | ${i18n.t('Click to download new updated version')} ${
+              this.latestVersion
+            }`,
           };
           const notificationInstance = new Notification(notification);
           notificationInstance.show();

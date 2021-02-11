@@ -101,13 +101,15 @@ const ScanQRStep: React.FC = () => {
               borderRadius: '20px',
             }}
           >
-            Make sure your computer and device are connected to same WiFi
+            {t(
+              'Make sure your computer and screen viewing device are connected to same Wi-Fi'
+            )}
           </span>
         </Text>
         <Text className="bp3-text">{t('Scan the QR code')}</Text>
       </div>
       <div>
-        <Tooltip content="Click to make bigger" position={Position.LEFT}>
+        <Tooltip content={t('Click to make bigger')} position={Position.LEFT}>
           <Button
             id="magnify-qr-code-button"
             className={classes.smallQRCode}
@@ -131,12 +133,13 @@ const ScanQRStep: React.FC = () => {
       </div>
       <div style={{ marginBottom: '10px' }}>
         <Text className="bp3-text-muted">
-          or type the following address manually in browser address bar on any
-          device:
+          {`${t(
+            'Or type the following address in browser address bar on any device'
+          )}:`}
         </Text>
       </div>
 
-      <Tooltip content="Click to copy" position={Position.LEFT}>
+      <Tooltip content={t('Click to copy')} position={Position.LEFT}>
         <Button
           intent="primary"
           icon="duplicate"
