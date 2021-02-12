@@ -134,6 +134,8 @@ You need to add it in two places: 1. host app, that runs on a computer and 2. cl
   "es": "Espagnol",
   ....
   ```
+- In `getShuffledArrayOfHello`(search for arrow function) add a Hello word in your language to `res` list like this: `res.push(translationES.Hello);`. You will first need to import `translationES` on a top of file where this arrow function is. Example: `import translationES from '../locales/es/translation.json'`
+
 - Done with the host app!
 - Now proceed with client viewer. Create a directory `es` in `app/client/public/locales`
 - create `app/client/public/locales/es/translation.json`
@@ -146,20 +148,20 @@ You need to add it in two places: 1. host app, that runs on a computer and 2. cl
 
 ### When the Deskreen App translations done, then please fix tests if they are broken. And regenerate snapshots if needed.
 
-Example to regenerate snapshots:
-in root `./` folder of project
+### How to regenerate snapshots if you have tests failing when running `yarn test`?
+
+in root `./` folder of project run this:
 
 ```
-yarn test -- -u (or yarn jest -- -u)
+yarn test --updateSnapshot
 ```
 
-in root `./app/client` folder of project
+in Deskreen Viewer `./app/client` folder of project run this:
 
 ```
-yarn test -- -u (or yarn jest -- -u)
+cd app/client
+SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 ```
-
-If that doesn't work for you to regenerate snaphosts, please google search how to do it.
 
 ### By this time you should be done with adding a translation.
 

@@ -161,6 +161,21 @@ globally on your machine.
 
 `yarn coverage` -- when run from project root, generates a coverage report for `host` and `app/client`
 
+### How to regenerate snapshots if you have tests failing when running `yarn test`?
+
+in root `./` folder of project run this:
+
+```
+yarn test --updateSnapshot
+```
+
+in Deskreen Viewer `./app/client` folder of project run this:
+
+```
+cd app/client
+SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
+```
+
 ## Instruction for running a local Sonar Qube, community edition
 
 ### Prerequisites
