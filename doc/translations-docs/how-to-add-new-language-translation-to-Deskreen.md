@@ -134,6 +134,8 @@ You need to add it in two places: 1. host app, that runs on a computer and 2. cl
   "es": "Espagnol",
   ....
   ```
+- In `getShuffledArrayOfHello`(search for arrow function) add a Hello word in your language to `res` list like this: `res.push(translationES.Hello);`. You will first need to import `translationES` on a top of file where this arrow function is. Example: `import translationES from '../locales/es/translation.json'`
+
 - Done with the host app!
 - Now proceed with client viewer. Create a directory `es` in `app/client/public/locales`
 - create `app/client/public/locales/es/translation.json`
