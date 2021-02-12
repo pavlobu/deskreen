@@ -29,10 +29,10 @@ jobs:
   update-aur:
     runs-on: ubuntu-latest
     env:
-      private_key : ${{ secrets.private_key }}
-      email : ${{ secrets.email }}
-      name : ${{ secrets.name }}
-      version : ${GITHUB_REF##*/}
+      AUR_PRIVATE_KEY : ${{ secrets.AUR_PRIVATE_KEY }}
+      AUR_EMAIL : ${{ secrets.AUR_EMAIL }}
+      AUR_NAME : ${{ secrets.AUR_NAME }}
+      VERSION : ${GITHUB_REF##*/}
     container: archlinux
     steps:
       - name: Update package database and packages
@@ -43,7 +43,7 @@ jobs:
       - name: Setup keys for git
         run: |
           mkdir -p ~/.ssh
-          echo "$private_key" > ~/.ssh/aur
+          echo "$AUR_PRIVATE_KEY" > ~/.ssh/aur
           echo "
           Host aur.archlinux.org
             IdentityFile ~/.ssh/aur
@@ -58,10 +58,10 @@ jobs:
       - name: Update version and set variables
         run: |
           cd deskreen-aur
-          sed -i "/pkgver=/c\pkgver=$version" PKGBUILD
+          sed -i "/pkgver=/c\pkgver=$VERSION" PKGBUILD
           _pkgname=Deskreen
           pkgname=deskreen
-          pkgver=$version
+          pkgver=$VERSION
       - name: Download the AppImage and set sha256sum
         run: |
           wget -nv https://github.com/pavlobu/${pkgname}/releases/download/v${pkgver//_/-}/${_pkgname}-${pkgver}.AppImage
@@ -77,9 +77,9 @@ jobs:
       - name: Push to git
         run: |
           git add .
-          git config user.name "$name"
-          git config user.email "$email"
-          git commit -m "updated pkgbuild to $version"
+          git config user.name "$AUR_NAME"
+          git config user.email "$AUR_EMAIL"
+          git commit -m "updated pkgbuild to $VERSION"
           git push
       - name: Remove key
         run: |
