@@ -37,7 +37,7 @@ describe('i18next.config.client tests', () => {
       expectedMap.set('en', 'English');
       expectedMap.set('ru', 'Русский');
       expectedMap.set('ua', 'Українська');
-      expectedMap.set('zh_CN', '简体中文')
+      expectedMap.set('zh_CN', '简体中文');
 
       const res = getLangISOKeyToLangFullNameMap();
 
