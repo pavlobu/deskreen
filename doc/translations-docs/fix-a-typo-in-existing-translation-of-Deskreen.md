@@ -115,20 +115,20 @@ Docs coming soon. Stay tuned.
 
 ### When the Deskreen App edits done, then please fix tests if they are broken. And regenerate snapshots if needed.
 
-Example to regenerate snapshots:
-in root `./` folder of project
+### How to regenerate snapshots if you have tests failing when running `yarn test`?
+
+in root `./` folder of project run this:
 
 ```
-yarn test -- -u (or yarn jest -- -u)
+yarn test --updateSnapshot
 ```
 
-in root `./app/client` folder of project
+in Deskreen Viewer `./app/client` folder of project run this:
 
 ```
-yarn test -- -u (or yarn jest -- -u)
+cd app/client
+SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 ```
-
-If that doesn't work for you to regenerate snaphosts, please google search how to do it.
 
 ### IMPORTANT: Please make sure your PR is 1 or maximum 2 commits length. If it is longer than that, you will be asked to squash your PR commits. If you don't know how to squash, refer [this guide](#dont-know-code)
 
