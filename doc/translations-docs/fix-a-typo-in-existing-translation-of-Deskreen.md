@@ -120,7 +120,7 @@ Docs coming soon. Stay tuned.
 in root `./` folder of project run this:
 
 ```
-yarn test --updateSnapshot
+yarn jest --updateSnapshot
 ```
 
 in Deskreen Viewer `./app/client` folder of project run this:

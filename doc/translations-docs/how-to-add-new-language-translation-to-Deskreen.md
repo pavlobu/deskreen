@@ -153,7 +153,7 @@ You need to add it in two places: 1. host app, that runs on a computer and 2. cl
 in root `./` folder of project run this:
 
 ```
-yarn test --updateSnapshot
+yarn jest --updateSnapshot
 ```
 
 in Deskreen Viewer `./app/client` folder of project run this:
