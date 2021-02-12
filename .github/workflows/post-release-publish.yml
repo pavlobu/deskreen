@@ -26,3 +26,61 @@ jobs:
           # https://github.com/settings/tokens/new?scopes=gist,public_repo&description=Homebrew
           # Then, go repo settings -> Secrets -> New repository secret -> HOMEBREW_GITHUB_API_TOKEN : <secret value>.
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
+  update-aur:
+    runs-on: ubuntu-latest
+    env:
+      private_key : ${{ secrets.private_key }}
+      email : ${{ secrets.email }}
+      name : ${{ secrets.name }}
+      version : ${GITHUB_REF##*/}
+    container: archlinux
+    steps:
+      - name: Update package database and packages
+        run: |
+          (patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && bsdtar -C / -xvf "$patched_glibc") &> /dev/null
+          pacman --noconfirm -Syu
+          pacman --noconfirm -S base-devel wget git
+      - name: Setup keys for git
+        run: |
+          mkdir -p ~/.ssh
+          echo "$private_key" > ~/.ssh/aur
+          echo "
+          Host aur.archlinux.org
+            IdentityFile ~/.ssh/aur
+            User aur" >> ~/.ssh/config
+      - name: Clone the repository
+        run: |
+          if [ -d deskreen-aur ]
+          then
+          rm -rf deskreen-aur
+          fi
+          git clone ssh://aur@aur.archlinux.org/deskreen.git deskreen-aur
+      - name: Update version and set variables
+        run: |
+          cd deskreen-aur
+          sed -i "/pkgver=/c\pkgver=$version" PKGBUILD
+          _pkgname=Deskreen
+          pkgname=deskreen
+          pkgver=$version
+      - name: Download the AppImage and set sha256sum
+        run: |
+          wget -nv https://github.com/pavlobu/${pkgname}/releases/download/v${pkgver//_/-}/${_pkgname}-${pkgver}.AppImage
+          arr=(`sha256sum *.AppImage`)
+          echo "$arr"
+          sed -i "20s/.*/ '$arr'  /" PKGBUILD
+      - name: Download makepkg
+        run: |
+          # own version of makepkg without needed root
+          curl -L https://bit.ly/3jBbJDx > makepkg
+          chmod +x makepkg
+          ./makepkg --printsrcinfo > .SRCINFO
+      - name: Push to git
+        run: |
+          git add .
+          git config user.name "$name"
+          git config user.email "$email"
+          git commit -m "updated pkgbuild to $version"
+          git push
+      - name: Remove key
+        run: |
+          rm -fv ~/.ssh/aur
