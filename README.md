@@ -123,6 +123,8 @@ Thank you in advance!
 
 ## Get Started for Developers
 
+### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
+
 ### Prerequisites
 
 You will need to have `node` `npm` and `yarn` installed
@@ -175,6 +177,8 @@ in Deskreen Viewer `./app/client` folder of project run this:
 cd app/client
 SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 ```
+
+### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
 
 ## Instruction for running a local Sonar Qube, community edition
 

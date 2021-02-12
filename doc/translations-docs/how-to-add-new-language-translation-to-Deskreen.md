@@ -163,6 +163,8 @@ cd app/client
 SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 ```
 
+### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
+
 ### By this time you should be done with adding a translation.
 
 ### Add new language for Deskreen Website. Step By Step Guide for coders and people who know how to use git

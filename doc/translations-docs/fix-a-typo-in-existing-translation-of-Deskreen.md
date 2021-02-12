@@ -130,6 +130,8 @@ cd app/client
 SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 ```
 
+### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
+
 ### IMPORTANT: Please make sure your PR is 1 or maximum 2 commits length. If it is longer than that, you will be asked to squash your PR commits. If you don't know how to squash, refer [this guide](#dont-know-code)
 
 ### After you done fixing, please submit your PR, it will be reviewed and if everything is ok it will be merged and you fix will be included in next release. Thank you!
