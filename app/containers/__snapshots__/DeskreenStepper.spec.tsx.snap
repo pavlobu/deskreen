@@ -1696,6 +1696,11 @@ exports[`should match exact snapshot 1`] = `
                                         >
                                           Українська
                                         </option>
+                                        <option
+                                          value="Nederlands"
+                                        >
+                                          Nederlands
+                                        </option>
                                       </select>
                                       <span
                                         class="bp3-icon bp3-icon-double-caret-vertical"
@@ -1967,6 +1972,11 @@ exports[`should match exact snapshot 1`] = `
                                           value="Українська"
                                         >
                                           Українська
+                                        </option>
+                                        <option
+                                          value="Nederlands"
+                                        >
+                                          Nederlands
                                         </option>
                                       </select>
                                       <span
@@ -2442,6 +2452,12 @@ exports[`should match exact snapshot 1`] = `
                                                       >
                                                         Українська
                                                       </option>
+                                                      <option
+                                                        key="Nederlands"
+                                                        value="Nederlands"
+                                                      >
+                                                        Nederlands
+                                                      </option>
                                                     </select>
                                                     <Blueprint3.Icon
                                                       icon="double-caret-vertical"
@@ -2907,6 +2923,11 @@ exports[`should match exact snapshot 1`] = `
                                 value="Українська"
                               >
                                 Українська
+                              </option>
+                              <option
+                                value="Nederlands"
+                              >
+                                Nederlands
                               </option>
                             </select>
                             <span
