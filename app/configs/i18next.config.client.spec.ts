@@ -37,6 +37,7 @@ describe('i18next.config.client tests', () => {
       expectedMap.set('Dansk', 'da');
       expectedMap.set('Deutsch', 'de');
       expectedMap.set('Nederlands', 'nl');
+      expectedMap.set('Svenska', 'sv');
 
       const res = getLangFullNameToLangISOKeyMap();
 
@@ -58,6 +59,7 @@ describe('i18next.config.client tests', () => {
       expectedMap.set('da', 'Dansk');
       expectedMap.set('de', 'Deutsch');
       expectedMap.set('nl', 'Nederlands');
+      expectedMap.set('sv', 'Svenska');
 
       const res = getLangISOKeyToLangFullNameMap();
 

@@ -22,6 +22,7 @@ import translationIT from '../locales/it/translation.json';
 import translationJA from '../locales/ja/translation.json';
 import translationNL from '../locales/nl/translation.json';
 import translationFR from '../locales/fr/translation.json';
+import translationSV from '../locales/sv/translation.json';
 import { IpcEvents } from '../main/IpcEvents.enum';
 import { ElectronStoreKeys } from '../enums/ElectronStoreKeys.enum';
 import store from '../deskreen-electron-store';
@@ -72,6 +73,7 @@ export const getShuffledArrayOfHello = (): string[] => {
   res.push(translationJA.Hello);
   res.push(translationNL.Hello);
   res.push(translationFR.Hello);
+  res.push(translationSV.Hello);
 
   shuffleArray(res);
 

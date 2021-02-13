@@ -25,219 +25,213 @@
 //   { id: 'd2' },
 //   { id: 'd3' },
 // ];
-// const TEST_CONNECTED_DEVICES_SERVICE = ({
-//   sdf: 'fda',
-// } as unknown) as ConnectedDevicesService;
-// const TEST_ROOM_ID_SERVICE = ({
-//   a223: '2g2g',
-// } as unknown) as ConnectedDevicesService;
-// const testMapSharingSessions = new Map();
-// testMapSharingSessions.set('1', {
-//   denyConnectionForPartner: jest.fn(),
-//   destroy: jest.fn(),
-// });
-// testMapSharingSessions.set('2', {
-//   denyConnectionForPartner: jest.fn(),
-//   destroy: jest.fn(),
-// });
-// const TEST_SHARING_SESSIONS_SERVICE = ({
-//   waitingForConnectionSharingSession: '2342a',
-//   sharingSessions: testMapSharingSessions,
-// } as unknown) as SharingSessionService;
-// const testMapHelpers = new Map();
-// testMapHelpers.set('1', { close: jest.fn() });
-// testMapHelpers.set('2', { close: jest.fn() });
-// const TEST_RENDERER_WEBRTC_HELPERS_SERVICE = ({
-//   helpers: testMapHelpers,
-// } as unknown) as RendererWebrtcHelpersService;
-// const mockGlobal = {
-//   connectedDevicesService: TEST_CONNECTED_DEVICES_SERVICE,
-//   roomIDService: TEST_ROOM_ID_SERVICE,
-//   sharingSessionService: TEST_SHARING_SESSIONS_SERVICE,
-//   rendererWebrtcHelpersService: TEST_RENDERER_WEBRTC_HELPERS_SERVICE,
-// };
+const testMapSharingSessions = new Map();
+testMapSharingSessions.set('1', {
+  denyConnectionForPartner: jest.fn(),
+  destroy: jest.fn(),
+});
+testMapSharingSessions.set('2', {
+  denyConnectionForPartner: jest.fn(),
+  destroy: jest.fn(),
+});
+const TEST_SHARING_SESSIONS_SERVICE = ({
+  waitingForConnectionSharingSession: '2342a',
+  sharingSessions: testMapSharingSessions,
+} as unknown) as SharingSessionService;
+const testMapHelpers = new Map();
+testMapHelpers.set('1', { close: jest.fn() });
+testMapHelpers.set('2', { close: jest.fn() });
+const TEST_RENDERER_WEBRTC_HELPERS_SERVICE = ({
+  helpers: testMapHelpers,
+} as unknown) as RendererWebrtcHelpersService;
+const mockGlobal = {
+  connectedDevicesService: TEST_CONNECTED_DEVICES_SERVICE,
+  roomIDService: TEST_ROOM_ID_SERVICE,
+  sharingSessionService: TEST_SHARING_SESSIONS_SERVICE,
+  rendererWebrtcHelpersService: TEST_RENDERER_WEBRTC_HELPERS_SERVICE,
+};
 
-// jest.useFakeTimers();
+jest.useFakeTimers();
 
-// jest.mock('./utils/installExtensions');
-// jest.mock('./utils/AppUpdater');
-// jest.mock('./main.dev', () => {
-//   return {
-//     __esModule: true, // this property makes it work
-//     default: jest.requireActual('./main.dev').default,
-//   };
-// });
-// jest.mock('./utils/mainProcessHelpers/getDeskreenGlobal');
-// jest.mock('./utils/mainProcessHelpers/initGlobals');
-// jest.mock('electron', () => {
-//   return {
-//     app: {
-//       quit: jest.fn(),
-//       on: jest.fn(),
-//       getName: jest.fn(),
-//       getVersion: jest.fn(),
-//       commandLine: {
-//         appendSwitch: jest.fn(),
-//       },
-//       whenReady: jest
-//         .fn()
-//         .mockReturnValue(new Promise((resolve) => resolve(undefined))),
-//     },
-//     ipcMain: {
-//       handle: jest.fn(),
-//       on: jest.fn(),
-//     },
-//     screen: {
-//       getAllDisplays: jest
-//         .fn()
-//         .mockReturnValue(TEST_SCREEN_GET_ALL_DISPLAYS_RESULT),
-//     },
-//     BrowserWindow: jest.fn().mockReturnValue({
-//       loadURL: jest.fn(),
-//       on: jest.fn(),
-//       webContents: {
-//         on: jest.fn(),
-//         toggleDevTools: jest.fn(),
-//       },
-//       minimize: jest.fn(),
-//       show: jest.fn(),
-//       focus: jest.fn(),
-//     }),
-//   };
-// });
-// jest.mock('./server', () => {
-//   return {
-//     start: jest.fn(),
-//     port: TEST_SIGNALING_SERVER_PORT,
-//   };
-// });
-// jest.mock('source-map-support', () => {
-//   return {
-//     install: jest.fn(),
-//   };
-// });
-// jest.mock('electron-debug');
-// jest.mock('electron-devtools-installer', () => {
-//   return {
-//     default: jest.fn(),
-//     REACT_DEVELOPER_TOOLS: 'REACT_DEVELOPER_TOOLS',
-//     REDUX_DEVTOOLS: 'REDUX_DEVTOOLS',
-//   };
-// });
-// jest.mock('./configs/i18next.config', () => {
-//   return {
-//     on: jest.fn(),
-//     changeLanguage: jest.fn(),
-//     off: jest.fn(),
-//     language: 'ua',
-//   };
-// });
-// jest.mock('./menu');
-// jest.mock('electron-settings', () => {
-//   return {
-//     set: jest.fn(),
-//   };
-// });
+jest.mock('./utils/installExtensions');
+jest.mock('./utils/AppUpdater');
+jest.mock('./main.dev', () => {
+  return {
+    __esModule: true, // this property makes it work
+    default: jest.requireActual('./main.dev').default,
+  };
+});
+jest.mock('./utils/mainProcessHelpers/getDeskreenGlobal');
+jest.mock('./utils/mainProcessHelpers/initGlobals');
+jest.mock('electron', () => {
+  return {
+    app: {
+      quit: jest.fn(),
+      on: jest.fn(),
+      getName: jest.fn(),
+      getVersion: jest.fn(),
+      commandLine: {
+        appendSwitch: jest.fn(),
+      },
+      whenReady: jest
+        .fn()
+        .mockReturnValue(new Promise((resolve) => resolve(undefined))),
+    },
+    ipcMain: {
+      handle: jest.fn(),
+      on: jest.fn(),
+    },
+    screen: {
+      getAllDisplays: jest
+        .fn()
+        .mockReturnValue(TEST_SCREEN_GET_ALL_DISPLAYS_RESULT),
+    },
+    BrowserWindow: jest.fn().mockReturnValue({
+      loadURL: jest.fn(),
+      on: jest.fn(),
+      webContents: {
+        on: jest.fn(),
+        toggleDevTools: jest.fn(),
+      },
+      minimize: jest.fn(),
+      show: jest.fn(),
+      focus: jest.fn(),
+    }),
+  };
+});
+jest.mock('./server', () => {
+  return {
+    start: jest.fn(),
+    port: TEST_SIGNALING_SERVER_PORT,
+  };
+});
+jest.mock('source-map-support', () => {
+  return {
+    install: jest.fn(),
+  };
+});
+jest.mock('electron-debug');
+jest.mock('electron-devtools-installer', () => {
+  return {
+    default: jest.fn(),
+    REACT_DEVELOPER_TOOLS: 'REACT_DEVELOPER_TOOLS',
+    REDUX_DEVTOOLS: 'REDUX_DEVTOOLS',
+  };
+});
+jest.mock('./configs/i18next.config', () => {
+  return {
+    on: jest.fn(),
+    changeLanguage: jest.fn(),
+    off: jest.fn(),
+    language: 'sv',
+  };
+});
+jest.mock('./menu');
+jest.mock('electron-settings', () => {
+  return {
+    set: jest.fn(),
+  };
+});
 
-// describe('app main.dev tests', () => {
-//   let testApp: DeskreenApp;
+describe('app main.dev tests', () => {
+  let testApp: DeskreenApp;
 
-//   beforeEach(() => {
-//     jest.clearAllMocks();
-//     jest.restoreAllMocks();
-//     // @ts-ignore
-//     MenuBuilder.mockClear();
-//     // @ts-ignore
-//     installExtensions.mockClear();
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+    // @ts-ignore
+    MenuBuilder.mockClear();
+    // @ts-ignore
+    installExtensions.mockClear();
 
-//     testApp = new DeskreenApp();
-//   });
+    testApp = new DeskreenApp();
+  });
 
-//   describe('when DeskreenApp created properly', () => {
-//     describe('when .start() was called', () => {
-//       it('should call initGlobals', () => {
-//         testApp.start();
+  describe('when DeskreenApp created properly', () => {
+    describe('when .start() was called', () => {
+      it('should call initGlobals', () => {
+        testApp.start();
 
-//         expect(initGlobals).toBeCalled();
-//       });
+        expect(initGlobals).toBeCalled();
+      });
 
-//       it('should call signalingServer.start()', () => {
-//         testApp.start();
+      it('should call signalingServer.start()', () => {
+        testApp.start();
 
-//         expect(signalingServer.start).toBeCalled();
-//       });
+        expect(signalingServer.start).toBeCalled();
+      });
 
-//       it('should call .initElectronAppObject()', () => {
-//         testApp.initElectronAppObject = jest.fn();
+      it('should call .initElectronAppObject()', () => {
+        testApp.initElectronAppObject = jest.fn();
 
-//         testApp.start();
+        testApp.start();
 
-//         expect(testApp.initElectronAppObject).toBeCalled();
-//       });
+        expect(testApp.initElectronAppObject).toBeCalled();
+      });
 
-//       it('should call .initIpcMain()', () => {
-//         testApp.initIpcMain = jest.fn();
+      it('should call .initIpcMain()', () => {
+        testApp.initIpcMain = jest.fn();
 
-//         testApp.start();
+        testApp.start();
 
-//         expect(testApp.initIpcMain).toBeCalled();
-//       });
+        expect(testApp.initIpcMain).toBeCalled();
+      });
 
-//       describe('when initElectronAppObject was called', () => {
-//         it('should set app.on("window-all-closed" listener', () => {
-//           testApp.initElectronAppObject();
+      describe('when initElectronAppObject was called', () => {
+        it('should set app.on("window-all-closed" listener', () => {
+          testApp.initElectronAppObject();
 
-//           expect(app.on).toHaveBeenCalledWith(
-//             'window-all-closed',
-//             expect.anything()
-//           );
-//         });
+          expect(app.on).toHaveBeenCalledWith(
+            'window-all-closed',
+            expect.anything()
+          );
+        });
 
-//         it('should call app.commandLine.appendSwitch with "webrtc-max-cpu-consumption-percentage","100"', () => {
-//           testApp.initElectronAppObject();
+        it('should call app.commandLine.appendSwitch with "webrtc-max-cpu-consumption-percentage","100"', () => {
+          testApp.initElectronAppObject();
 
-//           expect(app.commandLine.appendSwitch).toHaveBeenCalledWith(
-//             'webrtc-max-cpu-consumption-percentage',
-//             '100'
-//           );
-//         });
+          expect(app.commandLine.appendSwitch).toHaveBeenCalledWith(
+            'webrtc-max-cpu-consumption-percentage',
+            '100'
+          );
+        });
 
-//         describe('when process.env.E2E_BUILD !== "true"', () => {
-//           it('should set app.on("ready" listener', () => {
-//             const processEnvBackup = process.env.E2E_BUILD;
-//             process.env.E2E_BUILD = 'false';
+        describe('when process.env.E2E_BUILD !== "true"', () => {
+          it('should set app.on("ready" listener', () => {
+            const processEnvBackup = process.env.E2E_BUILD;
+            process.env.E2E_BUILD = 'false';
 
-//             testApp.initElectronAppObject();
+            testApp.initElectronAppObject();
 
-//             expect(app.on).toHaveBeenCalledWith('ready', expect.anything());
+            expect(app.on).toHaveBeenCalledWith('ready', expect.anything());
 
-//             process.env.E2E_BUILD = processEnvBackup;
-//           });
-//         });
+            process.env.E2E_BUILD = processEnvBackup;
+          });
+        });
 
-//         describe('when process.env.E2E_BUILD === "true"', () => {
-//           it('should set app.on("ready" listener', () => {
-//             const processEnvBackup = process.env.E2E_BUILD;
-//             process.env.E2E_BUILD = 'true';
+        describe('when process.env.E2E_BUILD === "true"', () => {
+          it('should set app.on("ready" listener', () => {
+            const processEnvBackup = process.env.E2E_BUILD;
+            process.env.E2E_BUILD = 'true';
 
-//             testApp.initElectronAppObject();
+            testApp.initElectronAppObject();
 
-//             expect(app.whenReady).toHaveBeenCalled();
+            expect(app.whenReady).toHaveBeenCalled();
 
-//             process.env.E2E_BUILD = processEnvBackup;
-//           });
-//         });
+            process.env.E2E_BUILD = processEnvBackup;
+          });
+        });
 
-//         describe('when app.on("window-all-closed" event occured', () => {
-//           describe('when running on NOT darwin platform', () => {
-//             it('should call app.quit()', () => {
-//               const processBackup = process;
-//               // @ts-ignore
-//               // eslint-disable-next-line no-global-assign
-//               process = {
-//                 ...processBackup,
-//                 platform: 'linux',
-//               };
+        describe('when app.on("window-all-closed" event occured', () => {
+          describe('when running on NOT darwin platform', () => {
+            it('should call app.quit()', () => {
+              const processBackup = process;
+              // @ts-ignore
+              // eslint-disable-next-line no-global-assign
+              process = {
+                ...processBackup,
+                platform: 'linux',
+              };
 
 //               testApp.initElectronAppObject();
 
