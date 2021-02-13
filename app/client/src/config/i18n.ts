@@ -22,7 +22,7 @@ i18n
     saveMissingTo: 'all',
     fallbackLng: 'en', // TODO: to generate missing keys use false as value here, will be useful when custom nodejs server is created to store missing values
     debug: false, // change to true to see debug message logs in browser console
-    whitelist: ['en', 'es', 'ru', 'ua', 'zh_CN', 'zh_TW', 'da', 'de', 'fi', 'ko', 'it', 'ja'],
+    whitelist: ['en', 'es', 'ru', 'ua', 'zh_CN', 'zh_TW', 'da', 'de', 'fi', 'ko', 'it', 'ja', 'nl'],
     backend: {
       // path where resources get loaded from
       loadPath: '/locales/{{lng}}/{{ns}}.json',
