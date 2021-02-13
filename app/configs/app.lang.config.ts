@@ -3,10 +3,11 @@
 export default {
   fallbackLng: 'en',
   namespace: 'translation',
-  languages: ['ru', 'en', 'ua'],
+  languages: ['ru', 'en', 'ua', 'nl'],
   langISOKeyToLangFullNameMap: {
     en: 'English',
     ru: 'Русский',
     ua: 'Українська',
+    nl: 'Nederlands',
   },
 };
