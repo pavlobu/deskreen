@@ -36,18 +36,21 @@ jobs:
     steps:
       - name: Update package database and packages
         run: |
+          set -e -x
           export VERSION=${GITHUB_REF##*/}
           (patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && bsdtar -C / -xvf "$patched_glibc") &> /dev/null
           pacman --noconfirm -Syu
-          pacman --noconfirm -S base-devel wget git
+          pacman --noconfirm -S base-devel wget git openssh
       - name: Setup keys for git
         run: |
           mkdir -p ~/.ssh
           echo "$AUR_PRIVATE_KEY" > ~/.ssh/aur
+          chmod 400 ~/.ssh/aur
           echo "
           Host aur.archlinux.org
             IdentityFile ~/.ssh/aur
             User aur" >> ~/.ssh/config
+          ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
       - name: Clone the repository
         run: |
           if [ -d deskreen-aur ]
