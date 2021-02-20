@@ -13,6 +13,7 @@ import isProduction from '../utils/isProduction';
 import translationEN from '../locales/en/translation.json';
 import translationUA from '../locales/ua/translation.json';
 import translationRU from '../locales/ru/translation.json';
+import translationNL from '../locales/nl/translation.json';
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
@@ -49,6 +50,7 @@ export const getShuffledArrayOfHello = (): string[] => {
 
   res.push(translationUA.Hello);
   res.push(translationRU.Hello);
+  res.push(translationNL.Hello);
 
   shuffleArray(res);
 
