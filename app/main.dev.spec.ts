@@ -133,7 +133,7 @@ jest.mock('./configs/i18next.config', () => {
     on: jest.fn(),
     changeLanguage: jest.fn(),
     off: jest.fn(),
-    language: 'ua',
+    language: 'sv',
   };
 });
 jest.mock('./menu');
