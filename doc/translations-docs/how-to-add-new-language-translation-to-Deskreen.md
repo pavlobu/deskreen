@@ -1,6 +1,6 @@
 ### Guide on how to add a new language translation to Deskreen
 
-As we agreed in our community, when adding a new language support for Deskreen,
+[As we agreed in our community](https://github.com/pavlobu/deskreen/issues/60), when adding a new language support for Deskreen,
 the translations for Deskreen App should be done along with translations for a website too.
 Why is that? Because if you translate app only, it doesn't bring any value to users because they
 can not read any documentation and important information about Deskreen on a website.
@@ -8,6 +8,8 @@ can not read any documentation and important information about Deskreen on a web
 If you are willing to contribute to translate application only and don't want to help with translating a
 website, then your submission with new language support will be stalled up until the time when there
 is a translation for Deskreen website.
+Follow guides on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
+for adding your language translation for [Deskreen Website](https://deskreen.com)
 
 ## The how-to guides on submitting translations for Deskreen website will be added here soon (within next week). Stay tuned.
 
@@ -92,7 +94,7 @@ open link -> right click in browser window -> Save as..
 
 ### Add new language for Deskreen Website if you don't know how to code
 
-Docs coming soon. Stay tuned.
+Follow guides on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 ### When finished editing translation.json files
 
@@ -169,7 +171,7 @@ SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
 
 ### Add new language for Deskreen Website. Step By Step Guide for coders and people who know how to use git
 
-Docs coming soon. Stay tuned.
+Follow guides on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 ### IMPORTANT: Please make sure your PR is 1 or maximum 2 commits length. If it is longer than that, you will be asked to squash your PR commits. If you don't know how to squash, refer [this guide](#dont-know-code)
 

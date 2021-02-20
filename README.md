@@ -217,7 +217,7 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ## Found typo on https://deskreen.com ?
 
-You can submit your pull request with fix on [Deskreen website repo](https://github.com/Deskreen/deskreen-website)
+You can submit your pull request with fix on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 ## Maintainer
 

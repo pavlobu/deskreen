@@ -78,7 +78,7 @@ Good text editors for different operating systems:
 
 ### Fix typo for Deskreen Website if you don't know how to code
 
-Docs coming soon. Stay tuned.
+Follow guides on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 #### How to download `translation.json` file
 
@@ -111,7 +111,7 @@ Fix them and then submit your PR. Thank you!
 
 ### Fix typo for Deskreen Website if you know how to code
 
-Docs coming soon. Stay tuned.
+Follow guides on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 ### When the Deskreen App edits done, then please fix tests if they are broken. And regenerate snapshots if needed.
 
