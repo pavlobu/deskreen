@@ -26,7 +26,7 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 
 <br/>
 
-## [Deskreen FAQ](https://deskreen.com/#faq)
+## [Deskreen FAQ](https://deskreen.com/?#faq)
 
 <br/>
 
