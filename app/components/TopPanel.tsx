@@ -143,7 +143,7 @@ export default function TopPanel(props: any) {
             intent="none"
             className={getClassesCallback().topPanelControlButton}
             onClick={() => {
-              shell.openExternal('https://www.deskreen.com/#howtos');
+              shell.openExternal('https://www.deskreen.com/?#howtos');
             }}
           >
             <Icon

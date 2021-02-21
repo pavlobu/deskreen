@@ -38,7 +38,7 @@ const getDeviceConnectedPopoverContent = (
               onClick={() => {
                 handleDisconnect();
               }}
-              style={{ width: '100%', borderRadius: '5px' }}
+              style={{ width: '100%', borderRadius: '100px' }}
             >
               {disconnectButtonText}
             </Button>

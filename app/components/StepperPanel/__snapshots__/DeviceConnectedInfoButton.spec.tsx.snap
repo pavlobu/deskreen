@@ -60,7 +60,7 @@ exports[`should match exact snapshot 1`] = `
                     onClick={[Function]}
                     style={
                       Object {
-                        "borderRadius": "5px",
+                        "borderRadius": "100px",
                         "width": "100%",
                       }
                     }

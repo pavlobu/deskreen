@@ -98,6 +98,7 @@ exports[`should match exact snapshot 1`] = `
                             <button
                               class="bp3-button bp3-disabled bp3-intent-danger"
                               disabled=""
+                              style="border-radius: 100px;"
                               tabindex="-1"
                               type="button"
                             >
@@ -210,6 +211,7 @@ exports[`should match exact snapshot 1`] = `
                             <button
                               class="bp3-button bp3-disabled bp3-intent-danger"
                               disabled=""
+                              style="border-radius: 100px;"
                               tabindex="-1"
                               type="button"
                             >
@@ -400,6 +402,11 @@ exports[`should match exact snapshot 1`] = `
                                       icon="disable"
                                       intent="danger"
                                       onClick={[Function]}
+                                      style={
+                                        Object {
+                                          "borderRadius": "100px",
+                                        }
+                                      }
                                     >
                                       <button
                                         className="bp3-button bp3-disabled bp3-intent-danger"
@@ -407,6 +414,11 @@ exports[`should match exact snapshot 1`] = `
                                         onBlur={[Function]}
                                         onKeyDown={[Function]}
                                         onKeyUp={[Function]}
+                                        style={
+                                          Object {
+                                            "borderRadius": "100px",
+                                          }
+                                        }
                                         tabIndex={-1}
                                         type="button"
                                       >

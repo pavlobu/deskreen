@@ -170,6 +170,9 @@ export default function ConnectedDevicesListDrawer(
                   setIsAlertDisconectAllOpen(true);
                 }}
                 icon="disable"
+                style={{
+                  borderRadius: '100px',
+                }}
               >
                 {t('Disconnect all devices')}
               </Button>
@@ -225,6 +228,9 @@ export default function ConnectedDevicesListDrawer(
                                 handleDisconnectAndHideOneDevice(device.id);
                               }}
                               icon="disable"
+                              style={{
+                                borderRadius: '100px',
+                              }}
                             >
                               {t('Disconnect')}
                             </Button>
