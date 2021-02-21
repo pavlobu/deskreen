@@ -429,6 +429,11 @@ exports[`should match exact snapshot 1`] = `
                                         >
                                           Українська
                                         </option>
+                                        <option
+                                          value="简体中文"
+                                        >
+                                          简体中文
+                                        </option>
                                       </select>
                                       <span
                                         class="bp3-icon bp3-icon-double-caret-vertical"
@@ -898,6 +903,11 @@ exports[`should match exact snapshot 1`] = `
                                           value="Українська"
                                         >
                                           Українська
+                                        </option>
+                                        <option
+                                          value="简体中文"
+                                        >
+                                          简体中文
                                         </option>
                                       </select>
                                       <span
@@ -1747,6 +1757,7 @@ exports[`should match exact snapshot 1`] = `
                                                               "English",
                                                               "Русский",
                                                               "Українська",
+                                                              "简体中文",
                                                             ]
                                                           }
                                                           style={
@@ -1786,6 +1797,12 @@ exports[`should match exact snapshot 1`] = `
                                                                 value="Українська"
                                                               >
                                                                 Українська
+                                                              </option>
+                                                              <option
+                                                                key="简体中文"
+                                                                value="简体中文"
+                                                              >
+                                                                简体中文
                                                               </option>
                                                             </select>
                                                             <Blueprint3.Icon
