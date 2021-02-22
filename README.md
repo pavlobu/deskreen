@@ -206,6 +206,10 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ![sharng-session-init](./doc/init-sharing-session/deskreen-webrtc-screen-sharing-session-initiation-pavlobu-22012021.svg)
 
+### Benchmarks:
+
+[Benchmarks can be found here](./doc/benchmarks)
+
 ## Note on versioning:
 
 - All versions git tags should start with `v` ex. `v1.0.0`
