@@ -29,6 +29,10 @@ body {
   background-color: var(--light-bg-color);
 }
 
+.bp3-alert-footer > button {
+  border-radius: 100px;
+}
+
 #intermediate-step-container > .react-reveal {
   width: 100%;
 }

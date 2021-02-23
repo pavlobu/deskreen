@@ -26,7 +26,7 @@ Why this was made? Because a client served with `http` without SSL, which makes 
 
 <br/>
 
-## [Deskreen FAQ](https://deskreen.com/#faq)
+## [Deskreen FAQ](https://deskreen.com/?#faq)
 
 <br/>
 
@@ -206,6 +206,10 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ![sharng-session-init](./doc/init-sharing-session/deskreen-webrtc-screen-sharing-session-initiation-pavlobu-22012021.svg)
 
+### Benchmarks:
+
+[Benchmarks can be found here](./doc/benchmarks)
+
 ## Note on versioning:
 
 - All versions git tags should start with `v` ex. `v1.0.0`
@@ -217,7 +221,7 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
 
 ## Found typo on https://deskreen.com ?
 
-You can submit your pull request with fix on [Deskreen website repo](https://github.com/Deskreen/deskreen-website)
+You can submit your pull request with fix on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
 
 ## Maintainer
 
