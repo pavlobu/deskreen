@@ -1,0 +1,9 @@
+{
+  "Confirm": "確認",
+  "No, Cancel": "否，取消",
+  "Yes, Disconnect All": "是，全部斷開",
+  "Disconnect all devices": "斷開所有裝置的連線",
+  "Are you sure you want to disconnect all connected viewing devices?": "是否確實要斷開所有連線的觀看裝置？",
+  "This step can not be reverted": "此步驟無法恢復",
+  "You will have to connect all devices manually again": "您必須再次手動連線所有裝置"
+}
