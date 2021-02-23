@@ -4,7 +4,7 @@ exports[`should match exact snapshot 1`] = `
 <Suspense
   fallback={
     <div>
-      Loading...
+      Loading... 
     </div>
   }
 >

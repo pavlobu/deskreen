@@ -4,7 +4,7 @@ exports[`should match exact snapshot 1`] = `
 <Suspense
   fallback={
     <div>
-      Loading...
+      Loading... 
     </div>
   }
 >
@@ -129,7 +129,7 @@ exports[`should match exact snapshot 1`] = `
                                 role="tab"
                                 tabindex="0"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -167,7 +167,7 @@ exports[`should match exact snapshot 1`] = `
                                 id="bp3-tab-title_TabsExample_ng"
                                 role="tab"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -206,7 +206,7 @@ exports[`should match exact snapshot 1`] = `
                                 role="tab"
                                 tabindex="0"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -520,7 +520,7 @@ exports[`should match exact snapshot 1`] = `
                                       <span
                                         class="bp3-control-indicator"
                                       />
-
+                                      
                                     </label>
                                   </div>
                                 </div>
@@ -609,7 +609,7 @@ exports[`should match exact snapshot 1`] = `
                                 role="tab"
                                 tabindex="0"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -647,7 +647,7 @@ exports[`should match exact snapshot 1`] = `
                                 id="bp3-tab-title_TabsExample_ng"
                                 role="tab"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -686,7 +686,7 @@ exports[`should match exact snapshot 1`] = `
                                 role="tab"
                                 tabindex="0"
                               >
-
+                                
                                 <div
                                   class="makeStyles-tabNavigationRowButton-18 row middle-xs"
                                 >
@@ -1000,7 +1000,7 @@ exports[`should match exact snapshot 1`] = `
                                       <span
                                         class="bp3-control-indicator"
                                       />
-
+                                      
                                     </label>
                                   </div>
                                 </div>
