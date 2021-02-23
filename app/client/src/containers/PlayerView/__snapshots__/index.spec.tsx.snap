@@ -133,6 +133,7 @@ exports[`should match exact snapshot 1`] = `
                       style={
                         Object {
                           "transform": "translateY(2px) translateX(-5px)",
+                          "width": "max-content",
                         }
                       }
                     >
@@ -148,27 +149,6 @@ exports[`should match exact snapshot 1`] = `
             </button>
           </span>
         </span>
-      </div>
-      <div
-        className="col-xs-12 col-md-1"
-      >
-        <div
-          className="row center-xs"
-          style={
-            Object {
-              "height": "42px",
-            }
-          }
-        >
-          <div
-            className=""
-          >
-            FPS: 
-          </div>
-          <p
-            id="fps-show"
-          />
-        </div>
       </div>
       <div
         className="col-xs-12 col-md-5"
@@ -249,7 +229,7 @@ exports[`should match exact snapshot 1`] = `
                       className="col-xs"
                     >
                       <div
-                        className="bp3-text-large"
+                        className="bp3-text-large play-pause-text"
                       >
                         Play
                       </div>

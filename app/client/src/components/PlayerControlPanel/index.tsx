@@ -30,6 +30,8 @@ import handlePlayerToggleFullscreen from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
 import ScreenSharingSource from '../../features/PeerConnection/ScreenSharingSourceEnum';
 import { REACT_PLAYER_WRAPPER_ID } from '../../constants/appConstants';
+import './index.css'
+
 
 const videoQualityButtonStyle: React.CSSProperties = {
   width: '100%',
@@ -152,7 +154,10 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                   </Col>
                   <Col xs>
                     <div
-                      style={{ transform: 'translateY(2px) translateX(-5px)' }}
+                      style={{
+                        transform: 'translateY(2px) translateX(-5px)',
+                        width: 'max-content',
+                      }}
                     >
                       <Text>{t('Donate')}</Text>
                     </div>
@@ -160,12 +165,6 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                 </Row>
               </Button>
             </Tooltip>
-          </Col>
-          <Col xs={12} md={1}>
-            <Row center="xs" style={{ height: '42px' }}>
-              <Text>FPS:&nbsp;</Text>
-              <p id="fps-show"></p>
-            </Row>
           </Col>
           <Col xs={12} md={5}>
             <Row center="xs" style={{ height: '42px' }}>
@@ -206,7 +205,8 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                         />
                       </Col>
                       <Col xs>
-                        <Text className="bp3-text-large">
+                        { /* @ts-ignore */ }
+                        <Text className="bp3-text-large play-pause-text">
                           {isPlaying ? t('Pause') : t('Play')}
                         </Text>
                       </Col>
@@ -252,7 +252,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                                   toaster?.show({
                                     icon: 'clean',
                                     intent: Intent.PRIMARY,
-                                    message: `${t('Video quality has been changed to')} ${q}`,
+                                    message: `${t(
+                                      'Video quality has been changed to'
+                                    )} ${q}`,
                                   });
                                 }}
                               >
@@ -266,7 +268,10 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     position={Position.BOTTOM}
                     popoverClassName={Classes.POPOVER_CONTENT_SIZING}
                   >
-                    <Tooltip content={t('Click to Open Video Settings')} position={Position.BOTTOM}>
+                    <Tooltip
+                      content={t('Click to Open Video Settings')}
+                      position={Position.BOTTOM}
+                    >
                       <Button minimal>
                         <Icon icon="cog" color="white" />
                       </Button>
@@ -321,7 +326,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                       icon: 'video',
                       intent: Intent.PRIMARY,
                       message: `${
-                        isDefaultPlayerTurnedOn ? t('Default video player has been turned OFF') : t('Default video player has been turned ON')
+                        isDefaultPlayerTurnedOn
+                          ? t('Default video player has been turned OFF')
+                          : t('Default video player has been turned ON')
                       }`,
                     });
                   }}

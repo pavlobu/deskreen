@@ -103,7 +103,12 @@ export default function TopPanel(props: any) {
               />
             </Col>
             <Col xs>
-              <div style={{ transform: 'translateY(2px) translateX(-5px)' }}>
+              <div
+                style={{
+                  transform: 'translateY(2px) translateX(-5px)',
+                  width: 'max-content',
+                }}
+              >
                 <Text>{t('Donate')}</Text>
               </div>
             </Col>

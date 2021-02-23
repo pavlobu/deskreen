@@ -550,6 +550,7 @@ exports[`should match exact snapshot 1`] = `
                                                 style={
                                                   Object {
                                                     "borderRadius": "100px",
+                                                    "width": "max-content",
                                                   }
                                                 }
                                               >
@@ -562,6 +563,7 @@ exports[`should match exact snapshot 1`] = `
                                                   style={
                                                     Object {
                                                       "borderRadius": "100px",
+                                                      "width": "max-content",
                                                     }
                                                   }
                                                   type="button"

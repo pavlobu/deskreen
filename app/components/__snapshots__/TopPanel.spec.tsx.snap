@@ -58,6 +58,7 @@ exports[`<TopPanel /> should match exact snapshot 1`] = `
                   style={
                     Object {
                       "transform": "translateY(2px) translateX(-5px)",
+                      "width": "max-content",
                     }
                   }
                 >

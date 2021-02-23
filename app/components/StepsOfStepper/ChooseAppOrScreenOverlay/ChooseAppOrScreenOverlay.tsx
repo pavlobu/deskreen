@@ -169,6 +169,7 @@ export default function ChooseAppOrScreenOverlay(
                     onClick={handleRefreshSources}
                     style={{
                       borderRadius: '100px',
+                      width: 'max-content',
                     }}
                   >
                     {t('Refresh')}

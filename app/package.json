@@ -1,7 +1,7 @@
 {
   "name": "deskreen",
   "productName": "Deskreen",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Deskreen turns any device into a secondary screen for your computer",
   "main": "./main.prod.js",
   "author": {

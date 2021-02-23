@@ -1,3 +1,13 @@
+# 1.0.8 (23 Feb 2021)
+
+Changes:
+
+- added locales for Traditional Chinese language, special thanks to @taotieren
+- minor UI improvements
+
+<br/>
+<br/>
+
 # 1.0.7 (21 Feb 2021)
 
 Changes:
