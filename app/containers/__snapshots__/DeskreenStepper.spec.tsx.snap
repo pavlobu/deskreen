@@ -1701,6 +1701,11 @@ exports[`should match exact snapshot 1`] = `
                                         >
                                           简体中文
                                         </option>
+                                        <option
+                                          value="繁體中文"
+                                        >
+                                          繁體中文
+                                        </option>
                                       </select>
                                       <span
                                         class="bp3-icon bp3-icon-double-caret-vertical"
@@ -1977,6 +1982,11 @@ exports[`should match exact snapshot 1`] = `
                                           value="简体中文"
                                         >
                                           简体中文
+                                        </option>
+                                        <option
+                                          value="繁體中文"
+                                        >
+                                          繁體中文
                                         </option>
                                       </select>
                                       <span
@@ -2413,6 +2423,7 @@ exports[`should match exact snapshot 1`] = `
                                                       "Русский",
                                                       "Українська",
                                                       "简体中文",
+                                                      "繁體中文",
                                                     ]
                                                   }
                                                   style={
@@ -2458,6 +2469,12 @@ exports[`should match exact snapshot 1`] = `
                                                         value="简体中文"
                                                       >
                                                         简体中文
+                                                      </option>
+                                                      <option
+                                                        key="繁體中文"
+                                                        value="繁體中文"
+                                                      >
+                                                        繁體中文
                                                       </option>
                                                     </select>
                                                     <Blueprint3.Icon
@@ -2929,6 +2946,11 @@ exports[`should match exact snapshot 1`] = `
                                 value="简体中文"
                               >
                                 简体中文
+                              </option>
+                              <option
+                                value="繁體中文"
+                              >
+                                繁體中文
                               </option>
                             </select>
                             <span
