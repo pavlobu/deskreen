@@ -26,6 +26,7 @@ describe('i18next.config.client tests', () => {
       expectedMap.set('简体中文', 'zh_CN');
       expectedMap.set('繁體中文', 'zh_TW');
       expectedMap.set('Dansk', 'da');
+      expectedMap.set('Deutsch', 'de');
 
       const res = getLangFullNameToLangISOKeyMap();
 
@@ -44,6 +45,7 @@ describe('i18next.config.client tests', () => {
       expectedMap.set('zh_CN', '简体中文');
       expectedMap.set('zh_TW', '繁體中文');
       expectedMap.set('da', 'Dansk');
+      expectedMap.set('de', 'Deutsch');
 
       const res = getLangISOKeyToLangFullNameMap();
 

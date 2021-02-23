@@ -1716,6 +1716,11 @@ exports[`should match exact snapshot 1`] = `
                                         >
                                           Dansk
                                         </option>
+                                        <option
+                                          value="Deutsch"
+                                        >
+                                          Deutsch
+                                        </option>
                                       </select>
                                       <span
                                         class="bp3-icon bp3-icon-double-caret-vertical"
@@ -2007,6 +2012,11 @@ exports[`should match exact snapshot 1`] = `
                                           value="Dansk"
                                         >
                                           Dansk
+                                        </option>
+                                        <option
+                                          value="Deutsch"
+                                        >
+                                          Deutsch
                                         </option>
                                       </select>
                                       <span
@@ -2446,6 +2456,7 @@ exports[`should match exact snapshot 1`] = `
                                                       "简体中文",
                                                       "繁體中文",
                                                       "Dansk",
+                                                      "Deutsch",
                                                     ]
                                                   }
                                                   style={
@@ -2509,6 +2520,12 @@ exports[`should match exact snapshot 1`] = `
                                                         value="Dansk"
                                                       >
                                                         Dansk
+                                                      </option>
+                                                      <option
+                                                        key="Deutsch"
+                                                        value="Deutsch"
+                                                      >
+                                                        Deutsch
                                                       </option>
                                                     </select>
                                                     <Blueprint3.Icon
@@ -2995,6 +3012,11 @@ exports[`should match exact snapshot 1`] = `
                                 value="Dansk"
                               >
                                 Dansk
+                              </option>
+                              <option
+                                value="Deutsch"
+                              >
+                                Deutsch
                               </option>
                             </select>
                             <span
