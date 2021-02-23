@@ -61,15 +61,15 @@ jobs:
       - name: yarn install in ./app/client
         run: |
           cd ./app/client
-          yarn install
+          yarn install --frozen-lockfile
 
       - name: yarn install in ./
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: yarn install in ./app
         run: |
           cd ./app
-          yarn install
+          yarn install --frozen-lockfile
 
       - name: yarn build
         env:

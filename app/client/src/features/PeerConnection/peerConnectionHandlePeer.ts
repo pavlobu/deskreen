@@ -21,7 +21,7 @@ let lastCalculatedFPSTimestamp = 0;
 function dumpStatsFramesPerSecondOnly(results: any) {
   // framesReceived
   let isFremsPerSecondSet;
-  let statsString = '';
+  // let statsString = '';
 
   results.forEach((res: any) => {
     // statsString += '<h3>Report type=';

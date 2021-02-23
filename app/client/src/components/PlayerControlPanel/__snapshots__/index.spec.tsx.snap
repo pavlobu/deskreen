@@ -138,7 +138,28 @@ exports[`should match exact snapshot 1`] = `
       </span>
     </div>
     <div
-      className="col-xs-12 col-md-6"
+      className="col-xs-12 col-md-1"
+    >
+      <div
+        className="row center-xs"
+        style={
+          Object {
+            "height": "42px",
+          }
+        }
+      >
+        <div
+          className=""
+        >
+          FPS: 
+        </div>
+        <p
+          id="fps-show"
+        />
+      </div>
+    </div>
+    <div
+      className="col-xs-12 col-md-5"
     >
       <div
         className="row center-xs"

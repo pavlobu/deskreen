@@ -131,7 +131,7 @@ You will need to have `node` `npm` and `yarn` installed
 globally on your machine.
 
 1. git clone this repo
-2. `cd app/client; yarn install ; cd ../../ ; yarn install`
+2. `cd app/client; yarn install --frozen-lockfile ; cd ../../ ; yarn install --frozen-lockfile`
 3. `yarn dev` -- run in dev mode with live updates
 
 ### Useful yarn commands
