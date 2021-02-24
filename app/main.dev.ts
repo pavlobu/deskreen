@@ -160,11 +160,15 @@ export default class DeskreenApp {
       return this.appVersion;
     });
 
-    ipcMain.handle('get-local-lan-ip', () => {
-      return process.env.RUN_MODE === 'dev' ||
+    ipcMain.handle('get-local-lan-ip', async () => {
+      if (
+        process.env.RUN_MODE === 'dev' ||
         process.env.NODE_ENV === 'production'
-        ? v4IPGetter.sync()
-        : '255.255.255.255';
+      ) {
+        const ip = await v4IPGetter();
+        return ip;
+      }
+      return '255.255.255.255';
     });
   }
 
