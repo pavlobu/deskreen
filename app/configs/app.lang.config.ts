@@ -3,9 +3,10 @@
 export default {
   fallbackLng: 'en',
   namespace: 'translation',
-  languages: ['ru', 'en', 'ua', 'zh_CN', 'zh_TW'],
+  languages: ['ru', 'en', 'es', 'ua', 'zh_CN', 'zh_TW'],
   langISOKeyToLangFullNameMap: {
     en: 'English',
+    es: 'Español',
     ru: 'Русский',
     ua: 'Українська',
     zh_CN: '简体中文',

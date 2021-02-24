@@ -2608,6 +2608,11 @@ exports[`should match exact snapshot 1`] = `
                                                   English
                                                 </option>
                                                 <option
+                                                  value="Español"
+                                                >
+                                                  Español
+                                                </option>
+                                                <option
                                                   value="Русский"
                                                 >
                                                   Русский
@@ -2888,6 +2893,11 @@ exports[`should match exact snapshot 1`] = `
                                                   value="English"
                                                 >
                                                   English
+                                                </option>
+                                                <option
+                                                  value="Español"
+                                                >
+                                                  Español
                                                 </option>
                                                 <option
                                                   value="Русский"
@@ -3339,6 +3349,7 @@ exports[`should match exact snapshot 1`] = `
                                                           options={
                                                             Array [
                                                               "English",
+                                                              "Español",
                                                               "Русский",
                                                               "Українська",
                                                               "简体中文",
@@ -3370,6 +3381,12 @@ exports[`should match exact snapshot 1`] = `
                                                                 value="English"
                                                               >
                                                                 English
+                                                              </option>
+                                                              <option
+                                                                key="Español"
+                                                                value="Español"
+                                                              >
+                                                                Español
                                                               </option>
                                                               <option
                                                                 key="Русский"
@@ -3849,6 +3866,11 @@ exports[`should match exact snapshot 1`] = `
                                           value="English"
                                         >
                                           English
+                                        </option>
+                                        <option
+                                          value="Español"
+                                        >
+                                          Español
                                         </option>
                                         <option
                                           value="Русский"
