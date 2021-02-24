@@ -23,7 +23,7 @@ jobs:
         run: brew bump-cask-pr --version $VERSION deskreen
         env:
           # First, create a personal access token: (url from Homebrew's output)
-          # https://github.com/settings/tokens/new?scopes=gist,public_repo&description=Homebrew
+          # https://github.com/settings/tokens/new?scopes=gist,public_repo,workflow&description=Homebrew
           # Then, go repo settings -> Secrets -> New repository secret -> HOMEBREW_GITHUB_API_TOKEN : <secret value>.
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
   update-aur:
