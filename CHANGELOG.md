@@ -1,3 +1,13 @@
+# 1.0.9 (25 Feb 2021)
+
+Changes:
+
+- remove severe Windows UI lags.
+- Increase performance on weak Windows machines.
+
+<br/>
+<br/>
+
 # 1.0.8 (23 Feb 2021)
 
 Changes:
