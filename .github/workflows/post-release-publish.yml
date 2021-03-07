@@ -37,7 +37,7 @@ jobs:
       - name: Update package database and packages
         run: |
           set -e -x
-          export VERSION=${GITHUB_REF##*/}
+          export VERSION=$(echo ${GITHUB_REF##*/} | cut -c2-)
           (patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && bsdtar -C / -xvf "$patched_glibc") &> /dev/null
           pacman --noconfirm -Syu
           pacman --noconfirm -S base-devel wget git openssh
