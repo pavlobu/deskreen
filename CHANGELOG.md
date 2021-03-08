@@ -1,4 +1,23 @@
-# 1.0.9 (25 Feb 2021)
+# 1.0.11 (8 Mar 2021)
+
+Changes:
+
+- add Danish language translations. Special thanks to @LauritsLL
+- add German language translations. Special thanks to @Aceto1
+
+<br/>
+<br/>
+
+# 1.0.10 (25 Feb 2021)
+
+Changes:
+
+- add Spanish language translations. Special thanks to @schiappa
+
+<br/>
+<br/>
+
+# 1.0.9 (24 Feb 2021)
 
 Changes:
 
