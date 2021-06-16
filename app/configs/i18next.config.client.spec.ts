@@ -29,6 +29,7 @@ describe('i18next.config.client tests', () => {
       const expectedMap = new Map();
       expectedMap.set('English', 'en');
       expectedMap.set('Español', 'es');
+      expectedMap.set('한국어', 'ko');
       expectedMap.set('Русский', 'ru');
       expectedMap.set('Українська', 'ua');
       expectedMap.set('简体中文', 'zh_CN');
@@ -48,6 +49,7 @@ describe('i18next.config.client tests', () => {
       const expectedMap = new Map();
       expectedMap.set('en', 'English');
       expectedMap.set('es', 'Español');
+      expectedMap.set('한국어', 'ko');
       expectedMap.set('ru', 'Русский');
       expectedMap.set('ua', 'Українська');
       expectedMap.set('zh_CN', '简体中文');

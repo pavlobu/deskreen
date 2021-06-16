@@ -10,6 +10,7 @@ import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 import translationEN from '../locales/en/translation.json';
 import translationES from '../locales/es/translation.json';
+import translationKO from '../locales/ko/translation.json';
 import translationUA from '../locales/ua/translation.json';
 import translationRU from '../locales/ru/translation.json';
 import translationZH_CN from '../locales/zh_CN/translation.json';
@@ -56,6 +57,7 @@ export const getShuffledArrayOfHello = (): string[] => {
 
   res.push(translationES.Hello);
   res.push(translationUA.Hello);
+  res.push(translationKO.Hello);
   res.push(translationRU.Hello);
   res.push(translationZH_CN.Hello);
   res.push(translationZH_TW.Hello);
