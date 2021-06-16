@@ -18,6 +18,7 @@ import translationZH_CN from '../locales/zh_CN/translation.json';
 import translationZH_TW from '../locales/zh_TW/translation.json';
 import translationDA from '../locales/da/translation.json';
 import translationDE from '../locales/de/translation.json';
+import translationIT from '../locales/it/translation.json';
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
@@ -59,6 +60,7 @@ export const getShuffledArrayOfHello = (): string[] => {
   res.push(translationZH_TW.Hello);
   res.push(translationDA.Hello);
   res.push(translationDE.Hello);
+  res.push(translationIT.Hello);
 
   shuffleArray(res);
 

@@ -3,7 +3,7 @@
 export default {
   fallbackLng: 'en',
   namespace: 'translation',
-  languages: ['ru', 'en', 'es', 'ua', 'zh_CN', 'zh_TW', 'da', 'de'],
+  languages: ['ru', 'en', 'es', 'ua', 'zh_CN', 'zh_TW', 'da', 'de', 'it'],
   langISOKeyToLangFullNameMap: {
     en: 'English',
     es: 'Español',
@@ -13,5 +13,6 @@ export default {
     zh_TW: '繁體中文',
     da: 'Dansk',
     de: 'Deutsch',
+    it: 'Italiano'
   },
 };
