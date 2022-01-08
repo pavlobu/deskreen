@@ -6,15 +6,16 @@ import webpack from 'webpack';
 import path from 'path';
 import { merge } from 'webpack-merge';
 import baseConfig from './webpack.config.base';
+import webpackPaths from './webpack.paths';
 import { dependencies } from '../package.json';
-import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
+import checkNodeEnv from '../scripts/check-node-env';
 
-CheckNodeEnv('development');
+checkNodeEnv('development');
 
-const dist = path.join(__dirname, '..', 'dll');
+const dist = webpackPaths.dllPath;
 
-export default merge(baseConfig, {
-  context: path.join(__dirname, '..'),
+const configuration: webpack.Configuration = {
+  context: webpackPaths.rootPath,
 
   devtool: 'eval',
 
@@ -27,17 +28,19 @@ export default merge(baseConfig, {
   /**
    * Use `module` from `webpack.config.renderer.dev.js`
    */
-  module: require('./webpack.config.renderer.dev.babel').default.module,
+  module: require('./webpack.config.renderer.dev').default.module,
 
   entry: {
     renderer: Object.keys(dependencies || {}),
   },
 
   output: {
-    library: 'renderer',
     path: dist,
     filename: '[name].dev.dll.js',
-    libraryTarget: 'var',
+    library: {
+      name: 'renderer',
+      type: 'var',
+    },
   },
 
   plugins: [
@@ -62,11 +65,13 @@ export default merge(baseConfig, {
     new webpack.LoaderOptionsPlugin({
       debug: true,
       options: {
-        context: path.join(__dirname, '..', 'app'),
+        context: webpackPaths.srcPath,
         output: {
-          path: path.join(__dirname, '..', 'dll'),
+          path: webpackPaths.dllPath,
         },
       },
     }),
   ],
-});
+};
+
+export default merge(baseConfig, configuration);

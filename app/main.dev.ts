@@ -12,6 +12,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { Display } from 'electron/main';
 import path from 'path';
+import url from 'url';
 import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
 import settings from 'electron-settings';
 import i18n from './configs/i18next.config';
@@ -202,7 +203,19 @@ export default class DeskreenApp {
             },
     });
 
-    this.mainWindow.loadURL(`file://${__dirname}/app.html`);
+    // mainWindow.loadURL(url.format({
+    //   pathname: path.join(__dirname, 'index.html'),
+    //   protocol: 'file:',
+    //   slashes: true
+    //     }));
+    // this.mainWindow.loadURL(`file://${__dirname}/app.html`);
+    this.mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'app.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+    );
 
     // @TODO: Use 'ready-to-show' event
     //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

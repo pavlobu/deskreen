@@ -8,43 +8,50 @@ import { merge } from 'webpack-merge';
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
-import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
-import DeleteSourceMaps from '../internals/scripts/DeleteSourceMaps';
+import webpackPaths from './webpack.paths';
+import checkNodeEnv from '../scripts/check-node-env';
+import deleteSourceMaps from '../scripts/delete-source-maps';
 
-CheckNodeEnv('production');
-DeleteSourceMaps();
+checkNodeEnv('production');
+deleteSourceMaps();
 
-export default merge(baseConfig, {
-  devtool: process.env.DEBUG_PROD === 'true' ? 'source-map' : 'none',
+const devtoolsConfig =
+  process.env.DEBUG_PROD === 'true'
+    ? {
+        devtool: 'source-map',
+      }
+    : {};
+
+const configuration: webpack.Configuration = {
+  ...devtoolsConfig,
 
   mode: 'production',
 
   target: 'electron-main',
 
-  entry: './app/main.dev.ts',
+  entry: {
+    main: path.join(webpackPaths.srcPath, 'main.dev.ts'),
+    preload: path.join(webpackPaths.srcPath, 'preload.js'),
+  },
 
   output: {
-    path: path.join(__dirname, '..'),
-    filename: './app/main.prod.js',
+    path: webpackPaths.distMainPath,
+    filename: '[name].js',
   },
 
   optimization: {
-    minimizer: process.env.E2E_BUILD
-      ? []
-      : [
-          new TerserPlugin({
-            parallel: true,
-            sourceMap: true,
-            cache: true,
-          }),
-        ],
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+    ],
   },
 
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     new BundleAnalyzerPlugin({
-      analyzerMode:
-        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
+      analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
     }),
 
     /**
@@ -60,7 +67,6 @@ export default merge(baseConfig, {
       NODE_ENV: 'production',
       DEBUG_PROD: false,
       START_MINIMIZED: false,
-      E2E_BUILD: false,
     }),
   ],
 
@@ -73,4 +79,6 @@ export default merge(baseConfig, {
     __dirname: false,
     __filename: false,
   },
-});
+};
+
+export default merge(baseConfig, configuration);

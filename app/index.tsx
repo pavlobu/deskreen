@@ -11,6 +11,8 @@ const store = configuredStore();
 
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
+console.log('this thing started');
+
 document.addEventListener('DOMContentLoaded', () => {
   if (process.platform === 'darwin') {
     const windowTopBar = document.createElement('div');
@@ -24,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     windowTopBar.style.pointerEvents = 'none';
     document.body.appendChild(windowTopBar);
   }
+
+  console.log('and this started!!!!!!!');
 
   // eslint-disable-next-line global-require
   const Root = require('./containers/Root').default;
