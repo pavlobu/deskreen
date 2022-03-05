@@ -39,7 +39,6 @@ import Logger from '../utils/LoggerWithFilePrefix';
 import LanguageSelector from '../components/LanguageSelector';
 import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
 import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
-import CloseOverlayButton from '../components/CloseOverlayButton';
 
 const log = new Logger(__filename);
 
