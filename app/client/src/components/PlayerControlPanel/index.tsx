@@ -139,7 +139,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               <Button
                 style={{ borderRadius: '100px' }}
                 onClick={() => {
-                  window.open('https://www.patreon.com/deskreen', '_blank');
+                  window.open('https://twitter.com/Ukraine/status/1497294840110977024', '_blank');
                 }}
               >
                 <Row start="xs">

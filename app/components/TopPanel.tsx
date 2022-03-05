@@ -89,7 +89,9 @@ export default function TopPanel(props: any) {
             borderRadius: '100px',
           }}
           onClick={() => {
-            shell.openExternal('https://www.patreon.com/deskreen');
+            shell.openExternal(
+              'https://twitter.com/Ukraine/status/1497294840110977024'
+            );
           }}
         >
           <Row start="xs">

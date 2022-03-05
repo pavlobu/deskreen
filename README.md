@@ -12,6 +12,28 @@
 [![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
 
+---
+
+# DESKREEN CREATOR IS A UKRAINIAN. 🇺🇦 UKRAINE 🇺🇦 NEEDS YOUR HELP ❗️❗️❗️
+
+## [♥️ CLICK HERE TO DONATE TO UKRAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
+
+If you don't live in a cave and aware of what is going on in the world 🌍 , Russian 🇷🇺 government had started global armed invasion on the territory of Ukraine on the 24th of February 2022. **_This is for real, this is a WAR. Russian army is killing Ukrainian soldiers, Ukrainian civil citizens and Ukrainian children RIGHT NOW because Russian government gave them an order to do so._** You can search online for thousands of videos of what is going on in Ukraine.
+
+Ukrainians fight brave for their land and will never give up. But you must understand that our country is fighting here not for our land only, but for the safety of the whole world. ❗️❗️❗️ **_If Ukraine fails in this war with Russian army and Russian government, the security of all countries in the world 🌍 will be under the threat! Russian government and it's vicious allies and governments from other countries will be moving their armies to YOUR land, sooner or later_** ❗️❗️❗
+
+You must understand that now Ukraine has more people here willing to fight than weapons, military supplies and other inventory for them.
+
+**If you CAN and WANT to support Ukraine 🇺🇦 and Ukrainian army, here is a tweet with instructions from OFFICIAL ✅ account of Ukraine 🇺🇦**
+
+## [♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO URKAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
+
+# GLORY TO 🇺🇦 UKRAINE 🇺🇦, GLORY TO UKRAINIAN HEROES! 🇺🇦🇺🇦🇺🇦
+
+#####YOU MUST UNDERSTAND THAT THIS WAR WITH UKRAINE STARTED NOT THE PEOPLE OF RUSSIA, BUT THE EVIL RUSSIAN GOVERNMENT! MOST OF RUSSIAN PEOPLE ARE PEACEFUL AND VERY KIND! IT IS A RUSSIAN GOVERNMENT THAT STARTED A WAR WITH THE WORLD THAT STARTED IN UKRAINE ON THE 24TH OF FEBRUARY 2022
+
+---
+
 ### ▶️ [Deskreen Youtube channel](https://www.youtube.com/channel/UCyiTK98gjDKGNNjUk9ynzxQ) (video tutorials, demos, use cases for Deskreen day to day usage)
 
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
