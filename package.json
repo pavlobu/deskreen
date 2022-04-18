@@ -332,7 +332,7 @@
     "classnames": "^2.2.6",
     "clsx": "^1.1.1",
     "connected-react-router": "^6.6.1",
-    "electron": "^18.0.3",
+    "electron": "^11.2.1",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.2",
     "electron-settings": "^4.0.2",
