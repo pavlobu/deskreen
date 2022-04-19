@@ -193,6 +193,7 @@ export default class DeskreenApp {
           process.env.E2E_BUILD === 'true') &&
         process.env.ERB_SECURE !== 'true'
           ? {
+              contextIsolation: false,
               nodeIntegration: true,
               enableRemoteModule: true,
             }
