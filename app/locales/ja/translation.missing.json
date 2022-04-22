@@ -1,0 +1,9 @@
+{
+  "Confirm": "確認",
+  "No, Cancel": "いいえ、キャンセル",
+  "Yes, Disconnect All": "はい、すべて切断",
+  "Disconnect all devices": "すべてのデバイスを切断",
+  "Are you sure you want to disconnect all connected viewing devices?": "接続されているすべてのデバイスを切断してよろしいですか？",
+  "This step can not be reverted": "このステップは元に戻すことができません",
+  "You will have to connect all devices manually again": "再度、すべてのデバイスを手動で接続する必要があります"
+}
