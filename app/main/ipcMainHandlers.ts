@@ -6,12 +6,13 @@ import SharingSession from '../features/SharingSessionService/SharingSession';
 import RoomIDService from '../server/RoomIDService';
 import getDeskreenGlobal from '../utils/mainProcessHelpers/getDeskreenGlobal';
 import signalingServer from '../server';
-import { DeskreenGlobalService } from '../utils/mainProcessHelpers/DeskreenGlobalService.enum';
+import Logger from '../utils/LoggerWithFilePrefix';
 
+const log = new Logger(__filename);
 const v4IPGetter = require('internal-ip').v4;
 
 export default function initIpcMainHandlers(
-  mainWindow: BrowserWindow | null,
+  mainWindow: BrowserWindow,
   latestVersion: string,
   appVersion: string
 ) {
@@ -89,5 +90,26 @@ export default function initIpcMainHandlers(
   ipcMain.handle('unmark-room-id-as-taken', (_, roomID) => {
     const deskreenGlobal = getDeskreenGlobal();
     deskreenGlobal.roomIDService.unmarkRoomIDAsTaken(roomID);
+  });
+
+  ipcMain.handle('create-waiting-for-connection-sharing-session', () => {
+    console.log('handle create-waiting-for-connection-sharing-session');
+    getDeskreenGlobal()
+      .sharingSessionService.createWaitingForConnectionSharingSession()
+      // eslint-disable-next-line promise/always-return
+      .then((waitingForConnectionSharingSession) => {
+        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+          (device: Device) => {
+            getDeskreenGlobal().connectedDevicesService.setPendingConnectionDevice(
+              device
+            );
+            mainWindow.webContents.send(
+              'set-pending-connection-device',
+              device
+            );
+          }
+        );
+      })
+      .catch((e) => log.error(e));
   });
 }

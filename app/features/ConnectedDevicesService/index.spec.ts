@@ -84,49 +84,5 @@ describe('ConnectedDevicesService tests', () => {
         expect(isInArray).toBe(true);
       });
     });
-
-    describe('when .addPendingConnectedDeviceListener() was called', () => {
-      it('should add listener to .pendingDeviceConnectedListeners array', () => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const testCallback = (_: Device) => {};
-
-        service.addPendingConnectedDeviceListener(testCallback);
-
-        let isInArray = false;
-        service.pendingDeviceConnectedListeners.forEach((c) => {
-          if (c === testCallback) {
-            isInArray = true;
-          }
-        });
-        expect(isInArray).toBe(true);
-      });
-    });
-
-    describe('when .setPendingConnectionDevice() was called', () => {
-      it('should set passed device as pendingConnectionDevice and call .emitPendingConnectionDeviceConnected', () => {
-        service.emitPendingConnectionDeviceConnected = jest.fn();
-
-        service.setPendingConnectionDevice(testDevice);
-
-        expect(service.pendingConnectionDevice).toBe(testDevice);
-        expect(service.emitPendingConnectionDeviceConnected).toBeCalled();
-      });
-    });
-
-    describe('when .emitPendingConnectionDeviceConnected() was called', () => {
-      it('should call all callbacks in pendingDeviceConnectedListeners', () => {
-        const testCallback1 = jest.fn();
-        const testCallback2 = jest.fn();
-        service.pendingDeviceConnectedListeners = [
-          testCallback1,
-          testCallback2,
-        ];
-
-        service.emitPendingConnectionDeviceConnected();
-
-        expect(testCallback1).toBeCalled();
-        expect(testCallback2).toBeCalled();
-      });
-    });
   });
 });

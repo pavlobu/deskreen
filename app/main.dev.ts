@@ -95,10 +95,6 @@ export default class DeskreenApp {
     );
   }
 
-  initIpcMain() {
-    initIpcMainHandlers(this.mainWindow, this.latestVersion, this.appVersion);
-  }
-
   async createWindow() {
     if (
       process.env.NODE_ENV === 'development' ||
@@ -167,6 +163,8 @@ export default class DeskreenApp {
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
     new AppUpdater();
+
+    initIpcMainHandlers(this.mainWindow, this.latestVersion, this.appVersion);
   }
 
   initI18n() {
@@ -205,7 +203,6 @@ export default class DeskreenApp {
     }
 
     this.initElectronAppObject();
-    this.initIpcMain();
   }
 }
 

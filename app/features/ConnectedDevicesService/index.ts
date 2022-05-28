@@ -14,8 +14,6 @@ class ConnectedDevices {
 
   pendingConnectionDevice: Device = nullDevice;
 
-  pendingDeviceConnectedListeners: ((device: Device) => void)[] = [];
-
   resetPendingConnectionDevice() {
     this.pendingConnectionDevice = nullDevice;
   }
@@ -41,21 +39,8 @@ class ConnectedDevices {
     this.devices.push(device);
   }
 
-  addPendingConnectedDeviceListener(callback: (device: Device) => void) {
-    this.pendingDeviceConnectedListeners.push(callback);
-  }
-
   setPendingConnectionDevice(device: Device) {
     this.pendingConnectionDevice = device;
-    this.emitPendingConnectionDeviceConnected();
-  }
-
-  emitPendingConnectionDeviceConnected() {
-    this.pendingDeviceConnectedListeners.forEach(
-      (callback: (device: Device) => void) => {
-        callback(this.pendingConnectionDevice);
-      }
-    );
   }
 }
 

@@ -32,15 +32,13 @@ import ColorlibStepIcon, {
 } from '../components/StepperPanel/ColorlibStepIcon';
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
-import SharingSessionService from '../features/SharingSessionService';
-import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
 import Logger from '../utils/LoggerWithFilePrefix';
 import LanguageSelector from '../components/LanguageSelector';
 import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
 import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
-
-const log = new Logger(__filename);
+import SharingSessionService from '../features/SharingSessionService';
+import ConnectedDevicesService from '../features/ConnectedDevicesService';
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
@@ -48,6 +46,8 @@ const sharingSessionService = remote.getGlobal(
 const connectedDevicesService = remote.getGlobal(
   'connectedDevicesService'
 ) as ConnectedDevicesService;
+
+const log = new Logger(__filename);
 
 const Fade = require('react-reveal/Fade');
 
@@ -117,24 +117,11 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   useEffect(() => {
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
-
-    connectedDevicesService.addPendingConnectedDeviceListener(
-      (device: Device) => {
-        setPendingConnectionDevice(device);
-        setIsAlertOpen(true);
-      }
-    );
+    ipcRenderer.invoke('create-waiting-for-connection-sharing-session');
+    ipcRenderer.on('set-pending-connection-device', (_, device) => {
+      setPendingConnectionDevice(device);
+      setIsAlertOpen(true);
+    });
   }, []);
 
   useEffect(() => {
