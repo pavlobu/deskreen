@@ -56,6 +56,7 @@ export default class PeerConnection {
     this.roomIDService = roomIDService;
     this.connectedDevicesService = connectedDevicesService;
     this.sharingSessionService = sharingSessionsService;
+    this.desktopCapturerSourcesService = desktopCapturerSourcesService;
     this.sharingSessionID = sharingSessionID;
     this.isSocketRoomLocked = false;
     this.roomID = encodeURI(roomID);
@@ -69,7 +70,6 @@ export default class PeerConnection {
     this.localStream = null;
     this.displayID = '';
     this.sourceDisplaySize = undefined;
-    this.desktopCapturerSourcesService = desktopCapturerSourcesService;
     this.onDeviceConnectedCallback = () => {};
 
     handleSocket(this);

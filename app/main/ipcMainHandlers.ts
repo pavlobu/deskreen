@@ -6,6 +6,7 @@ import SharingSession from '../features/SharingSessionService/SharingSession';
 import RoomIDService from '../server/RoomIDService';
 import getDeskreenGlobal from '../utils/mainProcessHelpers/getDeskreenGlobal';
 import signalingServer from '../server';
+import { DeskreenGlobalService } from '../utils/mainProcessHelpers/DeskreenGlobalService.enum';
 
 const v4IPGetter = require('internal-ip').v4;
 
@@ -83,5 +84,12 @@ export default function initIpcMainHandlers(
   ipcMain.handle('get-app-path', () => {
     const deskreenGlobal = getDeskreenGlobal();
     return deskreenGlobal.appPath;
+  });
+
+  ipcMain.handle('unmark-room-id-as-taken', (_, roomID) => {
+    const deskreenGlobal = getDeskreenGlobal();
+    deskreenGlobal[DeskreenGlobalService.RoomIDService].unmarkRoomIDAsTaken(
+      roomID
+    );
   });
 }

@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import SharingSessionStatusEnum from '../SharingSessionService/SharingSessionStatusEnum';
 import NullSimplePeer from './NullSimplePeer';
 import NullUser from './NullUser';
@@ -27,5 +28,6 @@ export default function handleSelfDestroy(peerConnection: PeerConnection) {
   peerConnection.onDeviceConnectedCallback = () => {};
   peerConnection.isCallStarted = false;
   peerConnection.socket.disconnect();
-  peerConnection.roomIDService.unmarkRoomIDAsTaken(peerConnection.roomID);
+
+  ipcRenderer.invoke('unmark-room-id-as-taken', peerConnection.roomID);
 }
