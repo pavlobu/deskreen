@@ -29,9 +29,9 @@ jobs:
   update-aur:
     runs-on: ubuntu-latest
     env:
-      AUR_PRIVATE_KEY : ${{ secrets.AUR_PRIVATE_KEY }}
-      AUR_EMAIL : ${{ secrets.AUR_EMAIL }}
-      AUR_NAME : ${{ secrets.AUR_NAME }}
+      AUR_PRIVATE_KEY: ${{ secrets.AUR_PRIVATE_KEY }}
+      AUR_EMAIL: ${{ secrets.AUR_EMAIL }}
+      AUR_NAME: ${{ secrets.AUR_NAME }}
     container: archlinux
     steps:
       - name: Update package database and packages

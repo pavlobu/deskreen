@@ -268,7 +268,7 @@
     "cross-env": "^7.0.0",
     "css-loader": "^3.6.0",
     "detect-port": "^1.3.0",
-    "electron-builder": "^22.3.6",
+    "electron-builder": "^23.0.3",
     "electron-devtools-installer": "^2.2.4",
     "electron-rebuild": "^3.2.7",
     "enzyme": "^3.11.0",

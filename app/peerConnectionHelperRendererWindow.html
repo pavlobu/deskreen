@@ -37,9 +37,13 @@
         if (process.env.START_HOT) {
           // Dynamically insert the bundled app script in the renderer process
           const port = process.env.PORT || 1212;
-          scripts.push(`http://localhost:${port}/dist/peerConnectionHelperRendererWindow.renderer.dev.js`);
+          scripts.push(
+            `http://localhost:${port}/dist/peerConnectionHelperRendererWindow.renderer.dev.js`
+          );
         } else {
-          scripts.push('./dist/peerConnectionHelperRendererWindow.renderer.prod.js');
+          scripts.push(
+            './dist/peerConnectionHelperRendererWindow.renderer.prod.js'
+          );
         }
 
         if (scripts.length) {
