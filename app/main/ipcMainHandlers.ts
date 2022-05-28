@@ -79,4 +79,9 @@ export default function initIpcMainHandlers(
     }
     return '255.255.255.255';
   });
+
+  ipcMain.handle('get-app-path', () => {
+    const deskreenGlobal = getDeskreenGlobal();
+    return deskreenGlobal.appPath;
+  });
 }

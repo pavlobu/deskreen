@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { remote, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import SyncBackend from 'i18next-node-fs-backend';
@@ -67,40 +67,43 @@ export const getShuffledArrayOfHello = (): string[] => {
   return res;
 };
 
-const appPath = remote.getGlobal('appPath');
+async function initI18NextOptions() {
+  const appPath = await ipcRenderer.invoke('get-app-path');
+  const i18nextOptions = {
+    interpolation: {
+      escapeValue: false,
+    },
+    backend: {
+      // path where resources get loaded from
+      loadPath: isProduction()
+        ? join(appPath, 'locales/{{lng}}/{{ns}}.json')
+        : join(__dirname, './locales/{{lng}}/{{ns}}.json'),
+      // path to post missing resources
+      addPath: isProduction()
+        ? join(appPath, 'locales/{{lng}}/{{ns}}.json')
+        : join(__dirname, './locales/{{lng}}/{{ns}}.missing.json'),
+      // jsonIndent to use when storing json files
+      jsonIndent: 2,
+    },
+    saveMissing: true,
+    lng: (settings.hasSync('appLanguage')
+      ? settings.getSync('appLanguage')
+      : 'en') as string,
+    fallbackLng: config.fallbackLng,
+    whitelist: config.languages,
+    react: {
+      wait: false,
+    },
+  };
 
-const i18nextOptions = {
-  interpolation: {
-    escapeValue: false,
-  },
-  backend: {
-    // path where resources get loaded from
-    loadPath: isProduction()
-      ? join(appPath, 'locales/{{lng}}/{{ns}}.json')
-      : join(__dirname, './locales/{{lng}}/{{ns}}.json'),
-    // path to post missing resources
-    addPath: isProduction()
-      ? join(appPath, 'locales/{{lng}}/{{ns}}.json')
-      : join(__dirname, './locales/{{lng}}/{{ns}}.missing.json'),
-    // jsonIndent to use when storing json files
-    jsonIndent: 2,
-  },
-  saveMissing: true,
-  lng: (settings.hasSync('appLanguage')
-    ? settings.getSync('appLanguage')
-    : 'en') as string,
-  fallbackLng: config.fallbackLng,
-  whitelist: config.languages,
-  react: {
-    wait: false,
-  },
-};
+  if (!i18n.isInitialized) {
+    i18n.init(i18nextOptions);
+  }
+}
+initI18NextOptions();
+
 i18n.use(SyncBackend);
 i18n.use(initReactI18next);
-
-if (!i18n.isInitialized) {
-  i18n.init(i18nextOptions);
-}
 
 i18n.on('languageChanged', () => {
   ipcRenderer.send('client-changed-language', i18n.language);
