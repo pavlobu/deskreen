@@ -16,6 +16,15 @@ jest.useFakeTimers();
 
 jest.mock('simple-peer');
 
+jest.mock('electron', () => {
+  return {
+    ipcRenderer: {
+      on: jest.fn(),
+      invoke: jest.fn(),
+    },
+  };
+});
+
 const TEST_PARTNER = {
   username: 'asdfaf',
   publicKey: 'afafdsg',

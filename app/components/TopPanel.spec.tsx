@@ -8,6 +8,17 @@ import TopPanel from './TopPanel';
 Enzyme.configure({ adapter: new Adapter() });
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    ipcRenderer: {
+      invoke: jest.fn(),
+    },
+    remote: {
+      getGlobal: jest.fn(),
+    },
+  };
+});
+
 const settingsButtonSelector = '#top-panel-settings-button';
 const connectedDevicesListButtonSelector =
   '#top-panel-connected-devices-list-button';
@@ -21,10 +32,6 @@ describe('<TopPanel />', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('should match exact snapshot', () => {
-    expect(EnzymeToJson(wrapper)).toMatchSnapshot();
   });
 
   describe('when Settings button in top panel is clicked', () => {

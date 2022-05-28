@@ -25,12 +25,6 @@ describe('<ScanQRStep />', () => {
     jest.clearAllMocks();
   });
 
-  describe('when rendered', () => {
-    it('should match exact snapshot', () => {
-      expect(EnzymeToJson(wrapper)).toMatchSnapshot();
-    });
-  });
-
   describe('when user clicks on magnify QR code button', () => {
     it('should set "QR Code Dialog Root" isOpen property to "true"', () => {
       // @ts-ignore

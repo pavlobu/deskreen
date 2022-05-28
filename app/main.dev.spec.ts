@@ -31,10 +31,6 @@ const TEST_CONNECTED_DEVICES_SERVICE = ({
 const TEST_ROOM_ID_SERVICE = ({
   a223: '2g2g',
 } as unknown) as ConnectedDevicesService;
-// const TEST_SHARING_SESSIONS = [
-//   { denyConnectionForPartner: jest.fn(), destroy: jest.fn() },
-//   { denyConnectionForPartner: jest.fn(), destroy: jest.fn() },
-// ];
 const testMapSharingSessions = new Map();
 testMapSharingSessions.set('1', {
   denyConnectionForPartner: jest.fn(),

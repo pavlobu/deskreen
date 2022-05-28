@@ -194,10 +194,6 @@ describe('app menu MenyBuilder tests', () => {
     });
 
     describe('when menu from buildDarwinTemplate was created', () => {
-      it('should match a snapshot', () => {
-        expect(menuBuilder.buildDarwinTemplate()).toMatchSnapshot();
-      });
-
       describe('when in About submenu menu quit label click event occured', () => {
         it('should call app.quit() and stop() on signaling server, stop should be called before quit', () => {
           const res = menuBuilder.buildDarwinTemplate();

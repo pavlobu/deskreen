@@ -88,8 +88,6 @@ export default function initIpcMainHandlers(
 
   ipcMain.handle('unmark-room-id-as-taken', (_, roomID) => {
     const deskreenGlobal = getDeskreenGlobal();
-    deskreenGlobal[DeskreenGlobalService.RoomIDService].unmarkRoomIDAsTaken(
-      roomID
-    );
+    deskreenGlobal.roomIDService.unmarkRoomIDAsTaken(roomID);
   });
 }
