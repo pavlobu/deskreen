@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { remote, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import SyncBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
-import settings from 'electron-settings';
+// import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 
@@ -67,7 +67,7 @@ export const getShuffledArrayOfHello = (): string[] => {
   return res;
 };
 
-const appPath = remote.getGlobal('appPath');
+const appPath = './';
 
 const i18nextOptions = {
   interpolation: {
@@ -86,9 +86,9 @@ const i18nextOptions = {
     jsonIndent: 2,
   },
   saveMissing: true,
-  lng: (settings.hasSync('appLanguage')
-    ? settings.getSync('appLanguage')
-    : 'en') as string,
+  // lng: (settings.hasSync('appLanguage')
+  //   ? settings.getSync('appLanguage')
+  //   : 'en') as string,
   fallbackLng: config.fallbackLng,
   whitelist: config.languages,
   react: {

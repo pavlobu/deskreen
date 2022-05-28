@@ -13,7 +13,7 @@ import 'regenerator-runtime/runtime';
 import { Display } from 'electron/main';
 import path from 'path';
 import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
-import settings from 'electron-settings';
+// import settings from 'electron-settings';
 import i18n from './configs/i18next.config';
 import signalingServer from './server';
 import MenuBuilder from './menu';
@@ -104,7 +104,7 @@ export default class DeskreenApp {
   initIpcMain() {
     ipcMain.on('client-changed-language', async (_, newLangCode) => {
       i18n.changeLanguage(newLangCode);
-      await settings.set('appLanguage', newLangCode);
+      // await settings.set('appLanguage', newLangCode);
     });
 
     ipcMain.handle('get-signaling-server-port', () => {
@@ -255,7 +255,7 @@ export default class DeskreenApp {
       setTimeout(async () => {
         if (lng !== 'en' && i18n.language !== lng) {
           i18n.changeLanguage(lng);
-          await settings.set('appLanguage', lng);
+          // await settings.set('appLanguage', lng);
         }
       }, 400);
     });

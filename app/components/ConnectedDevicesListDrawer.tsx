@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/destructuring-assignment */
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -22,24 +22,24 @@ import SharingSourcePreviewCard from './SharingSourcePreviewCard';
 import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 import isProduction from '../utils/isProduction';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
+// const connectedDevicesService = remote.getGlobal(
+//   'connectedDevicesService'
+// ) as ConnectedDevicesService;
 
 const Fade = require('react-reveal/Fade');
 
 const disconnectPeerAndDestroySharingSessionBySessionID = (
   sharingSessionID: string
 ) => {
-  const sharingSession = sharingSessionService.sharingSessions.get(
-    sharingSessionID
-  );
-  sharingSession?.disconnectByHostMachineUser();
-  sharingSession?.destroy();
-  sharingSessionService.sharingSessions.delete(sharingSessionID);
+  // const sharingSession = sharingSessionService.sharingSessions.get(
+  //   sharingSessionID
+  // );
+  // sharingSession?.disconnectByHostMachineUser();
+  // sharingSession?.destroy();
+  // sharingSessionService.sharingSessions.delete(sharingSessionID);
 };
 
 interface ConnectedDevicesListDrawerProps {
@@ -77,28 +77,28 @@ export default function ConnectedDevicesListDrawer(
 
   useEffect(() => {
     const map = new Map();
-    connectedDevicesService.getDevices().forEach((el) => {
-      map.set(el.id, true);
-    });
+    // connectedDevicesService.getDevices().forEach((el) => {
+    //   map.set(el.id, true);
+    // });
     setDevicesDisplayed(map);
   }, [setDevicesDisplayed]);
 
   const handleDisconnectOneDevice = useCallback(async (id: string) => {
-    const device = connectedDevicesService.devices.find(
-      (d: Device) => d.id === id
-    );
-    if (!device) return;
-    disconnectPeerAndDestroySharingSessionBySessionID(device.sharingSessionID);
-    connectedDevicesService.removeDeviceByID(id);
+    // const device = connectedDevicesService.devices.find(
+    //   (d: Device) => d.id === id
+    // );
+    // if (!device) return;
+    // disconnectPeerAndDestroySharingSessionBySessionID(device.sharingSessionID);
+    // connectedDevicesService.removeDeviceByID(id);
   }, []);
 
   const handleDisconnectAll = useCallback(() => {
-    connectedDevicesService.devices.forEach((device: Device) => {
-      disconnectPeerAndDestroySharingSessionBySessionID(
-        device.sharingSessionID
-      );
-    });
-    connectedDevicesService.removeAllDevices();
+    // connectedDevicesService.devices.forEach((device: Device) => {
+    //   disconnectPeerAndDestroySharingSessionBySessionID(
+    //     device.sharingSessionID
+    //   );
+    // });
+    // connectedDevicesService.removeAllDevices();
   }, []);
 
   const hideOneDeviceInDevicesDisplayed = useCallback(
@@ -165,7 +165,7 @@ export default function ConnectedDevicesListDrawer(
               </div>
               <Button
                 intent="danger"
-                disabled={connectedDevicesService.getDevices().length === 0}
+                // disabled={connectedDevicesService.getDevices().length === 0}
                 onClick={() => {
                   setIsAlertDisconectAllOpen(true);
                 }}
@@ -190,7 +190,7 @@ export default function ConnectedDevicesListDrawer(
               duration={isWithReactRevealAnimations() ? 700 : 0}
             >
               <div className={classes.zoomFullWidth}>
-                {connectedDevicesService.getDevices().map((device) => {
+                {/* {connectedDevicesService.getDevices().map((device) => {
                   return (
                     <div key={device.id}>
                       <Fade
@@ -239,7 +239,7 @@ export default function ConnectedDevicesListDrawer(
                       </Fade>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             </Fade>
           </Col>

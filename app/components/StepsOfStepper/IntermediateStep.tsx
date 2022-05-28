@@ -1,5 +1,5 @@
 import React from 'react';
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import { Button, Text } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
@@ -11,12 +11,12 @@ import ConfirmStep from './ConfirmStep';
 import ConnectedDevicesService from '../../features/ConnectedDevicesService';
 import SharingSessionService from '../../features/SharingSessionService';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
+// const connectedDevicesService = remote.getGlobal(
+//   'connectedDevicesService'
+// ) as ConnectedDevicesService;
 
 interface IntermediateStepProps {
   activeStep: number;
@@ -33,8 +33,8 @@ function getStepContent(
   t: TFunction,
   stepIndex: number,
   handleNextEntireScreen: () => void,
-  handleNextApplicationWindow: () => void,
-  pendingConnectionDevice: Device | null
+  handleNextApplicationWindow: () => void
+  // pendingConnectionDevice: Device | null
 ) {
   switch (stepIndex) {
     case 0:
@@ -55,8 +55,8 @@ function getStepContent(
           />
         </>
       );
-    case 2:
-      return <ConfirmStep device={pendingConnectionDevice} />;
+    // case 2:
+    //   return <ConfirmStep device={pendingConnectionDevice} />;
     default:
       return 'Unknown stepIndex';
   }
@@ -81,7 +81,7 @@ export default function IntermediateStep(props: IntermediateStepProps) {
   } = props;
 
   const connectDevice = (device: Device) => {
-    connectedDevicesService.setPendingConnectionDevice(device);
+    // connectedDevicesService.setPendingConnectionDevice(device);
   };
 
   return (
@@ -100,8 +100,8 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         t,
         activeStep,
         handleNextEntireScreen,
-        handleNextApplicationWindow,
-        connectedDevicesService.pendingConnectionDevice
+        handleNextApplicationWindow
+        // connectedDevicesService.pendingConnectionDevice
       )}
 
       {
@@ -152,21 +152,21 @@ export default function IntermediateStep(props: IntermediateStepProps) {
                 onClick={async () => {
                   handleNext();
                   if (isConfirmStep(activeStep, steps)) {
-                    if (
-                      sharingSessionService.waitingForConnectionSharingSession !==
-                      null
-                    ) {
-                      const sharingSession =
-                        sharingSessionService.waitingForConnectionSharingSession;
-                      sharingSession.callPeer();
-                      sharingSessionService.changeSharingSessionStatusToSharing(
-                        sharingSession
-                      );
-                    }
-                    connectedDevicesService.addDevice(
-                      connectedDevicesService.pendingConnectionDevice
-                    );
-                    connectedDevicesService.resetPendingConnectionDevice();
+                    // if (
+                    //   sharingSessionService.waitingForConnectionSharingSession !==
+                    //   null
+                    // ) {
+                    //   const sharingSession =
+                    //     sharingSessionService.waitingForConnectionSharingSession;
+                    //   sharingSession.callPeer();
+                    //   sharingSessionService.changeSharingSessionStatusToSharing(
+                    //     sharingSession
+                    //   );
+                    // }
+                    // connectedDevicesService.addDevice(
+                    //   connectedDevicesService.pendingConnectionDevice
+                    // );
+                    // connectedDevicesService.resetPendingConnectionDevice();
                     resetPendingConnectionDevice();
                     resetUserAllowedConnection();
                   }

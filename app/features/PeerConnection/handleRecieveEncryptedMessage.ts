@@ -1,4 +1,4 @@
-import settings from 'electron-settings';
+// import settings from 'electron-settings';
 import uuid from 'uuid';
 import { process as processMessage } from '../../utils/message';
 
@@ -44,9 +44,9 @@ export default async function handleRecieveEncryptedMessage(
     peerConnection.sendEncryptedMessage({
       type: 'APP_THEME',
       payload: {
-        value: settings.hasSync('appIsDarkTheme')
-          ? settings.getSync('appIsDarkTheme') === 'true'
-          : false,
+        // value: settings.hasSync('appIsDarkTheme')
+        //   ? settings.getSync('appIsDarkTheme') === 'true'
+        //   : false,
       },
     });
   }
@@ -54,9 +54,9 @@ export default async function handleRecieveEncryptedMessage(
     peerConnection.sendEncryptedMessage({
       type: 'APP_LANGUAGE',
       payload: {
-        value: settings.hasSync('appLanguage')
-          ? settings.getSync('appLanguage')
-          : 'en',
+        // value: settings.hasSync('appLanguage')
+        //   ? settings.getSync('appLanguage')
+        //   : 'en',
       },
     });
   }

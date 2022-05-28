@@ -1,12 +1,12 @@
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import React, { useContext, useCallback } from 'react';
 import { Button, Classes, ControlGroup } from '@blueprintjs/core';
 import SharingSessionService from '../../features/SharingSessionService';
 import { SettingsContext } from '../../containers/SettingsProvider';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
 
 export default function ToggleThemeBtnGroup() {
   const { isDarkTheme, setIsDarkThemeHook } = useContext(SettingsContext);
@@ -17,9 +17,9 @@ export default function ToggleThemeBtnGroup() {
       setIsDarkThemeHook(true);
     }
     // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged();
-    });
+    // sharingSessionService.sharingSessions.forEach((sharingSession) => {
+    //   sharingSession?.appThemeChanged();
+    // });
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const handleToggleLightTheme = useCallback(() => {
@@ -28,9 +28,9 @@ export default function ToggleThemeBtnGroup() {
       setIsDarkThemeHook(false);
     }
     // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged();
-    });
+    // sharingSessionService.sharingSessions.forEach((sharingSession) => {
+    //   sharingSession?.appThemeChanged();
+    // });
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   return (

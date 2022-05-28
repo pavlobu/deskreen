@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import { Text } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { useTranslation } from 'react-i18next';
@@ -8,9 +8,9 @@ import SharingSessionService from '../../features/SharingSessionService';
 import DeviceInfoCallout from '../DeviceInfoCallout';
 import SharingSession from '../../features/SharingSessionService/SharingSession';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
 
 interface ConfirmStepProps {
   device: Device | null;
@@ -23,13 +23,13 @@ export default function ConfirmStep(props: ConfirmStepProps) {
     SharingSession | undefined
   >();
 
-  useEffect(() => {
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      setSharingSession(
-        sharingSessionService.waitingForConnectionSharingSession
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+  //     setSharingSession(
+  //       sharingSessionService.waitingForConnectionSharingSession
+  //     );
+  //   }
+  // }, []);
 
   return (
     <div style={{ width: '80%', marginTop: '50px' }}>

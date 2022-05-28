@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { clipboard, remote, ipcRenderer } from 'electron';
+import { clipboard, ipcRenderer } from 'electron';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,9 +20,9 @@ import config from '../../api/config';
 
 const { port } = config;
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
 
 // TODO: change port to user defined port, if it is really defined
 const CLIENT_VIEWER_PORT = isProduction() ? port : '3000';
@@ -66,11 +66,11 @@ const ScanQRStep: React.FC = () => {
 
   useEffect(() => {
     const thisInterval = setInterval(() => {
-      if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-        setRoomID(
-          sharingSessionService.waitingForConnectionSharingSession.roomID
-        );
-      }
+      // if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+      //   setRoomID(
+      //     sharingSessionService.waitingForConnectionSharingSession.roomID
+      //   );
+      // }
     }, 1000);
 
     const ipInterval = setInterval(async () => {

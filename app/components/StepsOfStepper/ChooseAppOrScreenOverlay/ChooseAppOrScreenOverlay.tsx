@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import React, { useCallback, useEffect, useState } from 'react';
 import { H3, Card, Dialog, Button } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
@@ -9,9 +9,9 @@ import PreviewGridList from './PreviewGridList';
 import DesktopCapturerSources from '../../../features/DesktopCapturerSourcesService';
 import isWithReactRevealAnimations from '../../../utils/isWithReactRevealAnimations';
 
-const desktopCapturerSourcesService = remote.getGlobal(
-  'desktopCapturerSourcesService'
-) as DesktopCapturerSources;
+// const desktopCapturerSourcesService = remote.getGlobal(
+//   'desktopCapturerSourcesService'
+// ) as DesktopCapturerSources;
 
 const Zoom = require('react-reveal/Zoom');
 const Fade = require('react-reveal/Fade');
@@ -74,24 +74,24 @@ export default function ChooseAppOrScreenOverlay(
 
   const handleRefreshSources = useCallback(() => {
     if (isEntireScreenToShareChosen) {
-      const sourcesToShare = desktopCapturerSourcesService.getScreenSources();
+      // const sourcesToShare = desktopCapturerSourcesService.getScreenSources();
       const screenViewMap = new Map<string, ViewSharingObject>();
-      sourcesToShare.forEach((source) => {
-        screenViewMap.set(source.id, {
-          thumbnailUrl: source.thumbnail.toDataURL(),
-          name: source.name,
-        });
-      });
+      // sourcesToShare.forEach((source) => {
+      //   screenViewMap.set(source.id, {
+      //     thumbnailUrl: source.thumbnail.toDataURL(),
+      //     name: source.name,
+      //   });
+      // });
       setScreenViewSharingObjectsMap(screenViewMap);
     } else {
-      const sourcesToShare = desktopCapturerSourcesService.getAppWindowSources();
+      // const sourcesToShare = desktopCapturerSourcesService.getAppWindowSources();
       const appViewMap = new Map<string, ViewSharingObject>();
-      sourcesToShare.forEach((source) => {
-        appViewMap.set(source.id, {
-          thumbnailUrl: source.thumbnail.toDataURL(),
-          name: source.name,
-        });
-      });
+      // sourcesToShare.forEach((source) => {
+      //   appViewMap.set(source.id, {
+      //     thumbnailUrl: source.thumbnail.toDataURL(),
+      //     name: source.name,
+      //   });
+      // });
       setAppsWindowsViewSharingObjectsMap(appViewMap);
     }
   }, [isEntireScreenToShareChosen]);

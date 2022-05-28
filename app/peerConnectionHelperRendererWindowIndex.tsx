@@ -1,4 +1,5 @@
-import { ipcRenderer, remote } from 'electron';
+// import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import ConnectedDevicesService from './features/ConnectedDevicesService';
 import DesktopCapturerSourcesService from './features/DesktopCapturerSourcesService';
 import PeerConnection from './features/PeerConnection';
@@ -8,16 +9,16 @@ import RoomIDService from './server/RoomIDService';
 // eslint-disable-next-line import/prefer-default-export
 export function handleIpcRenderer() {
   ipcRenderer.on('start-peer-connection', () => {
-    const desktopCapturerSourcesService = remote.getGlobal(
-      'desktopCapturerSourcesService'
-    ) as DesktopCapturerSourcesService;
-    const roomIDService = remote.getGlobal('roomIDService') as RoomIDService;
-    const connectedDevicesService = remote.getGlobal(
-      'connectedDevicesService'
-    ) as ConnectedDevicesService;
-    const sharingSessionService = remote.getGlobal(
-      'sharingSessionService'
-    ) as SharingSessionService;
+    // const desktopCapturerSourcesService = remote.getGlobal(
+    //   'desktopCapturerSourcesService'
+    // ) as DesktopCapturerSourcesService;
+    // const roomIDService = remote.getGlobal('roomIDService') as RoomIDService;
+    // const connectedDevicesService = remote.getGlobal(
+    //   'connectedDevicesService'
+    // ) as ConnectedDevicesService;
+    // const sharingSessionService = remote.getGlobal(
+    //   'sharingSessionService'
+    // ) as SharingSessionService;
 
     let peerConnection: PeerConnection;
 
@@ -25,11 +26,11 @@ export function handleIpcRenderer() {
       peerConnection = new PeerConnection(
         data.roomID,
         data.sharingSessionID,
-        data.user,
-        roomIDService,
-        connectedDevicesService,
-        sharingSessionService,
-        desktopCapturerSourcesService
+        data.user
+        // roomIDService,
+        // connectedDevicesService,
+        // sharingSessionService,
+        // desktopCapturerSourcesService
       );
 
       peerConnection.setOnDeviceConnectedCallback((deviceData) => {

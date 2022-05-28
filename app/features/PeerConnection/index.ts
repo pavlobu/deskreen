@@ -36,10 +36,10 @@ export default class PeerConnection {
   partnerDeviceDetails = {} as Device;
   signalsDataToCallUser: string[];
   isCallStarted: boolean;
-  roomIDService: RoomIDService;
-  connectedDevicesService: ConnectedDevicesService;
-  sharingSessionService: SharingSessionService;
-  desktopCapturerSourcesService: DesktopCapturerSourcesService;
+  // roomIDService: RoomIDService;
+  // connectedDevicesService: ConnectedDevicesService;
+  // sharingSessionService: SharingSessionService;
+  // desktopCapturerSourcesService: DesktopCapturerSourcesService;
   onDeviceConnectedCallback: (device: Device) => void;
   displayID: string;
   sourceDisplaySize: DisplaySize | undefined;
@@ -47,15 +47,15 @@ export default class PeerConnection {
   constructor(
     roomID: string,
     sharingSessionID: string,
-    user: LocalPeerUser,
-    roomIDService: RoomIDService,
-    connectedDevicesService: ConnectedDevicesService,
-    sharingSessionsService: SharingSessionService,
-    desktopCapturerSourcesService: DesktopCapturerSourcesService
+    user: LocalPeerUser
+    // roomIDService: RoomIDService
+    // connectedDevicesService: ConnectedDevicesService,
+    // sharingSessionsService: SharingSessionService,
+    // desktopCapturerSourcesService: DesktopCapturerSourcesService
   ) {
-    this.roomIDService = roomIDService;
-    this.connectedDevicesService = connectedDevicesService;
-    this.sharingSessionService = sharingSessionsService;
+    // this.roomIDService = roomIDService;
+    // this.connectedDevicesService = connectedDevicesService;
+    // this.sharingSessionService = sharingSessionsService;
     this.sharingSessionID = sharingSessionID;
     this.isSocketRoomLocked = false;
     this.roomID = encodeURI(roomID);
@@ -69,7 +69,7 @@ export default class PeerConnection {
     this.localStream = null;
     this.displayID = '';
     this.sourceDisplaySize = undefined;
-    this.desktopCapturerSourcesService = desktopCapturerSourcesService;
+    // this.desktopCapturerSourcesService = desktopCapturerSourcesService;
     this.onDeviceConnectedCallback = () => {};
 
     handleSocket(this);
@@ -110,9 +110,9 @@ export default class PeerConnection {
     )
       return;
 
-    this.displayID = this.desktopCapturerSourcesService.getSourceDisplayIDBySourceID(
-      this.desktopCapturerSourceID
-    );
+    // this.displayID = this.desktopCapturerSourcesService.getSourceDisplayIDBySourceID(
+    //   this.desktopCapturerSourceID
+    // );
 
     if (this.displayID !== '') {
       this.setDisplaySizeRetreivedFromMainProcess();

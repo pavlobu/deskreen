@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { ipcRenderer, remote, shell } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Row, Col, Grid } from 'react-flexbox-grid';
-import settings from 'electron-settings';
+// import settings from 'electron-settings';
 import {
   Button,
   Dialog,
@@ -42,12 +42,12 @@ import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
 
 const log = new Logger(__filename);
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
+// const connectedDevicesService = remote.getGlobal(
+//   'connectedDevicesService'
+// ) as ConnectedDevicesService;
 
 const Fade = require('react-reveal/Fade');
 
@@ -116,32 +116,32 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   sharingSessionService
+  //     .createWaitingForConnectionSharingSession()
+  //     // eslint-disable-next-line promise/always-return
+  //     .then((waitingForConnectionSharingSession) => {
+  //       waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+  //         (device: Device) => {
+  //           connectedDevicesService.setPendingConnectionDevice(device);
+  //         }
+  //       );
+  //     })
+  //     .catch((e) => log.error(e));
+
+  //   connectedDevicesService.addPendingConnectedDeviceListener(
+  //     (device: Device) => {
+  //       setPendingConnectionDevice(device);
+  //       setIsAlertOpen(true);
+  //     }
+  //   );
+  // }, []);
+
   useEffect(() => {
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    // const isFirstTimeStart = !settings.hasSync('isNotFirstTimeAppStart');
+    // setIsSelectLanguageDialogOpen(isFirstTimeStart);
 
-    connectedDevicesService.addPendingConnectedDeviceListener(
-      (device: Device) => {
-        setPendingConnectionDevice(device);
-        setIsAlertOpen(true);
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    const isFirstTimeStart = !settings.hasSync('isNotFirstTimeAppStart');
-    setIsSelectLanguageDialogOpen(isFirstTimeStart);
-
-    if (!isFirstTimeStart) return () => {};
+    // if (!isFirstTimeStart) return () => {};
 
     const helloWords = getShuffledArrayOfHello();
 
@@ -197,17 +197,17 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    // sharingSessionService
+    //   .createWaitingForConnectionSharingSession()
+    //   // eslint-disable-next-line promise/always-return
+    //   .then((waitingForConnectionSharingSession) => {
+    //     waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+    //       (device: Device) => {
+    //         connectedDevicesService.setPendingConnectionDevice(device);
+    //       }
+    //     );
+    //   })
+    //   .catch((e) => log.error(e));
   }, []);
 
   const handleResetWithSharingSessionRestart = useCallback(() => {
@@ -215,24 +215,24 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    const sharingSession =
-      sharingSessionService.waitingForConnectionSharingSession;
-    sharingSession?.disconnectByHostMachineUser();
-    sharingSession?.destroy();
-    sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
-    sharingSessionService.waitingForConnectionSharingSession = null;
+    // const sharingSession =
+    //   sharingSessionService.waitingForConnectionSharingSession;
+    // sharingSession?.disconnectByHostMachineUser();
+    // sharingSession?.destroy();
+    // sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
+    // sharingSessionService.waitingForConnectionSharingSession = null;
 
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    // sharingSessionService
+    //   .createWaitingForConnectionSharingSession()
+    //   // eslint-disable-next-line promise/always-return
+    //   .then((waitingForConnectionSharingSession) => {
+    //     waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+    //       (device: Device) => {
+    //         connectedDevicesService.setPendingConnectionDevice(device);
+    //       }
+    //     );
+    //   })
+    //   .catch((e) => log.error(e));
   }, []);
 
   React.useImperativeHandle(ref, () => ({
@@ -244,30 +244,30 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   const handleCancelAlert = async () => {
     setIsAlertOpen(false);
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.denyConnectionForPartner();
-      sharingSession.destroy();
-      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
-      sharingSessionService.sharingSessions.delete(sharingSession.id);
+    // if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+    //   const sharingSession =
+    //     sharingSessionService.waitingForConnectionSharingSession;
+    //   sharingSession.denyConnectionForPartner();
+    //   sharingSession.destroy();
+    //   sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
+    //   sharingSessionService.sharingSessions.delete(sharingSession.id);
 
-      const prevRoomID =
-        sharingSessionService.waitingForConnectionSharingSession.roomID;
+    //   const prevRoomID =
+    //     sharingSessionService.waitingForConnectionSharingSession.roomID;
 
-      sharingSessionService.waitingForConnectionSharingSession = null;
-      sharingSessionService
-        .createWaitingForConnectionSharingSession(prevRoomID)
-        // eslint-disable-next-line promise/always-return
-        .then((waitingForConnectionSharingSession) => {
-          waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-            (device: Device) => {
-              connectedDevicesService.setPendingConnectionDevice(device);
-            }
-          );
-        })
-        .catch((e) => log.error(e));
-    }
+    //   sharingSessionService.waitingForConnectionSharingSession = null;
+    //   sharingSessionService
+    //     .createWaitingForConnectionSharingSession(prevRoomID)
+    //     // eslint-disable-next-line promise/always-return
+    //     .then((waitingForConnectionSharingSession) => {
+    //       waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
+    //         (device: Device) => {
+    //           connectedDevicesService.setPendingConnectionDevice(device);
+    //         }
+    //       );
+    //     })
+    //     .catch((e) => log.error(e));
+    // }
   };
 
   const handleConfirmAlert = useCallback(async () => {
@@ -275,11 +275,11 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setIsUserAllowedConnection(true);
     handleNext();
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.setStatus(SharingSessionStatusEnum.CONNECTED);
-    }
+    // if (sharingSessionService.waitingForConnectionSharingSession !== null) {
+    //   const sharingSession =
+    //     sharingSessionService.waitingForConnectionSharingSession;
+    //   sharingSession.setStatus(SharingSessionStatusEnum.CONNECTED);
+    // }
   }, [handleNext]);
 
   const handleUserClickedDeviceDisconnectButton = useCallback(async () => {
@@ -454,7 +454,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
                 rightIcon="chevron-right"
                 onClick={() => {
                   setIsSelectLanguageDialogOpen(false);
-                  settings.setSync('isNotFirstTimeAppStart', true);
+                  // settings.setSync('isNotFirstTimeAppStart', true);
                 }}
                 style={{ borderRadius: '50px' }}
               >

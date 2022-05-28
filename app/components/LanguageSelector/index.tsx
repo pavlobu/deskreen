@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import { HTMLSelect } from '@blueprintjs/core';
 import i18n from 'i18next';
 import SharingSessionService from '../../features/SharingSessionService';
@@ -9,9 +9,9 @@ import i18n_client, {
   getLangISOKeyToLangFullNameMap,
 } from '../../configs/i18next.config.client';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
 
 export default function LanguageSelector() {
   const { setCurrentLanguageHook } = useContext(SettingsContext);
@@ -39,9 +39,9 @@ export default function LanguageSelector() {
         'English';
       i18n.changeLanguage(newLang);
       // TODO: call sharing sessions service here to notify all connected clients about language change
-      sharingSessionService.sharingSessions.forEach((sharingSession) => {
-        sharingSession?.appLanguageChanged();
-      });
+      // sharingSessionService.sharingSessions.forEach((sharingSession) => {
+      //   sharingSession?.appLanguageChanged();
+      // });
     }
   };
 

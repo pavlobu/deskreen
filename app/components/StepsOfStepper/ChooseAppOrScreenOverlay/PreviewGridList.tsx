@@ -1,12 +1,12 @@
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import SharingSessionService from '../../../features/SharingSessionService';
 import SharingSourcePreviewCard from '../../SharingSourcePreviewCard';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+// const sharingSessionService = remote.getGlobal(
+//   'sharingSessionService'
+// ) as SharingSessionService;
 
 const EMPTY_VIEW_SHARING_OBJECTS_MAP = new Map<string, ViewSharingObject>();
 
@@ -59,14 +59,14 @@ export default function PreviewGridList(props: PreviewGridListProps) {
               isChangeApperanceOnHover
               onClickCard={async () => {
                 let sharingSession;
-                if (
-                  sharingSessionService.waitingForConnectionSharingSession !==
-                  null
-                ) {
-                  sharingSession =
-                    sharingSessionService.waitingForConnectionSharingSession;
-                  sharingSession.setDesktopCapturerSourceID(id);
-                }
+                // if (
+                //   sharingSessionService.waitingForConnectionSharingSession !==
+                //   null
+                // ) {
+                //   sharingSession =
+                //     sharingSessionService.waitingForConnectionSharingSession;
+                //   sharingSession.setDesktopCapturerSourceID(id);
+                // }
                 if (isEntireScreen) {
                   handleNextEntireScreen();
                 } else {

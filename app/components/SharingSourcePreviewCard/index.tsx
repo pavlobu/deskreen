@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { remote } from 'electron';
+// import { remote } from 'electron';
 import { Text, Card, Spinner } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import DesktopCapturerSources from '../../features/DesktopCapturerSourcesService';
 
-const desktopCapturerSourcesService = remote.getGlobal(
-  'desktopCapturerSourcesService'
-) as DesktopCapturerSources;
+// const desktopCapturerSourcesService = remote.getGlobal(
+//   'desktopCapturerSourcesService'
+// ) as DesktopCapturerSources;
 
 class SharingSourcePreviewCardProps {
   sharingSourceID: string | undefined = '';
@@ -24,26 +24,26 @@ export default function SharingSourcePreviewCard(
   const [sourceName, setSourceName] = useState('');
   const [appIconSourceImage, setAppIconSourceImage] = useState('');
   const [isHovered, setIsHovered] = useState(false);
-  useEffect(() => {
-    setTimeout(async () => {
-      const sources = desktopCapturerSourcesService.getSourcesMap();
+  // useEffect(() => {
+  //   setTimeout(async () => {
+  //     const sources = desktopCapturerSourcesService.getSourcesMap();
 
-      if (sources && sharingSourceID && sources.get(sharingSourceID)) {
-        setSourceImage(
-          sources.get(sharingSourceID)?.source.thumbnail.toDataURL() || ''
-        );
-        if (sources.get(sharingSourceID)?.source.appIcon != null) {
-          setAppIconSourceImage(
-            sources.get(sharingSourceID)?.source.appIcon.toDataURL() || ''
-          );
-        }
-        setSourceName(
-          sources.get(sharingSourceID)?.source.name ||
-            'Failed to get source name...'
-        );
-      }
-    }, 1000);
-  }, [sharingSourceID]);
+  //     if (sources && sharingSourceID && sources.get(sharingSourceID)) {
+  //       setSourceImage(
+  //         sources.get(sharingSourceID)?.source.thumbnail.toDataURL() || ''
+  //       );
+  //       if (sources.get(sharingSourceID)?.source.appIcon != null) {
+  //         setAppIconSourceImage(
+  //           sources.get(sharingSourceID)?.source.appIcon.toDataURL() || ''
+  //         );
+  //       }
+  //       setSourceName(
+  //         sources.get(sharingSourceID)?.source.name ||
+  //           'Failed to get source name...'
+  //       );
+  //     }
+  //   }, 1000);
+  // }, [sharingSourceID]);
 
   return (
     <Card
