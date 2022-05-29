@@ -124,4 +124,15 @@ export default function initIpcMainHandlers(
     );
     getDeskreenGlobal().sharingSessionService.waitingForConnectionSharingSession = null;
   });
+
+  ipcMain.handle(IpcEvents.SetDeviceConnectedStatus, () => {
+    if (
+      getDeskreenGlobal().sharingSessionService
+        .waitingForConnectionSharingSession !== null
+    ) {
+      const sharingSession = getDeskreenGlobal().sharingSessionService
+        .waitingForConnectionSharingSession;
+      sharingSession?.setStatus(SharingSessionStatusEnum.CONNECTED);
+    }
+  });
 }

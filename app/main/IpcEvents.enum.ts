@@ -5,4 +5,5 @@ export enum IpcEvents {
   UnmarkRoomIDAsTaken = 'unmark-room-id-as-taken',
   GetAppPath = 'get-app-path',
   ResetWaitingForConnectionSharingSession = 'reset-waiting-for-connection-sharing-session',
+  SetDeviceConnectedStatus = 'set-device-connected-status',
 }

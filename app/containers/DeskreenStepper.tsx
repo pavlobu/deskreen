@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { ipcRenderer, remote, shell } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -32,23 +32,10 @@ import ColorlibStepIcon, {
 } from '../components/StepperPanel/ColorlibStepIcon';
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
-import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
-import Logger from '../utils/LoggerWithFilePrefix';
 import LanguageSelector from '../components/LanguageSelector';
 import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
 import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
-import SharingSessionService from '../features/SharingSessionService';
-import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import { IpcEvents } from '../main/IpcEvents.enum';
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
-
-const log = new Logger(__filename);
 
 const Fade = require('react-reveal/Fade');
 
@@ -215,11 +202,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setIsUserAllowedConnection(true);
     handleNext();
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.setStatus(SharingSessionStatusEnum.CONNECTED);
-    }
+    ipcRenderer.invoke(IpcEvents.SetDeviceConnectedStatus);
   }, [handleNext]);
 
   const handleUserClickedDeviceDisconnectButton = useCallback(async () => {
