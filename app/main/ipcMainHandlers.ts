@@ -144,4 +144,18 @@ export default function initIpcMainHandlers(
       );
     }
   );
+
+  ipcMain.handle(
+    IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
+    (_, sessionId) => {
+      const sharingSession = getDeskreenGlobal().sharingSessionService.sharingSessions.get(
+        sessionId
+      );
+      sharingSession?.disconnectByHostMachineUser();
+      sharingSession?.destroy();
+      getDeskreenGlobal().sharingSessionService.sharingSessions.delete(
+        sessionId
+      );
+    }
+  );
 }

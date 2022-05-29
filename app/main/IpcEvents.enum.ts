@@ -7,4 +7,5 @@ export enum IpcEvents {
   ResetWaitingForConnectionSharingSession = 'reset-waiting-for-connection-sharing-session',
   SetDeviceConnectedStatus = 'set-device-connected-status',
   GetSourceDisplayIDByDesktopCapturerSourceID = 'get-source-display-id-by-desktop-capturer-source-id',
+  DisconnectPeerAndDestroySharingSessionBySessionID = 'disconnect-peer-and-destroy-sharing-session-by-session-id',
 }

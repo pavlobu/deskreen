@@ -70,6 +70,7 @@ const ScanQRStep: React.FC = () => {
         setRoomID(
           sharingSessionService.waitingForConnectionSharingSession.roomID
         );
+        clearInterval(thisInterval);
       }
     }, 1000);
 

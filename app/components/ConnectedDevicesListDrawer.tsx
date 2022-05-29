@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/destructuring-assignment */
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -21,6 +21,7 @@ import DeviceInfoCallout from './DeviceInfoCallout';
 import SharingSourcePreviewCard from './SharingSourcePreviewCard';
 import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 import isProduction from '../utils/isProduction';
+import { IpcEvents } from '../main/IpcEvents.enum';
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
@@ -30,17 +31,6 @@ const connectedDevicesService = remote.getGlobal(
 ) as ConnectedDevicesService;
 
 const Fade = require('react-reveal/Fade');
-
-const disconnectPeerAndDestroySharingSessionBySessionID = (
-  sharingSessionID: string
-) => {
-  const sharingSession = sharingSessionService.sharingSessions.get(
-    sharingSessionID
-  );
-  sharingSession?.disconnectByHostMachineUser();
-  sharingSession?.destroy();
-  sharingSessionService.sharingSessions.delete(sharingSessionID);
-};
 
 interface ConnectedDevicesListDrawerProps {
   isOpen: boolean;
@@ -88,13 +78,17 @@ export default function ConnectedDevicesListDrawer(
       (d: Device) => d.id === id
     );
     if (!device) return;
-    disconnectPeerAndDestroySharingSessionBySessionID(device.sharingSessionID);
+    ipcRenderer.invoke(
+      IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
+      device.sharingSessionID
+    );
     connectedDevicesService.removeDeviceByID(id);
   }, []);
 
   const handleDisconnectAll = useCallback(() => {
     connectedDevicesService.devices.forEach((device: Device) => {
-      disconnectPeerAndDestroySharingSessionBySessionID(
+      ipcRenderer.invoke(
+        IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
         device.sharingSessionID
       );
     });
