@@ -16,19 +16,19 @@ import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from './CloseOverlayButton';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
-import SharingSessionService from '../features/SharingSessionService';
 import DeviceInfoCallout from './DeviceInfoCallout';
 import SharingSourcePreviewCard from './SharingSourcePreviewCard';
 import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 import isProduction from '../utils/isProduction';
 import { IpcEvents } from '../main/IpcEvents.enum';
 
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
 const connectedDevicesService = remote.getGlobal(
   'connectedDevicesService'
 ) as ConnectedDevicesService;
+
+type DeviceWithDesktopCapturerSourceId = Device & {
+  desktopCapturerSourceId: string;
+};
 
 const Fade = require('react-reveal/Fade');
 
@@ -62,21 +62,46 @@ export default function ConnectedDevicesListDrawer(
   const classes = useStyles();
 
   const [isAlertDisconectAllOpen, setIsAlertDisconectAllOpen] = useState(false);
-
+  const [connectedDevices, setConnectedDevices] = useState<
+    DeviceWithDesktopCapturerSourceId[]
+  >([]);
   const [devicesDisplayed, setDevicesDisplayed] = useState(new Map());
 
   useEffect(() => {
+    ipcRenderer
+      .invoke(IpcEvents.GetConnectedDevices)
+      // eslint-disable-next-line promise/always-return
+      .then((devices: Device[]) => {
+        console.log('devices', devices);
+        // setConnectedDevices(devices);
+        const devicesWithSourceIds: DeviceWithDesktopCapturerSourceId[] = [];
+        devices.forEach(async (device) => {
+          const sharingSourceId = await ipcRenderer.invoke(
+            IpcEvents.GetDesktopCapturerSourceIdBySharingSessionId,
+            device.sharingSessionID
+          );
+          devicesWithSourceIds.push({
+            ...device,
+            desktopCapturerSourceId: sharingSourceId,
+          });
+          console.log('device pushed');
+        });
+        setConnectedDevices(devicesWithSourceIds);
+      })
+      // eslint-disable-next-line no-console
+      .catch((e) => console.error(e));
+  }, []);
+
+  useEffect(() => {
     const map = new Map();
-    connectedDevicesService.getDevices().forEach((el) => {
+    connectedDevices.forEach((el) => {
       map.set(el.id, true);
     });
     setDevicesDisplayed(map);
-  }, [setDevicesDisplayed]);
+  }, [setDevicesDisplayed, connectedDevices]);
 
   const handleDisconnectOneDevice = useCallback(async (id: string) => {
-    const device = connectedDevicesService.devices.find(
-      (d: Device) => d.id === id
-    );
+    const device = connectedDevices.find((d: Device) => d.id === id);
     if (!device) return;
     ipcRenderer.invoke(
       IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
@@ -86,7 +111,7 @@ export default function ConnectedDevicesListDrawer(
   }, []);
 
   const handleDisconnectAll = useCallback(() => {
-    connectedDevicesService.devices.forEach((device: Device) => {
+    connectedDevices.forEach((device: Device) => {
       ipcRenderer.invoke(
         IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
         device.sharingSessionID
@@ -149,7 +174,6 @@ export default function ConnectedDevicesListDrawer(
         isOpen={props.isOpen}
         onClose={props.handleToggle}
         transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
-        // transitionDuration={0}
       >
         <Row between="xs" middle="xs" className={classes.drawerInnerTopPanel}>
           <Col xs={11}>
@@ -184,7 +208,7 @@ export default function ConnectedDevicesListDrawer(
               duration={isWithReactRevealAnimations() ? 700 : 0}
             >
               <div className={classes.zoomFullWidth}>
-                {connectedDevicesService.getDevices().map((device) => {
+                {connectedDevices.map((device) => {
                   return (
                     <div key={device.id}>
                       <Fade
@@ -206,11 +230,7 @@ export default function ConnectedDevicesListDrawer(
                             </Col>
                             <Col xs={6}>
                               <SharingSourcePreviewCard
-                                sharingSourceID={
-                                  sharingSessionService.sharingSessions.get(
-                                    device.sharingSessionID
-                                  )?.desktopCapturerSourceID
-                                }
+                                sharingSourceID={device.desktopCapturerSourceId}
                               />
                             </Col>
                           </Row>

@@ -158,4 +158,17 @@ export default function initIpcMainHandlers(
       );
     }
   );
+
+  ipcMain.handle(
+    IpcEvents.GetDesktopCapturerSourceIdBySharingSessionId,
+    (_, sessionId) => {
+      return getDeskreenGlobal().sharingSessionService.sharingSessions.get(
+        sessionId
+      )?.desktopCapturerSourceID;
+    }
+  );
+
+  ipcMain.handle(IpcEvents.GetConnectedDevices, () => {
+    return getDeskreenGlobal().connectedDevicesService.getDevices();
+  });
 }

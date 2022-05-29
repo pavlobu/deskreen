@@ -8,4 +8,6 @@ export enum IpcEvents {
   SetDeviceConnectedStatus = 'set-device-connected-status',
   GetSourceDisplayIDByDesktopCapturerSourceID = 'get-source-display-id-by-desktop-capturer-source-id',
   DisconnectPeerAndDestroySharingSessionBySessionID = 'disconnect-peer-and-destroy-sharing-session-by-session-id',
+  GetDesktopCapturerSourceIdBySharingSessionId = 'get-desktop-capturer-source-id-by-sharing-session-id',
+  GetConnectedDevices = 'get-connected-devices-list',
 }
