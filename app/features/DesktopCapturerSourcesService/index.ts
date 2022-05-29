@@ -17,7 +17,7 @@ export function getSourceTypeFromSourceID(
 type SourcesDisappearListener = (ids: string[]) => void;
 type SharingSessionID = string;
 
-class DesktopCapturerSources {
+class DesktopCapturerSourcesService {
   sources: Map<string, DesktopCapturerSourceWithType>;
 
   lastAvailableScreenIDs: string[];
@@ -84,7 +84,7 @@ class DesktopCapturerSources {
     return appWindowSources;
   }
 
-  getSourceDisplayIDBySourceID(sourceID: string) {
+  getSourceDisplayIDByDisplayCapturerSourceID(sourceID: string) {
     let displayID = '';
     [...this.sources.keys()].forEach((key) => {
       const source = this.sources.get(key);
@@ -206,4 +206,4 @@ class DesktopCapturerSources {
   }
 }
 
-export default DesktopCapturerSources;
+export default DesktopCapturerSourcesService;

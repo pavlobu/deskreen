@@ -135,4 +135,13 @@ export default function initIpcMainHandlers(
       sharingSession?.setStatus(SharingSessionStatusEnum.CONNECTED);
     }
   });
+
+  ipcMain.handle(
+    IpcEvents.GetSourceDisplayIDByDesktopCapturerSourceID,
+    (_, sourceId) => {
+      return getDeskreenGlobal().desktopCapturerSourcesService.getSourceDisplayIDByDisplayCapturerSourceID(
+        sourceId
+      );
+    }
+  );
 }

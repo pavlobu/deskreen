@@ -6,4 +6,5 @@ export enum IpcEvents {
   GetAppPath = 'get-app-path',
   ResetWaitingForConnectionSharingSession = 'reset-waiting-for-connection-sharing-session',
   SetDeviceConnectedStatus = 'set-device-connected-status',
+  GetSourceDisplayIDByDesktopCapturerSourceID = 'get-source-display-id-by-desktop-capturer-source-id',
 }
