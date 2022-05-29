@@ -8,6 +8,7 @@ import getDeskreenGlobal from '../utils/mainProcessHelpers/getDeskreenGlobal';
 import signalingServer from '../server';
 import Logger from '../utils/LoggerWithFilePrefix';
 import { IpcEvents } from './IpcEvents.enum';
+import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
 
 const log = new Logger(__filename);
 const v4IPGetter = require('internal-ip').v4;
@@ -93,21 +94,20 @@ export default function initIpcMainHandlers(
     deskreenGlobal.roomIDService.unmarkRoomIDAsTaken(roomID);
   });
 
+  function onDeviceConnectedCallback(device: Device): void {
+    getDeskreenGlobal().connectedDevicesService.setPendingConnectionDevice(
+      device
+    );
+    mainWindow.webContents.send(IpcEvents.SetPendingConnectionDevice, device);
+  }
+
   ipcMain.handle(IpcEvents.CreateWaitingForConnectionSharingSession, () => {
     getDeskreenGlobal()
       .sharingSessionService.createWaitingForConnectionSharingSession()
       // eslint-disable-next-line promise/always-return
       .then((waitingForConnectionSharingSession) => {
         waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            getDeskreenGlobal().connectedDevicesService.setPendingConnectionDevice(
-              device
-            );
-            mainWindow.webContents.send(
-              IpcEvents.SetPendingConnectionDevice,
-              device
-            );
-          }
+          onDeviceConnectedCallback
         );
       })
       .catch((e) => log.error(e));
@@ -118,6 +118,7 @@ export default function initIpcMainHandlers(
       .waitingForConnectionSharingSession;
     sharingSession?.disconnectByHostMachineUser();
     sharingSession?.destroy();
+    sharingSession?.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
     getDeskreenGlobal().sharingSessionService.sharingSessions.delete(
       sharingSession?.id as string
     );

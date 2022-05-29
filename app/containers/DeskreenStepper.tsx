@@ -206,30 +206,8 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   const handleCancelAlert = async () => {
     setIsAlertOpen(false);
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.denyConnectionForPartner();
-      sharingSession.destroy();
-      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
-      sharingSessionService.sharingSessions.delete(sharingSession.id);
-
-      const prevRoomID =
-        sharingSessionService.waitingForConnectionSharingSession.roomID;
-
-      sharingSessionService.waitingForConnectionSharingSession = null;
-      sharingSessionService
-        .createWaitingForConnectionSharingSession(prevRoomID)
-        // eslint-disable-next-line promise/always-return
-        .then((waitingForConnectionSharingSession) => {
-          waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-            (device: Device) => {
-              connectedDevicesService.setPendingConnectionDevice(device);
-            }
-          );
-        })
-        .catch((e) => log.error(e));
-    }
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   };
 
   const handleConfirmAlert = useCallback(async () => {
