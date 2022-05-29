@@ -10,4 +10,6 @@ export enum IpcEvents {
   DisconnectPeerAndDestroySharingSessionBySessionID = 'disconnect-peer-and-destroy-sharing-session-by-session-id',
   GetDesktopCapturerSourceIdBySharingSessionId = 'get-desktop-capturer-source-id-by-sharing-session-id',
   GetConnectedDevices = 'get-connected-devices-list',
+  DisconnectDeviceById = 'disconnect-device-by-id',
+  DisconnectAllDevices = 'disconnect-all-devices',
 }

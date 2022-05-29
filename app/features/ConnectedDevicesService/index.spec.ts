@@ -45,7 +45,7 @@ describe('ConnectedDevicesService tests', () => {
       it('should make .devices array empty', () => {
         service.devices.push(testDevice);
 
-        service.removeAllDevices();
+        service.disconnectAllDevices();
 
         expect(service.devices.length).toBe(0);
       });
@@ -59,7 +59,7 @@ describe('ConnectedDevicesService tests', () => {
         service.devices.push(testDevice);
         service.devices.push(testDevice2);
 
-        await service.removeDeviceByID(testDevice.id);
+        await service.disconnectDeviceByID(testDevice.id);
 
         let isStillInArray = false;
         service.devices.forEach((d) => {

@@ -1,6 +1,7 @@
+/* eslint-disable promise/always-return */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/destructuring-assignment */
-import { remote, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,16 +16,11 @@ import {
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from './CloseOverlayButton';
-import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import DeviceInfoCallout from './DeviceInfoCallout';
 import SharingSourcePreviewCard from './SharingSourcePreviewCard';
 import isWithReactRevealAnimations from '../utils/isWithReactRevealAnimations';
 import isProduction from '../utils/isProduction';
 import { IpcEvents } from '../main/IpcEvents.enum';
-
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
 
 type DeviceWithDesktopCapturerSourceId = Device & {
   desktopCapturerSourceId: string;
@@ -68,28 +64,39 @@ export default function ConnectedDevicesListDrawer(
   const [devicesDisplayed, setDevicesDisplayed] = useState(new Map());
 
   useEffect(() => {
-    ipcRenderer
-      .invoke(IpcEvents.GetConnectedDevices)
-      // eslint-disable-next-line promise/always-return
-      .then((devices: Device[]) => {
-        console.log('devices', devices);
-        // setConnectedDevices(devices);
-        const devicesWithSourceIds: DeviceWithDesktopCapturerSourceId[] = [];
-        devices.forEach(async (device) => {
-          const sharingSourceId = await ipcRenderer.invoke(
-            IpcEvents.GetDesktopCapturerSourceIdBySharingSessionId,
-            device.sharingSessionID
-          );
-          devicesWithSourceIds.push({
-            ...device,
-            desktopCapturerSourceId: sharingSourceId,
-          });
-          console.log('device pushed');
-        });
-        setConnectedDevices(devicesWithSourceIds);
-      })
-      // eslint-disable-next-line no-console
-      .catch((e) => console.error(e));
+    function getConnectedDevicesCallback() {
+      ipcRenderer
+        .invoke(IpcEvents.GetConnectedDevices)
+        // eslint-disable-next-line promise/always-return
+        .then(async (devices: Device[]) => {
+          const devicesWithSourceIds: DeviceWithDesktopCapturerSourceId[] = [];
+          // eslint-disable-next-line no-restricted-syntax
+          for await (const device of devices) {
+            const sharingSourceId = await ipcRenderer.invoke(
+              IpcEvents.GetDesktopCapturerSourceIdBySharingSessionId,
+              device.sharingSessionID
+            );
+            devicesWithSourceIds.push({
+              ...device,
+              desktopCapturerSourceId: sharingSourceId,
+            });
+          }
+          setConnectedDevices(devicesWithSourceIds);
+        })
+        // eslint-disable-next-line no-console
+        .catch((e) => console.error(e));
+    }
+
+    getConnectedDevicesCallback();
+
+    const connectedDevicesInterval = setInterval(
+      getConnectedDevicesCallback,
+      4000
+    );
+
+    return () => {
+      clearInterval(connectedDevicesInterval);
+    };
   }, []);
 
   useEffect(() => {
@@ -100,15 +107,18 @@ export default function ConnectedDevicesListDrawer(
     setDevicesDisplayed(map);
   }, [setDevicesDisplayed, connectedDevices]);
 
-  const handleDisconnectOneDevice = useCallback(async (id: string) => {
-    const device = connectedDevices.find((d: Device) => d.id === id);
-    if (!device) return;
-    ipcRenderer.invoke(
-      IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
-      device.sharingSessionID
-    );
-    connectedDevicesService.removeDeviceByID(id);
-  }, []);
+  const handleDisconnectOneDevice = useCallback(
+    async (id: string) => {
+      const device = connectedDevices.find((d: Device) => d.id === id);
+      if (!device) return;
+      ipcRenderer.invoke(
+        IpcEvents.DisconnectPeerAndDestroySharingSessionBySessionID,
+        device.sharingSessionID
+      );
+      ipcRenderer.invoke(IpcEvents.DisconnectDeviceById, id);
+    },
+    [connectedDevices]
+  );
 
   const handleDisconnectAll = useCallback(() => {
     connectedDevices.forEach((device: Device) => {
@@ -117,8 +127,8 @@ export default function ConnectedDevicesListDrawer(
         device.sharingSessionID
       );
     });
-    connectedDevicesService.removeAllDevices();
-  }, []);
+    ipcRenderer.invoke(IpcEvents.DisconnectAllDevices);
+  }, [connectedDevices]);
 
   const hideOneDeviceInDevicesDisplayed = useCallback(
     (id) => {
@@ -183,7 +193,7 @@ export default function ConnectedDevicesListDrawer(
               </div>
               <Button
                 intent="danger"
-                disabled={connectedDevicesService.getDevices().length === 0}
+                disabled={connectedDevices.length === 0}
                 onClick={() => {
                   setIsAlertDisconectAllOpen(true);
                 }}

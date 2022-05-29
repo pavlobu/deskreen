@@ -22,11 +22,11 @@ class ConnectedDevices {
     return this.devices;
   }
 
-  removeAllDevices() {
+  disconnectAllDevices() {
     this.devices = [] as Device[];
   }
 
-  removeDeviceByID(deviceIDToRemove: string) {
+  disconnectDeviceByID(deviceIDToRemove: string) {
     return new Promise<undefined>((resolve) => {
       this.devices = this.devices.filter((d) => {
         return d.id !== deviceIDToRemove;

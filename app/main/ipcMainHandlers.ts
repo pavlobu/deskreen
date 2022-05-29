@@ -171,4 +171,12 @@ export default function initIpcMainHandlers(
   ipcMain.handle(IpcEvents.GetConnectedDevices, () => {
     return getDeskreenGlobal().connectedDevicesService.getDevices();
   });
+
+  ipcMain.handle(IpcEvents.DisconnectDeviceById, (_, id) => {
+    getDeskreenGlobal().connectedDevicesService.disconnectDeviceByID(id);
+  });
+
+  ipcMain.handle(IpcEvents.DisconnectAllDevices, () => {
+    getDeskreenGlobal().connectedDevicesService.disconnectAllDevices();
+  });
 }
