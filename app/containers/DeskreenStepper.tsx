@@ -39,6 +39,7 @@ import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
 import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
 import SharingSessionService from '../features/SharingSessionService';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
+import { IpcEvents } from '../main/IpcEvents.enum';
 
 const sharingSessionService = remote.getGlobal(
   'sharingSessionService'
@@ -117,8 +118,8 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   useEffect(() => {
-    ipcRenderer.invoke('create-waiting-for-connection-sharing-session');
-    ipcRenderer.on('set-pending-connection-device', (_, device) => {
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
+    ipcRenderer.on(IpcEvents.SetPendingConnectionDevice, (_, device) => {
       setPendingConnectionDevice(device);
       setIsAlertOpen(true);
     });
@@ -184,17 +185,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
   const handleResetWithSharingSessionRestart = useCallback(() => {
@@ -202,24 +193,8 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    const sharingSession =
-      sharingSessionService.waitingForConnectionSharingSession;
-    sharingSession?.disconnectByHostMachineUser();
-    sharingSession?.destroy();
-    sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
-    sharingSessionService.waitingForConnectionSharingSession = null;
-
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
   React.useImperativeHandle(ref, () => ({

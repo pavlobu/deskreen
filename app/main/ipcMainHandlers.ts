@@ -7,6 +7,7 @@ import RoomIDService from '../server/RoomIDService';
 import getDeskreenGlobal from '../utils/mainProcessHelpers/getDeskreenGlobal';
 import signalingServer from '../server';
 import Logger from '../utils/LoggerWithFilePrefix';
+import { IpcEvents } from './IpcEvents.enum';
 
 const log = new Logger(__filename);
 const v4IPGetter = require('internal-ip').v4;
@@ -82,18 +83,17 @@ export default function initIpcMainHandlers(
     return '255.255.255.255';
   });
 
-  ipcMain.handle('get-app-path', () => {
+  ipcMain.handle(IpcEvents.GetAppPath, () => {
     const deskreenGlobal = getDeskreenGlobal();
     return deskreenGlobal.appPath;
   });
 
-  ipcMain.handle('unmark-room-id-as-taken', (_, roomID) => {
+  ipcMain.handle(IpcEvents.UnmarkRoomIDAsTaken, (_, roomID) => {
     const deskreenGlobal = getDeskreenGlobal();
     deskreenGlobal.roomIDService.unmarkRoomIDAsTaken(roomID);
   });
 
-  ipcMain.handle('create-waiting-for-connection-sharing-session', () => {
-    console.log('handle create-waiting-for-connection-sharing-session');
+  ipcMain.handle(IpcEvents.CreateWaitingForConnectionSharingSession, () => {
     getDeskreenGlobal()
       .sharingSessionService.createWaitingForConnectionSharingSession()
       // eslint-disable-next-line promise/always-return
@@ -104,12 +104,23 @@ export default function initIpcMainHandlers(
               device
             );
             mainWindow.webContents.send(
-              'set-pending-connection-device',
+              IpcEvents.SetPendingConnectionDevice,
               device
             );
           }
         );
       })
       .catch((e) => log.error(e));
+  });
+
+  ipcMain.handle(IpcEvents.ResetWaitingForConnectionSharingSession, () => {
+    const sharingSession = getDeskreenGlobal().sharingSessionService
+      .waitingForConnectionSharingSession;
+    sharingSession?.disconnectByHostMachineUser();
+    sharingSession?.destroy();
+    getDeskreenGlobal().sharingSessionService.sharingSessions.delete(
+      sharingSession?.id as string
+    );
+    getDeskreenGlobal().sharingSessionService.waitingForConnectionSharingSession = null;
   });
 }

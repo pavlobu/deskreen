@@ -18,6 +18,7 @@ import translationZH_CN from '../locales/zh_CN/translation.json';
 import translationZH_TW from '../locales/zh_TW/translation.json';
 import translationDA from '../locales/da/translation.json';
 import translationDE from '../locales/de/translation.json';
+import { IpcEvents } from '../main/IpcEvents.enum';
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
@@ -68,7 +69,7 @@ export const getShuffledArrayOfHello = (): string[] => {
 };
 
 async function initI18NextOptions() {
-  const appPath = await ipcRenderer.invoke('get-app-path');
+  const appPath = await ipcRenderer.invoke(IpcEvents.GetAppPath);
   const i18nextOptions = {
     interpolation: {
       escapeValue: false,
