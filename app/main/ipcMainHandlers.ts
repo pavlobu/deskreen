@@ -266,4 +266,12 @@ export default function initIpcMainHandlers(
       id
     );
   });
+
+  ipcMain.handle(IpcEvents.NotifyAllSessionsWithAppThemeChanged, () => {
+    getDeskreenGlobal().sharingSessionService.sharingSessions.forEach(
+      (sharingSession) => {
+        sharingSession?.appThemeChanged();
+      }
+    );
+  });
 }

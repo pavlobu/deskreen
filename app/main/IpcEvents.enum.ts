@@ -20,4 +20,5 @@ export enum IpcEvents {
   GetWaitingForConnectionSharingSessionRoomId = 'get-waiting-for-connection-sharing-session-room-id',
   GetDesktopSharingSourceIds = 'get-desktop-sharing-source-ids',
   SetDesktopCapturerSourceId = 'set-desktop-capturer-source-id',
+  NotifyAllSessionsWithAppThemeChanged = 'notify-all-sessions-with-app-theme-changed',
 }
