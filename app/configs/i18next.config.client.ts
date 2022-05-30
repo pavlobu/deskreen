@@ -6,10 +6,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import SyncBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
-import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
-
 import translationEN from '../locales/en/translation.json';
 import translationES from '../locales/es/translation.json';
 import translationUA from '../locales/ua/translation.json';
@@ -87,9 +85,10 @@ async function initI18NextOptions() {
       jsonIndent: 2,
     },
     saveMissing: true,
-    lng: (settings.hasSync('appLanguage')
-      ? settings.getSync('appLanguage')
-      : 'en') as string,
+    // lng: (settings.hasSync('appLanguage')
+    //   ? settings.getSync('appLanguage')
+    //   : 'en') as string,
+    lng: 'en',
     fallbackLng: config.fallbackLng,
     whitelist: config.languages,
     react: {

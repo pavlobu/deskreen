@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import settings from 'electron-settings';
 import { Classes } from '@blueprintjs/core';
 
 // TODO: move to 'constants' tsx file ?
@@ -30,9 +29,10 @@ export const SettingsProvider: React.FC = ({ children }) => {
   const [currentLanguage, setCurrentLanguage] = useState('en');
 
   const loadDarkThemeFromSettings = () => {
-    const gotIsDarkThemeFromSettings = settings.hasSync('appIsDarkTheme')
-      ? settings.getSync('appIsDarkTheme') === 'true'
-      : false;
+    // const gotIsDarkThemeFromSettings = settings.hasSync('appIsDarkTheme')
+    //   ? settings.getSync('appIsDarkTheme') === 'true'
+    //   : false;
+    const gotIsDarkThemeFromSettings = true;
 
     if (gotIsDarkThemeFromSettings) {
       document.body.classList.toggle(Classes.DARK);
@@ -47,7 +47,7 @@ export const SettingsProvider: React.FC = ({ children }) => {
   }, []);
 
   const setIsDarkThemeHook = (val: boolean) => {
-    settings.setSync('appIsDarkTheme', `${val}`);
+    // settings.setSync('appIsDarkTheme', `${val}`);
     setIsDarkTheme(val);
   };
 

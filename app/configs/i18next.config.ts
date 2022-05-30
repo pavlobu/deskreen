@@ -3,15 +3,15 @@
 import i18n from 'i18next';
 import i18nextBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
-import settings from 'electron-settings';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
 
 const i18nextOptions = {
   fallbackLng: config.fallbackLng,
-  lng: (settings.hasSync('appLanguage')
-    ? settings.getSync('appLanguage')
-    : 'en') as string,
+  // lng: (settings.hasSync('appLanguage')
+  //   ? settings.getSync('appLanguage')
+  //   : 'en') as string,
+  lng: 'en',
   ns: 'translation',
   defaultNS: 'translation',
   backend: {

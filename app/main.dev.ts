@@ -12,7 +12,8 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
-import settings from 'electron-settings';
+// import ElectronStore from 'electron-store';
+import store from './deskreen-electron-store';
 import i18n from './configs/i18next.config';
 import signalingServer from './server';
 import MenuBuilder from './menu';
@@ -21,6 +22,9 @@ import AppUpdater from './utils/AppUpdater';
 import installExtensions from './utils/installExtensions';
 import getNewVersionTag from './utils/getNewVersionTag';
 import initIpcMainHandlers from './main/ipcMainHandlers';
+import { ElectronStoreKeys } from './enums/ElectronStoreKeys.enum';
+
+// const store = new ElectronStore();
 
 export default class DeskreenApp {
   mainWindow: BrowserWindow | null = null;
@@ -180,7 +184,7 @@ export default class DeskreenApp {
       setTimeout(async () => {
         if (lng !== 'en' && i18n.language !== lng) {
           i18n.changeLanguage(lng);
-          await settings.set('appLanguage', lng);
+          store.set(ElectronStoreKeys.AppLanguage, lng);
         }
       }, 400);
     });

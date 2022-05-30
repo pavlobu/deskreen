@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 import { Display, ipcMain, BrowserWindow, screen } from 'electron';
-import settings from 'electron-settings';
 import i18n from '../configs/i18next.config';
 import ConnectedDevicesService from '../features/ConnectedDevicesService';
 import SharingSession from '../features/SharingSessionService/SharingSession';
@@ -21,7 +20,7 @@ export default function initIpcMainHandlers(
 ) {
   ipcMain.on('client-changed-language', async (_, newLangCode) => {
     i18n.changeLanguage(newLangCode);
-    await settings.set('appLanguage', newLangCode);
+    // await settings.set('appLanguage', newLangCode);
   });
 
   ipcMain.handle('get-signaling-server-port', () => {
