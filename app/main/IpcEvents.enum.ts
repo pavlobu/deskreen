@@ -17,4 +17,5 @@ export enum IpcEvents {
   GetWaitingForConnectionSharingSessionSourceId = 'get-waiting-for-connection-sharing-session-source-id',
   StartSharingOnWaitingForConnectionSharingSession = 'start-sharing-on-waiting-for-connection-sharing-session',
   GetPendingConnectionDevice = 'get-pending-connection-device',
+  GetWaitingForConnectionSharingSessionRoomId = 'get-waiting-for-connection-sharing-session-room-id',
 }

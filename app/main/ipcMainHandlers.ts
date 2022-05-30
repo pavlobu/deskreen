@@ -235,4 +235,15 @@ export default function initIpcMainHandlers(
   ipcMain.handle(IpcEvents.GetPendingConnectionDevice, () => {
     return getDeskreenGlobal().connectedDevicesService.pendingConnectionDevice;
   });
+
+  ipcMain.handle(IpcEvents.GetWaitingForConnectionSharingSessionRoomId, () => {
+    if (
+      getDeskreenGlobal().sharingSessionService
+        .waitingForConnectionSharingSession === null
+    ) {
+      return undefined;
+    }
+    return getDeskreenGlobal().sharingSessionService
+      .waitingForConnectionSharingSession?.roomID;
+  });
 }
