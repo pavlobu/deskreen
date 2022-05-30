@@ -13,4 +13,5 @@ export enum IpcEvents {
   DisconnectDeviceById = 'disconnect-device-by-id',
   DisconnectAllDevices = 'disconnect-all-devices',
   AppLanguageChanged = 'app-language-changed',
+  GetDesktopCapturerServiceSourcesMap = 'get-desktop-capturer-service-sources-map',
 }

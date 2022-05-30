@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import { Display, ipcMain, BrowserWindow, screen } from 'electron';
 import settings from 'electron-settings';
 import i18n from '../configs/i18next.config';
@@ -186,5 +187,23 @@ export default function initIpcMainHandlers(
         sharingSession?.appLanguageChanged();
       }
     );
+  });
+
+  ipcMain.handle(IpcEvents.GetDesktopCapturerServiceSourcesMap, () => {
+    const map = getDeskreenGlobal().desktopCapturerSourcesService.getSourcesMap();
+    const res = {};
+    // eslint-disable-next-line guard-for-in
+    for (const key of map.keys()) {
+      const source = map.get(key);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      res[key] = {
+        source: {
+          thumbnail: source?.source.thumbnail?.toDataURL(),
+          appIcon: source?.source.appIcon?.toDataURL(),
+        },
+      };
+    }
+    return res;
   });
 }

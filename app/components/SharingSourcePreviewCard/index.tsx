@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Text, Card, Spinner } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
-import DesktopCapturerSources from '../../features/DesktopCapturerSourcesService';
-
-const desktopCapturerSourcesService = remote.getGlobal(
-  'desktopCapturerSourcesService'
-) as DesktopCapturerSources;
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 class SharingSourcePreviewCardProps {
   sharingSourceID: string | undefined = '';
@@ -26,19 +22,23 @@ export default function SharingSourcePreviewCard(
   const [isHovered, setIsHovered] = useState(false);
   useEffect(() => {
     setTimeout(async () => {
-      const sources = desktopCapturerSourcesService.getSourcesMap();
+      const sources = await ipcRenderer.invoke(
+        IpcEvents.GetDesktopCapturerServiceSourcesMap
+      );
 
-      if (sources && sharingSourceID && sources.get(sharingSourceID)) {
+      if (sources && sharingSourceID && sources[sharingSourceID]) {
         setSourceImage(
-          sources.get(sharingSourceID)?.source.thumbnail.toDataURL() || ''
+          ((sources[sharingSourceID]?.source.thumbnail as unknown) as string) ||
+            ''
         );
-        if (sources.get(sharingSourceID)?.source.appIcon != null) {
+        if (sources[sharingSourceID]?.source.appIcon != null) {
           setAppIconSourceImage(
-            sources.get(sharingSourceID)?.source.appIcon.toDataURL() || ''
+            ((sources[sharingSourceID]?.source.appIcon as unknown) as string) ||
+              ''
           );
         }
         setSourceName(
-          sources.get(sharingSourceID)?.source.name ||
+          sources[sharingSourceID]?.source.name ||
             'Failed to get source name...'
         );
       }
