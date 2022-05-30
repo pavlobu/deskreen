@@ -19,4 +19,5 @@ export enum IpcEvents {
   GetPendingConnectionDevice = 'get-pending-connection-device',
   GetWaitingForConnectionSharingSessionRoomId = 'get-waiting-for-connection-sharing-session-room-id',
   GetDesktopSharingSourceIds = 'get-desktop-sharing-source-ids',
+  SetDesktopCapturerSourceId = 'set-desktop-capturer-source-id',
 }

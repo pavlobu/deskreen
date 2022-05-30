@@ -260,4 +260,10 @@ export default function initIpcMainHandlers(
         .map((source) => source.id);
     }
   );
+
+  ipcMain.handle(IpcEvents.SetDesktopCapturerSourceId, (_, id) => {
+    getDeskreenGlobal().sharingSessionService.waitingForConnectionSharingSession?.setDesktopCapturerSourceID(
+      id
+    );
+  });
 }

@@ -1,12 +1,8 @@
 import React from 'react';
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Row, Col } from 'react-flexbox-grid';
-import SharingSessionService from '../../../features/SharingSessionService';
 import SharingSourcePreviewCard from '../../SharingSourcePreviewCard';
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+import { IpcEvents } from '../../../main/IpcEvents.enum';
 
 class PreviewGridListProps {
   viewSharingIds: string[] = [];
@@ -41,15 +37,7 @@ export default function PreviewGridList(props: PreviewGridListProps) {
               sharingSourceID={id}
               isChangeApperanceOnHover
               onClickCard={async () => {
-                let sharingSession;
-                if (
-                  sharingSessionService.waitingForConnectionSharingSession !==
-                  null
-                ) {
-                  sharingSession =
-                    sharingSessionService.waitingForConnectionSharingSession;
-                  sharingSession.setDesktopCapturerSourceID(id);
-                }
+                ipcRenderer.invoke(IpcEvents.SetDesktopCapturerSourceId, id);
                 if (isEntireScreen) {
                   handleNextEntireScreen();
                 } else {
