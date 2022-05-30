@@ -239,11 +239,9 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
           handleBack={handleBack}
           handleNextEntireScreen={handleNextEntireScreen}
           handleNextApplicationWindow={handleNextApplicationWindow}
-          resetPendingConnectionDevice={
-            () => setPendingConnectionDevice(null)
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
+          resetPendingConnectionDevice={() => setPendingConnectionDevice(null)}
           resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
+          connectedDevice={pendingConnectionDevice}
         />
       </div>
     );
@@ -255,6 +253,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     handleBack,
     handleNextEntireScreen,
     handleNextApplicationWindow,
+    pendingConnectionDevice,
   ]);
 
   const renderStepLabelContent = useCallback(

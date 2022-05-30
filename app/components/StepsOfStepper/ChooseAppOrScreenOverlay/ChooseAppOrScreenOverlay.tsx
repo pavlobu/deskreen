@@ -1,4 +1,4 @@
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import React, { useCallback, useEffect, useState } from 'react';
 import { H3, Card, Dialog, Button } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
@@ -6,12 +6,8 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import CloseOverlayButton from '../../CloseOverlayButton';
 import PreviewGridList from './PreviewGridList';
-import DesktopCapturerSources from '../../../features/DesktopCapturerSourcesService';
 import isWithReactRevealAnimations from '../../../utils/isWithReactRevealAnimations';
-
-const desktopCapturerSourcesService = remote.getGlobal(
-  'desktopCapturerSourcesService'
-) as DesktopCapturerSources;
+import { IpcEvents } from '../../../main/IpcEvents.enum';
 
 const Zoom = require('react-reveal/Zoom');
 const Fade = require('react-reveal/Fade');
@@ -62,37 +58,22 @@ export default function ChooseAppOrScreenOverlay(
   } = props;
   const classes = useStyles();
 
-  const [
-    screenViewSharingObjectsMap,
-    setScreenViewSharingObjectsMap,
-  ] = useState<Map<string, ViewSharingObject>>(new Map());
+  const [screenViewSharingIds, setScreenViewSharingIds] = useState<string[]>(
+    []
+  );
 
-  const [
-    appsWindowsViewSharingObjectsMap,
-    setAppsWindowsViewSharingObjectsMap,
-  ] = useState<Map<string, ViewSharingObject>>(new Map());
+  const [appWindowsViewSharingIds, setAppWindowsViewSharingIds] = useState<
+    string[]
+  >([]);
 
-  const handleRefreshSources = useCallback(() => {
+  const handleRefreshSources = useCallback(async () => {
+    const ids = await ipcRenderer.invoke(IpcEvents.GetDesktopSharingSourceIds, {
+      isEntireScreenToShareChosen,
+    });
     if (isEntireScreenToShareChosen) {
-      const sourcesToShare = desktopCapturerSourcesService.getScreenSources();
-      const screenViewMap = new Map<string, ViewSharingObject>();
-      sourcesToShare.forEach((source) => {
-        screenViewMap.set(source.id, {
-          thumbnailUrl: source.thumbnail.toDataURL(),
-          name: source.name,
-        });
-      });
-      setScreenViewSharingObjectsMap(screenViewMap);
+      setScreenViewSharingIds(ids);
     } else {
-      const sourcesToShare = desktopCapturerSourcesService.getAppWindowSources();
-      const appViewMap = new Map<string, ViewSharingObject>();
-      sourcesToShare.forEach((source) => {
-        appViewMap.set(source.id, {
-          thumbnailUrl: source.thumbnail.toDataURL(),
-          name: source.name,
-        });
-      });
-      setAppsWindowsViewSharingObjectsMap(appViewMap);
+      setAppWindowsViewSharingIds(ids);
     }
   }, [isEntireScreenToShareChosen]);
 
@@ -208,10 +189,10 @@ export default function ChooseAppOrScreenOverlay(
             <Row>
               <div className={classes.sharePreviewsContainer}>
                 <PreviewGridList
-                  viewSharingObjectsMap={
+                  viewSharingIds={
                     isEntireScreenToShareChosen
-                      ? screenViewSharingObjectsMap
-                      : appsWindowsViewSharingObjectsMap
+                      ? screenViewSharingIds
+                      : appWindowsViewSharingIds
                   }
                   isEntireScreen={isEntireScreenToShareChosen}
                   handleNextEntireScreen={() => {

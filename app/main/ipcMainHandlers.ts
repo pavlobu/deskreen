@@ -246,4 +246,18 @@ export default function initIpcMainHandlers(
     return getDeskreenGlobal().sharingSessionService
       .waitingForConnectionSharingSession?.roomID;
   });
+
+  ipcMain.handle(
+    IpcEvents.GetDesktopSharingSourceIds,
+    (_, { isEntireScreenToShareChosen }) => {
+      if (isEntireScreenToShareChosen === true) {
+        return getDeskreenGlobal()
+          .desktopCapturerSourcesService.getScreenSources()
+          .map((source) => source.id);
+      }
+      return getDeskreenGlobal()
+        .desktopCapturerSourcesService.getAppWindowSources()
+        .map((source) => source.id);
+    }
+  );
 }

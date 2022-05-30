@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ipcRenderer } from 'electron';
 import { Button, Text } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ interface IntermediateStepProps {
   handleNextApplicationWindow: () => void;
   resetPendingConnectionDevice: () => void;
   resetUserAllowedConnection: () => void;
+  connectedDevice: Device | null;
 }
 
 function getStepContent(
@@ -25,7 +26,7 @@ function getStepContent(
   stepIndex: number,
   handleNextEntireScreen: () => void,
   handleNextApplicationWindow: () => void,
-  device: Device
+  connectedDevice: Device | null
 ) {
   switch (stepIndex) {
     case 0:
@@ -47,7 +48,7 @@ function getStepContent(
         </>
       );
     case 2:
-      return <ConfirmStep device={device} />;
+      return <ConfirmStep device={connectedDevice} />;
     default:
       return 'Unknown stepIndex';
   }
@@ -59,7 +60,6 @@ function isConfirmStep(activeStep: number, steps: string[]) {
 
 export default function IntermediateStep(props: IntermediateStepProps) {
   const { t } = useTranslation();
-  const [pendingConnectionDevice, setPendingConnectionDevice] = useState();
 
   const {
     activeStep,
@@ -70,18 +70,8 @@ export default function IntermediateStep(props: IntermediateStepProps) {
     handleNextApplicationWindow,
     resetPendingConnectionDevice,
     resetUserAllowedConnection,
+    connectedDevice,
   } = props;
-
-  useEffect(() => {
-    // eslint-disable-next-line promise/always-return
-    ipcRenderer
-      .invoke(IpcEvents.GetPendingConnectionDevice)
-      // eslint-disable-next-line promise/always-return
-      .then((device) => {
-        setPendingConnectionDevice(device);
-      })
-      .catch((e) => console.error(e));
-  }, []);
 
   return (
     <Col
@@ -95,15 +85,13 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         width: '100%',
       }}
     >
-      {pendingConnectionDevice &&
-        getStepContent(
-          t,
-          activeStep,
-          handleNextEntireScreen,
-          handleNextApplicationWindow,
-          pendingConnectionDevice
-        )}
-
+      {getStepContent(
+        t,
+        activeStep,
+        handleNextEntireScreen,
+        handleNextApplicationWindow,
+        connectedDevice
+      )}
       {
         // eslint-disable-next-line no-nested-ternary
         process.env.NODE_ENV === 'production' &&
