@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Text } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { useTranslation } from 'react-i18next';
 import SharingSourcePreviewCard from '../SharingSourcePreviewCard';
-import SharingSessionService from '../../features/SharingSessionService';
 import DeviceInfoCallout from '../DeviceInfoCallout';
-import SharingSession from '../../features/SharingSessionService/SharingSession';
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 interface ConfirmStepProps {
   device: Device | null;
@@ -19,23 +14,25 @@ interface ConfirmStepProps {
 export default function ConfirmStep(props: ConfirmStepProps) {
   const { t } = useTranslation();
   const { device } = props;
-  const [sharingSession, setSharingSession] = useState<
-    SharingSession | undefined
-  >();
+  const [
+    waitingForConnectionSharingSessionSourceId,
+    setWaitingForConnectionSharingSessionSourceId,
+  ] = useState<string | undefined>();
 
   useEffect(() => {
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      setSharingSession(
-        sharingSessionService.waitingForConnectionSharingSession
-      );
-    }
+    ipcRenderer
+      .invoke(IpcEvents.GetWaitingForConnectionSharingSessionSourceId)
+      // eslint-disable-next-line promise/always-return
+      .then((id) => {
+        setWaitingForConnectionSharingSessionSourceId(id);
+      })
+      .catch((e) => console.error(e));
   }, []);
 
   return (
     <div style={{ width: '80%', marginTop: '50px' }}>
       <Row style={{ marginBottom: '10px' }}>
         <Col xs={12} style={{ textAlign: 'center' }}>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <Text>{t('Check if all is OK and click Confirm')}</Text>
         </Col>
       </Row>
@@ -51,7 +48,7 @@ export default function ConfirmStep(props: ConfirmStepProps) {
         </Col>
         <Col xs={5}>
           <SharingSourcePreviewCard
-            sharingSourceID={sharingSession?.desktopCapturerSourceID}
+            sharingSourceID={waitingForConnectionSharingSessionSourceId}
           />
         </Col>
       </Row>

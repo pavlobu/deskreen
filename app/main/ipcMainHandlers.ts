@@ -206,4 +206,12 @@ export default function initIpcMainHandlers(
     }
     return res;
   });
+
+  ipcMain.handle(
+    IpcEvents.GetWaitingForConnectionSharingSessionSourceId,
+    () => {
+      return getDeskreenGlobal().sharingSessionService
+        .waitingForConnectionSharingSession?.desktopCapturerSourceID;
+    }
+  );
 }

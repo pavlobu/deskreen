@@ -14,4 +14,5 @@ export enum IpcEvents {
   DisconnectAllDevices = 'disconnect-all-devices',
   AppLanguageChanged = 'app-language-changed',
   GetDesktopCapturerServiceSourcesMap = 'get-desktop-capturer-service-sources-map',
+  GetWaitingForConnectionSharingSessionSourceId = 'get-waiting-for-connection-sharing-session-source-id',
 }
