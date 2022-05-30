@@ -231,4 +231,8 @@ export default function initIpcMainHandlers(
       getDeskreenGlobal().connectedDevicesService.resetPendingConnectionDevice();
     }
   );
+
+  ipcMain.handle(IpcEvents.GetPendingConnectionDevice, () => {
+    return getDeskreenGlobal().connectedDevicesService.pendingConnectionDevice;
+  });
 }

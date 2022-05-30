@@ -16,7 +16,6 @@ export default function ToggleThemeBtnGroup() {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(true);
     }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
     sharingSessionService.sharingSessions.forEach((sharingSession) => {
       sharingSession?.appThemeChanged();
     });
@@ -27,7 +26,6 @@ export default function ToggleThemeBtnGroup() {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(false);
     }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
     sharingSessionService.sharingSessions.forEach((sharingSession) => {
       sharingSession?.appThemeChanged();
     });

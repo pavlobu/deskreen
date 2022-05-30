@@ -1,19 +1,13 @@
-import React from 'react';
-import { ipcRenderer, remote } from 'electron';
+import React, { useEffect, useState } from 'react';
+import { ipcRenderer } from 'electron';
 import { Button, Text } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import { Col, Row } from 'react-flexbox-grid';
-import DEVICES from '../../constants/test-devices.json';
 import ScanQRStep from './ScanQRStep';
 import ChooseAppOrScreeenStep from './ChooseAppOrScreeenStep';
 import ConfirmStep from './ConfirmStep';
-import ConnectedDevicesService from '../../features/ConnectedDevicesService';
 import { IpcEvents } from '../../main/IpcEvents.enum';
-
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
 
 interface IntermediateStepProps {
   activeStep: number;
@@ -31,7 +25,7 @@ function getStepContent(
   stepIndex: number,
   handleNextEntireScreen: () => void,
   handleNextApplicationWindow: () => void,
-  pendingConnectionDevice: Device | null
+  device: Device
 ) {
   switch (stepIndex) {
     case 0:
@@ -53,7 +47,7 @@ function getStepContent(
         </>
       );
     case 2:
-      return <ConfirmStep device={pendingConnectionDevice} />;
+      return <ConfirmStep device={device} />;
     default:
       return 'Unknown stepIndex';
   }
@@ -65,6 +59,7 @@ function isConfirmStep(activeStep: number, steps: string[]) {
 
 export default function IntermediateStep(props: IntermediateStepProps) {
   const { t } = useTranslation();
+  const [pendingConnectionDevice, setPendingConnectionDevice] = useState();
 
   const {
     activeStep,
@@ -77,9 +72,16 @@ export default function IntermediateStep(props: IntermediateStepProps) {
     resetUserAllowedConnection,
   } = props;
 
-  const connectDevice = (device: Device) => {
-    connectedDevicesService.setPendingConnectionDevice(device);
-  };
+  useEffect(() => {
+    // eslint-disable-next-line promise/always-return
+    ipcRenderer
+      .invoke(IpcEvents.GetPendingConnectionDevice)
+      // eslint-disable-next-line promise/always-return
+      .then((device) => {
+        setPendingConnectionDevice(device);
+      })
+      .catch((e) => console.error(e));
+  }, []);
 
   return (
     <Col
@@ -93,13 +95,14 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         width: '100%',
       }}
     >
-      {getStepContent(
-        t,
-        activeStep,
-        handleNextEntireScreen,
-        handleNextApplicationWindow,
-        connectedDevicesService.pendingConnectionDevice
-      )}
+      {pendingConnectionDevice &&
+        getStepContent(
+          t,
+          activeStep,
+          handleNextEntireScreen,
+          handleNextApplicationWindow,
+          pendingConnectionDevice
+        )}
 
       {
         // eslint-disable-next-line no-nested-ternary
@@ -111,11 +114,7 @@ export default function IntermediateStep(props: IntermediateStepProps) {
           // eslint-disable-next-line react/jsx-indent
           <Button
             onClick={() => {
-              connectDevice(
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                DEVICES[Math.floor(Math.random() * DEVICES.length)]
-              );
+              // connectedDevicesService.setPendingConnectionDevice(DEVICES[Math.floor(Math.random() * DEVICES.length)]);
             }}
           >
             Connect Test Device
