@@ -201,6 +201,7 @@ export default function initIpcMainHandlers(
         source: {
           thumbnail: source?.source.thumbnail?.toDataURL(),
           appIcon: source?.source.appIcon?.toDataURL(),
+          name: source?.source.name,
         },
       };
     }
@@ -212,6 +213,22 @@ export default function initIpcMainHandlers(
     () => {
       return getDeskreenGlobal().sharingSessionService
         .waitingForConnectionSharingSession?.desktopCapturerSourceID;
+    }
+  );
+
+  ipcMain.handle(
+    IpcEvents.StartSharingOnWaitingForConnectionSharingSession,
+    () => {
+      const sharingSession = getDeskreenGlobal().sharingSessionService
+        .waitingForConnectionSharingSession;
+      if (sharingSession !== null) {
+        sharingSession.callPeer();
+        sharingSession.status = SharingSessionStatusEnum.SHARING;
+      }
+      getDeskreenGlobal().connectedDevicesService.addDevice(
+        getDeskreenGlobal().connectedDevicesService.pendingConnectionDevice
+      );
+      getDeskreenGlobal().connectedDevicesService.resetPendingConnectionDevice();
     }
   );
 }

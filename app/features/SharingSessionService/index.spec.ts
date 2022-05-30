@@ -157,20 +157,6 @@ describe('SharingSessionService unit tests', () => {
     });
   });
 
-  describe('when changeSharingSessionStatusToSharing is called', () => {
-    it('should change passed sharingSession status to SHARING', () => {
-      const testSharingSession = ({
-        status: 'dummystatus',
-      } as unknown) as SharingSession;
-
-      sharingSessionService.changeSharingSessionStatusToSharing(
-        testSharingSession
-      );
-
-      expect(testSharingSession.status).toBe(SharingSessionStatusEnum.SHARING);
-    });
-  });
-
   describe('when waitWhileUserIsNotCreated is called', () => {
     it('should wait until user is created then call clearInterval', () => {
       const testUser = {

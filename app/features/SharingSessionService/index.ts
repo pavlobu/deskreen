@@ -86,11 +86,6 @@ export default class SharingSessionService {
     return sharingSession;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  changeSharingSessionStatusToSharing(sharingSession: SharingSession) {
-    sharingSession.status = SharingSessionStatusEnum.SHARING;
-  }
-
   pollForInactiveSessions(): void {
     [...this.sharingSessions.keys()].forEach((key) => {
       // @ts-ignore

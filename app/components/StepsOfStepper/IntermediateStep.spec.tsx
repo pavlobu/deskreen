@@ -25,7 +25,6 @@ jest.mock('electron', () => {
             waitingForConnectionSharingSession: {
               callPeer: jest.fn(),
             },
-            changeSharingSessionStatusToSharing: jest.fn(),
           };
         }
         return {};

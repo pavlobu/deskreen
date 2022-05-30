@@ -15,4 +15,5 @@ export enum IpcEvents {
   AppLanguageChanged = 'app-language-changed',
   GetDesktopCapturerServiceSourcesMap = 'get-desktop-capturer-service-sources-map',
   GetWaitingForConnectionSharingSessionSourceId = 'get-waiting-for-connection-sharing-session-source-id',
+  StartSharingOnWaitingForConnectionSharingSession = 'start-sharing-on-waiting-for-connection-sharing-session',
 }
