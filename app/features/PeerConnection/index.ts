@@ -61,19 +61,23 @@ export default class PeerConnection {
   }
 
   notifyClientWithNewLanguage() {
-    this.sendEncryptedMessage({
-      type: 'APP_LANGUAGE',
-      payload: {
-        value: getAppLanguage(),
-      },
-    });
+    setTimeout(() => {
+      this.sendEncryptedMessage({
+        type: 'APP_LANGUAGE',
+        payload: {
+          value: getAppLanguage(),
+        },
+      });
+    }, 1000);
   }
 
   notifyClientWithNewColorTheme() {
-    this.sendEncryptedMessage({
-      type: 'APP_THEME',
-      payload: { value: getAppTheme() },
-    });
+    setTimeout(() => {
+      this.sendEncryptedMessage({
+        type: 'APP_THEME',
+        payload: { value: getAppTheme() },
+      });
+    }, 1000);
   }
 
   async setDesktopCapturerSourceID(id: string) {

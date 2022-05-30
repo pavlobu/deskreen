@@ -179,4 +179,12 @@ export default function initIpcMainHandlers(
   ipcMain.handle(IpcEvents.DisconnectAllDevices, () => {
     getDeskreenGlobal().connectedDevicesService.disconnectAllDevices();
   });
+
+  ipcMain.handle(IpcEvents.AppLanguageChanged, () => {
+    getDeskreenGlobal().sharingSessionService.sharingSessions.forEach(
+      (sharingSession) => {
+        sharingSession?.appLanguageChanged();
+      }
+    );
+  });
 }

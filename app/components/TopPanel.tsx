@@ -235,7 +235,7 @@ export default function TopPanel(props: any) {
           {renderSettingsButton()}
         </div>
       </div>
-      {isConnectedDevicesDrawerOpen ? (
+      {isSettingsOpen ? (
         <SettingsOverlay
           isSettingsOpen={isSettingsOpen}
           handleClose={handleSettingsClose}

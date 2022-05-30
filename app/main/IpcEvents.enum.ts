@@ -12,4 +12,5 @@ export enum IpcEvents {
   GetConnectedDevices = 'get-connected-devices-list',
   DisconnectDeviceById = 'disconnect-device-by-id',
   DisconnectAllDevices = 'disconnect-all-devices',
+  AppLanguageChanged = 'app-language-changed',
 }
