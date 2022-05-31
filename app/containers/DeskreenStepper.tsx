@@ -171,10 +171,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
 
   const handleReset = useCallback(() => {
     setActiveStep(0);
-    setPendingConnectionDevice(null);
-    setIsUserAllowedConnection(false);
 
-    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
     ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
