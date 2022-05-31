@@ -22,15 +22,14 @@ import installExtensions from './utils/installExtensions';
 import getNewVersionTag from './utils/getNewVersionTag';
 import initIpcMainHandlers from './main/ipcMainHandlers';
 import { ElectronStoreKeys } from './enums/ElectronStoreKeys.enum';
+import getDeskreenGlobal from './utils/mainProcessHelpers/getDeskreenGlobal';
 
 export default class DeskreenApp {
   mainWindow: BrowserWindow | null = null;
 
   menuBuilder: MenuBuilder | null = null;
 
-  appVersion: string = app.getVersion();
-
-  latestVersion = '';
+  latestAppVersion = '';
 
   initElectronAppObject() {
     /**
@@ -55,14 +54,16 @@ export default class DeskreenApp {
 
         const { Notification } = require('electron');
 
+        const latestAppVersion = await getNewVersionTag();
+
         const showNotification = () => {
           const notification = {
             title: i18n.t('Deskreen Update is Available!'),
             body: `${i18n.t('Your current version is')} ${
-              this.appVersion
-            } | ${i18n.t('Click to download new updated version')} ${
-              this.latestVersion
-            }`,
+              getDeskreenGlobal().currentAppVersion
+            } | ${i18n.t(
+              'Click to download new updated version'
+            )} ${latestAppVersion}`,
           };
           const notificationInstance = new Notification(notification);
           notificationInstance.show();
@@ -72,10 +73,11 @@ export default class DeskreenApp {
           });
         };
 
-        const newVersion = await getNewVersionTag();
-
-        if (newVersion !== '' && newVersion !== this.appVersion) {
-          this.latestVersion = newVersion;
+        if (
+          latestAppVersion !== '' &&
+          latestAppVersion !== getDeskreenGlobal().currentAppVersion
+        ) {
+          getDeskreenGlobal().latestAppVersion = latestAppVersion;
           showNotification();
         }
       });
@@ -163,7 +165,7 @@ export default class DeskreenApp {
     // eslint-disable-next-line
     new AppUpdater();
 
-    initIpcMainHandlers(this.mainWindow, this.latestVersion, this.appVersion);
+    initIpcMainHandlers(this.mainWindow);
   }
 
   initI18n() {

@@ -15,11 +15,7 @@ import store from '../deskreen-electron-store';
 const log = new Logger(__filename);
 const v4IPGetter = require('internal-ip').v4;
 
-export default function initIpcMainHandlers(
-  mainWindow: BrowserWindow,
-  latestVersion: string,
-  appVersion: string
-) {
+export default function initIpcMainHandlers(mainWindow: BrowserWindow) {
   ipcMain.on('client-changed-language', async (_, newLangCode) => {
     i18n.changeLanguage(newLangCode);
     if (store.has(ElectronStoreKeys.AppLanguage)) {
@@ -74,11 +70,11 @@ export default function initIpcMainHandlers(
   });
 
   ipcMain.handle('get-latest-version', () => {
-    return latestVersion;
+    return getDeskreenGlobal().latestAppVersion;
   });
 
   ipcMain.handle('get-current-version', () => {
-    return appVersion;
+    return getDeskreenGlobal().currentAppVersion;
   });
 
   ipcMain.handle('get-local-lan-ip', async () => {

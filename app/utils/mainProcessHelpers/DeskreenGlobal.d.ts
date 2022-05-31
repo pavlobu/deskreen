@@ -11,4 +11,6 @@ interface DeskreenGlobal {
   connectedDevicesService: ConnectedDevicesService;
   sharingSessionService: SharingSessionService;
   desktopCapturerSourcesService: DesktopCapturerSourcesService;
+  latestAppVersion: string;
+  currentAppVersion: string;
 }

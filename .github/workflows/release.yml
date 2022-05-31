@@ -86,22 +86,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn tsc
 
-      - name: yarn test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn test
+      # - name: yarn test
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: yarn test
 
-      - name: yarn build-ux
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build-ux
+      # - name: yarn build-ux
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: yarn build-ux
 
-      - name: yarn test-ux
-        uses: GabrielBB/xvfb-action@v1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          run: yarn test-ux
+      # - name: yarn test-ux
+      #   uses: GabrielBB/xvfb-action@v1.2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     run: yarn test-ux
 
       - name: yarn package-ci
         env:
