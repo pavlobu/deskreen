@@ -174,6 +174,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
     ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
@@ -186,14 +187,11 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
-  React.useImperativeHandle(ref, () => ({
-    handleReset() {
-      handleResetWithSharingSessionRestart();
-    },
-  }));
-
   const handleCancelAlert = async () => {
     setIsAlertOpen(false);
+    setActiveStep(0);
+    setPendingConnectionDevice(null);
+    setIsUserAllowedConnection(false);
 
     ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
     ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);

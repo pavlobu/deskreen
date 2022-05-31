@@ -65,7 +65,6 @@ const ScanQRStep: React.FC = () => {
       );
       if (roomId) {
         setRoomID(roomId);
-        clearInterval(getRoomIdInterval);
       }
     }, 1000);
 
