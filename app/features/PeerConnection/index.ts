@@ -30,7 +30,16 @@ export default class PeerConnection {
   desktopCapturerSourceID: string;
   localStream: MediaStream | null;
   isSocketRoomLocked: boolean;
-  partnerDeviceDetails = {} as Device;
+  partnerDeviceDetails = {
+    id: '',
+    sharingSessionID: '',
+    deviceOS: '',
+    deviceType: '',
+    deviceIP: '',
+    deviceBrowser: '',
+    deviceScreenWidth: 0,
+    deviceScreenHeight: 0,
+  } as Device;
   signalsDataToCallUser: string[];
   isCallStarted: boolean;
   onDeviceConnectedCallback: (device: Device) => void;
@@ -141,7 +150,10 @@ export default class PeerConnection {
     });
   }
 
-  async disconnectByHostMachineUser() {
+  async disconnectByHostMachineUser(deviceId: string) {
+    if (this.partnerDeviceDetails.id !== deviceId) {
+      return;
+    }
     await this.sendEncryptedMessage({
       type: 'DISCONNECT_BY_HOST_MACHINE_USER',
       payload: {},

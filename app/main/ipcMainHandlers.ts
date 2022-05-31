@@ -159,6 +159,11 @@ export default function initIpcMainHandlers(
       const sharingSession = getDeskreenGlobal().sharingSessionService.sharingSessions.get(
         sessionId
       );
+      if (sharingSession) {
+        getDeskreenGlobal().connectedDevicesService.disconnectDeviceByID(
+          sharingSession.deviceID
+        );
+      }
       sharingSession?.disconnectByHostMachineUser();
       sharingSession?.destroy();
       getDeskreenGlobal().sharingSessionService.sharingSessions.delete(
@@ -319,5 +324,14 @@ export default function initIpcMainHandlers(
       return store.get(ElectronStoreKeys.AppLanguage);
     }
     return 'en';
+  });
+
+  ipcMain.handle(IpcEvents.DestroySharingSessionById, (_, id) => {
+    const sharingSession = getDeskreenGlobal().sharingSessionService.sharingSessions.get(
+      id
+    );
+    sharingSession?.setStatus(SharingSessionStatusEnum.DESTROYED);
+    sharingSession?.destroy();
+    getDeskreenGlobal().sharingSessionService.sharingSessions.delete(id);
   });
 }

@@ -215,12 +215,11 @@ export default class MenuBuilder {
       ],
     };
 
-    // const subMenuView =
-    //   process.env.NODE_ENV === 'development' ||
-    //   process.env.DEBUG_PROD === 'true'
-    //     ? subMenuViewDev
-    //     : subMenuViewProd;
-    const subMenuView = subMenuViewDev;
+    const subMenuView =
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+        ? subMenuViewDev
+        : subMenuViewProd;
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }

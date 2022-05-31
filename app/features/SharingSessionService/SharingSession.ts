@@ -95,7 +95,8 @@ export default class SharingSession {
 
   disconnectByHostMachineUser() {
     this.peerConnectionHelperRenderer?.webContents.send(
-      'disconnect-by-host-machine-user'
+      'disconnect-by-host-machine-user',
+      this.deviceID
     );
   }
 

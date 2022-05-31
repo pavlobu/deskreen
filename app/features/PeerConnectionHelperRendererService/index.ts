@@ -18,17 +18,6 @@ export default class RendererWebrtcHelpersService {
 
     helperRendererWindow = new BrowserWindow({
       show: false,
-      // width: 300,
-      // height: 300,
-      // x: 2147483647,
-      // y: 2147483647,
-      // transparent: true,
-      // frame: false,
-      // // skipTaskbar: true,
-      // focusable: false,
-      // // parent: mainWindow,
-      // hasShadow: false,
-      // titleBarStyle: 'hidden',
       webPreferences:
         (process.env.NODE_ENV === 'development' ||
           process.env.E2E_BUILD === 'true') &&
@@ -36,14 +25,12 @@ export default class RendererWebrtcHelpersService {
           ? {
               contextIsolation: true,
               nodeIntegration: true,
-              enableRemoteModule: true,
             }
           : {
               preload: path.join(
                 this.appPath,
                 'dist/peerConnectionHelperRendererWindow.renderer.prod.js'
               ),
-              enableRemoteModule: true,
             },
     });
 

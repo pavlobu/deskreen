@@ -26,8 +26,8 @@ export function handleIpcRenderer() {
       peerConnection.callPeer();
     });
 
-    ipcRenderer.on('disconnect-by-host-machine-user', () => {
-      peerConnection.disconnectByHostMachineUser();
+    ipcRenderer.on('disconnect-by-host-machine-user', (_, deviceId: string) => {
+      peerConnection.disconnectByHostMachineUser(deviceId);
     });
 
     ipcRenderer.on('deny-connection-for-partner', () => {

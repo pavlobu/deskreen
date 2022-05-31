@@ -26,4 +26,5 @@ export enum IpcEvents {
   SetAppStartedOnce = 'set-app-started-once',
   GetIsAppDarkTheme = 'get-is-app-dark-theme',
   SetIsAppDarkTheme = 'set-is-app-dark-theme',
+  DestroySharingSessionById = 'destroy-sharing-session-by-id',
 }

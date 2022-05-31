@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron';
 import { IpcEvents } from '../../main/IpcEvents.enum';
-import SharingSessionStatusEnum from '../SharingSessionService/SharingSessionStatusEnum';
 import NullSimplePeer from './NullSimplePeer';
 import NullUser from './NullUser';
 
 export default function handleSelfDestroy(peerConnection: PeerConnection) {
   peerConnection.partner = NullUser;
-  peerConnection.connectedDevicesService.removeDeviceByID(
+  ipcRenderer.invoke(
+    IpcEvents.DisconnectDeviceById,
     peerConnection.partnerDeviceDetails.id
   );
   if (peerConnection.peer !== NullSimplePeer) {
@@ -18,12 +18,8 @@ export default function handleSelfDestroy(peerConnection: PeerConnection) {
     });
     peerConnection.localStream = null;
   }
-  const sharingSession = peerConnection.sharingSessionService.sharingSessions.get(
-    peerConnection.sharingSessionID
-  );
-  sharingSession?.setStatus(SharingSessionStatusEnum.DESTROYED);
-  sharingSession?.destroy();
-  peerConnection.sharingSessionService.sharingSessions.delete(
+  ipcRenderer.invoke(
+    IpcEvents.DestroySharingSessionById,
     peerConnection.sharingSessionID
   );
   peerConnection.onDeviceConnectedCallback = () => {};
