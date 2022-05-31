@@ -187,6 +187,12 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
+  React.useImperativeHandle(ref, () => ({
+    handleReset() {
+      handleResetWithSharingSessionRestart();
+    },
+  }));
+
   const handleCancelAlert = async () => {
     setIsAlertOpen(false);
     setActiveStep(0);
