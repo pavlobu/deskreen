@@ -112,25 +112,27 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   useEffect(() => {
-    const isFirstTimeStart = true;
-    // const isFirstTimeStart = !settings.hasSync('isNotFirstTimeAppStart');
-    setIsSelectLanguageDialogOpen(isFirstTimeStart);
-
-    if (!isFirstTimeStart) return () => {};
-
-    const helloWords = getShuffledArrayOfHello();
-
-    let pos = 0;
-    const helloInterval = setInterval(() => {
-      setIsDisplayHelloWord(false);
-      if (pos + 1 === helloWords.length) {
-        pos = 0;
-      } else {
-        pos += 1;
-      }
-      setHelloWord(helloWords[pos]);
-      setIsDisplayHelloWord(true);
-    }, 4000);
+    let helloInterval: NodeJS.Timeout;
+    async function stepperOpenedCallback() {
+      const isFirstTimeStart = await ipcRenderer.invoke(
+        IpcEvents.GetIsFirstTimeAppStart
+      );
+      setIsSelectLanguageDialogOpen(isFirstTimeStart);
+      if (!isFirstTimeStart) return;
+      const helloWords = getShuffledArrayOfHello();
+      let pos = 0;
+      helloInterval = setInterval(() => {
+        setIsDisplayHelloWord(false);
+        if (pos + 1 === helloWords.length) {
+          pos = 0;
+        } else {
+          pos += 1;
+        }
+        setHelloWord(helloWords[pos]);
+        setIsDisplayHelloWord(true);
+      }, 4000);
+    }
+    stepperOpenedCallback();
 
     return () => {
       clearInterval(helloInterval);
@@ -376,7 +378,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
                 rightIcon="chevron-right"
                 onClick={() => {
                   setIsSelectLanguageDialogOpen(false);
-                  // settings.setSync('isNotFirstTimeAppStart', true);
+                  ipcRenderer.invoke(IpcEvents.SetAppStartedOnce);
                 }}
                 style={{ borderRadius: '50px' }}
               >

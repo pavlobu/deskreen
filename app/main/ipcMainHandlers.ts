@@ -279,4 +279,18 @@ export default function initIpcMainHandlers(
       }
     );
   });
+
+  ipcMain.handle(IpcEvents.GetIsFirstTimeAppStart, () => {
+    if (store.has(ElectronStoreKeys.IsNotFirstTimeAppStart)) {
+      return false;
+    }
+    return true;
+  });
+
+  ipcMain.handle(IpcEvents.SetAppStartedOnce, () => {
+    if (store.has(ElectronStoreKeys.IsNotFirstTimeAppStart)) {
+      store.delete(ElectronStoreKeys.IsNotFirstTimeAppStart);
+    }
+    store.set(ElectronStoreKeys.IsNotFirstTimeAppStart, true);
+  });
 }

@@ -22,4 +22,6 @@ export enum IpcEvents {
   SetDesktopCapturerSourceId = 'set-desktop-capturer-source-id',
   NotifyAllSessionsWithAppThemeChanged = 'notify-all-sessions-with-app-theme-changed',
   GetAppLanguage = 'get-app-language',
+  GetIsFirstTimeAppStart = 'get-is-not-first-time-app-start',
+  SetAppStartedOnce = 'set-app-started-once',
 }
