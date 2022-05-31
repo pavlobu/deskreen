@@ -1,6 +1,7 @@
-import settings from 'electron-settings';
+import { ipcRenderer } from 'electron';
 import uuid from 'uuid';
 import { process as processMessage } from '../../utils/message';
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 export function handleDeviceIPMessage(
   deviceIP: string,
@@ -41,22 +42,22 @@ export default async function handleRecieveEncryptedMessage(
     );
   }
   if (message.type === 'GET_APP_THEME') {
+    const isDarkAppTheme = await ipcRenderer.invoke(
+      IpcEvents.GetIsAppDarkTheme
+    );
     peerConnection.sendEncryptedMessage({
       type: 'APP_THEME',
       payload: {
-        value: settings.hasSync('appIsDarkTheme')
-          ? settings.getSync('appIsDarkTheme') === 'true'
-          : false,
+        value: isDarkAppTheme,
       },
     });
   }
   if (message.type === 'GET_APP_LANGUAGE') {
+    const appLanguage = await ipcRenderer.invoke(IpcEvents.GetAppLanguage);
     peerConnection.sendEncryptedMessage({
       type: 'APP_LANGUAGE',
       payload: {
-        value: settings.hasSync('appLanguage')
-          ? settings.getSync('appLanguage')
-          : 'en',
+        value: appLanguage,
       },
     });
   }

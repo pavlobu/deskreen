@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { ipcRenderer, remote, shell } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Row, Col, Grid } from 'react-flexbox-grid';
-import settings from 'electron-settings';
 import {
   Button,
   Dialog,
@@ -32,22 +31,10 @@ import ColorlibStepIcon, {
 } from '../components/StepperPanel/ColorlibStepIcon';
 import ColorlibConnector from '../components/StepperPanel/ColorlibConnector';
 import { SettingsContext } from './SettingsProvider';
-import SharingSessionService from '../features/SharingSessionService';
-import ConnectedDevicesService from '../features/ConnectedDevicesService';
-import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
-import Logger from '../utils/LoggerWithFilePrefix';
 import LanguageSelector from '../components/LanguageSelector';
 import { getShuffledArrayOfHello } from '../configs/i18next.config.client';
 import ToggleThemeBtnGroup from '../components/ToggleThemeBtnGroup';
-
-const log = new Logger(__filename);
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
+import { IpcEvents } from '../main/IpcEvents.enum';
 
 const Fade = require('react-reveal/Fade');
 
@@ -117,45 +104,35 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
   }, []);
 
   useEffect(() => {
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
-
-    connectedDevicesService.addPendingConnectedDeviceListener(
-      (device: Device) => {
-        setPendingConnectionDevice(device);
-        setIsAlertOpen(true);
-      }
-    );
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
+    ipcRenderer.on(IpcEvents.SetPendingConnectionDevice, (_, device) => {
+      setPendingConnectionDevice(device);
+      setIsAlertOpen(true);
+    });
   }, []);
 
   useEffect(() => {
-    const isFirstTimeStart = !settings.hasSync('isNotFirstTimeAppStart');
-    setIsSelectLanguageDialogOpen(isFirstTimeStart);
-
-    if (!isFirstTimeStart) return () => {};
-
-    const helloWords = getShuffledArrayOfHello();
-
-    let pos = 0;
-    const helloInterval = setInterval(() => {
-      setIsDisplayHelloWord(false);
-      if (pos + 1 === helloWords.length) {
-        pos = 0;
-      } else {
-        pos += 1;
-      }
-      setHelloWord(helloWords[pos]);
-      setIsDisplayHelloWord(true);
-    }, 4000);
+    let helloInterval: NodeJS.Timeout;
+    async function stepperOpenedCallback() {
+      const isFirstTimeStart = await ipcRenderer.invoke(
+        IpcEvents.GetIsFirstTimeAppStart
+      );
+      setIsSelectLanguageDialogOpen(isFirstTimeStart);
+      if (!isFirstTimeStart) return;
+      const helloWords = getShuffledArrayOfHello();
+      let pos = 0;
+      helloInterval = setInterval(() => {
+        setIsDisplayHelloWord(false);
+        if (pos + 1 === helloWords.length) {
+          pos = 0;
+        } else {
+          pos += 1;
+        }
+        setHelloWord(helloWords[pos]);
+        setIsDisplayHelloWord(true);
+      }, 4000);
+    }
+    stepperOpenedCallback();
 
     return () => {
       clearInterval(helloInterval);
@@ -197,17 +174,8 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
 
   const handleResetWithSharingSessionRestart = useCallback(() => {
@@ -215,59 +183,18 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setPendingConnectionDevice(null);
     setIsUserAllowedConnection(false);
 
-    const sharingSession =
-      sharingSessionService.waitingForConnectionSharingSession;
-    sharingSession?.disconnectByHostMachineUser();
-    sharingSession?.destroy();
-    sharingSessionService.sharingSessions.delete(sharingSession?.id as string);
-    sharingSessionService.waitingForConnectionSharingSession = null;
-
-    sharingSessionService
-      .createWaitingForConnectionSharingSession()
-      // eslint-disable-next-line promise/always-return
-      .then((waitingForConnectionSharingSession) => {
-        waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-          (device: Device) => {
-            connectedDevicesService.setPendingConnectionDevice(device);
-          }
-        );
-      })
-      .catch((e) => log.error(e));
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   }, []);
-
-  React.useImperativeHandle(ref, () => ({
-    handleReset() {
-      handleResetWithSharingSessionRestart();
-    },
-  }));
 
   const handleCancelAlert = async () => {
     setIsAlertOpen(false);
+    setActiveStep(0);
+    setPendingConnectionDevice(null);
+    setIsUserAllowedConnection(false);
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.denyConnectionForPartner();
-      sharingSession.destroy();
-      sharingSession.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
-      sharingSessionService.sharingSessions.delete(sharingSession.id);
-
-      const prevRoomID =
-        sharingSessionService.waitingForConnectionSharingSession.roomID;
-
-      sharingSessionService.waitingForConnectionSharingSession = null;
-      sharingSessionService
-        .createWaitingForConnectionSharingSession(prevRoomID)
-        // eslint-disable-next-line promise/always-return
-        .then((waitingForConnectionSharingSession) => {
-          waitingForConnectionSharingSession.setOnDeviceConnectedCallback(
-            (device: Device) => {
-              connectedDevicesService.setPendingConnectionDevice(device);
-            }
-          );
-        })
-        .catch((e) => log.error(e));
-    }
+    ipcRenderer.invoke(IpcEvents.ResetWaitingForConnectionSharingSession);
+    ipcRenderer.invoke(IpcEvents.CreateWaitingForConnectionSharingSession);
   };
 
   const handleConfirmAlert = useCallback(async () => {
@@ -275,11 +202,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     setIsUserAllowedConnection(true);
     handleNext();
 
-    if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-      const sharingSession =
-        sharingSessionService.waitingForConnectionSharingSession;
-      sharingSession.setStatus(SharingSessionStatusEnum.CONNECTED);
-    }
+    ipcRenderer.invoke(IpcEvents.SetDeviceConnectedStatus);
   }, [handleNext]);
 
   const handleUserClickedDeviceDisconnectButton = useCallback(async () => {
@@ -316,11 +239,9 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
           handleBack={handleBack}
           handleNextEntireScreen={handleNextEntireScreen}
           handleNextApplicationWindow={handleNextApplicationWindow}
-          resetPendingConnectionDevice={
-            () => setPendingConnectionDevice(null)
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
+          resetPendingConnectionDevice={() => setPendingConnectionDevice(null)}
           resetUserAllowedConnection={() => setIsUserAllowedConnection(false)}
+          connectedDevice={pendingConnectionDevice}
         />
       </div>
     );
@@ -332,6 +253,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
     handleBack,
     handleNextEntireScreen,
     handleNextApplicationWindow,
+    pendingConnectionDevice,
   ]);
 
   const renderStepLabelContent = useCallback(
@@ -454,7 +376,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
                 rightIcon="chevron-right"
                 onClick={() => {
                   setIsSelectLanguageDialogOpen(false);
-                  settings.setSync('isNotFirstTimeAppStart', true);
+                  ipcRenderer.invoke(IpcEvents.SetAppStartedOnce);
                 }}
                 style={{ borderRadius: '50px' }}
               >

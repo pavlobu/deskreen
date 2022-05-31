@@ -40,6 +40,7 @@ const testBrowserWindowParams = {
       process.env.E2E_BUILD === 'true') &&
     process.env.ERB_SECURE !== 'true'
       ? {
+          contextIsolation: true,
           nodeIntegration: true,
           enableRemoteModule: true,
         }

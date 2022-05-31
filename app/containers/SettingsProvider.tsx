@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import settings from 'electron-settings';
 import { Classes } from '@blueprintjs/core';
+import { ipcRenderer } from 'electron';
+import { IpcEvents } from '../main/IpcEvents.enum';
 
 // TODO: move to 'constants' tsx file ?
 export const LIGHT_UI_BACKGROUND = 'rgba(240, 248, 250, 1)';
@@ -29,26 +30,26 @@ export const SettingsProvider: React.FC = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('en');
 
-  const loadDarkThemeFromSettings = () => {
-    const gotIsDarkThemeFromSettings = settings.hasSync('appIsDarkTheme')
-      ? settings.getSync('appIsDarkTheme') === 'true'
-      : false;
+  const loadDarkThemeFromSettings = async () => {
+    const isDarkAppTheme = await ipcRenderer.invoke(
+      IpcEvents.GetIsAppDarkTheme
+    );
 
-    if (gotIsDarkThemeFromSettings) {
+    if (isDarkAppTheme) {
       document.body.classList.toggle(Classes.DARK);
       document.body.style.backgroundColor = LIGHT_UI_BACKGROUND;
     }
 
-    setIsDarkTheme(gotIsDarkThemeFromSettings);
+    setIsDarkTheme(isDarkAppTheme);
   };
 
   useEffect(() => {
     loadDarkThemeFromSettings();
   }, []);
 
-  const setIsDarkThemeHook = (val: boolean) => {
-    settings.setSync('appIsDarkTheme', `${val}`);
-    setIsDarkTheme(val);
+  const setIsDarkThemeHook = (isAppDarkTheme: boolean) => {
+    ipcRenderer.invoke(IpcEvents.SetIsAppDarkTheme, isAppDarkTheme);
+    setIsDarkTheme(isAppDarkTheme);
   };
 
   const setCurrentLanguageHook = (newLang: string) => {

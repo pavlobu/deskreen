@@ -1,10 +1,12 @@
-import SharingSessionStatusEnum from '../SharingSessionService/SharingSessionStatusEnum';
+import { ipcRenderer } from 'electron';
+import { IpcEvents } from '../../main/IpcEvents.enum';
 import NullSimplePeer from './NullSimplePeer';
 import NullUser from './NullUser';
 
 export default function handleSelfDestroy(peerConnection: PeerConnection) {
   peerConnection.partner = NullUser;
-  peerConnection.connectedDevicesService.removeDeviceByID(
+  ipcRenderer.invoke(
+    IpcEvents.DisconnectDeviceById,
     peerConnection.partnerDeviceDetails.id
   );
   if (peerConnection.peer !== NullSimplePeer) {
@@ -16,16 +18,13 @@ export default function handleSelfDestroy(peerConnection: PeerConnection) {
     });
     peerConnection.localStream = null;
   }
-  const sharingSession = peerConnection.sharingSessionService.sharingSessions.get(
-    peerConnection.sharingSessionID
-  );
-  sharingSession?.setStatus(SharingSessionStatusEnum.DESTROYED);
-  sharingSession?.destroy();
-  peerConnection.sharingSessionService.sharingSessions.delete(
+  ipcRenderer.invoke(
+    IpcEvents.DestroySharingSessionById,
     peerConnection.sharingSessionID
   );
   peerConnection.onDeviceConnectedCallback = () => {};
   peerConnection.isCallStarted = false;
   peerConnection.socket.disconnect();
-  peerConnection.roomIDService.unmarkRoomIDAsTaken(peerConnection.roomID);
+
+  ipcRenderer.invoke(IpcEvents.UnmarkRoomIDAsTaken, peerConnection.roomID);
 }

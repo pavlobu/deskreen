@@ -1,22 +1,13 @@
 import React from 'react';
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Button, Text } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
 import { Col, Row } from 'react-flexbox-grid';
-import DEVICES from '../../constants/test-devices.json';
 import ScanQRStep from './ScanQRStep';
 import ChooseAppOrScreeenStep from './ChooseAppOrScreeenStep';
 import ConfirmStep from './ConfirmStep';
-import ConnectedDevicesService from '../../features/ConnectedDevicesService';
-import SharingSessionService from '../../features/SharingSessionService';
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
-const connectedDevicesService = remote.getGlobal(
-  'connectedDevicesService'
-) as ConnectedDevicesService;
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 interface IntermediateStepProps {
   activeStep: number;
@@ -27,6 +18,7 @@ interface IntermediateStepProps {
   handleNextApplicationWindow: () => void;
   resetPendingConnectionDevice: () => void;
   resetUserAllowedConnection: () => void;
+  connectedDevice: Device | null;
 }
 
 function getStepContent(
@@ -34,7 +26,7 @@ function getStepContent(
   stepIndex: number,
   handleNextEntireScreen: () => void,
   handleNextApplicationWindow: () => void,
-  pendingConnectionDevice: Device | null
+  connectedDevice: Device | null
 ) {
   switch (stepIndex) {
     case 0:
@@ -56,7 +48,7 @@ function getStepContent(
         </>
       );
     case 2:
-      return <ConfirmStep device={pendingConnectionDevice} />;
+      return <ConfirmStep device={connectedDevice} />;
     default:
       return 'Unknown stepIndex';
   }
@@ -78,11 +70,8 @@ export default function IntermediateStep(props: IntermediateStepProps) {
     handleNextApplicationWindow,
     resetPendingConnectionDevice,
     resetUserAllowedConnection,
+    connectedDevice,
   } = props;
-
-  const connectDevice = (device: Device) => {
-    connectedDevicesService.setPendingConnectionDevice(device);
-  };
 
   return (
     <Col
@@ -101,9 +90,8 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         activeStep,
         handleNextEntireScreen,
         handleNextApplicationWindow,
-        connectedDevicesService.pendingConnectionDevice
+        connectedDevice
       )}
-
       {
         // eslint-disable-next-line no-nested-ternary
         process.env.NODE_ENV === 'production' &&
@@ -114,11 +102,7 @@ export default function IntermediateStep(props: IntermediateStepProps) {
           // eslint-disable-next-line react/jsx-indent
           <Button
             onClick={() => {
-              connectDevice(
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                DEVICES[Math.floor(Math.random() * DEVICES.length)]
-              );
+              // connectedDevicesService.setPendingConnectionDevice(DEVICES[Math.floor(Math.random() * DEVICES.length)]);
             }}
           >
             Connect Test Device
@@ -126,73 +110,43 @@ export default function IntermediateStep(props: IntermediateStepProps) {
         ) : (
           <></>
         )
-        // activeStep === 0 ? (
-        //   <Button
-        //     onClick={() => {
-        //       connectDevice(
-        //         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //         // @ts-ignore
-        //         DEVICES[Math.floor(Math.random() * DEVICES.length)]
-        //       );
-        //     }}
-        //   >
-        //     Connect Test Device
-        //   </Button>
-        // ) : (
-        //   <></>
-        // )
       }
-      {
-        /**/
-        activeStep !== 0 ? (
-          <Row>
-            <Col xs={12}>
-              <Button
-                intent={activeStep === 2 ? 'success' : 'none'}
-                onClick={async () => {
-                  handleNext();
-                  if (isConfirmStep(activeStep, steps)) {
-                    if (
-                      sharingSessionService.waitingForConnectionSharingSession !==
-                      null
-                    ) {
-                      const sharingSession =
-                        sharingSessionService.waitingForConnectionSharingSession;
-                      sharingSession.callPeer();
-                      sharingSessionService.changeSharingSessionStatusToSharing(
-                        sharingSession
-                      );
-                    }
-                    connectedDevicesService.addDevice(
-                      connectedDevicesService.pendingConnectionDevice
-                    );
-                    connectedDevicesService.resetPendingConnectionDevice();
-                    resetPendingConnectionDevice();
-                    resetUserAllowedConnection();
-                  }
-                }}
-                style={{
-                  display: activeStep === 1 ? 'none' : 'inline',
-                  borderRadius: '100px',
-                  width: '300px',
-                  textAlign: 'center',
-                }}
-                rightIcon={
-                  isConfirmStep(activeStep, steps)
-                    ? 'small-tick'
-                    : 'chevron-right'
+      {activeStep !== 0 ? (
+        <Row>
+          <Col xs={12}>
+            <Button
+              intent={activeStep === 2 ? 'success' : 'none'}
+              onClick={async () => {
+                handleNext();
+                if (isConfirmStep(activeStep, steps)) {
+                  ipcRenderer.invoke(
+                    IpcEvents.StartSharingOnWaitingForConnectionSharingSession
+                  );
+                  resetPendingConnectionDevice();
+                  resetUserAllowedConnection();
                 }
-              >
-                {isConfirmStep(activeStep, steps)
-                  ? t('Confirm Button Text')
-                  : 'Next'}
-              </Button>
-            </Col>
-          </Row>
-        ) : (
-          <></>
-        )
-      }
+              }}
+              style={{
+                display: activeStep === 1 ? 'none' : 'inline',
+                borderRadius: '100px',
+                width: '300px',
+                textAlign: 'center',
+              }}
+              rightIcon={
+                isConfirmStep(activeStep, steps)
+                  ? 'small-tick'
+                  : 'chevron-right'
+              }
+            >
+              {isConfirmStep(activeStep, steps)
+                ? t('Confirm Button Text')
+                : 'Next'}
+            </Button>
+          </Col>
+        </Row>
+      ) : (
+        <></>
+      )}
       <Row style={{ display: activeStep === 2 ? 'inline-block' : 'none' }}>
         <Button
           intent="danger"

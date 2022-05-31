@@ -1,7 +1,7 @@
-import settings from 'electron-settings';
+import { ipcRenderer } from 'electron';
+import { IpcEvents } from '../main/IpcEvents.enum';
 
-export default function getAppTheme(): boolean {
-  return settings.hasSync('appIsDarkTheme')
-    ? settings.getSync('appIsDarkTheme') === 'true'
-    : false;
+export default async function getAppTheme(): Promise<boolean> {
+  const isAppDarkTheme = await ipcRenderer.invoke(IpcEvents.GetIsAppDarkTheme);
+  return isAppDarkTheme;
 }

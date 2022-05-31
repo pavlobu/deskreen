@@ -4,11 +4,7 @@
 import { ipcRenderer } from 'electron';
 import { prepare as prepareMessage } from '../../utils/message';
 import DeskreenCrypto from '../../utils/crypto';
-import ConnectedDevicesService from '../ConnectedDevicesService';
-import RoomIDService from '../../server/RoomIDService';
-import SharingSessionService from '../SharingSessionService';
 import connectSocket from '../../server/connectSocket';
-import DesktopCapturerSourcesService from '../DesktopCapturerSourcesService';
 import handleCreatePeer from './handleCreatePeer';
 import handleSocket from './handleSocket';
 import handleRecieveEncryptedMessage from './handleRecieveEncryptedMessage';
@@ -19,6 +15,7 @@ import setDisplaySizeFromLocalStream from './handleSetDisplaySizeFromLocalStream
 import DesktopCapturerSourceType from '../DesktopCapturerSourcesService/DesktopCapturerSourceType';
 import getAppLanguage from '../../utils/getAppLanguage';
 import getAppTheme from '../../utils/getAppTheme';
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 type DisplaySize = { width: number; height: number };
 
@@ -33,29 +30,23 @@ export default class PeerConnection {
   desktopCapturerSourceID: string;
   localStream: MediaStream | null;
   isSocketRoomLocked: boolean;
-  partnerDeviceDetails = {} as Device;
+  partnerDeviceDetails = {
+    id: '',
+    sharingSessionID: '',
+    deviceOS: '',
+    deviceType: '',
+    deviceIP: '',
+    deviceBrowser: '',
+    deviceScreenWidth: 0,
+    deviceScreenHeight: 0,
+  } as Device;
   signalsDataToCallUser: string[];
   isCallStarted: boolean;
-  roomIDService: RoomIDService;
-  connectedDevicesService: ConnectedDevicesService;
-  sharingSessionService: SharingSessionService;
-  desktopCapturerSourcesService: DesktopCapturerSourcesService;
   onDeviceConnectedCallback: (device: Device) => void;
   displayID: string;
   sourceDisplaySize: DisplaySize | undefined;
 
-  constructor(
-    roomID: string,
-    sharingSessionID: string,
-    user: LocalPeerUser,
-    roomIDService: RoomIDService,
-    connectedDevicesService: ConnectedDevicesService,
-    sharingSessionsService: SharingSessionService,
-    desktopCapturerSourcesService: DesktopCapturerSourcesService
-  ) {
-    this.roomIDService = roomIDService;
-    this.connectedDevicesService = connectedDevicesService;
-    this.sharingSessionService = sharingSessionsService;
+  constructor(roomID: string, sharingSessionID: string, user: LocalPeerUser) {
     this.sharingSessionID = sharingSessionID;
     this.isSocketRoomLocked = false;
     this.roomID = encodeURI(roomID);
@@ -69,7 +60,6 @@ export default class PeerConnection {
     this.localStream = null;
     this.displayID = '';
     this.sourceDisplaySize = undefined;
-    this.desktopCapturerSourcesService = desktopCapturerSourcesService;
     this.onDeviceConnectedCallback = () => {};
 
     handleSocket(this);
@@ -80,19 +70,23 @@ export default class PeerConnection {
   }
 
   notifyClientWithNewLanguage() {
-    this.sendEncryptedMessage({
-      type: 'APP_LANGUAGE',
-      payload: {
-        value: getAppLanguage(),
-      },
-    });
+    setTimeout(async () => {
+      this.sendEncryptedMessage({
+        type: 'APP_LANGUAGE',
+        payload: {
+          value: await getAppLanguage(),
+        },
+      });
+    }, 1000);
   }
 
   notifyClientWithNewColorTheme() {
-    this.sendEncryptedMessage({
-      type: 'APP_THEME',
-      payload: { value: getAppTheme() },
-    });
+    setTimeout(async () => {
+      this.sendEncryptedMessage({
+        type: 'APP_THEME',
+        payload: { value: await getAppTheme() },
+      });
+    }, 1000);
   }
 
   async setDesktopCapturerSourceID(id: string) {
@@ -104,13 +98,14 @@ export default class PeerConnection {
     this.handleCreatePeerAfterDesktopCapturerSourceIDWasSet();
   }
 
-  setDisplayIDByDesktopCapturerSourceID() {
+  async setDisplayIDByDesktopCapturerSourceID() {
     if (
       !this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)
     )
       return;
 
-    this.displayID = this.desktopCapturerSourcesService.getSourceDisplayIDBySourceID(
+    this.displayID = await ipcRenderer.invoke(
+      IpcEvents.GetSourceDisplayIDByDesktopCapturerSourceID,
       this.desktopCapturerSourceID
     );
 
@@ -155,7 +150,10 @@ export default class PeerConnection {
     });
   }
 
-  async disconnectByHostMachineUser() {
+  async disconnectByHostMachineUser(deviceId: string) {
+    if (this.partnerDeviceDetails.id !== deviceId) {
+      return;
+    }
     await this.sendEncryptedMessage({
       type: 'DISCONNECT_BY_HOST_MACHINE_USER',
       payload: {},

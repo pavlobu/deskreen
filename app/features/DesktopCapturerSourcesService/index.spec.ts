@@ -250,7 +250,7 @@ describe('DesktopCapturerSourcesService tests', () => {
           testWindowSource2
         );
 
-        const res = desktopCapturerService.getSourceDisplayIDBySourceID(
+        const res = desktopCapturerService.getSourceDisplayIDByDisplayCapturerSourceID(
           testScreenSource1.source.id
         );
 

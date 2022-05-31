@@ -7,6 +7,14 @@ import {
 
 jest.useFakeTimers();
 
+jest.mock('electron', () => {
+  return {
+    ipcRenderer: {
+      invoke: jest.fn(),
+    },
+  };
+});
+
 describe('i18next.config.client tests', () => {
   beforeEach(() => {});
 

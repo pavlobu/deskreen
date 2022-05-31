@@ -1,12 +1,8 @@
-import { remote } from 'electron';
 import React, { useContext, useCallback } from 'react';
 import { Button, Classes, ControlGroup } from '@blueprintjs/core';
-import SharingSessionService from '../../features/SharingSessionService';
+import { ipcRenderer } from 'electron';
 import { SettingsContext } from '../../containers/SettingsProvider';
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 export default function ToggleThemeBtnGroup() {
   const { isDarkTheme, setIsDarkThemeHook } = useContext(SettingsContext);
@@ -16,10 +12,7 @@ export default function ToggleThemeBtnGroup() {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(true);
     }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged();
-    });
+    ipcRenderer.invoke(IpcEvents.NotifyAllSessionsWithAppThemeChanged);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   const handleToggleLightTheme = useCallback(() => {
@@ -27,10 +20,7 @@ export default function ToggleThemeBtnGroup() {
       document.body.classList.toggle(Classes.DARK);
       setIsDarkThemeHook(false);
     }
-    // TODO: call sharing sessions service here to notify all connected clients about theme change
-    sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged();
-    });
+    ipcRenderer.invoke(IpcEvents.NotifyAllSessionsWithAppThemeChanged);
   }, [isDarkTheme, setIsDarkThemeHook]);
 
   return (

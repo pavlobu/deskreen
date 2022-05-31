@@ -10,32 +10,26 @@
  */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import { Display } from 'electron/main';
 import path from 'path';
-import { app, BrowserWindow, ipcMain, screen, shell } from 'electron';
-import settings from 'electron-settings';
+import { app, BrowserWindow, shell } from 'electron';
+import store from './deskreen-electron-store';
 import i18n from './configs/i18next.config';
 import signalingServer from './server';
 import MenuBuilder from './menu';
 import initGlobals from './utils/mainProcessHelpers/initGlobals';
-import ConnectedDevicesService from './features/ConnectedDevicesService';
-import RoomIDService from './server/RoomIDService';
-import SharingSession from './features/SharingSessionService/SharingSession';
-import getDeskreenGlobal from './utils/mainProcessHelpers/getDeskreenGlobal';
 import AppUpdater from './utils/AppUpdater';
 import installExtensions from './utils/installExtensions';
 import getNewVersionTag from './utils/getNewVersionTag';
-
-const v4IPGetter = require('internal-ip').v4;
+import initIpcMainHandlers from './main/ipcMainHandlers';
+import { ElectronStoreKeys } from './enums/ElectronStoreKeys.enum';
+import getDeskreenGlobal from './utils/mainProcessHelpers/getDeskreenGlobal';
 
 export default class DeskreenApp {
   mainWindow: BrowserWindow | null = null;
 
   menuBuilder: MenuBuilder | null = null;
 
-  appVersion: string = app.getVersion();
-
-  latestVersion = '';
+  latestAppVersion = '';
 
   initElectronAppObject() {
     /**
@@ -60,14 +54,16 @@ export default class DeskreenApp {
 
         const { Notification } = require('electron');
 
+        const latestAppVersion = await getNewVersionTag();
+
         const showNotification = () => {
           const notification = {
             title: i18n.t('Deskreen Update is Available!'),
             body: `${i18n.t('Your current version is')} ${
-              this.appVersion
-            } | ${i18n.t('Click to download new updated version')} ${
-              this.latestVersion
-            }`,
+              getDeskreenGlobal().currentAppVersion
+            } | ${i18n.t(
+              'Click to download new updated version'
+            )} ${latestAppVersion}`,
           };
           const notificationInstance = new Notification(notification);
           notificationInstance.show();
@@ -77,10 +73,11 @@ export default class DeskreenApp {
           });
         };
 
-        const newVersion = await getNewVersionTag();
-
-        if (newVersion !== '' && newVersion !== this.appVersion) {
-          this.latestVersion = newVersion;
+        if (
+          latestAppVersion !== '' &&
+          latestAppVersion !== getDeskreenGlobal().currentAppVersion
+        ) {
+          getDeskreenGlobal().latestAppVersion = latestAppVersion;
           showNotification();
         }
       });
@@ -99,77 +96,6 @@ export default class DeskreenApp {
       'webrtc-max-cpu-consumption-percentage',
       '100'
     );
-  }
-
-  initIpcMain() {
-    ipcMain.on('client-changed-language', async (_, newLangCode) => {
-      i18n.changeLanguage(newLangCode);
-      await settings.set('appLanguage', newLangCode);
-    });
-
-    ipcMain.handle('get-signaling-server-port', () => {
-      if (this.mainWindow === null) return;
-      this.mainWindow.webContents.send(
-        'sending-port-from-main',
-        signalingServer.port
-      );
-    });
-
-    ipcMain.handle('get-all-displays', () => {
-      return screen.getAllDisplays();
-    });
-
-    ipcMain.handle('get-display-size-by-display-id', (_, displayID: string) => {
-      const display = screen.getAllDisplays().find((d: Display) => {
-        return `${d.id}` === displayID;
-      });
-
-      if (display) {
-        return display.size;
-      }
-      return undefined;
-    });
-
-    ipcMain.handle('main-window-onbeforeunload', () => {
-      const deskreenGlobal = getDeskreenGlobal();
-      deskreenGlobal.connectedDevicesService = new ConnectedDevicesService();
-      deskreenGlobal.roomIDService = new RoomIDService();
-      deskreenGlobal.sharingSessionService.sharingSessions.forEach(
-        (sharingSession: SharingSession) => {
-          sharingSession.denyConnectionForPartner();
-          sharingSession.destroy();
-        }
-      );
-
-      deskreenGlobal.rendererWebrtcHelpersService.helpers.forEach(
-        (helperWindow) => {
-          helperWindow.close();
-        }
-      );
-
-      deskreenGlobal.sharingSessionService.waitingForConnectionSharingSession = null;
-      deskreenGlobal.rendererWebrtcHelpersService.helpers.clear();
-      deskreenGlobal.sharingSessionService.sharingSessions.clear();
-    });
-
-    ipcMain.handle('get-latest-version', () => {
-      return this.latestVersion;
-    });
-
-    ipcMain.handle('get-current-version', () => {
-      return this.appVersion;
-    });
-
-    ipcMain.handle('get-local-lan-ip', async () => {
-      if (
-        process.env.RUN_MODE === 'dev' ||
-        process.env.NODE_ENV === 'production'
-      ) {
-        const ip = await v4IPGetter();
-        return ip;
-      }
-      return '255.255.255.255';
-    });
   }
 
   async createWindow() {
@@ -193,12 +119,11 @@ export default class DeskreenApp {
           process.env.E2E_BUILD === 'true') &&
         process.env.ERB_SECURE !== 'true'
           ? {
+              contextIsolation: false,
               nodeIntegration: true,
-              enableRemoteModule: true,
             }
           : {
               preload: path.join(__dirname, 'dist/mainWindow.renderer.prod.js'),
-              enableRemoteModule: true,
             },
     });
 
@@ -239,6 +164,8 @@ export default class DeskreenApp {
     // Remove this if your app does not use auto updates
     // eslint-disable-next-line
     new AppUpdater();
+
+    initIpcMainHandlers(this.mainWindow);
   }
 
   initI18n() {
@@ -254,7 +181,10 @@ export default class DeskreenApp {
       setTimeout(async () => {
         if (lng !== 'en' && i18n.language !== lng) {
           i18n.changeLanguage(lng);
-          await settings.set('appLanguage', lng);
+          if (store.has(ElectronStoreKeys.AppLanguage)) {
+            store.delete(ElectronStoreKeys.AppLanguage);
+          }
+          store.set(ElectronStoreKeys.AppLanguage, lng);
         }
       }, 400);
     });
@@ -277,7 +207,6 @@ export default class DeskreenApp {
     }
 
     this.initElectronAppObject();
-    this.initIpcMain();
   }
 }
 

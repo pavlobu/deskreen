@@ -1,3 +1,4 @@
+import { app } from 'electron';
 import ConnectedDevicesService from '../../features/ConnectedDevicesService';
 import SharingSessionService from '../../features/SharingSessionService';
 import RendererWebrtcHelpersService from '../../features/PeerConnectionHelperRendererService';
@@ -21,4 +22,6 @@ export default (appPath: string) => {
     deskreenGlobal.rendererWebrtcHelpersService
   );
   deskreenGlobal.desktopCapturerSourcesService = new DesktopCapturerSources();
+  deskreenGlobal.latestAppVersion = '';
+  deskreenGlobal.currentAppVersion = app.getVersion();
 };

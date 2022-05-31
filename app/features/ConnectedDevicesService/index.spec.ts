@@ -45,7 +45,7 @@ describe('ConnectedDevicesService tests', () => {
       it('should make .devices array empty', () => {
         service.devices.push(testDevice);
 
-        service.removeAllDevices();
+        service.disconnectAllDevices();
 
         expect(service.devices.length).toBe(0);
       });
@@ -59,7 +59,7 @@ describe('ConnectedDevicesService tests', () => {
         service.devices.push(testDevice);
         service.devices.push(testDevice2);
 
-        await service.removeDeviceByID(testDevice.id);
+        await service.disconnectDeviceByID(testDevice.id);
 
         let isStillInArray = false;
         service.devices.forEach((d) => {
@@ -82,50 +82,6 @@ describe('ConnectedDevicesService tests', () => {
           }
         });
         expect(isInArray).toBe(true);
-      });
-    });
-
-    describe('when .addPendingConnectedDeviceListener() was called', () => {
-      it('should add listener to .pendingDeviceConnectedListeners array', () => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const testCallback = (_: Device) => {};
-
-        service.addPendingConnectedDeviceListener(testCallback);
-
-        let isInArray = false;
-        service.pendingDeviceConnectedListeners.forEach((c) => {
-          if (c === testCallback) {
-            isInArray = true;
-          }
-        });
-        expect(isInArray).toBe(true);
-      });
-    });
-
-    describe('when .setPendingConnectionDevice() was called', () => {
-      it('should set passed device as pendingConnectionDevice and call .emitPendingConnectionDeviceConnected', () => {
-        service.emitPendingConnectionDeviceConnected = jest.fn();
-
-        service.setPendingConnectionDevice(testDevice);
-
-        expect(service.pendingConnectionDevice).toBe(testDevice);
-        expect(service.emitPendingConnectionDeviceConnected).toBeCalled();
-      });
-    });
-
-    describe('when .emitPendingConnectionDeviceConnected() was called', () => {
-      it('should call all callbacks in pendingDeviceConnectedListeners', () => {
-        const testCallback1 = jest.fn();
-        const testCallback2 = jest.fn();
-        service.pendingDeviceConnectedListeners = [
-          testCallback1,
-          testCallback2,
-        ];
-
-        service.emitPendingConnectionDeviceConnected();
-
-        expect(testCallback1).toBeCalled();
-        expect(testCallback2).toBeCalled();
       });
     });
   });

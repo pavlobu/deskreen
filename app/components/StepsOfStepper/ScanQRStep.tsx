@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { clipboard, remote, ipcRenderer } from 'electron';
+import { clipboard, ipcRenderer } from 'electron';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -15,14 +15,10 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { SettingsContext } from '../../containers/SettingsProvider';
 import isProduction from '../../utils/isProduction';
-import SharingSessionService from '../../features/SharingSessionService';
 import config from '../../api/config';
+import { IpcEvents } from '../../main/IpcEvents.enum';
 
 const { port } = config;
-
-const sharingSessionService = remote.getGlobal(
-  'sharingSessionService'
-) as SharingSessionService;
 
 // TODO: change port to user defined port, if it is really defined
 const CLIENT_VIEWER_PORT = isProduction() ? port : '3000';
@@ -43,8 +39,6 @@ const useStyles = makeStyles(() =>
     dialogQRWrapper: {
       backgroundColor: 'white',
       padding: '20px',
-      // width: '95%',
-      // hieght: '95%',
       borderRadius: '10px',
     },
     bigQRCodeDialogRoot: {
@@ -65,11 +59,12 @@ const ScanQRStep: React.FC = () => {
   const [LOCAL_LAN_IP, setLocalLanIP] = useState('');
 
   useEffect(() => {
-    const thisInterval = setInterval(() => {
-      if (sharingSessionService.waitingForConnectionSharingSession !== null) {
-        setRoomID(
-          sharingSessionService.waitingForConnectionSharingSession.roomID
-        );
+    const getRoomIdInterval = setInterval(async () => {
+      const roomId = await ipcRenderer.invoke(
+        IpcEvents.GetWaitingForConnectionSharingSessionRoomId
+      );
+      if (roomId) {
+        setRoomID(roomId);
       }
     }, 1000);
 
@@ -81,7 +76,7 @@ const ScanQRStep: React.FC = () => {
     }, 1000);
 
     return () => {
-      clearInterval(thisInterval);
+      clearInterval(getRoomIdInterval);
       clearInterval(ipInterval);
     };
   }, []);

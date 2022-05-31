@@ -61,7 +61,10 @@ export default function TopPanel(props: any) {
   }, [isDarkTheme]);
 
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
-  const [isDrawersOpen, setIsDrawerOpen] = React.useState(false);
+  const [
+    isConnectedDevicesDrawerOpen,
+    setIsConnectedDevicesDrawerOpen,
+  ] = React.useState(false);
 
   const handleSettingsOpen = useCallback(() => {
     setIsSettingsOpen(true);
@@ -72,8 +75,8 @@ export default function TopPanel(props: any) {
   }, []);
 
   const handleToggleConnectedDevicesListDrawer = useCallback(() => {
-    setIsDrawerOpen(!isDrawersOpen);
-  }, [isDrawersOpen]);
+    setIsConnectedDevicesDrawerOpen(!isConnectedDevicesDrawerOpen);
+  }, [isConnectedDevicesDrawerOpen]);
 
   const donateTooltipContent = t(
     'If you like Deskreen consider contributing financially Deskreen is open-source Your donations keep us motivated to make Deskreen even better'
@@ -232,15 +235,23 @@ export default function TopPanel(props: any) {
           {renderSettingsButton()}
         </div>
       </div>
-      <SettingsOverlay
-        isSettingsOpen={isSettingsOpen}
-        handleClose={handleSettingsClose}
-      />
-      <ConnectedDevicesListDrawer
-        isOpen={isDrawersOpen}
-        handleToggle={handleToggleConnectedDevicesListDrawer}
-        stepperRef={props.stepperRef}
-      />
+      {isSettingsOpen ? (
+        <SettingsOverlay
+          isSettingsOpen={isSettingsOpen}
+          handleClose={handleSettingsClose}
+        />
+      ) : (
+        <></>
+      )}
+      {isConnectedDevicesDrawerOpen ? (
+        <ConnectedDevicesListDrawer
+          isOpen={isConnectedDevicesDrawerOpen}
+          handleToggle={handleToggleConnectedDevicesListDrawer}
+          stepperRef={props.stepperRef}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }
