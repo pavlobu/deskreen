@@ -34,7 +34,7 @@ export default function LanguageSelector() {
         getLangFullNameToLangISOKeyMap().get(event.currentTarget.value) ||
         'English';
       i18n.changeLanguage(newLang);
-      ipcRenderer.invoke(IpcEvents.AppLanguageChanged);
+      ipcRenderer.invoke(IpcEvents.AppLanguageChanged, newLang);
     }
   };
 

@@ -17,6 +17,8 @@ import translationZH_TW from '../locales/zh_TW/translation.json';
 import translationDA from '../locales/da/translation.json';
 import translationDE from '../locales/de/translation.json';
 import { IpcEvents } from '../main/IpcEvents.enum';
+import { ElectronStoreKeys } from '../enums/ElectronStoreKeys.enum';
+import store from '../deskreen-electron-store';
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
   const res = new Map<string, string>();
@@ -68,7 +70,11 @@ export const getShuffledArrayOfHello = (): string[] => {
 
 async function initI18NextOptions() {
   const appPath = await ipcRenderer.invoke(IpcEvents.GetAppPath);
+  const appLanguage = String(store.get(ElectronStoreKeys.AppLanguage));
+  i18n.use(SyncBackend);
+  i18n.use(initReactI18next);
   const i18nextOptions = {
+    debug: true,
     interpolation: {
       escapeValue: false,
     },
@@ -85,10 +91,7 @@ async function initI18NextOptions() {
       jsonIndent: 2,
     },
     saveMissing: true,
-    // lng: (settings.hasSync('appLanguage')
-    //   ? settings.getSync('appLanguage')
-    //   : 'en') as string,
-    lng: 'en',
+    lng: config.languages.includes(appLanguage) ? appLanguage : 'en',
     fallbackLng: config.fallbackLng,
     whitelist: config.languages,
     react: {
@@ -101,9 +104,6 @@ async function initI18NextOptions() {
   }
 }
 initI18NextOptions();
-
-i18n.use(SyncBackend);
-i18n.use(initReactI18next);
 
 i18n.on('languageChanged', () => {
   ipcRenderer.send('client-changed-language', i18n.language);

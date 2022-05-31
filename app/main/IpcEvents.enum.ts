@@ -21,4 +21,5 @@ export enum IpcEvents {
   GetDesktopSharingSourceIds = 'get-desktop-sharing-source-ids',
   SetDesktopCapturerSourceId = 'set-desktop-capturer-source-id',
   NotifyAllSessionsWithAppThemeChanged = 'notify-all-sessions-with-app-theme-changed',
+  GetAppLanguage = 'get-app-language',
 }

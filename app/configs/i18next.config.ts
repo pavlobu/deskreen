@@ -5,13 +5,12 @@ import i18nextBackend from 'i18next-node-fs-backend';
 import { join } from 'path';
 import config from './app.lang.config';
 import isProduction from '../utils/isProduction';
+import store from '../deskreen-electron-store';
+import { ElectronStoreKeys } from '../enums/ElectronStoreKeys.enum';
 
 const i18nextOptions = {
   fallbackLng: config.fallbackLng,
-  // lng: (settings.hasSync('appLanguage')
-  //   ? settings.getSync('appLanguage')
-  //   : 'en') as string,
-  lng: 'en',
+  lng: store.get(ElectronStoreKeys.AppLanguage),
   ns: 'translation',
   defaultNS: 'translation',
   backend: {

@@ -9,6 +9,8 @@ import signalingServer from '../server';
 import Logger from '../utils/LoggerWithFilePrefix';
 import { IpcEvents } from './IpcEvents.enum';
 import SharingSessionStatusEnum from '../features/SharingSessionService/SharingSessionStatusEnum';
+import { ElectronStoreKeys } from '../enums/ElectronStoreKeys.enum';
+import store from '../deskreen-electron-store';
 
 const log = new Logger(__filename);
 const v4IPGetter = require('internal-ip').v4;
@@ -180,7 +182,11 @@ export default function initIpcMainHandlers(
     getDeskreenGlobal().connectedDevicesService.disconnectAllDevices();
   });
 
-  ipcMain.handle(IpcEvents.AppLanguageChanged, () => {
+  ipcMain.handle(IpcEvents.AppLanguageChanged, (_, newLang) => {
+    if (store.has(ElectronStoreKeys.AppLanguage)) {
+      store.delete(ElectronStoreKeys.AppLanguage);
+    }
+    store.set(ElectronStoreKeys.AppLanguage, newLang);
     getDeskreenGlobal().sharingSessionService.sharingSessions.forEach(
       (sharingSession) => {
         sharingSession?.appLanguageChanged();
