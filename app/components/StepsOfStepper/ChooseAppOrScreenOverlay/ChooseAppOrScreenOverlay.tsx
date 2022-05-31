@@ -58,23 +58,13 @@ export default function ChooseAppOrScreenOverlay(
   } = props;
   const classes = useStyles();
 
-  const [screenViewSharingIds, setScreenViewSharingIds] = useState<string[]>(
-    []
-  );
-
-  const [appWindowsViewSharingIds, setAppWindowsViewSharingIds] = useState<
-    string[]
-  >([]);
+  const [viewSharingIds, setViewSharingIds] = useState<string[]>([]);
 
   const handleRefreshSources = useCallback(async () => {
     const ids = await ipcRenderer.invoke(IpcEvents.GetDesktopSharingSourceIds, {
       isEntireScreenToShareChosen,
     });
-    if (isEntireScreenToShareChosen) {
-      setScreenViewSharingIds(ids);
-    } else {
-      setAppWindowsViewSharingIds(ids);
-    }
+    setViewSharingIds(ids);
   }, [isEntireScreenToShareChosen]);
 
   useEffect(() => {
@@ -189,11 +179,7 @@ export default function ChooseAppOrScreenOverlay(
             <Row>
               <div className={classes.sharePreviewsContainer}>
                 <PreviewGridList
-                  viewSharingIds={
-                    isEntireScreenToShareChosen
-                      ? screenViewSharingIds
-                      : appWindowsViewSharingIds
-                  }
+                  viewSharingIds={viewSharingIds}
                   isEntireScreen={isEntireScreenToShareChosen}
                   handleNextEntireScreen={() => {
                     handleNextEntireScreen();
