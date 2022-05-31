@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react';
 import Enzyme from 'enzyme';
-import EnzymeToJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import ScanQRStep from './ScanQRStep';
 
