@@ -26,6 +26,8 @@ type DeviceWithDesktopCapturerSourceId = Device & {
   desktopCapturerSourceId: string;
 };
 
+const ANIMATION_DURATION = 700;
+
 const Fade = require('react-reveal/Fade');
 
 interface ConnectedDevicesListDrawerProps {
@@ -134,6 +136,10 @@ export default function ConnectedDevicesListDrawer(
       const newDevicesDisplayed = new Map(devicesDisplayed);
       newDevicesDisplayed.set(id, false);
       setDevicesDisplayed(newDevicesDisplayed);
+      setTimeout(() => {
+        newDevicesDisplayed.delete(id);
+        setDevicesDisplayed(newDevicesDisplayed);
+      }, ANIMATION_DURATION);
     },
     [devicesDisplayed, setDevicesDisplayed]
   );
@@ -182,7 +188,9 @@ export default function ConnectedDevicesListDrawer(
         size={Drawer.SIZE_LARGE}
         isOpen={props.isOpen}
         onClose={props.handleToggle}
-        transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
+        transitionDuration={
+          isWithReactRevealAnimations() ? ANIMATION_DURATION : 0
+        }
       >
         <Row between="xs" middle="xs" className={classes.drawerInnerTopPanel}>
           <Col xs={11}>
@@ -214,7 +222,7 @@ export default function ConnectedDevicesListDrawer(
             <Fade
               bottom
               cascade
-              duration={isWithReactRevealAnimations() ? 700 : 0}
+              duration={isWithReactRevealAnimations() ? ANIMATION_DURATION : 0}
             >
               <div className={classes.zoomFullWidth}>
                 {connectedDevices.map((device) => {
@@ -224,7 +232,7 @@ export default function ConnectedDevicesListDrawer(
                         collapse
                         opposite
                         when={devicesDisplayed.get(device.id)}
-                        duration={isProduction() ? 700 : 0}
+                        duration={isProduction() ? ANIMATION_DURATION : 0}
                       >
                         <Card className="connected-device-card">
                           <Row middle="xs">
@@ -283,7 +291,9 @@ export default function ConnectedDevicesListDrawer(
           setIsAlertDisconectAllOpen(false);
         }}
         onConfirm={handleDisconnectAndHideAllDevices}
-        transitionDuration={isWithReactRevealAnimations() ? 700 : 0}
+        transitionDuration={
+          isWithReactRevealAnimations() ? ANIMATION_DURATION : 0
+        }
       >
         <H4>
           {t(
