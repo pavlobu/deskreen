@@ -173,7 +173,6 @@ export default function ConnectedDevicesListDrawer(
 
   const disconnectAllCancelButtonText = t('No, Cancel');
   const disconnectAllConfirmButtonText = t('Yes, Disconnect All');
-  console.log('============');
 
   return (
     <>
@@ -219,7 +218,6 @@ export default function ConnectedDevicesListDrawer(
             >
               <div className={classes.zoomFullWidth}>
                 {connectedDevices.map((device) => {
-                  console.log('device', device);
                   return (
                     <div key={device.id}>
                       <Fade
