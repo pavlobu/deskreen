@@ -119,11 +119,9 @@ export default class DeskreenApp {
           ? {
               contextIsolation: false,
               nodeIntegration: true,
-              enableRemoteModule: true,
             }
           : {
               preload: path.join(__dirname, 'dist/mainWindow.renderer.prod.js'),
-              enableRemoteModule: true,
             },
     });
 

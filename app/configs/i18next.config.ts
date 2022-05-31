@@ -10,7 +10,9 @@ import { ElectronStoreKeys } from '../enums/ElectronStoreKeys.enum';
 
 const i18nextOptions = {
   fallbackLng: config.fallbackLng,
-  lng: store.get(ElectronStoreKeys.AppLanguage),
+  lng: store.has(ElectronStoreKeys.AppLanguage)
+    ? String(store.get(ElectronStoreKeys.AppLanguage))
+    : 'en',
   ns: 'translation',
   defaultNS: 'translation',
   backend: {

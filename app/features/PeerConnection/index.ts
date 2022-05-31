@@ -61,21 +61,21 @@ export default class PeerConnection {
   }
 
   notifyClientWithNewLanguage() {
-    setTimeout(() => {
+    setTimeout(async () => {
       this.sendEncryptedMessage({
         type: 'APP_LANGUAGE',
         payload: {
-          value: getAppLanguage(),
+          value: await getAppLanguage(),
         },
       });
     }, 1000);
   }
 
   notifyClientWithNewColorTheme() {
-    setTimeout(() => {
+    setTimeout(async () => {
       this.sendEncryptedMessage({
         type: 'APP_THEME',
-        payload: { value: getAppTheme() },
+        payload: { value: await getAppTheme() },
       });
     }, 1000);
   }

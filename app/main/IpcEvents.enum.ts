@@ -24,4 +24,6 @@ export enum IpcEvents {
   GetAppLanguage = 'get-app-language',
   GetIsFirstTimeAppStart = 'get-is-not-first-time-app-start',
   SetAppStartedOnce = 'set-app-started-once',
+  GetIsAppDarkTheme = 'get-is-app-dark-theme',
+  SetIsAppDarkTheme = 'set-is-app-dark-theme',
 }

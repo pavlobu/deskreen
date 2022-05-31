@@ -22,7 +22,13 @@ export default function initIpcMainHandlers(
 ) {
   ipcMain.on('client-changed-language', async (_, newLangCode) => {
     i18n.changeLanguage(newLangCode);
-    // await settings.set('appLanguage', newLangCode);
+    if (store.has(ElectronStoreKeys.AppLanguage)) {
+      if (store.get(ElectronStoreKeys.AppLanguage) === newLangCode) {
+        return;
+      }
+      store.delete(ElectronStoreKeys.AppLanguage);
+    }
+    store.set(ElectronStoreKeys.AppLanguage, newLangCode);
   });
 
   ipcMain.handle('get-signaling-server-port', () => {
@@ -292,5 +298,26 @@ export default function initIpcMainHandlers(
       store.delete(ElectronStoreKeys.IsNotFirstTimeAppStart);
     }
     store.set(ElectronStoreKeys.IsNotFirstTimeAppStart, true);
+  });
+
+  ipcMain.handle(IpcEvents.GetIsAppDarkTheme, () => {
+    if (store.has(ElectronStoreKeys.IsAppDarkTheme)) {
+      return store.get(ElectronStoreKeys.IsAppDarkTheme);
+    }
+    return false;
+  });
+
+  ipcMain.handle(IpcEvents.SetIsAppDarkTheme, (_, isDarkTheme) => {
+    if (store.has(ElectronStoreKeys.IsAppDarkTheme)) {
+      store.delete(ElectronStoreKeys.IsAppDarkTheme);
+    }
+    store.set(ElectronStoreKeys.IsAppDarkTheme, isDarkTheme);
+  });
+
+  ipcMain.handle(IpcEvents.GetAppLanguage, () => {
+    if (store.has(ElectronStoreKeys.AppLanguage)) {
+      return store.get(ElectronStoreKeys.AppLanguage);
+    }
+    return 'en';
   });
 }
