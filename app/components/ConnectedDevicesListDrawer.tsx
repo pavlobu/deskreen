@@ -84,6 +84,12 @@ export default function ConnectedDevicesListDrawer(
             });
           }
           setConnectedDevices(devicesWithSourceIds);
+
+          const map = new Map();
+          devicesWithSourceIds.forEach((el) => {
+            map.set(el.id, true);
+          });
+          setDevicesDisplayed(map);
         })
         // eslint-disable-next-line no-console
         .catch((e) => console.error(e));
@@ -100,14 +106,6 @@ export default function ConnectedDevicesListDrawer(
       clearInterval(connectedDevicesInterval);
     };
   }, []);
-
-  useEffect(() => {
-    const map = new Map();
-    connectedDevices.forEach((el) => {
-      map.set(el.id, true);
-    });
-    setDevicesDisplayed(map);
-  }, [setDevicesDisplayed, connectedDevices]);
 
   const handleDisconnectOneDevice = useCallback(
     async (id: string) => {
@@ -159,10 +157,10 @@ export default function ConnectedDevicesListDrawer(
     (id) => {
       setTimeout(
         async () => {
-          await handleDisconnectOneDevice(id);
+          handleDisconnectOneDevice(id);
           hideOneDeviceInDevicesDisplayed(id);
         },
-        isProduction() ? 1000 : 0
+        isProduction() ? ANIMATION_DURATION : 0
       );
     },
     [handleDisconnectOneDevice, hideOneDeviceInDevicesDisplayed]
