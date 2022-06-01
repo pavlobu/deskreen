@@ -139,6 +139,9 @@ export default function ConnectedDevicesListDrawer(
       setTimeout(() => {
         newDevicesDisplayed.delete(id);
         setDevicesDisplayed(newDevicesDisplayed);
+        setConnectedDevices(
+          connectedDevices.filter((device) => device.id !== id)
+        );
       }, ANIMATION_DURATION);
     },
     [devicesDisplayed, setDevicesDisplayed]

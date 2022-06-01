@@ -240,6 +240,7 @@ TODO: add how to get started with local SonarCube for Deskreen in details.
   - `package.json` -- in `version` key ex. `1.0.0`
   - `app/package.json` -- in `version` key ex. `1.0.0`
   - `app/package-lock.json` -- in `version` key ex. `1.0.0`
+  - `app/client/package.json` -- in `version` key ex. `1.0.0`
 
 ## Found typo on https://deskreen.com ?
 
