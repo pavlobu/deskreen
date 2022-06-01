@@ -7,13 +7,13 @@ export default {
   langISOKeyToLangFullNameMap: {
     en: 'English',
     es: 'Español',
-    ko: '한국어',
     ru: 'Русский',
     ua: 'Українська',
-    zh_CN: '简体中文',
-    zh_TW: '繁體中文',
     da: 'Dansk',
     de: 'Deutsch',
     fi: 'Suomi',
+    ko: '한국어',
+    zh_CN: '简体中文',
+    zh_TW: '繁體中文',
   },
 };
