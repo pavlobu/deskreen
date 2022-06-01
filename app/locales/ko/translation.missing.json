@@ -1,9 +1,0 @@
-{
-  "Confirm": "확인",
-  "No, Cancel": "아니오, 취소합니다",
-  "Yes, Disconnect All": "예, 모두 연결을 끊습니다",
-  "Disconnect all devices": "모든 장치를 분리하십시오",
-  "Are you sure you want to disconnect all connected viewing devices?": "연결된 모든 장치를 해제 하시겠습니까?",
-  "This step can not be reverted": "이 단계는 되돌릴 수 없습니다",
-  "You will have to connect all devices manually again": "모든 장치를 다시 수동으로 연결해야합니다"
-}
