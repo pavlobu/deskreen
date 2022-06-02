@@ -1,6 +1,6 @@
 {
   "name": "deskreen-client-viewer",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.35.0",
