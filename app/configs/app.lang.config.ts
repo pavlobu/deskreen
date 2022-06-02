@@ -16,6 +16,8 @@ export default {
     'ko',
     'it',
     'ja',
+    'nl',
+    'fr',
   ],
   langISOKeyToLangFullNameMap: {
     en: 'English',
@@ -26,6 +28,8 @@ export default {
     de: 'Deutsch',
     fi: 'Suomi',
     it: 'Italiano',
+    nl: 'Nederlands',
+    fr: 'Français',
     ko: '한국어',
     zh_CN: '简体中文',
     zh_TW: '繁體中文',
