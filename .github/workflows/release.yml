@@ -107,6 +107,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: yarn package-ci
+      # TODO: add windows32 build step
 
       - name: Upload binaries to release
         uses: xresloader/upload-to-github-release@v1
