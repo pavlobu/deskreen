@@ -20,6 +20,7 @@ import { IpcEvents } from '../../main/IpcEvents.enum';
 
 const { port } = config;
 
+// can the comment bellow be removed? Because the port is being defined in the config file, although it can't be changed after bundling I think
 // TODO: change port to user defined port, if it is really defined
 const CLIENT_VIEWER_PORT = isProduction() ? port : '3000';
 
