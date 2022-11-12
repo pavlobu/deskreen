@@ -26,11 +26,9 @@ You must understand that now Ukraine has more people here willing to fight than 
 
 **If you CAN and WANT to support Ukraine 🇺🇦 and Ukrainian army, here is a tweet with instructions from OFFICIAL ✅ account of Ukraine 🇺🇦**
 
-## [♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO URKAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
+## [♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO UKRAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
 
 # GLORY TO 🇺🇦 UKRAINE 🇺🇦, GLORY TO UKRAINIAN HEROES! 🇺🇦🇺🇦🇺🇦
-
-##### YOU MUST UNDERSTAND THAT THIS WAR WITH UKRAINE STARTED NOT THE PEOPLE OF RUSSIA, BUT THE EVIL RUSSIAN GOVERNMENT! MOST OF RUSSIAN PEOPLE ARE PEACEFUL AND VERY KIND! IT IS A RUSSIAN GOVERNMENT THAT STARTED A WAR WITH THE WORLD THAT STARTED IN UKRAINE ON THE 24TH OF FEBRUARY 2022
 
 ---
 
