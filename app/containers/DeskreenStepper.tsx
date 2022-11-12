@@ -502,7 +502,7 @@ const DeskreenStepper = React.forwardRef((_props, ref) => {
                 }}
               >
                 <i>
-                  <b>♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO URKAINE! ♥️</b>
+                  <b>♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO UKRAINE! ♥️</b>
                 </i>
               </Button>
             </Row>
