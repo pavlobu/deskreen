@@ -97,6 +97,19 @@
         }
       ]
     },
+    "mac": {
+      "appId": null,
+      "category": "public.app-category.utilities",
+      "entitlements": "./mac_build_files/entitlements.mac.plist",
+      "entitlementsInherit": "./mac_build_files/entitlements.mac.inherit.plist",
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "target": [
+        "zip",
+        "dmg",
+        "pkg"
+      ]
+    },
     "win": {
       "target": [
         "nsis",
