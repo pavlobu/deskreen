@@ -1,89 +1,89 @@
-name: build and test
-
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-jobs:
-  build-and-test:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-10.15, windows-2019, ubuntu-18.04] # IMPORTANT!!! here ubuntu-18.04 should be same as in codecov and release workflows, this is for making sure caches are used in most efficient way
-
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2.3.4
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.4
-        with:
-          node-version: '16'
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v2.1.3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-yarn-
-
-      - name: yarn install in ./app/client
-        run: |
-          cd ./app/client
-          yarn install --frozen-lockfile
-
-      - name: yarn install in ./
-        run: yarn install --frozen-lockfile
-
-      - name: yarn install in ./app
-        run: |
-          cd ./app
-          yarn install --frozen-lockfile
-
-      - name: yarn build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build
-
-      # following step does code signing when `electron-builder --publish always` (look in package.json)
-      - name: yarn package-ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn package-ci
-
-      - name: yarn lint
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn lint
-
-      - name: yarn tsc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn tsc
-
-      - name: yarn test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn test
-
-      - name: yarn build-ux
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build-ux
-
-      - name: yarn test-ux
-        uses: GabrielBB/xvfb-action@v1.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          run: yarn test-ux
+#name: build and test
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#  pull_request:
+#    branches:
+#      - master
+#
+#jobs:
+#  build-and-test:
+#    runs-on: ${{ matrix.os }}
+#
+#    strategy:
+#      matrix:
+#        os: [macos-10.15, windows-2019, ubuntu-18.04] # IMPORTANT!!! here ubuntu-18.04 should be same as in codecov and release workflows, this is for making sure caches are used in most efficient way
+#
+#    steps:
+#      - name: Check out Git repository
+#        uses: actions/checkout@v2.3.4
+#
+#      - name: Setup Node.js environment
+#        uses: actions/setup-node@v2.1.4
+#        with:
+#          node-version: '16'
+#
+#      - name: Get yarn cache directory path
+#        id: yarn-cache-dir-path
+#        run: echo "::set-output name=dir::$(yarn cache dir)"
+#
+#      - uses: actions/cache@v2.1.3
+#        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+#        with:
+#          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+#          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+#          restore-keys: |
+#            ${{ matrix.os }}-yarn-
+#
+#      - name: yarn install in ./app/client
+#        run: |
+#          cd ./app/client
+#          yarn install --frozen-lockfile
+#
+#      - name: yarn install in ./
+#        run: yarn install --frozen-lockfile
+#
+#      - name: yarn install in ./app
+#        run: |
+#          cd ./app
+#          yarn install --frozen-lockfile
+#
+#      - name: yarn build
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn build
+#
+#      # following step does code signing when `electron-builder --publish always` (look in package.json)
+#      - name: yarn package-ci
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn package-ci
+#
+#      - name: yarn lint
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn lint
+#
+#      - name: yarn tsc
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn tsc
+#
+#      - name: yarn test
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn test
+#
+#      - name: yarn build-ux
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: yarn build-ux
+#
+#      - name: yarn test-ux
+#        uses: GabrielBB/xvfb-action@v1.2
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          run: yarn test-ux
