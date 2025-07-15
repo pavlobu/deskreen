@@ -146,8 +146,17 @@ class DeskreenSignalingServer {
   }
 
   callListenOnHttpServer() {
-    return this.server.listen(this.port, () => {
-      this.log.info(`Deskreen signaling server is online at port ${this.port}`);
+    const host = '::';
+    
+    return this.server.listen(this.port, host, () => {
+      this.log.info(`Deskreen signaling server is online at ${host}:${this.port}`);
+    }).on('error', (err: any) => {
+      if (err.code === 'EAFNOSUPPORT') {
+        return this.server.listen(this.port, '0.0.0.0', () => {
+          this.log.info(`Deskreen signaling server is online at 0.0.0.0:${this.port}`);
+        });
+      }
+      throw err;
     });
   }
 
