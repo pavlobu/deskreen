@@ -3,3 +3,4 @@ coverage:
     patch:
       default:
         enabled: no
+print(我爱你)
