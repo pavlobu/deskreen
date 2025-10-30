@@ -28,6 +28,6 @@
     "*.{css,sass,scss}.d.ts": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   }
 }
