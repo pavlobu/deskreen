@@ -142,6 +142,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ${{ matrix.build_command }}
 
+      - name: Rename Linux update manifest for non-x64
+        if: ${{ matrix.platform == 'linux' && matrix.build_name != 'linux-x64' }}
+        run: |
+          if [ -f dist/latest-linux.yml ]; then
+            mv dist/latest-linux.yml dist/latest-${{ matrix.build_name }}.yml
+          fi
+
       - name: Notarize and staple macOS DMG
         if: ${{ matrix.platform == 'macos' }}
         env:
