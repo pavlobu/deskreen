@@ -143,10 +143,26 @@ jobs:
         run: ${{ matrix.build_command }}
 
       - name: Rename Linux update manifest for non-x64
-        if: ${{ matrix.platform == 'linux' && matrix.build_name != 'linux-x64' }}
+        if: ${{ matrix.platform == 'linux' }}
         run: |
           if [ -f dist/latest-linux.yml ]; then
             mv dist/latest-linux.yml dist/latest-${{ matrix.build_name }}.yml
+          fi
+
+      - name: Rename Windows update manifest for non-x64
+        if: ${{ matrix.platform == 'windows' }}
+        shell: pwsh
+        run: |
+          $manifest = Join-Path dist 'latest.yml'
+          if (Test-Path $manifest) {
+            Rename-Item $manifest "latest-${{ matrix.build_name }}.yml"
+          }
+
+      - name: Rename macOS update manifest for arm builds
+        if: ${{ matrix.platform == 'macos' }}
+        run: |
+          if [ -f dist/latest-mac.yml ]; then
+            mv dist/latest-mac.yml dist/latest-${{ matrix.build_name }}.yml
           fi
 
       - name: Notarize and staple macOS DMG
