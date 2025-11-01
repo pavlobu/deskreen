@@ -32,7 +32,7 @@ jobs:
           fi
 
   release:
-    name: Release
+    name: Release (${{ matrix.build_name }})
     needs: create-release
     runs-on: ${{ matrix.os }}
 
@@ -40,10 +40,52 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            platform: linux
+            arch: x64
+            build_args: ''
+            build_name: linux-x64
+            artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
+          - os: ubuntu-latest
+            platform: linux
+            arch: arm64
+            build_args: ' -- --arm64'
+            build_name: linux-arm64
+            artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
+          - os: ubuntu-latest
+            platform: linux
+            arch: armv7l
+            build_args: ' -- --armv7l'
+            build_name: linux-arm32
             artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: windows-latest
+            platform: windows
+            arch: x64
+            build_args: ''
+            build_name: windows-amd64
+            artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
+          - os: windows-latest
+            platform: windows
+            arch: ia32
+            build_args: ' -- --ia32'
+            build_name: windows-amd32
+            artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
+          - os: windows-latest
+            platform: windows
+            arch: arm64
+            build_args: ' -- --arm64'
+            build_name: windows-arm64
             artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
           - os: macos-latest
+            platform: macos
+            arch: arm64
+            build_args: ' -- --arm64'
+            build_name: macos-arm64
+            artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
+          - os: macos-13
+            platform: macos
+            arch: x64
+            build_args: ' -- --x64'
+            build_name: macos-intel
             artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
 
     steps:
@@ -67,49 +109,49 @@ jobs:
         run: pnpm install
 
       - name: Install Linux build dependencies
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.platform == 'linux' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y libfuse2
 
       - name: Create .env file for client-viewer with Google Analytics tag (macOS)
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ matrix.platform == 'macos' }}
         run: |
           echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_MACOS }}" > ./src/client-viewer/.env
 
       - name: Create .env file for client-viewer with Google Analytics tag (Windows)
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.platform == 'windows' }}
         run: |
           echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_WINDOWS }}" > ./src/client-viewer/.env
 
       - name: Create .env file for client-viewer with Google Analytics tag (Linux)
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.platform == 'linux' }}
         run: |
           echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_LINUX }}" > ./src/client-viewer/.env
 
       - name: pnpm build on Windows
-        if: ${{ matrix.os == 'windows-latest' }}
+        if: ${{ matrix.platform == 'windows' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm build:win
+        run: pnpm build:win${{ matrix.build_args }}
 
       - name: pnpm build on macOS
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ matrix.platform == 'macos' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # certificate for signing (base64-encoded .p12) and its password
           CSC_LINK: ${{ secrets.MAC_CERTS }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-        run: pnpm build:mac
+        run: pnpm build:mac${{ matrix.build_args }}
 
       - name: pnpm build on Linux
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.platform == 'linux' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm build:linux
+        run: pnpm build:linux${{ matrix.build_args }}
 
       - name: Notarize and staple macOS DMG
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ matrix.platform == 'macos' }}
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
