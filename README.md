@@ -1,4 +1,4 @@
-# Deskreen
+# Deskreen Community Edition
 
 [![Github All Releases](https://img.shields.io/github/downloads/pavlobu/deskreen/total.svg)]()
 
@@ -14,56 +14,28 @@
 
 ---
 
-# DESKREEN CREATOR IS A UKRAINIAN. 🇺🇦 UKRAINE 🇺🇦 NEEDS YOUR HELP ❗️❗️❗️
-
-## [♥️ CLICK HERE TO DONATE TO UKRAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
-
-If you don't live in a cave and aware of what is going on in the world 🌍 , Russian 🇷🇺 government had started global armed invasion on the territory of Ukraine on the 24th of February 2022. **_This is for real, this is a WAR. Russian army is killing Ukrainian soldiers, Ukrainian civil citizens and Ukrainian children RIGHT NOW because Russian government gave them an order to do so._** You can search online for thousands of videos of what is going on in Ukraine.
-
-Ukrainians fight brave for their land and will never give up. But you must understand that our country is fighting here not for our land only, but for the safety of the whole world. ❗️❗️❗️ **_If Ukraine fails in this war with Russian army and Russian government, the security of all countries in the world 🌍 will be under the threat! Russian government and it's vicious allies and governments from other countries will be moving their armies to YOUR land, sooner or later_** ❗️❗️❗
-
-You must understand that now Ukraine has more people here willing to fight than weapons, military supplies and other inventory for them.
-
-**If you CAN and WANT to support Ukraine 🇺🇦 and Ukrainian army, here is a tweet with instructions from OFFICIAL ✅ account of Ukraine 🇺🇦**
-
-## [♥️ CLICK HERE TO GO TO A TWEET TO DONATE TO UKRAINE! ♥️](https://twitter.com/Ukraine/status/1497294840110977024)
-
-# GLORY TO 🇺🇦 UKRAINE 🇺🇦, GLORY TO UKRAINIAN HEROES! 🇺🇦🇺🇦🇺🇦
-
----
-
 ### ▶️ [Deskreen Youtube channel](https://www.youtube.com/channel/UCyiTK98gjDKGNNjUk9ynzxQ) (video tutorials, demos, use cases for Deskreen day to day usage)
 
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
 
-Deskreen is an `electron.js` based application that uses `WebRTC` to make a live stream of your
-desktop to a web browser on any device.
-It is built on top of [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
-For better security mechanism, end-to-end encryption is implemented, which is inspired by
-[darkwire.io](https://github.com/darkwire/darkwire.io). The difference is that it is rewritten
-in `Typescript` and transformed to use `node-forge` instead of `window.crypto.subtle`.
-Why this was made? Because a client served with `http` without SSL, which makes `window.crypto.subtle` unavailable.
+## To learn more visit our website [deskreen.com](https://deskreen.com)
+
+## Donate
+
+[Donate](https://deskreen.com/#contribute)
+
+Deskreen is an `electron.js` based application that uses `WebRTC` to make a live stream of your computer screen to a web browser on any device. It is available for MacOS, Windows and Linux operating systems.
+The current open-source Community Edition version has limited features. If you need more features please consider upgrading to [Pro](https://deskreen.com/download) version for more features when it is released.
 
 <br/>
 
-## [Deskreen FAQ](https://deskreen.com/?#faq)
-
-<br/>
-
-## Get Started for translators
-
-Want to add a new language support for Deskreen?
-Or you found a typo in existing translations of Deskreen App or website?
-Here are step by step guides:
-
-- [How to add a new language to Deskreen App and Website](doc/translations-docs/how-to-add-new-language-translation-to-Deskreen.md)
-- [How to fix a typo in Deskreen App or Website](doc/translations-docs/fix-a-typo-in-existing-translation-of-Deskreen.md)
+## [Deskreen Frequently Asked Questions](https://deskreen.com/faq)
 
 <br/>
 
 ## Deskreen Github Discussion Threads
 
-[Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.md)
+[Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.m
 
 ### [Announcements Channel in Discussions](https://github.com/pavlobu/deskreen/discussions/71)
 
@@ -143,106 +115,17 @@ Thank you in advance!
 
 ## Get Started for Developers
 
-### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
-
 ### Prerequisites
 
-You will need to have `node` `npm` and `yarn` installed
-globally on your machine.
+You will need to have `node>=v23` `pnpm>=v10.20.0` installed.
+
 
 1. git clone this repo
-2. `cd app/client; yarn install --frozen-lockfile ; cd ../../ ; yarn install --frozen-lockfile`
-3. `yarn dev` -- run in dev mode with live updates
+2. `pnpm i`
+3. `cd ./src/client-viewer && pnpm i && cd ../..`
+4. `pnpm clean && pnpm build && pnpm start` -- run in prod like mode
 
-### Useful yarn commands
-
-`yarn start` -- run in production mode to test, without packaging
-`yarn package` -- to package an app and make executables available in `release` folder
-
-#### for more yarn commands look at `package.json`
-
-### How to run tests
-
-`yarn test` -- run all unit tests
-`yarn build-ux && yarn test-ux` -- run User Experience tests (no tests for `app/client` yet)
-
-### TODO: add e2e tests with host + client app interaction
-
-#### run tests of host app
-
-`yarn test-watch-not-silent` -- run tests in watch mode with console logs only for host app, excluding `app/client`
-`yarn test -- -u` -- update snapshots
-
-#### run tests for `app/client`
-
-`yarn test` -- run client tests in watch mode
-`test:nowatch` -- run client tests a single time
-`yarn test -- -u` -- update snapshots
-
-### Generate test coverage results
-
-`yarn coverage` -- when run from project root, generates a coverage report for `host` and `app/client`
-
-### How to regenerate snapshots if you have tests failing when running `yarn test`?
-
-in root `./` folder of project run this:
-
-```
-yarn jest --updateSnapshot
-```
-
-in Deskreen Viewer `./app/client` folder of project run this:
-
-```
-cd app/client
-SKIP_PREFLIGHT_CHECK=true yarn test:nowatch -- -u
-```
-
-### Run `yarn test-all` locally to make sure you don't have any errors, before submitting your PR
-
-## Instruction for running a local Sonar Qube, community edition
-
-### Prerequisites
-
-You need to install Sonar Qube community edition for your machine.
-And sonar-scanner. Then add sonar scanner to your PATH.
-
-You need to run sonar-scanner separately on root directory
-and on `app/client` directory.
-
-Luckily for you sonar scanner is automatically triggered after `husky` checks.
-So you only need to install and configure SonarCube locally and
-create two separate projects in SonarCube panel.
-First project for host app, and second project for client viewer app.
-TODO: add how to get started with local SonarCube for Deskreen in details.
-
-## Documentation
-
-### High level architecture design
-
-![high-level-design](./doc/architecture/deskreen-arch-pavlobu-21012021.svg)
-
-### WebRTC Screen Sharing Session Initiation Step by Step
-
-![sharng-session-init](./doc/init-sharing-session/deskreen-webrtc-screen-sharing-session-initiation-pavlobu-22012021.svg)
-
-### Benchmarks:
-
-[Benchmarks can be found here](./doc/benchmarks)
-
-## Note on versioning:
-
-- All versions git tags should start with `v` ex. `v1.0.0`
-- Before making a new release with `git push <version-tagname>` set version
-  to `<version-tagname>` ! without `v` in the beginning! (ex. `1.0.0` -- not start with `v`) in these three files:
-  - `package.json` -- in `version` key ex. `1.0.0`
-  - `app/package.json` -- in `version` key ex. `1.0.0`
-  - `app/package-lock.json` -- in `version` key ex. `1.0.0`
-  - `app/client/package.json` -- in `version` key ex. `1.0.0`
-
-## Found typo on https://deskreen.com ?
-
-You can submit your pull request with fix on [Deskreen website locales repo](https://github.com/Deskreen/deskreen-website-locales)
+#### for more pnpm commands look at `package.json`
 
 ## Maintainer
 
@@ -254,28 +137,16 @@ AGPL-3.0 License © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen
 
 ## Copyright
 
-Deskreen Logo PNG Image -- © [Nadiia Plaunova](https://www.artstation.com/nadiiia)
+Electron-Vite MIT License © [electron-vite-react](https://github.com/electron-vite/electron-vite-react)
+
+Vite MIT License © [Vite.js](https://github.com/vitejs/vite)
 
 Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 
-MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
+simple-peer MIT. Copyright © [Feross Aboukhadijeh](http://feross.org/)
 
-simple-peer MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org/)
-
-GNU General Public License (GPL) Version 2 [node-forge](https://github.com/digitalbazaar/forge)
-
-ISC Copyright (c) 2019, Mapbox [pixelmatch](https://github.com/mapbox/pixelmatch)
+And many many others...
 
 ## Thanks
 
-🙏 Special thanks to [Electron React Boilerplate community](https://github.com/electron-react-boilerplate/electron-react-boilerplate) for providing a good kickstart template boilerplate code for electron project, that really helped a lot to get started with development of Deskreen.
-
-🙏 Thanks to Github workflows for enabling a robust CI pipeline for the needs of 'forging' 🛠️ Deskreen.
-
 🙏 Many thanks to all 🌍 open source community members and maintainers of libraries used in this project.
-
-## Donate
-
-[Click to donate on Deskreen's Patreon page](https://patreon.com/deskreen)
-
-[Click to donate on Deskreen's Opencollective page](https://opencollective.com/deskreen)
