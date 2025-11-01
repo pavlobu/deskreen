@@ -3,6 +3,7 @@ node_modules
 dist
 out
 .DS_Store
+.pnpm-store
 .eslintcache
 *.log*
 src/client-viewer/dist
@@ -12,3 +13,5 @@ src/client-viewer/node_modules
 .env
 tsconfig.web.tsbuildinfo
 src/client-viewer/.env
+
+AGENTS.md

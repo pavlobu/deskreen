@@ -66,6 +66,12 @@ jobs:
       - name: pnpm install in ./
         run: pnpm install
 
+      - name: Install Linux build dependencies
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse2
+
       - name: Create .env file for client-viewer with Google Analytics tag (macOS)
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
