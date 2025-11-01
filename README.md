@@ -2,36 +2,32 @@
 
 [![Github All Releases](https://img.shields.io/github/downloads/pavlobu/deskreen/total.svg)]()
 
-![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
-
-### Website: https://deskreen.com
-
-![release all os -- no code signing](https://github.com/pavlobu/deskreen/workflows/release%20all%20os%20--%20no%20code%20signing/badge.svg)
-![build-and-test](https://github.com/pavlobu/deskreen/workflows/build%20and%20test/badge.svg)
-![codecov-generate](https://github.com/pavlobu/deskreen/workflows/codecov/badge.svg)
-[![codecov](https://codecov.io/gh/pavlobu/deskreen/branch/master/graph/badge.svg?token=fqfBlyXT5O)](https://codecov.io/gh/pavlobu/deskreen)
-![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
-
----
-
-### ▶️ [Deskreen Youtube channel](https://www.youtube.com/channel/UCyiTK98gjDKGNNjUk9ynzxQ) (video tutorials, demos, use cases for Deskreen day to day usage)
+![Deskreen Logo](./resources/icon.png)
 
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
 
 ## To learn more visit our website: [deskreen.com](https://deskreen.com)
 
-## Donate
 
-[Donate](https://deskreen.com/#contribute)
+![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
+
+
+## [Donate to support Deskreen Open-Source](https://deskreen.com/#contribute)
 
 Deskreen is an `electron.js` based application that uses `WebRTC` to make a live stream of your computer screen to a web browser on any device. It is available for MacOS, Windows and Linux operating systems.
 The current open-source Community Edition version has limited features. If you need more features please consider upgrading to [Pro](https://deskreen.com/download) version for more features when it is released.
 
-<br/>
+---
+
+### ▶️ [See how people use Deskreen on Youtube](https://www.youtube.com/results?search_query=deskreen) (video tutorials, demos, use cases for Deskreen day to day usage)
+
+---
+
 
 ## [Deskreen Frequently Asked Questions](https://deskreen.com/faq)
 
-<br/>
+---
+
 
 ## Deskreen Github Discussion Threads
 
