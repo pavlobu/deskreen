@@ -41,51 +41,43 @@ jobs:
         include:
           - os: ubuntu-latest
             platform: linux
-            arch: x64
-            build_args: ''
             build_name: linux-x64
+            build_command: pnpm build:linux
             artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: ubuntu-latest
             platform: linux
-            arch: arm64
-            build_args: ' -- --arm64'
             build_name: linux-arm64
+            build_command: pnpm build:linux:arm64
             artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: ubuntu-latest
             platform: linux
-            arch: armv7l
-            build_args: ' -- --armv7l'
             build_name: linux-arm32
+            build_command: pnpm build:linux:armv7l
             artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
           - os: windows-latest
             platform: windows
-            arch: x64
-            build_args: ''
             build_name: windows-amd64
+            build_command: pnpm build:win
             artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
           - os: windows-latest
             platform: windows
-            arch: ia32
-            build_args: ' -- --ia32'
             build_name: windows-amd32
+            build_command: pnpm build:win:ia32
             artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
           - os: windows-latest
             platform: windows
-            arch: arm64
-            build_args: ' -- --arm64'
             build_name: windows-arm64
+            build_command: pnpm build:win:arm64
             artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
           - os: macos-latest
             platform: macos
-            arch: arm64
-            build_args: ' -- --arm64'
             build_name: macos-arm64
+            build_command: pnpm build:mac:arm64
             artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
           - os: macos-13
             platform: macos
-            arch: x64
-            build_args: ' -- --x64'
             build_name: macos-intel
+            build_command: pnpm build:mac:x64
             artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
 
     steps:
@@ -133,7 +125,7 @@ jobs:
         if: ${{ matrix.platform == 'windows' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm build:win${{ matrix.build_args }}
+        run: ${{ matrix.build_command }}
 
       - name: pnpm build on macOS
         if: ${{ matrix.platform == 'macos' }}
@@ -142,13 +134,13 @@ jobs:
           # certificate for signing (base64-encoded .p12) and its password
           CSC_LINK: ${{ secrets.MAC_CERTS }}
           CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-        run: pnpm build:mac${{ matrix.build_args }}
+        run: ${{ matrix.build_command }}
 
       - name: pnpm build on Linux
         if: ${{ matrix.platform == 'linux' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm build:linux${{ matrix.build_args }}
+        run: ${{ matrix.build_command }}
 
       - name: Notarize and staple macOS DMG
         if: ${{ matrix.platform == 'macos' }}

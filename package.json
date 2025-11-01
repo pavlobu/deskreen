@@ -21,8 +21,14 @@
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
+    "build:win:ia32": "npm run build && electron-builder --win --ia32",
+    "build:win:arm64": "npm run build && electron-builder --win --arm64",
     "build:mac": "npm run buildClientViewer && electron-vite build && electron-builder --mac",
-    "build:linux": "electron-vite build && electron-builder --linux"
+    "build:mac:arm64": "npm run buildClientViewer && electron-vite build && electron-builder --mac --arm64",
+    "build:mac:x64": "npm run buildClientViewer && electron-vite build && electron-builder --mac --x64",
+    "build:linux": "npm run buildClientViewer && electron-vite build && electron-builder --linux",
+    "build:linux:arm64": "npm run buildClientViewer && electron-vite build && electron-builder --linux --arm64",
+    "build:linux:armv7l": "npm run buildClientViewer && electron-vite build && electron-builder --linux --armv7l"
   },
   "dependencies": {
     "@blueprintjs/core": "^6.1.0",
