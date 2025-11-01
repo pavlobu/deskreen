@@ -1,0 +1,23 @@
+.video-js,
+.video-js .vjs-tech {
+	width: 100% !important;
+	height: 100% !important;
+	background-color: #000 !important;
+}
+
+.video-js .vjs-tech,
+.video-js .vjs-tech[style] {
+	object-fit: contain !important;
+}
+
+:fullscreen .video-js,
+:fullscreen .video-js .vjs-tech,
+:-webkit-full-screen .video-js,
+:-webkit-full-screen .video-js .vjs-tech {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: contain !important;
+	background-color: #000 !important;
+}
+
+

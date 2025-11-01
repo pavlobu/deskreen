@@ -4,38 +4,47 @@ on:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
-name: release all os -- no code signing
+name: release all os — mac signed & notarized, windows, linux
+
+permissions:
+  contents: write # Required to create releases and upload assets
 
 jobs:
   create-release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2.3.1
-      - name: Create Release
+        uses: actions/checkout@v4
+      - name: Create GitHub Release (draft)
         id: create_release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Deskreen Release ${{ github.ref }}
-          draft: true
-          prerelease: false
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ github.ref_name }}"
+          echo "Ensuring draft release for tag: $tag"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists, skipping creation"
+          else
+            gh release create "$tag" \
+              --title "$tag" \
+              --draft \
+              --notes ""
+          fi
 
   release:
-    name: Deskreen Release
+    name: Release
+    needs: create-release
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         include:
-          - os: ubuntu-18.04 # IMPORTANT!!! this LINUX os should be the same as in build-and-test and covecov workflows! this is for making sure caches are used in most efficient way
-            artifact_name: 'release/{*.AppImage,*.rpm,*.deb,*.yml}'
-          - os: windows-2019
-            artifact_name: 'release/{*.msi,*.exe,*.blockmap,*.yml}'
-          - os: macos-10.15
-            artifact_name: 'release/{*.dmg,*.blockmap,*.yml}'
+          - os: ubuntu-latest
+            artifact_name: 'dist/{*.AppImage,*.rpm,*.deb,*.yml}'
+          - os: windows-latest
+            artifact_name: 'dist/{*.msi,*.exe,*.blockmap,*.yml}'
+          - os: macos-latest
+            artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
 
     steps:
       - name: Checkout code
@@ -44,70 +53,73 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.4
         with:
-          node-version: '16'
+          node-version: '23'
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-      - uses: actions/cache@v2.1.3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ matrix.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ matrix.os }}-yarn-
-
-      - name: yarn install in ./app/client
+      - name: pnpm install in ./src/client-viewer
         run: |
-          cd ./app/client
-          yarn install --frozen-lockfile
+          cd ./src/client-viewer
+          pnpm install
 
-      - name: yarn install in ./
-        run: yarn install --frozen-lockfile
+      - name: pnpm install in ./
+        run: pnpm install
 
-      - name: yarn install in ./app
+      - name: Create .env file for client-viewer with Google Analytics tag (macOS)
+        if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          cd ./app
-          yarn install --frozen-lockfile
+          echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_MACOS }}" > ./src/client-viewer/.env
 
-      - name: yarn build
+      - name: Create .env file for client-viewer with Google Analytics tag (Windows)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_WINDOWS }}" > ./src/client-viewer/.env
+
+      - name: Create .env file for client-viewer with Google Analytics tag (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          echo "VITE_CLIENT_VIEWER_GA_TAG=${{ secrets.CLIENT_VIEWER_GA_TAG_LINUX }}" > ./src/client-viewer/.env
+
+      - name: pnpm build on Windows
+        if: ${{ matrix.os == 'windows-latest' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn build
+        run: pnpm build:win
 
-      - name: yarn lint
+      - name: pnpm build on macOS
+        if: ${{ matrix.os == 'macos-latest' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn lint
+          # certificate for signing (base64-encoded .p12) and its password
+          CSC_LINK: ${{ secrets.MAC_CERTS }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
+        run: pnpm build:mac
 
-      - name: yarn tsc
+      - name: pnpm build on Linux
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn tsc
+        run: pnpm build:linux
 
-      # - name: yarn test
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: yarn test
-
-      # - name: yarn build-ux
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: yarn build-ux
-
-      # - name: yarn test-ux
-      #   uses: GabrielBB/xvfb-action@v1.2
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     run: yarn test-ux
-
-      - name: yarn package-ci
+      - name: Notarize and staple macOS DMG
+        if: ${{ matrix.os == 'macos-latest' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn package-ci
-      # TODO: add windows32 build step
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          shopt -s nullglob
+          for dmg in dist/*.dmg; do
+            echo "Submitting $dmg for notarization"
+            xcrun notarytool submit "$dmg" \
+              --apple-id "$APPLE_ID" \
+              --team-id "$APPLE_TEAM_ID" \
+              --password "$APPLE_APP_SPECIFIC_PASSWORD" \
+              --wait
+            echo "Stapling ticket to $dmg"
+            xcrun stapler staple "$dmg"
+          done
 
       - name: Upload binaries to release
         uses: xresloader/upload-to-github-release@v1

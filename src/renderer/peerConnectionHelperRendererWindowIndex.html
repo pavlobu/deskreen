@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Electron Helper Renderer</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+<!--    <meta-->
+<!--      http-equiv="Content-Security-Policy"-->
+<!--      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"-->
+<!--    />-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src *;"/>
+    <script src="./assets/simplepeer.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+    </div>
+
+    <script type="module" src="/src/peerConnectionHelperRendererWindowIndex.tsx"></script>
+  </body>
+</html>

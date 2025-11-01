@@ -1,425 +1,109 @@
 {
-  "name": "deskreen",
-  "productName": "Deskreen",
-  "version": "2.0.4",
-  "description": "Deskreen turns any device into a secondary screen for your computer",
+  "name": "deskreen-ce",
+  "version": "3.0.1",
+  "description": "An Electron application with React and TypeScript",
+  "main": "./out/main/index.js",
+  "author": "deskreen.com",
+  "homepage": "https://electron-vite.org",
   "scripts": {
-    "build": "yarn build-client && yarn build-main && yarn build-renderer",
-    "build-test": "yarn build-main-test && yarn build-renderer-test && yarn build-client",
-    "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
-    "build-e2e": "cross-env E2E_BUILD=true yarn build",
-    "build-ux": "cross-env E2E_BUILD=true RUN_MODE=test yarn build-test",
-    "build-main": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
-    "build-main-test": "cross-env RUN_MODE=test NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
-    "build-renderer": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
-    "build-renderer-test": "cross-env RUN_MODE=test NODE_ENV=production webpack --config ./configs/webpack.config.renderer.prod.babel.js --colors",
-    "build-client": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn build",
-    "dev": "cross-env START_HOT=1 node -r @babel/register ./internals/scripts/CheckPortInUse.js && concurrently \"cross-env START_HOT=1 RUN_MODE=dev yarn start-renderer-dev\" \"yarn start-client-dev\"",
-    "coverage": "yarn coverage-app && yarn coverage-client",
-    "coverage-app": "cross-env BABEL_DISABLE_CACHE=1 jest --coverage",
-    "coverage-client": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true cross-env BABEL_DISABLE_CACHE=1 yarn test -- --coverage --watchAll=false",
-    "electron-rebuild": "electron-rebuild --parallel --force --types prod,dev,optional --module-dir app",
-    "install-client:nolockfile": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn install --no-lockfile",
-    "install-client:frozenlockfile": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn install --frozen-lockfile",
-    "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
-    "lint-fix": "yarn --silent lint --fix; exit 0",
-    "lint-styles": "stylelint --ignore-path .eslintignore '**/*.*(css|scss)' --syntax scss",
-    "lint-styles-fix": "yarn --silent lint-styles --fix; exit 0",
-    "package": "yarn build && electron-builder build --publish never",
-    "package-all": "yarn build && electron-builder build -mwl --publish never",
-    "package-ci": "yarn postinstall && yarn build && electron-builder --publish never",
-    "package-mac": "yarn build && electron-builder build --mac",
-    "package-linux": "yarn build && electron-builder build --linux",
-    "package-win": "yarn build && electron-builder build --win --x64",
-    "package-win-32": "yarn build && electron-builder build --win --ia32",
-    "postinstall": "node -r @babel/register internals/scripts/CheckNativeDep.js && electron-builder install-app-deps && yarn build-dll && opencollective-postinstall",
-    "postlint-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{js,jsx,json,html,css,less,scss,yml}'",
-    "postlint-styles-fix": "prettier --ignore-path .eslintignore --single-quote --write '**/*.{css,scss}'",
-    "preinstall": "node ./internals/scripts/CheckYarn.js",
-    "prestart": "yarn build",
-    "start": "cross-env NODE_ENV=production electron --webrtc-max-cpu-consumption-percentage=100 ./app/main.prod.js",
-    "start-main-debug": "yarn start-main-dev --inspect=5858 --remote-debugging-port=9223",
-    "start-main-dev": "cross-env START_HOT=1 NODE_ENV=development electron --webrtc-max-cpu-consumption-percentage=100 -r ./internals/scripts/BabelRegister ./app/main.dev.ts",
-    "start-renderer-dev": "cross-env START_HOT=1 NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
-    "start-client-dev": "cd app/client && cross-env SKIP_PREFLIGHT_CHECK=true yarn start",
-    "test": "cross-env BABEL_DISABLE_CACHE=1 RUN_MODE=test jest --silent && yarn test-client",
-    "test-client": "cd app/client && cross-env BABEL_DISABLE_CACHE=1 SKIP_PREFLIGHT_CHECK=true yarn test:nowatch",
-    "test-all": "yarn lint && yarn tsc && yarn build && yarn test",
-    "test-e2e": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe electron:./app ./test/e2e/HomePage.e2e.ts",
-    "test-e2e-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test testcafe --live electron:./app ./test/e2e/HomePage.e2e.ts",
-    "test-ux": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test RUN_MODE=test testcafe --skip-js-errors electron:./app ./test/ux/Stepper.ux.ts",
-    "test-ux-live": "node -r @babel/register ./internals/scripts/CheckBuildsExist.js && cross-env NODE_ENV=test RUN_MODE=test testcafe --live electron:./app ./test/ux/Stepper.ux.ts",
-    "test-watch": "yarn jest --watch --silent",
-    "test-watch-not-silent": "yarn jest --watch",
-    "sonar": "concurrently \"sonar-scanner\" \"cd app/client && sonar-scanner\" "
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "cross-env NODE_ENV=development eslint --cache"
-    ],
-    "{*.json,.{babelrc,eslintrc,prettierrc,stylelintrc}}": [
-      "prettier --ignore-path .eslintignore --parser json --write"
-    ],
-    "*.{css,scss}": [
-      "stylelint --allow-empty-input --ignore-path .eslintignore --syntax scss --fix",
-      "prettier --ignore-path .eslintignore --single-quote --write"
-    ],
-    "*.{html,md,yml}": [
-      "prettier --ignore-path .eslintignore --single-quote --write"
-    ]
-  },
-  "build": {
-    "productName": "Deskreen",
-    "appId": "com.pavlobu.Deskreen",
-    "copyright": "Copyright © 2020-present Pavlo Buidenkov (Paul)",
-    "files": [
-      "dist/",
-      "node_modules/",
-      "app.html",
-      "peerConnectionHelperRendererWindow.html",
-      "main.prod.js",
-      "main.prod.js.map",
-      "package.json",
-      "locales/",
-      "client/build"
-    ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": [
-        "nsis",
-        "msi",
-        "portable"
-      ]
-    },
-    "portable": {
-      "artifactName": "${name}_${version}_Windows_portable.exe"
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "pavlobu",
-      "repo": "deskreen",
-      "private": false
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pavlobu/deskreen.git"
-  },
-  "author": {
-    "name": "Pavlo (Paul) Buidenkov",
-    "email": "pavlobu@gmail.com",
-    "url": "https://github.com/pavlobu"
-  },
-  "contributors": [
-    {
-      "name": "Pavlo (Paul) Buidenkov",
-      "email": "pavlobu@gmail.com",
-      "url": "https://github.com/pavlobu"
-    }
-  ],
-  "license": "AGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/pavlobu/deskreen/issues"
-  },
-  "keywords": [
-    "electron",
-    "react",
-    "redux",
-    "typescript",
-    "ts",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
-  ],
-  "homepage": "https://github.com/pavlobu/deskreen#readme",
-  "jest": {
-    "testURL": "http://localhost/",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "app/client"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "app/client"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "ts",
-      "tsx",
-      "json"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "app/node_modules"
-    ],
-    "setupFiles": [
-      "./internals/scripts/CheckBuildsExist.js",
-      "./internals/jest/setEnvVars.js"
-    ],
-    "collectCoverageFrom": [
-      "**/*.{ts,tsx}",
-      "!**/node_modules/**",
-      "!**/dist/**",
-      "!**/dll/**",
-      "!**/internals/**",
-      "!**/coverage/**",
-      "!**/configs/**",
-      "!**/resources/**"
-    ],
-    "testResultsProcessor": "jest-sonar-reporter"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-decorators": "^7.10.5",
-    "@babel/plugin-proposal-do-expressions": "^7.10.4",
-    "@babel/plugin-proposal-export-default-from": "^7.10.4",
-    "@babel/plugin-proposal-export-namespace-from": "^7.10.4",
-    "@babel/plugin-proposal-function-bind": "^7.10.5",
-    "@babel/plugin-proposal-function-sent": "^7.10.4",
-    "@babel/plugin-proposal-json-strings": "^7.10.4",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.11.0",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
-    "@babel/plugin-proposal-numeric-separator": "^7.10.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.10.5",
-    "@babel/plugin-proposal-throw-expressions": "^7.10.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-syntax-import-meta": "^7.10.4",
-    "@babel/plugin-transform-react-constant-elements": "^7.10.4",
-    "@babel/plugin-transform-react-inline-elements": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
-    "@babel/register": "^7.10.5",
-    "@types/classnames": "^2.2.10",
-    "@types/enzyme": "^3.10.5",
-    "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/express": "^4.17.7",
-    "@types/history": "^4.7.6",
-    "@types/i18next-node-fs-backend": "^2.1.0",
-    "@types/jest": "^26.0.5",
-    "@types/kcors": "^2.2.3",
-    "@types/koa": "^2.11.4",
-    "@types/koa-router": "^7.4.1",
-    "@types/koa-send": "^4.1.2",
-    "@types/koa-static": "^4.0.1",
-    "@types/node": "12",
-    "@types/node-forge": "^0.9.5",
-    "@types/qrcode.react": "^1.0.1",
-    "@types/react": "^16.9.44",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-redux": "^7.1.9",
-    "@types/react-router": "^5.1.8",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/react-toast-notifications": "^2.4.0",
-    "@types/react-toastify": "^4.1.0",
-    "@types/redux-logger": "^3.0.8",
-    "@types/shortid": "^0.0.29",
-    "@types/simple-peer": "^9.6.0",
-    "@types/socket.io": "^2.1.11",
-    "@types/socket.io-client": "^1.4.33",
-    "@types/uuid": "^8.3.0",
-    "@types/webpack": "^4.41.21",
-    "@types/webpack-env": "^1.15.2",
-    "@typescript-eslint/eslint-plugin": "^3.6.1",
-    "@typescript-eslint/parser": "^3.6.1",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.1.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-dev-expression": "^0.2.2",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist-config-erb": "^0.0.1",
-    "chalk": "^4.1.0",
-    "concurrently": "^5.2.0",
-    "core-js": "^3.6.5",
-    "cross-env": "^7.0.0",
-    "css-loader": "^3.6.0",
-    "detect-port": "^1.3.0",
-    "electron-builder": "^23.0.3",
-    "electron-devtools-installer": "^2.2.4",
-    "electron-rebuild": "^3.2.7",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.5.0",
-    "eslint": "^7.5.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-airbnb-typescript": "^9.0.0",
-    "eslint-config-erb": "^1.0.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-import-resolver-webpack": "^0.12.2",
-    "eslint-plugin-compat": "^3.8.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
-    "eslint-plugin-jsx-a11y": "6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.8",
-    "eslint-plugin-testcafe": "^0.2.1",
-    "file-loader": "^6.0.0",
-    "husky": "^4.2.5",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.1.0",
-    "jest-sonar-reporter": "^2.0.0",
-    "lint-staged": "^10.2.11",
-    "mini-css-extract-plugin": "^0.9.0",
-    "opencollective-postinstall": "^2.0.3",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "prettier": "^2.0.5",
-    "redux-logger": "^3.0.6",
-    "rimraf": "^3.0.0",
-    "sass-loader": "^9.0.2",
-    "style-loader": "^1.2.1",
-    "stylelint": "^13.6.1",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^20.0.0",
-    "terser-webpack-plugin": "^3.0.7",
-    "testcafe": "^1.10.1",
-    "testcafe-browser-provider-electron": "^0.0.16",
-    "testcafe-react-selectors": "^4.1.4",
-    "ts-jest": "^26.1.4",
-    "typescript": "^3.9.7",
-    "typings-for-css-modules-loader": "^1.7.0",
-    "url-loader": "^4.1.0",
-    "webpack": "^4.43.0",
-    "webpack-bundle-analyzer": "^3.8.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^5.0.9"
+    "clean": "rm -rf dist out src/client-viewer/dist",
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "start": "electron-vite preview",
+    "dev": "concurrently \"pnpm electron-vite dev\" \"pnpm:devClientViewer\"",
+    "devClientViewer": "cd src/client-viewer && pnpm dev --host --port=5174",
+    "buildDev": "npm run buildClientViewer && electron-vite build",
+    "build": "npm run typecheck && npm run buildClientViewer && electron-vite build",
+    "buildClientViewer": "cd src/client-viewer && pnpm build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run buildClientViewer && electron-vite build && electron-builder --mac",
+    "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
-    "@blueprintjs/core": "^3.31.0",
-    "@blueprintjs/select": "^3.13.7",
-    "@fortawesome/fontawesome-free": "^5.14.0",
-    "@hot-loader/react-dom": "^16.13.0",
-    "@material-ui/core": "^4.11.0",
-    "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.19.2",
-    "classnames": "^2.2.6",
-    "clsx": "^1.1.1",
-    "connected-react-router": "^6.6.1",
-    "electron": "18.2.4",
-    "electron-debug": "^3.1.0",
-    "electron-log": "^4.2.2",
-    "electron-settings": "^4.0.2",
-    "electron-store": "^8.0.1",
-    "electron-updater": "^4.3.1",
-    "express": "^4.17.1",
-    "fontsource-lexend-peta": "^3.0.9",
-    "get-port": "^5.1.1",
-    "history": "^4.7.2",
-    "i18next": "^19.6.3",
-    "i18next-fs-backend": "^1.0.7",
-    "i18next-node-fs-backend": "^2.1.3",
+    "@blueprintjs/core": "^6.1.0",
+    "@blueprintjs/select": "^6.0.1",
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/utils": "^4.0.0",
+    "@fortawesome/fontawesome-free": "^7.0.0",
+    "@material-ui/core": "^4.12.4",
+    "@roamhq/wrtc": "^0.9.0",
+    "@types/lodash": "^4.17.20",
+    "axios": "^1.11.0",
+    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
+    "detect-port": "^2.1.0",
+    "electron-devtools-installer": "^4.0.0",
+    "electron-log": "^5.4.2",
+    "electron-settings": "^4.0.4",
+    "electron-store": "^10.1.0",
+    "electron-updater": "^6.6.2",
+    "fontsource-lexend-peta": "^4.0.0",
+    "fs-extra": "^11.3.1",
+    "get-port": "^7.1.0",
+    "i18next": "^25.3.4",
+    "i18next-fs-backend": "^2.6.0",
     "i18next-sync-fs-backend": "^1.1.1",
-    "internal-ip": "^6.1.0",
     "kcors": "^2.2.2",
-    "koa": "^2.13.0",
-    "koa-router": "^9.4.0",
+    "koa": "^3.0.1",
+    "koa-router": "^14.0.0",
     "koa-send": "^5.0.1",
     "koa-static": "^5.0.0",
-    "node-forge": "^0.9.1",
-    "qrcode.react": "^1.0.0",
-    "react": "^16.13.1",
-    "react-awesome-reveal": "^3.2.1",
-    "react-dom": "^16.12.0",
+    "lodash": "^4.17.21",
+    "node-forge": "^1.3.1",
+    "normalize.css": "^8.0.1",
+    "qrcode.react": "^4.2.0",
     "react-flexbox-grid": "^2.1.2",
-    "react-hot-loader": "^4.12.21",
-    "react-i18next": "^11.7.0",
-    "react-qrcode-logo": "^2.2.1",
-    "react-redux": "^7.2.0",
-    "react-reveal": "^1.2.2",
-    "react-router-dom": "^5.2.0",
-    "react-toast-notifications": "^2.4.0",
-    "react-toastify": "^6.0.8",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "regenerator-runtime": "^0.13.5",
-    "shortid": "^2.2.15",
-    "simple-peer": "^9.7.2",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0",
-    "source-map-support": "^0.5.19",
-    "winston": "^3.3.3"
+    "react-toast-notifications": "^2.5.1",
+    "shortid": "^2.2.17",
+    "simple-peer": "^9.11.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tweetnacl": "^1.0.3",
+    "uuid": "^11.1.0"
   },
-  "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x",
-    "yarn": ">=0.21.3"
+  "devDependencies": {
+    "@electron-toolkit/eslint-config-prettier": "^3.0.0",
+    "@electron-toolkit/eslint-config-ts": "^3.1.0",
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/electron-devtools-installer": "^4.0.0",
+    "@types/i18next-node-fs-backend": "^2.1.5",
+    "@types/kcors": "^2.2.8",
+    "@types/koa": "^3.0.0",
+    "@types/koa-router": "^7.4.8",
+    "@types/koa-send": "^4.1.6",
+    "@types/koa-static": "^4.0.4",
+    "@types/node-forge": "^1.3.13",
+    "@types/qrcode.react": "^3.0.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@types/react-toast-notifications": "^2.4.1",
+    "@types/simple-peer": "^9.11.8",
+    "@types/socket.io": "^3.0.2",
+    "@types/socket.io-client": "^3.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.2.0",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^4.0.0",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "prettier": "^3.6.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-i18next": "^15.6.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.2"
   },
-  "collective": {
-    "url": "https://opencollective.com/deskreen"
-  },
-  "browserslist": [],
-  "prettier": {
-    "overrides": [
-      {
-        "files": [
-          ".prettierrc",
-          ".babelrc",
-          ".eslintrc",
-          ".stylelintrc"
-        ],
-        "options": {
-          "parser": "json"
-        }
-      }
-    ],
-    "singleQuote": true
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-standard",
-      "stylelint-config-prettier"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron"
     ]
-  },
-  "renovate": {
-    "extends": [
-      "bliss"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "post-commit": "yarn coverage &> /dev/null && yarn sonar &> /dev/null &"
-    }
-  },
-  "jestSonar": {
-    "reportPath": "test-reports",
-    "reportFile": "test-reporter.xml",
-    "indent": 4
   }
 }
