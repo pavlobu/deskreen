@@ -2,7 +2,9 @@ import shortId from 'shortid';
 import SimplePeer from 'simple-peer';
 import { UAParser } from 'ua-parser-js';
 import { connect as connectSocket } from '../../utils/socket';
+import { prepare as prepareMessage } from '../../utils/message';
 import setSdpMediaBitrate from './setSdpMediaBitrate';
+import Crypto from '../../utils/crypto';
 import VideoAutoQualityOptimizer from '../VideoAutoQualityOptimizer';
 import { VideoQuality, type VideoQualityType } from '../VideoAutoQualityOptimizer/VideoQualityEnum';
 import { prepareDataMessageToChangeQuality } from './simplePeerDataMessages';
@@ -21,6 +23,8 @@ import PeerConnectionPartnerIsNotDefinedError from './errors/PeerConnectionPartn
 
 interface LocalPeerUser {
   username: string;
+  privateKey: string;
+  publicKey: string;
 }
 
 interface SendEncryptedMessagePayload {
@@ -32,6 +36,8 @@ export default class PeerConnection {
   roomId: string;
 
   socket: any;
+
+  crypto: Crypto;
 
   user: LocalPeerUser = NullUser;
 
@@ -64,10 +70,12 @@ export default class PeerConnection {
   constructor(
     roomId: string,
     setUrlCallback: (url: any) => void,
+    crypto: Crypto,
     videoAutoQualityOptimizer: VideoAutoQualityOptimizer,
     UIHandler: PeerConnectionUIHandler,
   ) {
     this.setUrlCallback = setUrlCallback;
+    this.crypto = crypto;
     this.videoAutoQualityOptimizer = videoAutoQualityOptimizer;
     this.UIHandler = UIHandler;
     this.roomId = roomId;
@@ -130,6 +138,7 @@ export default class PeerConnection {
     }
     this.socket.emit('USER_ENTER', {
       username: user.username,
+      publicKey: user.publicKey,
       ip: myIP, // TODO: remove as it is not used
     });
   }
@@ -138,8 +147,18 @@ export default class PeerConnection {
     return new Promise<LocalPeerUser>(async (resolve) => {
       const username = shortId.generate();
 
+      const encryptDecryptKeys = await this.crypto.createEncryptDecryptKeys();
+      const exportedEncryptDecryptPrivateKey = await this.crypto.exportKey(
+        encryptDecryptKeys.privateKey,
+      );
+      const exportedEncryptDecryptPublicKey = await this.crypto.exportKey(
+        encryptDecryptKeys.publicKey,
+      );
+
       resolve({
-        username
+        username,
+        privateKey: exportedEncryptDecryptPrivateKey,
+        publicKey: exportedEncryptDecryptPublicKey,
       });
     });
   }
@@ -155,7 +174,9 @@ export default class PeerConnection {
       throw new PeerConnectionPartnerIsNotDefinedError();
     }
     if (!this.partner.publicKey || this.partner.publicKey.length < 40) return;
-    this.socket.emit('ENCRYPTED_MESSAGE', payload);
+    prepareMessage(payload, this.user, this.partner).then((msg: any) => {
+      this.socket.emit('ENCRYPTED_MESSAGE', msg.toSend);
+    });
   }
 
   receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload) {

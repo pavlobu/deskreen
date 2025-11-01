@@ -4,9 +4,11 @@ import { ConnectedDevicesService } from '../ConnectedDevicesService';
 import RendererWebrtcHelpersService from '../PeerConnectionHelperRendererService';
 import SharingSession from './SharingSession';
 import SharingSessionStatusEnum from './SharingSessionStatusEnum';
+import DeskreenCrypto from '../../main/utils/crypto';
 import { LocalPeerUser } from '../../common/LocalPeerUser';
 
 export default class SharingSessionService {
+  crypto: DeskreenCrypto;
   user: LocalPeerUser | null;
   sharingSessions: Map<string, SharingSession>;
   waitingForConnectionSharingSession: SharingSession | null;
@@ -23,6 +25,7 @@ export default class SharingSessionService {
     this.roomIDService = _roomIDService;
     this.connectedDevicesService = _connectedDevicesService;
     this.rendererWebrtcHelpersService = _rendererWebrtcHelpersService;
+    this.crypto = new DeskreenCrypto();
     this.waitingForConnectionSharingSession = null;
     this.sharingSessions = new Map<string, SharingSession>();
     this.user = null;
@@ -43,8 +46,18 @@ export default class SharingSessionService {
       if (process.env.RUN_MODE === 'test') resolve(undefined);
       const username = uuid.v4();
 
+      const encryptDecryptKeys = await this.crypto.createEncryptDecryptKeys();
+      const exportedEncryptDecryptPrivateKey = await this.crypto.exportKey(
+        encryptDecryptKeys.privateKey,
+      );
+      const exportedEncryptDecryptPublicKey = await this.crypto.exportKey(
+        encryptDecryptKeys.publicKey,
+      );
+
       this.user = {
-        username
+        username,
+        privateKey: exportedEncryptDecryptPrivateKey,
+        publicKey: exportedEncryptDecryptPublicKey,
       };
       resolve(undefined);
     });

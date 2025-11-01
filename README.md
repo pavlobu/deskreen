@@ -1,4 +1,4 @@
-# Deskreen Community Edition
+# Deskreen CE (Community Edition)
 
 [![Github All Releases](https://img.shields.io/github/downloads/pavlobu/deskreen/total.svg)]()
 
@@ -18,7 +18,7 @@
 
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
 
-## To learn more visit our website [deskreen.com](https://deskreen.com)
+## To learn more visit our website: [deskreen.com](https://deskreen.com)
 
 ## Donate
 
@@ -139,11 +139,17 @@ AGPL-3.0 License © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen
 
 Electron-Vite MIT License © [electron-vite-react](https://github.com/electron-vite/electron-vite-react)
 
+React MIT License © [Facebook, Inc. and its affiliates](https://github.com/facebook/react)
+
 Vite MIT License © [Vite.js](https://github.com/vitejs/vite)
 
 Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 
 simple-peer MIT. Copyright © [Feross Aboukhadijeh](http://feross.org/)
+
+tweetnacl ISC License © Dmitry Chestnykh, Devi Mandiri, and contributors (https://github.com/dchest/tweetnacl-js)
+
+darkwire.io MIT License © [darkwire/darkwire.io](https://github.com/darkwire/darkwire.io)
 
 And many many others...
 

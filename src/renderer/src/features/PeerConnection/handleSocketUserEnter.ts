@@ -1,6 +1,6 @@
 export default (peerConnection: PeerConnection, payload: { users: PartnerPeerUser[] }): void => {
   const filteredPartner = payload.users.filter((user: PartnerPeerUser) => {
-    return peerConnection.user.username !== user.username;
+    return peerConnection.user.publicKey !== user.publicKey;
   });
 
   if (filteredPartner[0] === undefined) return;

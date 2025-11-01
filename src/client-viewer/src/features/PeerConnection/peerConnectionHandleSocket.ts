@@ -63,7 +63,7 @@ export default (peerConnection: PeerConnection) => {
   peerConnection.socket.on('USER_ENTER', (payload: { users: PartnerPeerUser[] }) => {
     if (!isAllowed) return;
     const filteredPartner = payload.users.filter((v) => {
-      return peerConnection.user.username !== v.username;
+      return peerConnection.user.publicKey !== v.publicKey;
     });
 
     peerConnection.partner = filteredPartner[0];

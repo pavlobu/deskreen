@@ -1,3 +1,4 @@
+import { process as processMessage } from './message';
 import { IpcEvents } from '../../../common/IpcEvents.enum';
 
 export type CallAcceptedMessageWithPayload = {
@@ -61,8 +62,7 @@ export const handleRecieveEncryptedMessage = async (
 ): Promise<void> => {
   let message: ProcessedMessage;
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    message = payload as any;
+    message = await processMessage(payload, peerConnection.user.privateKey);
   } catch (e) {
     console.error('failed to process/decrypt incoming message', e, payload);
     return;

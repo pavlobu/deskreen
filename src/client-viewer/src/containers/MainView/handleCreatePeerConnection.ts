@@ -1,5 +1,6 @@
 import PeerConnection from '../../features/PeerConnection';
 import PeerConnectionUIHandler from '../../features/PeerConnection/PeerConnectionUIHandler';
+import Crypto from '../../utils/crypto';
 import VideoAutoQualityOptimizer from '../../features/VideoAutoQualityOptimizer';
 import changeLanguage from './changeLanguage';
 import ConnectionIcon from './ConnectionIconEnum';
@@ -52,6 +53,7 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
       const _peer = new PeerConnection(
         connectionRoomId,
         setUrl,
+        new Crypto(),
         new VideoAutoQualityOptimizer(),
         UIHandler
       );

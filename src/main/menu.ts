@@ -48,7 +48,7 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'Deskreen-CE',
+      label: 'Deskreen CE',
       submenu: [
         {
           label: this.i18n.t('about-deskreen'),

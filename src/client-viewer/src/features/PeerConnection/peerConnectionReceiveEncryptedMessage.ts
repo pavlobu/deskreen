@@ -1,4 +1,5 @@
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
+import { process as processMessage } from '../../utils/message';
 import NullUser from './NullUser';
 import PeerConnectionUserIsNotDefinedError from './errors/PeerConnectionUserIsNotDefinedError';
 import setAndShowErrorDialogMessage from './setAndShowErrorDialogMessage';
@@ -7,8 +8,8 @@ export default async (peerConnection: PeerConnection, payload: ReceiveEncryptedM
   if (peerConnection.user === NullUser) {
     throw new PeerConnectionUserIsNotDefinedError();
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const message = payload as any;
+  const message = await processMessage(payload, peerConnection.user.privateKey);
+  // const message = payload as any;
   if (message.type === 'CALL_USER') {
     peerConnection.peer?.signal(message.payload.signalData);
   }

@@ -1,3 +1,5 @@
+import { prepare as prepareMessage } from '../../utils/message';
+import DeskreenCrypto from '../../utils/crypto';
 import { connectSocket } from '../../../../common/connectSocket';
 import handleCreatePeer from './handleCreatePeer';
 import handleSocket from './handleSocket';
@@ -26,6 +28,7 @@ export default class PeerConnection {
   sharingSessionID: string;
   roomID: string;
   socket: Socket;
+  crypto: DeskreenCrypto;
   user: LocalPeerUser;
   partner: PartnerPeerUser;
   peer = NullSimplePeer;
@@ -52,6 +55,7 @@ export default class PeerConnection {
     this.sharingSessionID = sharingSessionID;
     this.isSocketRoomLocked = false;
     this.roomID = encodeURI(roomID);
+    this.crypto = new DeskreenCrypto();
     this.socket = connectSocket(port, this.roomID);
     this.user = user;
     this.partner = NullUser;
@@ -175,6 +179,7 @@ export default class PeerConnection {
   emitUserEnter(): void {
     this.socket.emit('USER_ENTER', {
       username: this.user.username,
+      publicKey: this.user.publicKey,
     });
   }
 
@@ -183,8 +188,7 @@ export default class PeerConnection {
     if (!this.user) return;
     if (!this.partner) return;
     if (!this.partner.publicKey || this.partner.publicKey.length < 40) return;
-    // const msg = await prepareMessage(payload, this.user, this.partner);
-    const msg = payload as any;
+    const msg = await prepareMessage(payload, this.user, this.partner);
     this.socket.emit('ENCRYPTED_MESSAGE', msg.toSend);
   }
 

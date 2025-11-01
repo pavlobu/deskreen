@@ -151,7 +151,7 @@ class DeskreenSignalingServer {
 
   listenCallback() {
     return () => {
-      this.log.info(`Deskreen-CE signaling server is online at port ${this.port}`);
+      this.log.info(`Deskreen CE signaling server is online at port ${this.port}`);
       this.log.info(`🌐 Server available at http://${this.hostname}:${this.port}`);
     };
   }

@@ -148,7 +148,7 @@
   "autostart-deskreen-ce-app-on-login": "ログイン時にDeskreen-CEアプリを自動起動する",
   "open-deskreen-ce-app-window-on-login": "ログイン時にDeskreen-CE Appのウィンドウを開く",
   "use-system-tray": "システムトレイを使用する",
-  "deskreen-ce-system-tray": "Deskreen-CE システムトレイ",
+  "deskreen-ce-system-tray": "Deskreen CE システムトレイ",
   "open-app-window": "アプリのウィンドウを開く",
   "minimize-to-tray": "トレイに最小化する",
   "show-connected-devices": "接続されたデバイスを見る",

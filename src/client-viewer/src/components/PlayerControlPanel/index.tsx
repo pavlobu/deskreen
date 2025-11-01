@@ -134,7 +134,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
               <Col xs>
                 <Tooltip
                   content={t(
-                    'If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better',
+                    'If you like Deskreen CE consider contributing financially Deskreen CE is open-source Your donations keep us motivated to make Deskreen CE even better',
                   )}
                   position={Position.BOTTOM}
                 >
