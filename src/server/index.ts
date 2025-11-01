@@ -22,6 +22,7 @@ import DarkwireSocket from './darkwireSocket';
 import getStore from './store';
 import { getDeskreenGlobal } from '../main/helpers/getDeskreenGlobal';
 import getMyLocalIpV4 from '../main/helpers/getMyLocalIpV4';
+import { getClientViewerDistPath } from './getClientViewerDistPath';
 
 const { hostname, primaryPort, backupPort } = config;
 
@@ -85,6 +86,8 @@ class DeskreenSignalingServer {
 
   app: Koa | undefined;
 
+  clientDistDirectory: string;
+
   constructor() {
     const localIp = getMyLocalIpV4();
     this.hostname = localIp || String(hostname);
@@ -92,6 +95,12 @@ class DeskreenSignalingServer {
     this.backupPort = parseInt(backupPort as unknown as string, 10);
 
     this.port = this.primaryPort;
+    this.clientDistDirectory = getClientViewerDistPath();
+
+    if (!this.clientDistDirectory) {
+      this.log.error('Client viewer bundle is missing. Remote connections will fail.');
+    }
+
     this.init();
   }
 
@@ -102,7 +111,7 @@ class DeskreenSignalingServer {
     this.app.use(cors());
     this.app.use(router.routes());
 
-    const clientDistDirectory = `${__dirname}/../client-viewer`;
+    const clientDistDirectory = this.clientDistDirectory;
 
     if (clientDistDirectory) {
       this.app.use(async (ctx, next) => {
