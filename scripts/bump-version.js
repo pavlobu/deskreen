@@ -130,7 +130,7 @@ function assertValidSemver(value) {
 
 async function stageFiles() {
 	execSync(
-		`git add ${quote(rootPackagePath)} ${quote(clientPackagePath)} ${quote(envPath)}`,
+		`git add ${quote(rootPackagePath)} ${quote(clientPackagePath)}`,
 		{stdio: 'inherit'}
 	);
 }
