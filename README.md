@@ -1,7 +1,7 @@
 # Deskreen CE (Community Edition)
 
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
-(Over 2M downloads during 5 years since release)
+(Over 2M downloads during 5 years since launch)
 
 ![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
 
