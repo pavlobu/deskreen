@@ -37,6 +37,7 @@ interface ChooseAppOrScreenOverlayProps {
   handleNextEntireScreen: () => void;
   handleNextApplicationWindow: () => void;
   handleClose: () => void;
+  isWaylandSession: boolean;
 }
 
 export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlayProps) {
@@ -46,6 +47,7 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
     isEntireScreenToShareChosen,
     handleNextEntireScreen,
     handleNextApplicationWindow,
+    isWaylandSession,
   } = props;
   const classes = useStyles();
   const { t } = useTranslation();
@@ -53,19 +55,26 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
   const [viewSharingIds, setViewSharingIds] = useState<string[]>([]);
 
   const handleRefreshSources = useCallback(async (): Promise<string[]> => {
+    if (isWaylandSession) {
+      setViewSharingIds([]);
+      return [];
+    }
     const ids = await window.electron.ipcRenderer.invoke(IpcEvents.GetDesktopSharingSourceIds, {
       isEntireScreenToShareChosen,
     });
     setViewSharingIds(ids);
     return ids;
-  }, [isEntireScreenToShareChosen]);
+  }, [isEntireScreenToShareChosen, isWaylandSession]);
 
   useEffect(() => {
+    if (isWaylandSession) {
+      return;
+    }
     handleRefreshSources();
-  }, [handleRefreshSources, isEntireScreenToShareChosen]);
+  }, [handleRefreshSources, isEntireScreenToShareChosen, isWaylandSession]);
 
   useEffect(() => {
-    if (!isChooseAppOrScreenOverlayOpen) {
+    if (!isChooseAppOrScreenOverlayOpen || isWaylandSession) {
       return;
     }
 

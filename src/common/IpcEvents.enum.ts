@@ -20,6 +20,8 @@ export enum IpcEvents {
   StartSharingOnWaitingForConnectionSharingSession = 'start-sharing-on-waiting-for-connection-sharing-session',
   GetPendingConnectionDevice = 'get-pending-connection-device',
   GetWaitingForConnectionSharingSessionRoomId = 'get-waiting-for-connection-sharing-session-room-id',
+  GetIsLinuxWaylandSession = 'get-is-linux-wayland-session',
+  RequestDesktopCapturerPortalSource = 'request-desktop-capturer-portal-source',
   GetDesktopSharingSourceIds = 'get-desktop-sharing-source-ids',
   SetDesktopCapturerSourceId = 'set-desktop-capturer-source-id',
   NotifyAllSessionsWithAppThemeChanged = 'notify-all-sessions-with-app-theme-changed',

@@ -11,6 +11,8 @@ import { getDeskreenGlobal } from './getDeskreenGlobal';
 import { IpcEvents } from '../../common/IpcEvents.enum';
 import { ElectronStoreKeys } from '../../common/ElectronStoreKeys.enum';
 import { store } from '../../common/deskreen-electron-store';
+import DesktopCapturerSourceType from '../../common/DesktopCapturerSourceType';
+import isLinuxWaylandSession from '../utils/isLinuxWaylandSession';
 
 export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
   ipcMain.on('client-changed-language', async (_, newLangCode) => {
@@ -43,6 +45,36 @@ export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
     }
     return undefined;
   });
+
+  ipcMain.handle(IpcEvents.GetIsLinuxWaylandSession, () => {
+    return isLinuxWaylandSession;
+  });
+
+  ipcMain.handle(
+    IpcEvents.RequestDesktopCapturerPortalSource,
+    async (
+      _,
+      { mode }: { mode: 'screen' | 'window' },
+    ) => {
+      const types =
+        mode === 'window'
+          ? [DesktopCapturerSourceType.WINDOW]
+          : [DesktopCapturerSourceType.SCREEN];
+
+      if (!isLinuxWaylandSession) {
+        await getDeskreenGlobal().desktopCapturerSourcesService.refreshDesktopCapturerSources();
+        if (mode === 'window') {
+          const sources = getDeskreenGlobal().desktopCapturerSourcesService.getAppWindowSources();
+          return sources[0]?.id ?? null;
+        }
+        const sources = getDeskreenGlobal().desktopCapturerSourcesService.getScreenSources();
+        return sources[0]?.id ?? null;
+      }
+
+      const source = await getDeskreenGlobal().desktopCapturerSourcesService.requestPortalSource(types);
+      return source?.id ?? null;
+    },
+  );
 
   ipcMain.handle('main-window-onbeforeunload', () => {
     const deskreenGlobal = getDeskreenGlobal();
@@ -312,6 +344,9 @@ export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
   ipcMain.handle(
     IpcEvents.GetDesktopSharingSourceIds,
     async (_, { isEntireScreenToShareChosen }) => {
+      if (isLinuxWaylandSession) {
+        return [];
+      }
       // ensure sources are up to date at request time
       await getDeskreenGlobal().desktopCapturerSourcesService.refreshDesktopCapturerSources();
 

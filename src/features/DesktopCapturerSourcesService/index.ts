@@ -4,10 +4,7 @@
 import { desktopCapturer, DesktopCapturerSource } from 'electron';
 import Logger from '../../main/utils/LoggerWithFilePrefix';
 import DesktopCapturerSourceType from '../../common/DesktopCapturerSourceType';
-
-const isLinuxWaylandSession =
-  process.platform === 'linux' &&
-  (process.env.XDG_SESSION_TYPE?.toLowerCase() === 'wayland' || process.env.WAYLAND_DISPLAY != null);
+import isLinuxWaylandSession from '../../main/utils/isLinuxWaylandSession';
 
 export interface DesktopCapturerSourceWithType {
   source: import('electron').DesktopCapturerSource;
@@ -41,6 +38,8 @@ class DesktopCapturerSourcesService {
 
   refreshPromise: Promise<void> | null;
 
+  portalSelectionPromise: Promise<DesktopCapturerSource | null> | null;
+
   constructor() {
     this.sources = new Map<string, DesktopCapturerSourceWithType>();
     this.lastAvailableScreenIDs = [];
@@ -49,6 +48,7 @@ class DesktopCapturerSourcesService {
     this.onScreenDisconnectedListeners = new Map<SharingSessionID, SourcesDisappearListener[]>();
     this.autoRefreshEnabled = !isLinuxWaylandSession;
     this.refreshPromise = null;
+    this.portalSelectionPromise = null;
 
     if (this.autoRefreshEnabled) {
       this.startRefreshDesktopCapturerSourcesLoop();
@@ -179,6 +179,35 @@ class DesktopCapturerSourcesService {
     })();
 
     return this.refreshPromise;
+  }
+
+  async requestPortalSource(
+    types: DesktopCapturerSourceType[],
+  ): Promise<DesktopCapturerSource | null> {
+    if (this.portalSelectionPromise) {
+      return this.portalSelectionPromise;
+    }
+
+    this.portalSelectionPromise = (async () => {
+      try {
+        const sources = await desktopCapturer.getSources({
+          types,
+          thumbnailSize: { width: 0, height: 0 },
+          fetchWindowIcons: false,
+        });
+        if (sources.length === 0) {
+          return null;
+        }
+        return sources[0];
+      } catch (error) {
+        this.log.error(error);
+        return null;
+      } finally {
+        this.portalSelectionPromise = null;
+      }
+    })();
+
+    return this.portalSelectionPromise;
   }
 
   startPollForInactiveListenersLoop(): void {
