@@ -1,6 +1,7 @@
 # Deskreen CE (Community Edition)
 
-[![Github All Releases](https://img.shields.io/github/downloads/pavlobu/deskreen/total.svg)]()
+![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
+(Over 2M downloads during 5 years of history)
 
 ![Deskreen Logo](./resources/icon.png)
 
@@ -9,7 +10,7 @@
 ## To learn more visit our website: [deskreen.com](https://deskreen.com)
 
 
-![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
+
 
 
 ## [Donate to support Deskreen Open-Source](https://deskreen.com/#contribute)
