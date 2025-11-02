@@ -183,6 +183,7 @@ export default class DeskreenApp {
       titleBarStyle: 'hiddenInset',
       frame: process.platform === 'darwin' ? false : true,
       useContentSize: true,
+		  title: 'Deskreen CE',
       // useContentSize: true,
       autoHideMenuBar: true,
       ...(process.platform === 'linux' ? { icon } : {}),
