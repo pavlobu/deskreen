@@ -158,7 +158,7 @@
   "deskreen-logo": "Deskreen logo",
   "one-viewing-client-is-connected-already": "已有一個觀看用戶端連線。",
   "viewing-client-connected-label": "觀看用戶端已連線",
-  "connection-limit-reached-tooltip": "Connection limit reached. Disconnect the current viewing client (or wait for it to disconnect) to connect a new one.",
+ "connection-limit-reached-tooltip": "已達到連線上限。請先斷開目前的觀看用戶端（或等待其斷線），再連接新的用戶端。",
   "scan-the-qr-code-to-connect": "掃描 QR 碼以連線",
   "enter-the-following-address-in-browser-address-bar-on-any-device": "在任何裝置的瀏覽器網址列輸入以下地址",
   "deskreen-ce-allows-only-one-client-at-same-time": "Deskreen CE 僅允許同時連接一個觀看用戶端裝置。",

@@ -158,7 +158,7 @@
   "deskreen-logo": "Deskreen logo",
   "one-viewing-client-is-connected-already": "En visningsklient är redan ansluten.",
   "viewing-client-connected-label": "Visningsklient ansluten",
-  "connection-limit-reached-tooltip": "Connection limit reached. Disconnect the current viewing client (or wait for it to disconnect) to connect a new one.",
+ "connection-limit-reached-tooltip": "Anslutningsgränsen har nåtts. Koppla från den aktuella visningsklienten (eller vänta tills den kopplar från) för att ansluta en ny.",
   "scan-the-qr-code-to-connect": "Skanna QR-koden för att ansluta",
   "enter-the-following-address-in-browser-address-bar-on-any-device": "Ange följande adress i webbläsarens adressfält på valfri enhet",
   "deskreen-ce-allows-only-one-client-at-same-time": "Deskreen CE tillåter endast en visningsklient ansluten åt gången.",

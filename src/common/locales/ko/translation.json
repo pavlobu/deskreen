@@ -158,7 +158,7 @@
   "deskreen-logo": "Deskreen logo",
   "one-viewing-client-is-connected-already": "뷰잉 클라이언트가 이미 연결되어 있습니다.",
   "viewing-client-connected-label": "뷰잉 클라이언트가 연결되었습니다",
-  "connection-limit-reached-tooltip": "Connection limit reached. Disconnect the current viewing client (or wait for it to disconnect) to connect a new one.",
+ "connection-limit-reached-tooltip": "연결 한도에 도달했습니다. 새 클라이언트를 연결하려면 현재 시청 중인 클라이언트의 연결을 끊거나 끊어질 때까지 기다리세요.",
   "scan-the-qr-code-to-connect": "연결하려면 QR 코드를 스캔하세요",
   "enter-the-following-address-in-browser-address-bar-on-any-device": "어떤 기기의 브라우저 주소창에 다음 주소를 입력하세요",
   "deskreen-ce-allows-only-one-client-at-same-time": "Deskreen CE는 동시에 하나의 시청 클라이언트만 연결할 수 있습니다.",

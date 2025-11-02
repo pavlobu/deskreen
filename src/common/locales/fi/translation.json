@@ -159,7 +159,7 @@
   "deskreen-logo": "Deskreen logo",
   "one-viewing-client-is-connected-already": "Yksi katselulaite on jo yhdistetty.",
   "viewing-client-connected-label": "Katselulaite yhdistetty",
-  "connection-limit-reached-tooltip": "Connection limit reached. Disconnect the current viewing client (or wait for it to disconnect) to connect a new one.",
+ "connection-limit-reached-tooltip": "Yhteysraja on saavutettu. Katkaise nykyisen katseluasiakkaan yhteys (tai odota, että se katkeaa), jotta voit yhdistää uuden.",
   "scan-the-qr-code-to-connect": "Skannaa QR-koodi yhdistääksesi",
   "enter-the-following-address-in-browser-address-bar-on-any-device": "Kirjoita seuraava osoite minkä tahansa laitteen selaimen osoiteriville",
   "deskreen-ce-allows-only-one-client-at-same-time": "Deskreen CE sallii vain yhden katselulaitteen yhteyden kerrallaan.",

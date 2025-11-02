@@ -28,6 +28,7 @@ import { handlePlayerToggleFullscreen } from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
 import { ScreenSharingSource } from '../../features/PeerConnection/ScreenSharingSourceEnum';
 import { PLAYER_WRAPPER_ID } from '../../constants/appConstants';
+import { trackAnalyticsEvent } from '../../utils/analytics';
 import './index.css';
 
 const videoQualityButtonStyle: React.CSSProperties = {
@@ -39,33 +40,33 @@ const videoQualityButtonStyle: React.CSSProperties = {
 };
 
 interface PlayerControlPanelProps {
-  onSwitchChangedCallback: (isEnabled: boolean) => void;
-  isPlaying: boolean;
-  isDefaultPlayerTurnedOn: boolean;
-  handleClickFullscreen: () => void;
-  handleClickPlayPause: () => void;
-  setVideoQuality: (q: VideoQualityType) => void;
-  selectedVideoQuality: VideoQualityType;
-  screenSharingSourceType: ScreenSharingSourceType;
-  // toaster: undefined | HTMLDivElement;
-  isDarkTheme: boolean;
+	onSwitchChangedCallback: (isEnabled: boolean) => void;
+	isPlaying: boolean;
+	isDefaultPlayerTurnedOn: boolean;
+	handleClickFullscreen: () => 'entered' | 'exited' | 'failed';
+	handleClickPlayPause: () => void;
+	setVideoQuality: (q: VideoQualityType) => void;
+	selectedVideoQuality: VideoQualityType;
+	screenSharingSourceType: ScreenSharingSourceType;
+	// toaster: undefined | HTMLDivElement;
+	isDarkTheme: boolean;
 }
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 function PlayerControlPanel(props: PlayerControlPanelProps) {
   const { t } = useTranslation();
-  const {
-    isPlaying,
-    // onSwitchChangedCallback,
-    isDefaultPlayerTurnedOn,
-    handleClickPlayPause,
-    handleClickFullscreen,
-    selectedVideoQuality,
-    setVideoQuality,
-    screenSharingSourceType,
-    // isDarkTheme,
-  } = props;
+	const {
+		onSwitchChangedCallback,
+		isPlaying,
+		isDefaultPlayerTurnedOn,
+		handleClickPlayPause,
+		handleClickFullscreen,
+		selectedVideoQuality,
+		setVideoQuality,
+		screenSharingSourceType,
+		// isDarkTheme,
+	} = props;
 
   const isFullScreenAPIAvailable = screenfull.isEnabled;
 
@@ -81,10 +82,69 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 		const result = handlePlayerToggleFullscreen();
 		if (result === 'failed') {
 			console.warn('Unable to toggle fullscreen');
-			return;
+			return result;
 		}
 		setIsFullScreenOn(result === 'entered');
+		return result;
 	}, [setIsFullScreenOn]);
+
+	const handleLogoClick = useCallback(() => {
+		trackAnalyticsEvent('logo_clicked', {
+			destination: 'https://deskreen.com'
+		});
+		window.open('https://deskreen.com', '_blank');
+	}, []);
+
+	const handleContributeClick = useCallback(() => {
+		trackAnalyticsEvent('contribute_clicked', {
+			destination: 'https://deskreen.com/#contribute'
+		});
+		window.open('https://deskreen.com/#contribute', '_blank');
+	}, []);
+
+	const handlePlayPauseClick = useCallback(() => {
+		const nextAction = isPlaying ? 'pause' : 'play';
+		trackAnalyticsEvent(nextAction === 'play' ? 'play_button_clicked' : 'pause_button_clicked', {
+			target_state: nextAction === 'play' ? 'playing' : 'paused'
+		});
+		handleClickPlayPause();
+	}, [handleClickPlayPause, isPlaying]);
+
+	const handleVideoQualitySelect = useCallback(
+		(quality: VideoQualityType) => {
+			if (selectedVideoQuality !== quality) {
+				trackAnalyticsEvent('video_quality_selected', {
+					quality
+				});
+			}
+			setVideoQuality(quality);
+		},
+		[selectedVideoQuality, setVideoQuality]
+	);
+
+	const handleDefaultPlayerToggle = useCallback(() => {
+		const nextState = !isDefaultPlayerTurnedOn;
+		trackAnalyticsEvent('default_player_toggled', {
+			state: nextState ? 'on' : 'off'
+		});
+		onSwitchChangedCallback(nextState);
+	}, [isDefaultPlayerTurnedOn, onSwitchChangedCallback]);
+
+	const handleFullscreenClick = useCallback(() => {
+		const result = isDefaultPlayerTurnedOn
+			? handleClickFullscreenWhenDefaultPlayerIsOn()
+			: handleClickFullscreen();
+		if (result === 'failed') {
+			trackAnalyticsEvent('fullscreen_toggle_failed', {
+				player_mode: isDefaultPlayerTurnedOn ? 'default' : 'custom'
+			});
+			return;
+		}
+		trackAnalyticsEvent('fullscreen_toggled', {
+			state: result === 'entered' ? 'on' : 'off',
+			player_mode: isDefaultPlayerTurnedOn ? 'default' : 'custom'
+		});
+	}, [handleClickFullscreen, handleClickFullscreenWhenDefaultPlayerIsOn, isDefaultPlayerTurnedOn]);
 
 	const toggleFlipVideo = useCallback(() => {
 		const videoElement = (isSafari
@@ -114,11 +174,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
             <Row middle='xs' start='xs'>
               <Col xs>
                 <Tooltip content={t('Click to visit our website')} position={Position.BOTTOM}>
-                  <Button
-                    minimal
-                    onClick={() => {
-                      window.open('https://deskreen.com', '_blank');
-                    }}
+					<Button
+						minimal
+						onClick={handleLogoClick}
                   >
                     <Row middle='xs'>
                       <img
@@ -138,21 +196,19 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                   )}
                   position={Position.BOTTOM}
                 >
-                  <Button
-                    style={{
-                      borderRadius: '100px',
-                      marginLeft: '8px',
-                      padding: '8px 18px',
-                      minHeight: '36px',
-                      background: 'linear-gradient(135deg, hsl(258, 90%, 66%) 0%, hsl(210, 96%, 62%) 30%, hsl(192, 94%, 44%) 70%, hsl(28, 96%, 58%) 100%)',
-                      border: 'none',
-                      boxShadow:
-                        '0 4px 12px rgba(102, 51, 204, 0.4), 0 2px 4px rgba(102, 51, 204, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onClick={() => {
-                      window.open('https://deskreen.com/#contribute', '_blank');
-                    }}
+					<Button
+						style={{
+							borderRadius: '100px',
+							marginLeft: '8px',
+							padding: '8px 18px',
+							minHeight: '36px',
+							background: 'linear-gradient(135deg, hsl(258, 90%, 66%) 0%, hsl(210, 96%, 62%) 30%, hsl(192, 94%, 44%) 70%, hsl(28, 96%, 58%) 100%)',
+							border: 'none',
+							boxShadow:
+								'0 4px 12px rgba(102, 51, 204, 0.4), 0 2px 4px rgba(102, 51, 204, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+							transition: 'all 0.2s ease',
+						}}
+						onClick={handleContributeClick}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-1px)';
                       e.currentTarget.style.boxShadow =
@@ -215,16 +271,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                 <Row style={{ width: '100%' }} middle='xs' center='xs'>
                   <Button
                     minimal
-                    onClick={() => {
-                      handleClickPlayPause();
-                      // toaster?.show({
-                      //   icon: isPlaying ? 'pause' : 'play',
-                      //   intent: Intent.PRIMARY,
-                      //   message: isPlaying
-                      //     ? t('Video stream is paused')
-                      //     : t('Video stream is playing'),
-                      // });
-                    }}
+						onClick={handlePlayPauseClick}
                     style={{
                       width: '85px',
                       minWidth: '70px',
@@ -281,16 +328,16 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                                 active={selectedVideoQuality === q}
                                 style={videoQualityButtonStyle}
                                 disabled={screenSharingSourceType === ScreenSharingSource.WINDOW}
-                                onClick={() => {
-                                  setVideoQuality(q);
-                                  // toaster?.show({
-                                  //   icon: 'clean',
-                                  //   intent: Intent.PRIMARY,
-                                  //   message: `${t(
-                                  //     'Video quality has been changed to'
-                                  //   )} ${q}`,
-                                  // });
-                                }}
+									onClick={() => {
+										handleVideoQualitySelect(q);
+										// toaster?.show({
+										//   icon: 'clean',
+										//   intent: Intent.PRIMARY,
+										//   message: `${t(
+										//     'Video quality has been changed to'
+										//   )} ${q}`,
+										// });
+									}}
                               >
                                 {q}
                               </Button>
@@ -320,15 +367,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                     content={t('Click to Enter Full Screen Mode')}
                     position={Position.BOTTOM}
                   >
-                    <Button
-                      minimal
-                      onClick={() => {
-                        if (isDefaultPlayerTurnedOn) {
-                          handleClickFullscreenWhenDefaultPlayerIsOn();
-                        } else {
-                          handleClickFullscreen();
-                        }
-                      }}
+					<Button
+						minimal
+						onClick={handleFullscreenClick}
                     >
                       <img
                         src={isFullScreenOn ? FullScreenExit : FullScreenEnter}
@@ -350,11 +391,8 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
           <Col xs={12} md={3}>
             <Row end='xs'>
               <Col xs={12}>
-                <Switch
-                  onChange={() => {
-                    // toggles between react-player (default) and html5 video fallback
-                    props.onSwitchChangedCallback(!isDefaultPlayerTurnedOn);
-                  }}
+			<Switch
+				onChange={handleDefaultPlayerToggle}
                   innerLabel={isDefaultPlayerTurnedOn ? t('ON') : t('OFF')}
                   inline
                   label={t('Default Video Player')}

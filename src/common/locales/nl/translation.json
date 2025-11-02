@@ -158,7 +158,7 @@
   "deskreen-logo": "Deskreen logo",
   "one-viewing-client-is-connected-already": "Er is al één weergaveclient verbonden.",
   "viewing-client-connected-label": "Weergaveclient verbonden",
-  "connection-limit-reached-tooltip": "Connection limit reached. Disconnect the current viewing client (or wait for it to disconnect) to connect a new one.",
+ "connection-limit-reached-tooltip": "Maximaal aantal verbindingen bereikt. Verbreek de verbinding met de huidige weergaveclient (of wacht tot deze verbreekt) om een nieuwe te verbinden.",
   "scan-the-qr-code-to-connect": "Scan de QR-code om verbinding te maken",
   "enter-the-following-address-in-browser-address-bar-on-any-device": "Voer het volgende adres in de adresbalk van een willekeurig apparaat in",
   "deskreen-ce-allows-only-one-client-at-same-time": "Deskreen CE staat slechts één weergaveapparaat tegelijk toe.",

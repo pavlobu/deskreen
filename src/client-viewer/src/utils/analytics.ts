@@ -8,6 +8,11 @@ declare global {
 
 const CONSENT_KEY = 'deskreen_ga_consent';
 const GA_TAG_PLACEHOLDER = '%VITE_CLIENT_VIEWER_GA_TAG%';
+const CLIENT_VIEWER_VERSION_PLACEHOLDER = '%VITE_CLIENT_VIEWER_VERSION%';
+
+let versionEventSent = false;
+
+type AnalyticsEventParams = Record<string, string | number | boolean>;
 
 export type ConsentStatus = 'accepted' | 'opted-out' | null;
 
@@ -118,11 +123,13 @@ function sendPageView(): void {
 	}
 
 	// send page_view event with proper GA4 format for real-time tracking
-	window.gtag('event', 'page_view', {
+	trackAnalyticsEvent('page_view', {
 		page_title: document.title,
 		page_location: window.location.href,
 		page_path: window.location.pathname
 	});
+
+	sendClientViewerVersionEvent();
 }
 
 function waitForGAReady(callback: () => void): void {
@@ -217,5 +224,54 @@ export function getGaTagIdFromMeta(): string | null {
 	}
 
 	return null;
+}
+
+function getClientViewerVersion(): string | null {
+	if (typeof window === 'undefined') {
+		return null;
+	}
+
+	const metaTag = document.querySelector('meta[name="client-viewer-version"]');
+	if (!metaTag) {
+		return null;
+	}
+
+	const version = metaTag.getAttribute('content');
+	if (!version || version === CLIENT_VIEWER_VERSION_PLACEHOLDER) {
+		return null;
+	}
+
+	return version;
+}
+
+function sendClientViewerVersionEvent(): void {
+	if (versionEventSent || typeof window === 'undefined' || !window.gtag) {
+		return;
+	}
+
+	const version = getClientViewerVersion();
+	if (!version) {
+		return;
+	}
+
+	versionEventSent = true;
+	trackAnalyticsEvent('client_viewer_version', {
+		client_viewer_version: version
+	});
+}
+
+export function trackAnalyticsEvent(eventName: string, params: AnalyticsEventParams = {}): void {
+	if (typeof window === 'undefined') {
+		return;
+	}
+
+	if (typeof window.gtag === 'function') {
+		window.gtag('event', eventName, params);
+		return;
+	}
+
+	if (window.dataLayer && typeof (window.dataLayer as unknown[]).push === 'function') {
+		(window.dataLayer as unknown[]).push(['event', eventName, params]);
+	}
 }
 
