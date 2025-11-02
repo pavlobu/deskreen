@@ -1,9 +1,9 @@
 # Deskreen CE (Community Edition)
 
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20MacOS%20%7C%20Linux-lightgrey)
-(Over 2M downloads during 5 years of history)
+(Over 2M downloads during 5 years since release)
 
-![Deskreen Logo](./resources/icon.png)
+![Deskreen Logo](https://raw.githubusercontent.com/pavlobu/deskreen/master/resources/icon.png)
 
 ## Deskreen turns any device with a web browser into a secondary screen for your computer
 
