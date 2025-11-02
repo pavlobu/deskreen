@@ -192,12 +192,24 @@ class DesktopCapturerSourcesService {
       try {
         const sources = await desktopCapturer.getSources({
           types,
-          thumbnailSize: { width: 0, height: 0 },
-          fetchWindowIcons: false,
+          thumbnailSize: { width: 500, height: 500 },
+          fetchWindowIcons: types.includes(DesktopCapturerSourceType.WINDOW),
         });
         if (sources.length === 0) {
           return null;
         }
+        const selectedSourcesMap = new Map<string, DesktopCapturerSourceWithType>(this.sources);
+        const defaultType = types.length === 1 ? types[0] : undefined;
+
+        sources.forEach((source) => {
+          selectedSourcesMap.set(source.id, {
+            type: defaultType ?? getSourceTypeFromSourceID(source.id),
+            source,
+          });
+        });
+
+        this.sources = selectedSourcesMap;
+
         return sources[0];
       } catch (error) {
         this.log.error(error);
