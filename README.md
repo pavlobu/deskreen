@@ -140,6 +140,9 @@ React MIT License © [Facebook, Inc. and its affiliates](https://github.com/face
 
 Vite MIT License © [Vite.js](https://github.com/vitejs/vite)
 
+Electron Builder MIT License © [electron-builder contributors](https://github.com/electron-userland/electron-builder)
+
+
 Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 
 simple-peer MIT. Copyright © [Feross Aboukhadijeh](http://feross.org/)
