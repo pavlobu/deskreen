@@ -1,6 +1,6 @@
 {
   "name": "deskreen-ce",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "An Electron application with React and TypeScript",
   "main": "./out/main/index.js",
   "author": "deskreen.com",
