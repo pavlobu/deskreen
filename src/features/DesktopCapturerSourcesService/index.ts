@@ -5,6 +5,10 @@ import { desktopCapturer, DesktopCapturerSource } from 'electron';
 import Logger from '../../main/utils/LoggerWithFilePrefix';
 import DesktopCapturerSourceType from '../../common/DesktopCapturerSourceType';
 
+const isLinuxWaylandSession =
+  process.platform === 'linux' &&
+  (process.env.XDG_SESSION_TYPE?.toLowerCase() === 'wayland' || process.env.WAYLAND_DISPLAY != null);
+
 export interface DesktopCapturerSourceWithType {
   source: import('electron').DesktopCapturerSource;
   type: import('../../common/DesktopCapturerSourceType').default;
@@ -33,14 +37,24 @@ class DesktopCapturerSourcesService {
 
   log = new Logger(__filename);
 
+  autoRefreshEnabled: boolean;
+
+  refreshPromise: Promise<void> | null;
+
   constructor() {
     this.sources = new Map<string, DesktopCapturerSourceWithType>();
     this.lastAvailableScreenIDs = [];
     this.lastAvailableWindowIDs = [];
     this.onWindowClosedListeners = new Map<SharingSessionID, SourcesDisappearListener[]>();
     this.onScreenDisconnectedListeners = new Map<SharingSessionID, SourcesDisappearListener[]>();
+    this.autoRefreshEnabled = !isLinuxWaylandSession;
+    this.refreshPromise = null;
 
-    this.startRefreshDesktopCapturerSourcesLoop();
+    if (this.autoRefreshEnabled) {
+      this.startRefreshDesktopCapturerSourcesLoop();
+    } else {
+      this.log.debug('skipping desktop capturer auto refresh on wayland session');
+    }
     this.startPollForInactiveListenersLoop();
   }
 
@@ -49,6 +63,9 @@ class DesktopCapturerSourcesService {
   }
 
   startRefreshDesktopCapturerSourcesLoop(): void {
+    if (!this.autoRefreshEnabled) {
+      return;
+    }
     setInterval(() => {
       this.refreshDesktopCapturerSources();
     }, 5000);
@@ -144,14 +161,24 @@ class DesktopCapturerSourcesService {
 
   async refreshDesktopCapturerSources(): Promise<void> {
     // TODO: implement get available sources logic here;
-    try {
-      await this.updateDesktopCapturerSources();
-      // eventually run checkers that emit events
-      this.checkForClosedWindows();
-      this.checkForScreensDisconnected();
-    } catch (e) {
-      this.log.error(e);
+    if (this.refreshPromise) {
+      return this.refreshPromise;
     }
+
+    this.refreshPromise = (async () => {
+      try {
+        await this.updateDesktopCapturerSources();
+        // eventually run checkers that emit events
+        this.checkForClosedWindows();
+        this.checkForScreensDisconnected();
+      } catch (e) {
+        this.log.error(e);
+      } finally {
+        this.refreshPromise = null;
+      }
+    })();
+
+    return this.refreshPromise;
   }
 
   startPollForInactiveListenersLoop(): void {
