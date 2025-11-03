@@ -49,29 +49,19 @@ const App: React.FC = () => {
 			return;
 		}
 
-		// check consent status first
 		const consentStatus = getConsentStatus();
-
-		// load GA immediately when page is visible (before consent)
-		const gaTagId = getGaTagIdFromMeta();
-		if (gaTagId && gaTagId !== '%VITE_CLIENT_VIEWER_GA_TAG%') {
-			loadGoogleAnalytics(gaTagId);
-
-			// if user previously accepted consent, ensure page_view is sent
-			if (consentStatus === 'accepted') {
-				// wait a bit for GA to load, then update consent and send page_view
-				setTimeout(() => {
-					updateAnalyticsConsent('accepted');
-				}, 500);
-			}
-		}
-
 		if (consentStatus === 'accepted') {
 			setHasConsent(true);
-		} else {
-			// no consent or opted out - show dialog
-			setShowConsentDialog(true);
+
+			const gaTagId = getGaTagIdFromMeta();
+			if (gaTagId && gaTagId !== '%VITE_CLIENT_VIEWER_GA_TAG%') {
+				loadGoogleAnalytics(gaTagId);
+				updateAnalyticsConsent('accepted');
+			}
+			return;
 		}
+
+		setShowConsentDialog(true);
 	}, [isTrulyVisible]);
 
 	const handleAccept = () => {
@@ -79,8 +69,11 @@ const App: React.FC = () => {
 		setShowConsentDialog(false);
 		setHasConsent(true);
 
-		// update GA consent to granted and send page_view
-		updateAnalyticsConsent('accepted');
+		const gaTagId = getGaTagIdFromMeta();
+		if (gaTagId && gaTagId !== '%VITE_CLIENT_VIEWER_GA_TAG%') {
+			loadGoogleAnalytics(gaTagId);
+			updateAnalyticsConsent('accepted');
+		}
 	};
 
 	const handleOptOut = () => {
