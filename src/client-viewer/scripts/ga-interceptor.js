@@ -1,0 +1,141 @@
+(function() {
+	const CONSENT_KEY = 'deskreen_ga_consent';
+	const GA_DOMAINS = ['google-analytics.com', 'googletagmanager.com', 'google-analytics.co', 'analytics.google.com'];
+	
+	for (let i = 1; i <= 20; i++) {
+		GA_DOMAINS.push('region' + i + '.google-analytics.com');
+	}
+	
+	function getConsentStatus() {
+		try {
+			const stored = localStorage.getItem(CONSENT_KEY);
+			return stored === 'accepted' ? 'accepted' : null;
+		} catch {
+			return null;
+		}
+	}
+	
+	function isGoogleAnalyticsUrl(url) {
+		try {
+			const urlObj = new URL(url, window.location.href);
+			const hostname = urlObj.hostname.toLowerCase();
+			return GA_DOMAINS.some(function(domain) {
+				return hostname === domain || hostname.endsWith('.' + domain);
+			});
+		} catch {
+			return false;
+		}
+	}
+	
+	function shouldBlockRequest() {
+		return getConsentStatus() !== 'accepted';
+	}
+	
+	function isLocalIP(ip) {
+		const parts = ip.split('.').map(Number);
+		if (parts.length !== 4 || parts.some(isNaN)) {
+			return false;
+		}
+		// 127.0.0.0/8
+		if (parts[0] === 127) return true;
+		// 10.0.0.0/8
+		if (parts[0] === 10) return true;
+		// 172.16.0.0/12
+		if (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) return true;
+		// 192.168.0.0/16
+		if (parts[0] === 192 && parts[1] === 168) return true;
+		return false;
+	}
+	
+	function sanitizeGAUrl(url) {
+		try {
+			const urlObj = new URL(url);
+			// only sanitize /g/collect requests
+			if (!urlObj.pathname.includes('/g/collect')) {
+				return url;
+			}
+			const dlParam = urlObj.searchParams.get('dl');
+			if (!dlParam) {
+				return url;
+			}
+			try {
+				const dlUrl = new URL(decodeURIComponent(dlParam));
+				const hostname = dlUrl.hostname;
+				if (isLocalIP(hostname)) {
+					urlObj.searchParams.set('dl', encodeURIComponent('http://localhost'));
+					return urlObj.toString();
+				}
+			} catch {
+				// if dl parameter is not a valid URL, leave it as is
+			}
+			return url;
+		} catch {
+			return url;
+		}
+	}
+	
+	// intercept fetch
+	if (window.fetch) {
+		const originalFetch = window.fetch;
+		window.fetch = function(input, init) {
+			let url = typeof input === 'string' ? input : (input instanceof Request ? input.url : '');
+			if (isGoogleAnalyticsUrl(url)) {
+				if (shouldBlockRequest()) {
+					return Promise.reject(new Error('Google Analytics request blocked: user consent not granted'));
+				}
+				url = sanitizeGAUrl(url);
+				if (input instanceof Request) {
+					input = new Request(url, init || input);
+				} else {
+					input = url;
+				}
+			}
+			return originalFetch.apply(this, arguments);
+		};
+	}
+	
+	// intercept XMLHttpRequest
+	if (window.XMLHttpRequest) {
+		const XHR = window.XMLHttpRequest;
+		const originalOpen = XHR.prototype.open;
+		const originalSend = XHR.prototype.send;
+		
+		XHR.prototype.open = function(method, url, async, username, password) {
+			let urlString = typeof url === 'string' ? url : url.toString();
+			if (isGoogleAnalyticsUrl(urlString)) {
+				if (shouldBlockRequest()) {
+					throw new Error('Google Analytics request blocked: user consent not granted');
+				}
+				urlString = sanitizeGAUrl(urlString);
+				url = urlString;
+			}
+			this._interceptedUrl = urlString;
+			return originalOpen.apply(this, arguments);
+		};
+		
+		XHR.prototype.send = function() {
+			const url = this._interceptedUrl || '';
+			if (isGoogleAnalyticsUrl(url) && shouldBlockRequest()) {
+				return;
+			}
+			return originalSend.apply(this, arguments);
+		};
+	}
+	
+	// intercept sendBeacon
+	if (navigator.sendBeacon) {
+		const originalSendBeacon = navigator.sendBeacon;
+		navigator.sendBeacon = function(url, data) {
+			let urlString = typeof url === 'string' ? url : url.toString();
+			if (isGoogleAnalyticsUrl(urlString)) {
+				if (shouldBlockRequest()) {
+					return false;
+				}
+				urlString = sanitizeGAUrl(urlString);
+				url = urlString;
+			}
+			return originalSendBeacon.call(this, url, data);
+		};
+	}
+})();
+
