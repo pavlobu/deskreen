@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MainView from './containers/MainView';
 import PrivacyConsentDialog from './components/PrivacyConsentDialog';
-import { getConsentStatus, setConsentStatus, clearConsentStatus, loadGoogleAnalytics, getGaTagIdFromMeta, updateAnalyticsConsent } from './utils/analytics';
+import { getConsentStatus, setConsentStatus, loadGoogleAnalytics, getGaTagIdFromMeta, updateAnalyticsConsent } from './utils/analytics';
 
 const App: React.FC = () => {
 	// Helper function to check for prerendering safely
@@ -68,8 +68,13 @@ const App: React.FC = () => {
 
 		if (consentStatus === 'accepted') {
 			setHasConsent(true);
+		} else if (consentStatus === 'opted-out') {
+			// user previously opted out - allow app usage without analytics
+			setHasConsent(true);
+			// ensure analytics consent is set to denied
+			updateAnalyticsConsent('opted-out');
 		} else {
-			// no consent or opted out - show dialog
+			// no consent yet - show dialog
 			setShowConsentDialog(true);
 		}
 	}, [isTrulyVisible]);
@@ -84,13 +89,13 @@ const App: React.FC = () => {
 	};
 
 	const handleOptOut = () => {
-		// clear any stored consent so dialog shows again next time
-		clearConsentStatus();
+		// set consent status to opted-out so user can continue using app without analytics
+		setConsentStatus('opted-out');
 		setShowConsentDialog(false);
 		setHasConsent(true);
 
-		// redirect to google.com
-		window.location.href = 'https://google.com';
+		// update GA consent to denied and ensure no analytics are sent
+		updateAnalyticsConsent('opted-out');
 	};
 
 	if (!isTrulyVisible) {
