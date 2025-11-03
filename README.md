@@ -134,14 +134,13 @@ AGPL-3.0 License © [Pavlo (Paul) Buidenkov](https://github.com/pavlobu/deskreen
 
 ## Copyright
 
-Electron-Vite MIT License © [electron-vite-react](https://github.com/electron-vite/electron-vite-react)
+Electron-Vite MIT License © [electron-vite](https://github.com/alex8088/electron-vite)
 
 React MIT License © [Facebook, Inc. and its affiliates](https://github.com/facebook/react)
 
 Vite MIT License © [Vite.js](https://github.com/vitejs/vite)
 
 Electron Builder MIT License © [electron-builder contributors](https://github.com/electron-userland/electron-builder)
-
 
 Apache 2.0 © [blueprintjs](https://github.com/palantir/blueprint)
 

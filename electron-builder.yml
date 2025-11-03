@@ -17,6 +17,17 @@ asarUnpack:
 win:
   artifactName: ${name}-${version}-${arch}.${ext}
   executableName: Deskreen CE
+  target:
+    - target: portable
+      arch:
+        - x64
+        - ia32
+        - arm64
+    - target: msi
+      arch:
+        - x64
+        - ia32
+        - arm64
 nsis:
   artifactName: ${name}-${version}-${arch}-setup.${ext}
   shortcutName: ${productName}
