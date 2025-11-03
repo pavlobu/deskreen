@@ -32,7 +32,7 @@ The current open-source Community Edition version has limited features. If you n
 
 ## Deskreen Github Discussion Threads
 
-[Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.m
+[Read and Respect our Contributor Covenant Code of Conduct When Writing in our Discussion Threads.](CODE_OF_CONDUCT.md)
 
 ### [Announcements Channel in Discussions](https://github.com/pavlobu/deskreen/discussions/71)
 
