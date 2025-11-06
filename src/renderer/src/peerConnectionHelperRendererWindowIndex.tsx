@@ -54,10 +54,6 @@ export function handleIpcRenderer(): void {
       peerConnection.sendUserAllowedToConnect();
     });
 
-    window.electron.ipcRenderer.on('app-color-theme-changed', () => {
-      peerConnection.notifyClientWithNewColorTheme();
-    });
-
     window.electron.ipcRenderer.on('app-language-changed', () => {
       peerConnection.notifyClientWithNewLanguage();
     });

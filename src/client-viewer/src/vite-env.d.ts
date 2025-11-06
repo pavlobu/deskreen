@@ -5,10 +5,8 @@ type ScreenSharingSourceType =
   | ScreenSharingSourceEnum.SCREEN
   | ScreenSharingSourceEnum.WINDOW;
 type CreatePeerConnectionUseEffectParams = {
-  isDarkTheme: boolean;
   connectionRoomId: string;
   peer: undefined | PeerConnection;
-  setIsDarkThemeHook: (_: boolean) => void;
   setMyDeviceDetails: (_: DeviceDetails) => void;
   setConnectionIconType: (_: ConnectionIconType) => void;
   setIsShownTextPrompt: (_: boolean) => void;

@@ -8,7 +8,7 @@ export default async (peerConnection: PeerConnection, payload: ReceiveEncryptedM
   if (peerConnection.user === NullUser) {
     throw new PeerConnectionUserIsNotDefinedError();
   }
-  const message = await processMessage(payload, peerConnection.user.privateKey);
+  const message = await processMessage(payload);
   // const message = payload as any;
   if (message.type === 'CALL_USER') {
     peerConnection.peer?.signal(message.payload.signalData);
@@ -21,12 +21,6 @@ export default async (peerConnection: PeerConnection, payload: ReceiveEncryptedM
   }
   if (message.type === 'ALLOWED_TO_CONNECT') {
     peerConnection.UIHandler.hostAllowedToConnectCallback();
-  }
-  if (message.type === 'APP_THEME') {
-    if (peerConnection.UIHandler.isDarkTheme !== message.payload.value) {
-      peerConnection.UIHandler.setIsDarkThemeCallback(message.payload.value);
-      peerConnection.UIHandler.isDarkTheme = message.payload.value;
-    }
   }
   if (message.type === 'APP_LANGUAGE') {
     peerConnection.UIHandler.setAppLanguageCallback(message.payload.value);

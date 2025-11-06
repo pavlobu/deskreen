@@ -1,11 +1,6 @@
-import { useContext } from 'react';
 import { Row, Col } from 'react-flexbox-grid';
 import { useTranslation } from 'react-i18next';
-import { AppContext } from '../../providers/AppContextProvider';
-import {
-  DARK_UI_BACKGROUND,
-  LIGHT_UI_BACKGROUND,
-} from '../../constants/styleConstants';
+import { LIGHT_UI_BACKGROUND } from '../../constants/styleConstants';
 import MyDeviceInfoCard from '../../components/MyDeviceInfoCard';
 import type {TFunction} from 'i18next';
 import { Button, H3 } from '@blueprintjs/core';
@@ -56,7 +51,6 @@ function ConnectionPropmpts(props: ConnectionPropmptsProps) {
   } = props;
 
   const { t } = useTranslation();
-  const { isDarkTheme } = useContext(AppContext);
 
 	const handleReinitiateConnection = () => {
 		window.location.reload();
@@ -71,10 +65,8 @@ function ConnectionPropmpts(props: ConnectionPropmptsProps) {
           left: 0,
           width: '100%',
           height: '100vh',
-          boxShadow: `0 0 0 5px ${isDarkTheme ? '#000' : '#A7B6C2'}`,
-          backgroundColor: isDarkTheme
-            ? DARK_UI_BACKGROUND
-            : LIGHT_UI_BACKGROUND,
+          boxShadow: '0 0 0 5px #A7B6C2',
+          backgroundColor: LIGHT_UI_BACKGROUND,
         }}
       >
         <Row

@@ -1,1 +1,1 @@
-export default { username: '', publicKey: '', privateKey: '' };
+export default { username: '', id: '' };

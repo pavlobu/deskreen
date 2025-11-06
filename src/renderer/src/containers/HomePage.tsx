@@ -17,11 +17,8 @@ export const CustomToastWithTheme = ({ children, ...props }): React.ReactElement
       {...props}
       // @ts-ignore: some minor type complain, it is fine here
       style={{
-        // eslint-disable-next-line react/prop-types
-        color: props.isdarktheme === 'false' ? '#293742' : '#BFCCD6',
-        backgroundColor:
-          // eslint-disable-next-line react/prop-types
-          props.isdarktheme === 'false' ? LIGHT_UI_BACKGROUND : '#394B59',
+        color: '#293742',
+        backgroundColor: LIGHT_UI_BACKGROUND,
       }}
     >
       <>{children}</>

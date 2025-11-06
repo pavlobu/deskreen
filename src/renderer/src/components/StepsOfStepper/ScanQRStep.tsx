@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Text, Tooltip, Position, Dialog, Classes, H3 } from '@blueprintjs/core';
 import { QRCodeSVG } from 'qrcode.react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import { Row, Col } from 'react-flexbox-grid';
-import { SettingsContext } from '@renderer/contexts/SettingsContext';
 import isProduction from '../../../../common/isProduction';
 import config from '../../../../common/config';
 import { IpcEvents } from '../../../../common/IpcEvents.enum';
@@ -45,7 +44,6 @@ const ScanQRStep: React.FC = () => {
   const { t } = useTranslation();
   const [clientViewerPort, setClientViewerPort] = useState('80'); // Default port, can be changed later
   const classes = useStyles();
-  const { isDarkTheme } = useContext(SettingsContext);
 
   const [isViewerSlotAvailable, setIsViewerSlotAvailable] = useState(true);
   const [roomID, setRoomID] = useState('');
@@ -208,7 +206,7 @@ const ScanQRStep: React.FC = () => {
                         value={shareUrl}
                         level="H"
                         bgColor="rgba(0,0,0,0.0)"
-                        fgColor={isDarkTheme ? '#ffffff' : '#000000'}
+                        fgColor="#000000"
                         imageSettings={{
                           // src: `http://127.0.0.1${portString}/logo192.png`,
                           src: Logo192,

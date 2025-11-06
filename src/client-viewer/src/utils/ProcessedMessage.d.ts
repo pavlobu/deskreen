@@ -32,13 +32,6 @@ type AllowedToConnectMessageWithPayload = {
   payload: {};
 };
 
-type AppThemeMessageWithPayload = {
-  type: 'APP_THEME';
-  payload: {
-    value: boolean;
-  };
-};
-
 type AppLanguageMessageWithPayload = {
   type: 'APP_LANGUAGE';
   payload: {
@@ -52,5 +45,4 @@ type ProcessedMessage =
   | DenyToConnectMessageWithPayload
   | DisconnectByHostMachineUserMessageWithPayload
   | AllowedToConnectMessageWithPayload
-  | AppThemeMessageWithPayload
   | AppLanguageMessageWithPayload;

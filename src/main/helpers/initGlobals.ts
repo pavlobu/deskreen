@@ -15,9 +15,10 @@ export interface DeskreenGlobal {
   desktopCapturerSourcesService: DesktopCapturerSourcesService;
   latestAppVersion: string;
   currentAppVersion: string;
+  cliLocalIp?: string;
 }
 
-export const initGlobals = (appPath: string) => {
+export const initGlobals = (appPath: string, cliLocalIp?: string) => {
   const deskreenGlobal: DeskreenGlobal = global as unknown as DeskreenGlobal;
 
   deskreenGlobal.appPath = appPath;
@@ -32,4 +33,5 @@ export const initGlobals = (appPath: string) => {
   deskreenGlobal.desktopCapturerSourcesService = new DesktopCapturerSources();
   deskreenGlobal.latestAppVersion = '';
   deskreenGlobal.currentAppVersion = app.getVersion();
+  deskreenGlobal.cliLocalIp = cliLocalIp;
 };

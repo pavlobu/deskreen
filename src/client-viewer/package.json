@@ -27,7 +27,6 @@
     "shortid": "^2.2.17",
     "simple-peer": "^9.11.1",
     "socket.io-client": "^4.8.1",
-    "tweetnacl": "^1.0.3",
     "ua-parser-js": "^2.0.4",
     "video.js": "^8.23.4"
   },

@@ -7,6 +7,7 @@ import { signalingServer } from '../../server';
 import { onDeviceConnectedCallback } from '../../server/onDeviceConnectedCallback';
 import SharingSessionStatusEnum from '../../features/SharingSessionService/SharingSessionStatusEnum';
 import getMyLocalIpV4 from './getMyLocalIpV4';
+import isWifiConnected from './isWifiConnected';
 import { getDeskreenGlobal } from './getDeskreenGlobal';
 import { IpcEvents } from '../../common/IpcEvents.enum';
 import { ElectronStoreKeys } from '../../common/ElectronStoreKeys.enum';
@@ -105,8 +106,16 @@ export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
   });
 
   ipcMain.handle('get-local-lan-ip', async () => {
-    const ip = getMyLocalIpV4(); // Call the function
+    const deskreenGlobal = getDeskreenGlobal();
+    if (deskreenGlobal.cliLocalIp) {
+      return deskreenGlobal.cliLocalIp;
+    }
+    const ip = getMyLocalIpV4();
     return ip;
+  });
+
+  ipcMain.handle('check-wifi-connection', async () => {
+    return isWifiConnected();
   });
 
   ipcMain.handle(IpcEvents.GetPort, () => {
@@ -367,12 +376,6 @@ export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
     );
   });
 
-  ipcMain.handle(IpcEvents.NotifyAllSessionsWithAppThemeChanged, () => {
-    getDeskreenGlobal().sharingSessionService.sharingSessions.forEach((sharingSession) => {
-      sharingSession?.appThemeChanged();
-    });
-  });
-
   ipcMain.handle(IpcEvents.GetIsFirstTimeAppStart, () => {
     if (store.has(ElectronStoreKeys.IsNotFirstTimeAppStart)) {
       return false;
@@ -385,20 +388,6 @@ export const initIpcMainHandlers = (mainWindow: BrowserWindow): void => {
       store.delete(ElectronStoreKeys.IsNotFirstTimeAppStart);
     }
     store.set(ElectronStoreKeys.IsNotFirstTimeAppStart, 'true');
-  });
-
-  ipcMain.handle(IpcEvents.GetIsAppDarkTheme, () => {
-    if (store.has(ElectronStoreKeys.IsAppDarkTheme)) {
-      return store.get(ElectronStoreKeys.IsAppDarkTheme);
-    }
-    return false;
-  });
-
-  ipcMain.handle(IpcEvents.SetIsAppDarkTheme, (_, isDarkTheme) => {
-    if (store.has(ElectronStoreKeys.IsAppDarkTheme)) {
-      store.delete(ElectronStoreKeys.IsAppDarkTheme);
-    }
-    store.set(ElectronStoreKeys.IsAppDarkTheme, isDarkTheme);
   });
 
   ipcMain.handle(IpcEvents.GetAppLanguage, () => {

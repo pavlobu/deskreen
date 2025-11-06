@@ -1,9 +1,8 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Grid } from 'react-flexbox-grid';
 import screenfull from 'screenfull';
 import './index.css';
 import PeerConnection from '../../features/PeerConnection';
-import { AppContext } from '../../providers/AppContextProvider';
 import { VideoQuality, type VideoQualityType } from '../../features/VideoAutoQualityOptimizer/VideoQualityEnum';
 import ErrorDialog from '../../components/ErrorDialog';
 import { ErrorMessage, type ErrorMessageType } from '../../components/ErrorDialog/ErrorMessageEnum';
@@ -20,7 +19,6 @@ import ConnectionIcon from './ConnectionIconEnum';
 import { LoadingSharingIconEnum } from './LoadingSharingIconEnum';
 
 function MainView() {
-  const { isDarkTheme, setIsDarkThemeHook } = useContext(AppContext);
   const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
 
   const [promptStep, setPromptStep] = useState(1);
@@ -75,10 +73,8 @@ function MainView() {
 
   useEffect(
     handleCreatePeerConnection({
-      isDarkTheme,
       peer,
       connectionRoomId,
-      setIsDarkThemeHook,
       setMyDeviceDetails,
       setConnectionIconType,
       setIsShownTextPrompt,
@@ -89,7 +85,7 @@ function MainView() {
       setUrl,
       setPeer,
     }),
-    [setIsDarkThemeHook, isDarkTheme, peer, connectionRoomId]
+    [peer, connectionRoomId]
   );
 
   const handlePlayPause = useCallback(() => {
@@ -129,7 +125,6 @@ function MainView() {
 			isPlaying={playing}
 			setVideoQuality={setVideoQuality}
 			videoQuality={videoQuality}
-			isDarkTheme={isDarkTheme}
 		/>
       <ErrorDialog
         errorMessage={dialogErrorMessage}

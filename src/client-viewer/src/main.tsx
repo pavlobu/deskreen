@@ -9,11 +9,12 @@ import './index.css'
 import './config/i18n';
 import App from './App.tsx'
 import { AppContextProvider } from './providers/AppContextProvider';
+import LoadingScreen from './components/LoadingScreen';
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Suspense fallback="loading">
+    <Suspense fallback={<LoadingScreen />}>
     <AppContextProvider>
 
     <App />

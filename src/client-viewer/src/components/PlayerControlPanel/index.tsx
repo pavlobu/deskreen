@@ -27,7 +27,6 @@ import {
 import { handlePlayerToggleFullscreen } from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
 import { ScreenSharingSource } from '../../features/PeerConnection/ScreenSharingSourceEnum';
-import { PLAYER_WRAPPER_ID } from '../../constants/appConstants';
 import { trackAnalyticsEvent } from '../../utils/analytics';
 import './index.css';
 
@@ -49,10 +48,7 @@ interface PlayerControlPanelProps {
 	selectedVideoQuality: VideoQualityType;
 	screenSharingSourceType: ScreenSharingSourceType;
 	// toaster: undefined | HTMLDivElement;
-	isDarkTheme: boolean;
 }
-
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 function PlayerControlPanel(props: PlayerControlPanelProps) {
   const { t } = useTranslation();
@@ -65,13 +61,11 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 		selectedVideoQuality,
 		setVideoQuality,
 		screenSharingSourceType,
-		// isDarkTheme,
 	} = props;
 
   const isFullScreenAPIAvailable = screenfull.isEnabled;
 
   const [isFullScreenOn, setIsFullScreenOn] = useState(false);
-  const [isVideoFlipped, setIsVideoFlipped] = useState(false);
 
 	useEffect(() => {
 		const cleanup = initScreenfullOnChange(setIsFullScreenOn);
@@ -145,26 +139,6 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 			player_mode: isDefaultPlayerTurnedOn ? 'default' : 'custom'
 		});
 	}, [handleClickFullscreen, handleClickFullscreenWhenDefaultPlayerIsOn, isDefaultPlayerTurnedOn]);
-
-	const toggleFlipVideo = useCallback(() => {
-		const videoElement = (isSafari
-			? document.querySelector(`#${PLAYER_WRAPPER_ID}`)
-			: document.querySelector(`#${PLAYER_WRAPPER_ID} video`)) as HTMLElement | null;
-		if (!videoElement) return;
-		if (isVideoFlipped) {
-			videoElement.style.transform = '';
-			setIsVideoFlipped(false);
-			return;
-		}
-		videoElement.style.transform = 'rotateY(180deg)';
-		setIsVideoFlipped(true);
-
-		// toaster?.show({
-		//   icon: 'clean',
-		//   intent: Intent.PRIMARY,
-		//   message: t('Video is flipped horizontally'),
-		// });
-	}, [isVideoFlipped]);
 
   return (
     <>
@@ -309,9 +283,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                               <Button
                                 icon='key-tab'
                                 minimal
-                                active={isVideoFlipped}
                                 style={videoQualityButtonStyle}
-                                onClick={toggleFlipVideo}
                                 disabled={true}
                               >
                                 {t('Flip')}

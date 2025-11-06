@@ -25,7 +25,7 @@ export default function handleSocket(peerConnection: PeerConnection): void {
     handleSocketUserExit(peerConnection);
   });
 
-  peerConnection.socket.on('ENCRYPTED_MESSAGE', (payload: ReceiveEncryptedMessagePayload) => {
+  peerConnection.socket.on('MESSAGE', (payload: ReceiveEncryptedMessagePayload) => {
     peerConnection.receiveEncryptedMessage(payload);
   });
 

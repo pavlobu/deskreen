@@ -1,7 +1,6 @@
 import { contextBridge } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import forge from 'node-forge';
-import nacl from 'tweetnacl';
 // import SimplePeer from 'simple-peer';
 // import wrtc from '@roamhq/wrtc';
 // import * as SimplePeerMin from './simplepeer.min.js';
@@ -16,14 +15,6 @@ const api = {
   // },
   // SimplePeerMin: SimplePeerMin,
   // wrtc: wrtc,
-  nacl: nacl,
-  // expose stable wrappers to avoid losing nested function properties through the bridge
-  naclBox: nacl.box,
-  naclBoxOpen: nacl.box.open,
-  naclBoxKeyPair: nacl.box.keyPair,
-  naclBoxKeyPairFromSecretKey: nacl.box.keyPair.fromSecretKey,
-  naclRandomBytes: nacl.randomBytes,
-  naclBoxNonceLength: nacl.box.nonceLength,
   forge: forge,
   Buffer: Buffer,
 };

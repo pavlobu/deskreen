@@ -99,9 +99,13 @@ export default class Socket implements SocketOPTS {
       acknowledgeFunction(room.isLocked);
     });
 
-    this.socket.on('ENCRYPTED_MESSAGE', (payload) => {
+    this.socket.on('PING', (acknowledgeFunction) => {
+      acknowledgeFunction('PONG');
+    });
+
+    this.socket.on('MESSAGE', (payload) => {
       payload.fromSocketID = this.socket.id;
-      this.socket.to(this.roomId).emit('ENCRYPTED_MESSAGE', payload);
+      this.socket.to(this.roomId).emit('MESSAGE', payload);
     });
 
     this.socket.on('DISCONNECT_SOCKET_BY_DEVICE_IP', async (payload) => {
@@ -124,7 +128,7 @@ export default class Socket implements SocketOPTS {
           createdAt: Date.now(),
         };
       } else {
-        const userFound = room.users.find((r) => r.publicKey === payload.publicKey);
+        const userFound = room.users.find((r) => r.username === payload.username);
         if (userFound) return;
       }
 
@@ -148,7 +152,7 @@ export default class Socket implements SocketOPTS {
           ...(room.users || []),
           {
             socketId: this.socket.id,
-            publicKey: payload.publicKey.replace(/\r\n/g, '\n'),
+            username: payload.username,
 						isOwner: isOwnerSocket,
             ip: payload.ip ? payload.ip : '', // TODO: remove as it is not used
           },

@@ -1,16 +1,13 @@
 import PeerConnection from '../../features/PeerConnection';
 import PeerConnectionUIHandler from '../../features/PeerConnection/PeerConnectionUIHandler';
-import Crypto from '../../utils/crypto';
 import VideoAutoQualityOptimizer from '../../features/VideoAutoQualityOptimizer';
 import changeLanguage from './changeLanguage';
 import ConnectionIcon from './ConnectionIconEnum';
 
 export default (params: CreatePeerConnectionUseEffectParams) => {
   const {
-    isDarkTheme,
     peer,
     connectionRoomId,
-    setIsDarkThemeHook,
     setMyDeviceDetails,
     setConnectionIconType,
     setIsShownTextPrompt,
@@ -28,7 +25,6 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
         return;
       }
       const UIHandler = new PeerConnectionUIHandler(
-        isDarkTheme,
         setMyDeviceDetails,
         () => {
           setConnectionIconType(ConnectionIcon.FEED_SUBSCRIBED);
@@ -44,7 +40,6 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
           }, 2000);
         },
         setScreenSharingSourceType,
-        setIsDarkThemeHook,
         changeLanguage,
         setDialogErrorMessage,
         setIsErrorDialogOpen
@@ -53,7 +48,6 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
       const _peer = new PeerConnection(
         connectionRoomId,
         setUrl,
-        new Crypto(),
         new VideoAutoQualityOptimizer(),
         UIHandler
       );

@@ -268,10 +268,23 @@ export default class DeskreenApp {
   }
 
   start(): void {
-    initGlobals(join(__dirname, '..'));
+    const cliLocalIp = this.parseCliLocalIp();
+    initGlobals(join(__dirname, '..'), cliLocalIp);
     signalingServer.start();
 
     this.initElectronAppObject();
+  }
+
+  private parseCliLocalIp(): string | undefined {
+    const args = process.argv;
+    const localIpIndex = args.findIndex((arg) => arg === '--local-ip' || arg === '--ip');
+    if (localIpIndex !== -1 && localIpIndex + 1 < args.length) {
+      const ip = args[localIpIndex + 1];
+      if (ip && !ip.startsWith('--')) {
+        return ip;
+      }
+    }
+    return undefined;
   }
 }
 

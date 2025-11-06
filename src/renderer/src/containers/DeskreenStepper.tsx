@@ -102,9 +102,9 @@ const DeskreenStepper = ({
   }, []);
 
   useEffect(() => {
-    const ipInterval = setInterval(async () => {
-      const gotIP = await window.electron.ipcRenderer.invoke('get-local-lan-ip');
-      if (gotIP === undefined) {
+    const wifiCheckInterval = setInterval(async () => {
+      const isConnected = await window.electron.ipcRenderer.invoke('check-wifi-connection');
+      if (!isConnected) {
         setisNoWiFiError(true);
       } else {
         setisNoWiFiError(false);
@@ -112,7 +112,7 @@ const DeskreenStepper = ({
     }, 1000);
 
     return () => {
-      clearInterval(ipInterval);
+      clearInterval(wifiCheckInterval);
     };
   }, []);
 

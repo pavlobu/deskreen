@@ -69,7 +69,6 @@
     "simple-peer": "^9.11.1",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
-    "tweetnacl": "^1.0.3",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

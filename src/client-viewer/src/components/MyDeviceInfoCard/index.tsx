@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   Callout,
   Card,
@@ -8,11 +7,7 @@ import {
   Position,
 } from '@blueprintjs/core';
 import { useTranslation } from 'react-i18next';
-import { AppContext } from '../../providers/AppContextProvider';
-import {
-  DARK_UI_BACKGROUND,
-  LIGHT_UI_BACKGROUND,
-} from '../../constants/styleConstants';
+import { LIGHT_UI_BACKGROUND } from '../../constants/styleConstants';
 
 interface MyDeviceDetailsCardProps {
   deviceDetails: DeviceDetails;
@@ -20,7 +15,6 @@ interface MyDeviceDetailsCardProps {
 
 function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
   const { t } = useTranslation();
-  const { isDarkTheme } = useContext(AppContext);
 
   const { deviceDetails } = props;
   const { myIP, myOS, myDeviceType, myBrowser, myRoomId } = deviceDetails;
@@ -29,7 +23,7 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
     <Card
       elevation={3}
       style={{
-        backgroundColor: isDarkTheme ? DARK_UI_BACKGROUND : LIGHT_UI_BACKGROUND,
+        backgroundColor: LIGHT_UI_BACKGROUND,
         marginBottom: '30px',
       }}
     >
@@ -37,7 +31,7 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
       <Callout>
         <Text>{`${t('Device Type')}: ${myDeviceType}`}</Text>
         <Tooltip
-          content={t('Your Device IP should match with Device IP in alert popup appeared on your computer, where Deskreen CE is running')}
+          content={t('Your Device IP should match with Device IP in alert popup appeared on your computer, where Deskreen-CE is running')}
           position={Position.TOP}
         >
           <div
@@ -57,7 +51,7 @@ function MyDeviceInfoCard(props: MyDeviceDetailsCardProps) {
         <Text>{`${t('My Current Connection ID')}: ${myRoomId}`}</Text>
       </Callout>
       <Text className="bp3-text-muted">
-        {t('These details should match with the ones that you see in alert popup on computer screen, where Deskreen CE is running')}
+        {t('These details should match with the ones that you see in alert popup on computer screen, where Deskreen-CE is running')}
       </Text>
     </Card>
   );

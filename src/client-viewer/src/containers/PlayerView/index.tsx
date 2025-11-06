@@ -14,7 +14,6 @@ interface PlayerViewProps {
 	videoQuality: VideoQualityType;
 	screenSharingSourceType: ScreenSharingSourceType;
 	streamUrl: undefined | MediaStream;
-	isDarkTheme: boolean;
 }
 
 function PlayerView(props: PlayerViewProps) {
@@ -27,7 +26,6 @@ function PlayerView(props: PlayerViewProps) {
     setVideoQuality,
     videoQuality,
     streamUrl,
-    isDarkTheme,
   } = props;
 
   // const player = useRef(null);
@@ -72,6 +70,7 @@ function PlayerView(props: PlayerViewProps) {
     // react-player play/pause is handled via its `playing` prop
   }, [isPlaying, isWithControls]);
 
+  // @ts-ignore
   return (
     <div
       style={{
@@ -88,20 +87,19 @@ function PlayerView(props: PlayerViewProps) {
     >
       <PlayerControlPanel
         onSwitchChangedCallback={(isEnabled) => setIsWithControls(isEnabled)}
-		isDefaultPlayerTurnedOn={isWithControls}
-		handleClickFullscreen={() => {
-			const result = togglePlayerFullscreen();
-			if (result === 'failed') {
-				console.warn('Unable to toggle fullscreen');
-			}
-			return result;
-		}}
+        isDefaultPlayerTurnedOn={isWithControls}
+        handleClickFullscreen={() => {
+				const result = togglePlayerFullscreen();
+				if (result === 'failed') {
+					console.warn('Unable to toggle fullscreen');
+				}
+				return result;
+        }}
         handleClickPlayPause={handlePlayPause}
         isPlaying={isPlaying}
         setVideoQuality={setVideoQuality}
         selectedVideoQuality={videoQuality}
         screenSharingSourceType={screenSharingSourceType}
-        isDarkTheme={isDarkTheme}
       />
       <div
         id='video-container'

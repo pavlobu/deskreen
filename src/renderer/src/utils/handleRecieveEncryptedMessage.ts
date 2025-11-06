@@ -8,6 +8,13 @@ export type CallAcceptedMessageWithPayload = {
   };
 };
 
+export type CallUserMessageWithPayload = {
+  type: 'CALL_USER';
+  payload: {
+    signalData: string;
+  };
+};
+
 export type DeviceDetailsMessageWithPayload = {
   type: 'DEVICE_DETAILS';
   payload: {
@@ -19,21 +26,42 @@ export type DeviceDetailsMessageWithPayload = {
   };
 };
 
-export type GetAppThemeMessageWithPayload = {
-  type: 'GET_APP_THEME';
-  payload: Record<string, unknown>;
-};
-
 export type GetAppLanguageMessageWithPayload = {
   type: 'GET_APP_LANGUAGE';
   payload: Record<string, unknown>;
 };
 
+export type AppLanguageMessageWithPayload = {
+  type: 'APP_LANGUAGE';
+  payload: {
+    value: string;
+  };
+};
+
+export type DenyToConnectMessageWithPayload = {
+  type: 'DENY_TO_CONNECT';
+  payload: Record<string, unknown>;
+};
+
+export type AllowedToConnectMessageWithPayload = {
+  type: 'ALLOWED_TO_CONNECT';
+  payload: Record<string, unknown>;
+};
+
+export type DisconnectByHostMachineUserMessageWithPayload = {
+  type: 'DISCONNECT_BY_HOST_MACHINE_USER';
+  payload: Record<string, unknown>;
+};
+
 export type ProcessedMessage =
   | CallAcceptedMessageWithPayload
+  | CallUserMessageWithPayload
   | DeviceDetailsMessageWithPayload
-  | GetAppThemeMessageWithPayload
-  | GetAppLanguageMessageWithPayload;
+  | GetAppLanguageMessageWithPayload
+  | AppLanguageMessageWithPayload
+  | DenyToConnectMessageWithPayload
+  | AllowedToConnectMessageWithPayload
+  | DisconnectByHostMachineUserMessageWithPayload;
 
 export function handleDeviceIPMessage(
   deviceIP: string,
@@ -62,9 +90,9 @@ export const handleRecieveEncryptedMessage = async (
 ): Promise<void> => {
   let message: ProcessedMessage;
   try {
-    message = await processMessage(payload, peerConnection.user.privateKey);
+    message = await processMessage(payload);
   } catch (e) {
-    console.error('failed to process/decrypt incoming message', e, payload);
+    console.error('failed to process incoming message', e, payload);
     return;
   }
   // const message = payload as any;
@@ -75,15 +103,6 @@ export const handleRecieveEncryptedMessage = async (
     peerConnection.socket.emit('GET_IP_BY_SOCKET_ID', payload.fromSocketID, (deviceIP: string) => {
       // TODO: need to add myIP in client message.payload.myIP, then if retrieved deviceIP and myIP from client don't match, we were spoofed, then we can interrupt connection immediately!
       handleDeviceIPMessage(deviceIP, peerConnection, message);
-    });
-  }
-  if (message.type === 'GET_APP_THEME') {
-    const isDarkAppTheme = await window.electron.ipcRenderer.invoke(IpcEvents.GetIsAppDarkTheme);
-    peerConnection.sendEncryptedMessage({
-      type: 'APP_THEME',
-      payload: {
-        value: isDarkAppTheme,
-      },
     });
   }
   if (message.type === 'GET_APP_LANGUAGE') {

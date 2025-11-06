@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MainView from './containers/MainView';
 import PrivacyConsentDialog from './components/PrivacyConsentDialog';
+import LoadingScreen from './components/LoadingScreen';
 import { getConsentStatus, setConsentStatus, loadGoogleAnalytics, getGaTagIdFromMeta, updateAnalyticsConsent } from './utils/analytics';
 
 const App: React.FC = () => {
@@ -102,7 +103,7 @@ const App: React.FC = () => {
 		// Render a minimal version or nothing while the browser is prerendering.
 		// This prevents heavy computations or API calls during the browser's prerender phase.
 		// console.log("Page is being prerendered by the browser (or support for detection is present). Waiting for activation.");
-		return <div>Loading preview (being prerendered)...</div>; // Or null, or a lightweight placeholder
+		return <LoadingScreen />;
 	}
 
 	if (!hasConsent) {

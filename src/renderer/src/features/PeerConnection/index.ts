@@ -1,5 +1,4 @@
 import { prepare as prepareMessage } from '../../utils/message';
-import DeskreenCrypto from '../../utils/crypto';
 import { connectSocket } from '../../../../common/connectSocket';
 import handleCreatePeer from './handleCreatePeer';
 import handleSocket from './handleSocket';
@@ -10,7 +9,6 @@ import NullSimplePeer from './NullSimplePeer';
 import setDisplaySizeFromLocalStream from './handleSetDisplaySizeFromLocalStream';
 import DesktopCapturerSourceType from '../../../../common/DesktopCapturerSourceType';
 import getAppLanguage from '../../../../common/getAppLanguage';
-import getAppTheme from '../../../../common/getAppTheme';
 import { IpcEvents } from '../../../../common/IpcEvents.enum';
 
 import { Device } from '../../../../common/Device';
@@ -21,14 +19,12 @@ type DisplaySize = { width: number; height: number };
 
 export interface PartnerPeerUser {
   username: string;
-  publicKey: string;
 }
 
 export default class PeerConnection {
   sharingSessionID: string;
   roomID: string;
   socket: Socket;
-  crypto: DeskreenCrypto;
   user: LocalPeerUser;
   partner: PartnerPeerUser;
   peer = NullSimplePeer;
@@ -55,7 +51,6 @@ export default class PeerConnection {
     this.sharingSessionID = sharingSessionID;
     this.isSocketRoomLocked = false;
     this.roomID = encodeURI(roomID);
-    this.crypto = new DeskreenCrypto();
     this.socket = connectSocket(port, this.roomID);
     this.user = user;
     this.partner = NullUser;
@@ -81,15 +76,6 @@ export default class PeerConnection {
         payload: {
           value: await getAppLanguage(),
         },
-      });
-    }, 1000);
-  }
-
-  notifyClientWithNewColorTheme(): void {
-    setTimeout(async () => {
-      this.sendEncryptedMessage({
-        type: 'APP_THEME',
-        payload: { value: await getAppTheme() },
       });
     }, 1000);
   }
@@ -179,7 +165,6 @@ export default class PeerConnection {
   emitUserEnter(): void {
     this.socket.emit('USER_ENTER', {
       username: this.user.username,
-      publicKey: this.user.publicKey,
     });
   }
 
@@ -187,9 +172,9 @@ export default class PeerConnection {
     if (!this.socket) return;
     if (!this.user) return;
     if (!this.partner) return;
-    if (!this.partner.publicKey || this.partner.publicKey.length < 40) return;
-    const msg = await prepareMessage(payload, this.user, this.partner);
-    this.socket.emit('ENCRYPTED_MESSAGE', msg.toSend);
+    if (!this.partner.username) return;
+    const msg = await prepareMessage(payload, this.user);
+    this.socket.emit('MESSAGE', msg.toSend);
   }
 
   receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload): void {

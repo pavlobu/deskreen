@@ -79,10 +79,8 @@
 
 
 :root {
-  --dark-bg-color: #293742;
   --light-bg-color: rgba(240, 248, 250, 1);
   --light-btn-no-intent-color: rgb(218, 238, 243);
-  --dark-btn-no-intent-color: #394b59;
   --custom-scrollbar-webkit-scrollbar-thumb-border-radius: 10px;
   --custom-scrollbar-webkit-scrollbar-thumb-background-color: #8a9ba8;
   --custom-scrollbar-webkit-scrollbar_background-color: rgba(0, 0, 0, 0);
@@ -111,21 +109,13 @@ body {
   height: 0%;
 }
 
-/* UI colors FOR LIGHT AND DARK THEME START */
+/* UI colors START */
 .bp3-button:not([class*='bp3-intent-']) {
   background-color: var(--light-btn-no-intent-color);
 }
 
-body.bp3-dark {
-  background-color: var(--dark-bg-color) !important;
-}
-
 .bp3-dialog {
   background-color: var(--light-bg-color) !important;
-}
-
-.bp3-dark .bp3-dialog {
-  background-color: var(--dark-bg-color) !important;
 }
 
 .bp3-popover .bp3-popover-arrow-fill {

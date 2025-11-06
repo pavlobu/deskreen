@@ -57,7 +57,6 @@ export default function DeviceConnectedInfoButton(props: DeviceConnectedInfoButt
       <Popover
         content={getDeviceConnectedPopoverContent(device, onDisconnect, t)}
         position="bottom"
-        inheritDarkTheme={false}
         transitionDuration={0}
       >
         <Tooltip content={<Text>Click to see more</Text>} position="right" hoverOpenDelay={400}>

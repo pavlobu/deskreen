@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Overlay2,
   Classes,
@@ -12,11 +12,10 @@ import {
 } from '@blueprintjs/core';
 import { Col, Row } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { DARK_UI_BACKGROUND, LIGHT_UI_BACKGROUND } from '../../containers/SettingsProvider';
+import { LIGHT_UI_BACKGROUND } from '../../containers/SettingsProvider';
 import CloseOverlayButton from '../CloseOverlayButton';
 import SettingRowLabelAndInput from './SettingRowLabelAndInput';
 import LanguageSelector from '../LanguageSelector';
-import { SettingsContext } from '@renderer/contexts/SettingsContext';
 import { IpcEvents } from '../../../../common/IpcEvents.enum';
 import { useTranslation } from 'react-i18next';
 import './settings-overlay.css';
@@ -38,15 +37,14 @@ type SettingsOverlayClassKey =
 
 type SettingsOverlayClassMap = Record<SettingsOverlayClassKey, string>;
 
-const useStylesWithTheme = (isDarkTheme: boolean): (() => SettingsOverlayClassMap) =>
-  makeStyles(() =>
-    createStyles({
-      checkboxSettings: { margin: '0' },
-      overlayInnerRoot: { width: '90%' },
-      overlayInsideFade: {
-        height: '90vh',
-        backgroundColor: isDarkTheme ? DARK_UI_BACKGROUND : LIGHT_UI_BACKGROUND,
-      },
+const useStyles = makeStyles(() =>
+  createStyles({
+    checkboxSettings: { margin: '0' },
+    overlayInnerRoot: { width: '90%' },
+    overlayInsideFade: {
+      height: '90vh',
+      backgroundColor: LIGHT_UI_BACKGROUND,
+    },
       absoluteCloseButton: { position: 'absolute', left: 'calc(100% - 65px)' },
       tabNavigationRowButton: {
         fontWeight: 700,
@@ -71,7 +69,7 @@ const useStylesWithTheme = (isDarkTheme: boolean): (() => SettingsOverlayClassMa
         borderRadius: '8px',
       },
     }),
-  ) as unknown as () => SettingsOverlayClassMap;
+  );
 
 export default function SettingsOverlay(props: SettingsOverlayProps): React.ReactElement {
   const [clientViewerPort, setClientViewerPort] = useState('80'); // Default port, can be changed later
@@ -80,10 +78,8 @@ export default function SettingsOverlay(props: SettingsOverlayProps): React.Reac
   const [latestVersion, setLatestVersion] = useState('');
   const [currentVersion, setCurrentVersion] = useState('');
 
-  const { isDarkTheme } = useContext(SettingsContext);
   const { t } = useTranslation();
 
-  const useStyles = useStylesWithTheme(isDarkTheme);
   const classes = useStyles() as SettingsOverlayClassMap;
 
   const handleOpenDownload = useCallback((): void => {
@@ -139,7 +135,6 @@ export default function SettingsOverlay(props: SettingsOverlayProps): React.Reac
     latestVersion !== '' && currentVersion !== '' && latestVersion !== currentVersion;
 
   const GeneralSettingsPanel: React.FC = () => {
-    const { isDarkTheme: generalPanelIsDarkTheme } = useContext(SettingsContext);
     return (
       <div style={{ width: '100%' }}>
         {hasUpdate ? (
@@ -200,7 +195,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps): React.Reac
                   rel="noopener noreferrer"
                   className="bp3-link"
                   style={{
-                    color: generalPanelIsDarkTheme ? '#48aff0' : '#106ba3',
+                    color: '#106ba3',
                     textDecoration: 'none',
                   }}
                 >
@@ -217,7 +212,7 @@ export default function SettingsOverlay(props: SettingsOverlayProps): React.Reac
                   rel="noopener noreferrer"
                   className="bp3-link"
                   style={{
-                    color: generalPanelIsDarkTheme ? '#48aff0' : '#106ba3',
+                    color: '#106ba3',
                     textDecoration: 'none',
                   }}
                 >

@@ -1,6 +1,5 @@
 interface ReceiveEncryptedMessagePayload {
   fromSocketID: string;
-  ciphertext: string;
-  nonce: string;
-  senderPublicKey: string;
+  type: string;
+  payload: Record<string, unknown>;
 }

@@ -1,8 +1,6 @@
-import { useContext } from 'react';
 import { Icon } from '@blueprintjs/core';
 import { Col, Row } from 'react-flexbox-grid';
 import PropagateLoader from 'react-spinners/PropagateLoader';
-import { AppContext } from '../../providers/AppContextProvider';
 
 interface SelectSharingIconProps {
   loadingSharingIconType: LoadingSharingIconType;
@@ -10,7 +8,6 @@ interface SelectSharingIconProps {
 }
 
 function LoadingSharingIcon(props: SelectSharingIconProps) {
-  const { isDarkTheme } = useContext(AppContext);
 
   const {
     loadingSharingIconType: selectingSharingIconType,
@@ -37,7 +34,7 @@ function LoadingSharingIcon(props: SelectSharingIconProps) {
           center='xs'
         >
           <Col xs={8} md={4}>
-            <PropagateLoader loading size={18} color={isDarkTheme ? '#BFCCD6' : '#5C7080'} />
+            <PropagateLoader loading size={18} color="#5C7080" />
           </Col>
         </Row>
         <Row center='xs'>
@@ -46,7 +43,7 @@ function LoadingSharingIcon(props: SelectSharingIconProps) {
               <Icon
                 icon={selectingSharingIconType}
                 size={60}
-                color={isDarkTheme ? '#BFCCD6' : '#5C7080'}
+                color="#5C7080"
               />
             )}
           </Col>

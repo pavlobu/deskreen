@@ -27,8 +27,13 @@ export default (peerConnection: PeerConnection) => {
 
   peerConnection.socket.on('disconnect', () => {
     disconnectCount++;
-    // don't surface socket disconnect errors if we already have a playing stream
-    if (peerConnection.isStreamStarted) return;
+    // handle disconnect even when stream is started - stop stream and show error
+    if (peerConnection.isStreamStarted && disconnectCount >= 1) {
+      peerConnection.stopStream();
+      setAndShowErrorDialogMessage(peerConnection, ErrorMessage.DISCONNECTED);
+      return;
+    }
+    // for pre-stream disconnects, wait for sustained disconnection before showing error
     if (disconnectCount > 6 && isAllowed) {
       setAndShowErrorDialogMessage(peerConnection, ErrorMessage.DISCONNECTED);
     }
@@ -63,7 +68,7 @@ export default (peerConnection: PeerConnection) => {
   peerConnection.socket.on('USER_ENTER', (payload: { users: PartnerPeerUser[] }) => {
     if (!isAllowed) return;
     const filteredPartner = payload.users.filter((v) => {
-      return peerConnection.user.publicKey !== v.publicKey;
+      return peerConnection.user.username !== v.username;
     });
 
     peerConnection.partner = filteredPartner[0];
@@ -82,10 +87,6 @@ export default (peerConnection: PeerConnection) => {
       },
     });
 
-    peerConnection.sendEncryptedMessage({
-      type: 'GET_APP_THEME',
-      payload: {},
-    });
     peerConnection.sendEncryptedMessage({
       type: 'GET_APP_LANGUAGE',
       payload: {},
@@ -106,7 +107,7 @@ export default (peerConnection: PeerConnection) => {
   //   // peerConnection.props.receiveUnencryptedMessage('USER_EXIT', payload);
   // });
 
-  peerConnection.socket.on('ENCRYPTED_MESSAGE', (payload: ReceiveEncryptedMessagePayload) => {
+  peerConnection.socket.on('MESSAGE', (payload: ReceiveEncryptedMessagePayload) => {
     if (!isAllowed) return;
     peerConnection.receiveEncryptedMessage(payload);
   });
