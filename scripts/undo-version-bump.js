@@ -47,8 +47,8 @@ async function main() {
 		writeEnv(previousVersion)
 	]);
 	
-	await deleteLocalTag(latestTag);
 	await deleteRemoteTag(latestTag);
+	await deleteLocalTag(latestTag);
 	
 	console.log(`Version reverted from ${tagVersion} to ${previousVersion}`);
 	console.log(`Tag ${latestTag} has been deleted locally and remotely (if it existed).`);
