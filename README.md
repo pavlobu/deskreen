@@ -50,7 +50,7 @@ open -a "Deskreen CE" --args --ip 192.168.1.100
 /Applications/Deskreen\ CE.app/Contents/MacOS/Deskreen\ CE --ip 192.168.1.100
 
 # Get your IP automatically and launch
-open -a "Deskreen CE" --args --ip $(ipconfig getifaddr en0)
+open -a "Deskreen CE" --args --ip "192.168.1.100"
 ```
 
 ### Windows

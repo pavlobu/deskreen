@@ -97,6 +97,7 @@ const useStyles = makeStyles(() =>
     },
     topPanelControlButtonMargin: {
       cursor: 'default !important',
+      position: 'relative',
     },
     updateBadge: {
       borderRadius: '12px',
@@ -105,6 +106,25 @@ const useStyles = makeStyles(() =>
     },
     topPanelIconOfControlButton: {
       cursor: 'default !important',
+    },
+    connectedDevicesBadge: {
+      position: 'absolute',
+      top: '-4px',
+      right: '-4px',
+      backgroundColor: '#ff3b30',
+      color: '#ffffff',
+      borderRadius: '10px',
+      minWidth: '20px',
+      height: '20px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '12px',
+      fontWeight: 600,
+      padding: '0 6px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+      zIndex: 10,
+      lineHeight: '1',
     },
   }),
 );
@@ -121,6 +141,7 @@ export default function TopPanel({ handleReset }: Props): React.ReactElement {
   const [isConnectedDevicesDrawerOpen, setIsConnectedDevicesDrawerOpen] = React.useState(false);
   const [latestVersion, setLatestVersion] = React.useState('');
   const [currentVersion, setCurrentVersion] = React.useState('');
+  const [connectedDevicesCount, setConnectedDevicesCount] = React.useState(0);
 
   const handleSettingsOpen = React.useCallback(() => {
     setIsSettingsOpen(true);
@@ -173,6 +194,27 @@ export default function TopPanel({ handleReset }: Props): React.ReactElement {
     void fetchVersions();
   }, []);
 
+  React.useEffect(() => {
+    const fetchConnectedDevicesCount = async (): Promise<void> => {
+      try {
+        const devices = await window.electron.ipcRenderer.invoke(IpcEvents.GetConnectedDevices);
+        if (Array.isArray(devices)) {
+          setConnectedDevicesCount(devices.length);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchConnectedDevicesCount();
+
+    const connectedDevicesInterval = setInterval(fetchConnectedDevicesCount, 2000);
+
+    return () => {
+      clearInterval(connectedDevicesInterval);
+    };
+  }, []);
+
   const hasUpdate =
     latestVersion !== '' && currentVersion !== '' && latestVersion !== currentVersion;
 
@@ -203,6 +245,9 @@ export default function TopPanel({ handleReset }: Props): React.ReactElement {
           <Icon className={classes.topPanelIconOfControlButton} icon="th-list" size={20} />
         </Button>
       </Tooltip>
+      {connectedDevicesCount > 0 && (
+        <span className={classes.connectedDevicesBadge}>{connectedDevicesCount}</span>
+      )}
     </div>
   );
 
