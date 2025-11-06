@@ -59,9 +59,6 @@ importers:
       socket.io-client:
         specifier: ^4.8.1
         version: 4.8.1
-      tweetnacl:
-        specifier: ^1.0.3
-        version: 1.0.3
       ua-parser-js:
         specifier: ^2.0.4
         version: 2.0.4
@@ -2555,9 +2552,6 @@ packages:
 
   tty-browserify@0.0.1:
     resolution: {integrity: sha512-C3TaO7K81YvjCgQH9Q1S3R3P3BtN3RIM8n+OvX4il1K1zgE8ZhI0op7kClgkxtutIE8hQrcrHBXvIheqKUUCxw==}
-
-  tweetnacl@1.0.3:
-    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
 
   twitch-video-element@0.1.4:
     resolution: {integrity: sha512-SDpZ4f7sZmwHF6XG5PF0KWuP18pH/kNG04MhTcpqJby7Lk/D3TS/lCYd+RSg0rIAAVi1LDgSIo1yJs9kmHlhgw==}
@@ -5559,8 +5553,6 @@ snapshots:
   tslib@2.6.3: {}
 
   tty-browserify@0.0.1: {}
-
-  tweetnacl@1.0.3: {}
 
   twitch-video-element@0.1.4: {}
 
