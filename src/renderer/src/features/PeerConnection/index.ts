@@ -46,6 +46,7 @@ export default class PeerConnection {
   onDeviceConnectedCallback: (device: Device) => void;
   displayID: string;
   sourceDisplaySize: DisplaySize | undefined;
+  beforeunloadHandler: (() => void) | null = null;
 
   constructor(roomID: string, sharingSessionID: string, user: LocalPeerUser, port: string) {
     this.sharingSessionID = sharingSessionID;
@@ -64,9 +65,10 @@ export default class PeerConnection {
 
     handleSocket(this);
 
-    window.addEventListener('beforeunload', () => {
+    this.beforeunloadHandler = () => {
       this.socket.emit('USER_DISCONNECT');
-    });
+    };
+    window.addEventListener('beforeunload', this.beforeunloadHandler);
   }
 
   notifyClientWithNewLanguage(): void {

@@ -1,6 +1,7 @@
 import DesktopCapturerSourceType from '../../../../common/DesktopCapturerSourceType';
 import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID';
 import prepareDataMessageToSendScreenSourceType from './prepareDataMessageToSendScreenSourceType';
+import NullSimplePeer from './NullSimplePeer';
 
 export default async function handlePeerOnData(
   peerConnection: PeerConnection,
@@ -23,12 +24,19 @@ export default async function handlePeerOnData(
       maxVideoQualityMultiplier,
     );
     const newVideoTrack = newStream.getVideoTracks()[0];
-    const oldTrack = peerConnection.localStream?.getVideoTracks()[0];
+    const oldStream = peerConnection.localStream;
+    const oldTrack = oldStream?.getVideoTracks()[0];
 
-    if (oldTrack && peerConnection.localStream) {
-      peerConnection.peer.replaceTrack(oldTrack, newVideoTrack, peerConnection.localStream);
-      oldTrack.stop();
+    if (oldTrack && oldStream && peerConnection.peer !== NullSimplePeer) {
+      peerConnection.peer.replaceTrack(oldTrack, newVideoTrack, oldStream);
+      // stop all tracks in old stream to ensure full cleanup
+      oldStream.getTracks().forEach((track) => {
+        track.stop();
+      });
     }
+    
+    // update local stream reference to new stream
+    peerConnection.localStream = newStream;
   }
 
   if (dataJSON.type === 'get_sharing_source_type') {

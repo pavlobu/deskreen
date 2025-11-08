@@ -2,7 +2,7 @@ import PeerConnection from '..';
 import { ErrorMessage } from '../../../components/ErrorDialog/ErrorMessageEnum';
 import setAndShowErrorDialogMessage from '../setAndShowErrorDialogMessage';
 
-export default (peerConnection: PeerConnection) => {
+export default (peerConnection: PeerConnection): NodeJS.Timeout => {
   let disconnectedStreak = 0;
   let pingTimeout: NodeJS.Timeout | null = null;
   
@@ -61,5 +61,5 @@ export default (peerConnection: PeerConnection) => {
     }
   };
   
-  setInterval(checkConnection, 5000);
+  return setInterval(checkConnection, 5000);
 };

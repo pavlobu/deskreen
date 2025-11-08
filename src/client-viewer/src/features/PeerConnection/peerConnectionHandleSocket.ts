@@ -41,7 +41,13 @@ export default (peerConnection: PeerConnection) => {
 
   peerConnection.socket.on('connect', () => {
     let ipCallbackReceived = false;
-    const reconnectTimeout = setTimeout(() => {
+    
+    // clear any existing reconnect timeout
+    if (peerConnection.reconnectTimeout) {
+      clearTimeout(peerConnection.reconnectTimeout);
+    }
+    
+    peerConnection.reconnectTimeout = setTimeout(() => {
       if (!ipCallbackReceived && isAllowed) {
         console.log('GET_MY_IP callback not received, reconnecting socket');
         peerConnection.socket.disconnect();
@@ -49,12 +55,20 @@ export default (peerConnection: PeerConnection) => {
       }
     }, 2500); // 2 seconds timeout to wait for callback
 
-    setTimeout(() => {
+    // clear any existing getMyIP timeout
+    if (peerConnection.getMyIPTimeout) {
+      clearTimeout(peerConnection.getMyIPTimeout);
+    }
+    
+    peerConnection.getMyIPTimeout = setTimeout(() => {
       if (!isAllowed) return;
       peerConnection.socket.emit('GET_MY_IP', (ip: string) => {
         console.log('GET_MY_IP', ip);
         ipCallbackReceived = true;
-        clearTimeout(reconnectTimeout);
+        if (peerConnection.reconnectTimeout) {
+          clearTimeout(peerConnection.reconnectTimeout);
+          peerConnection.reconnectTimeout = null;
+        }
         getMyIPCallback(peerConnection, ip, window.navigator.userAgent);
       });
     }, 500);
@@ -92,7 +106,12 @@ export default (peerConnection: PeerConnection) => {
       payload: {},
     });
 
-    setTimeout(() => {
+    // clear any existing timeout
+    if (peerConnection.setMyDeviceDetailsTimeout) {
+      clearTimeout(peerConnection.setMyDeviceDetailsTimeout);
+    }
+    
+    peerConnection.setMyDeviceDetailsTimeout = setTimeout(() => {
       peerConnection.UIHandler.setMyDeviceDetails({
         myIP: peerConnection.myDeviceDetails.myIP,
         myOS: peerConnection.myDeviceDetails.myOS,

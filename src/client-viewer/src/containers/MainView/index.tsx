@@ -85,7 +85,7 @@ function MainView() {
       setUrl,
       setPeer,
     }),
-    [peer, connectionRoomId]
+    [connectionRoomId]
   );
 
   const handlePlayPause = useCallback(() => {

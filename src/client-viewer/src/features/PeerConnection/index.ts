@@ -63,6 +63,16 @@ export default class PeerConnection {
 
   UIHandler: PeerConnectionUIHandler;
 
+  beforeunloadHandler: (() => void) | null = null;
+
+  connectionCheckInterval: NodeJS.Timeout | null = null;
+
+  reconnectTimeout: NodeJS.Timeout | null = null;
+
+  getMyIPTimeout: NodeJS.Timeout | null = null;
+
+  setMyDeviceDetailsTimeout: NodeJS.Timeout | null = null;
+
   constructor(
     roomId: string,
     setUrlCallback: (url: any) => void,
@@ -82,7 +92,7 @@ export default class PeerConnection {
       setAndShowErrorDialogMessage(this, ErrorMessage.NOT_ALLOWED);
     }
 
-    startSocketConnectedCheckingLoop(this);
+    this.connectionCheckInterval = startSocketConnectedCheckingLoop(this);
   }
 
   setVideoQuality(videoQuality: VideoQualityType) {
@@ -109,6 +119,7 @@ export default class PeerConnection {
     // destroy the peer connection
     if (this.peer) {
       try {
+        this.peer.removeAllListeners();
         this.peer.destroy();
       } catch (error) {
         console.error('Error destroying peer connection:', error);
@@ -117,7 +128,68 @@ export default class PeerConnection {
     }
   }
 
+  destroy() {
+    // remove window event listener
+    if (this.beforeunloadHandler) {
+      window.removeEventListener('beforeunload', this.beforeunloadHandler);
+      this.beforeunloadHandler = null;
+    }
+
+    // clear connection check interval
+    if (this.connectionCheckInterval) {
+      clearInterval(this.connectionCheckInterval);
+      this.connectionCheckInterval = null;
+    }
+
+    // clear all timeouts
+    if (this.reconnectTimeout) {
+      clearTimeout(this.reconnectTimeout);
+      this.reconnectTimeout = null;
+    }
+    if (this.getMyIPTimeout) {
+      clearTimeout(this.getMyIPTimeout);
+      this.getMyIPTimeout = null;
+    }
+    if (this.setMyDeviceDetailsTimeout) {
+      clearTimeout(this.setMyDeviceDetailsTimeout);
+      this.setMyDeviceDetailsTimeout = null;
+    }
+
+    // stop stream if started
+    if (this.isStreamStarted) {
+      this.stopStream();
+    }
+
+    // cleanup peer connection
+    if (this.peer) {
+      try {
+        this.peer.removeAllListeners();
+        this.peer.destroy();
+      } catch (error) {
+        console.error('Error destroying peer:', error);
+      }
+      this.peer = null;
+    }
+
+    // cleanup socket
+    if (this.socket) {
+      this.socket.removeAllListeners();
+      this.socket.disconnect();
+    }
+  }
+
   createPeer() {
+    // cleanup existing peer before creating new one
+    if (this.peer) {
+      try {
+        this.peer.removeAllListeners();
+        this.peer.destroy();
+      } catch (error) {
+        console.error('Error cleaning up existing peer:', error);
+      }
+      this.peer = null;
+    }
+
     // When we are testing with jest, SimplePeer() can not be created, so we just return
     const peer = new SimplePeer({
       initiator: false,
@@ -196,9 +268,10 @@ export default class PeerConnection {
 
       peerConnectionHandleSocket(this);
 
-      window.addEventListener('beforeunload', (_) => {
+      this.beforeunloadHandler = () => {
         this.socket.emit('USER_DISCONNECT');
-      });
+      };
+      window.addEventListener('beforeunload', this.beforeunloadHandler);
     };
 
     this.createUser().then((newUser: LocalPeerUser) => userCreatedCallback(newUser));

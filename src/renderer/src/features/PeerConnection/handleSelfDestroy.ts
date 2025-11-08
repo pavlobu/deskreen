@@ -8,22 +8,43 @@ export default function handleSelfDestroy(peerConnection: PeerConnection): void 
     IpcEvents.DisconnectDeviceById,
     peerConnection.partnerDeviceDetails.id,
   );
-  if (peerConnection.peer !== NullSimplePeer) {
-    peerConnection.peer.destroy();
+  
+  // remove window event listener
+  if (peerConnection.beforeunloadHandler) {
+    window.removeEventListener('beforeunload', peerConnection.beforeunloadHandler);
+    peerConnection.beforeunloadHandler = null;
   }
+  
+  // cleanup peer connection and remove all event listeners
+  if (peerConnection.peer !== NullSimplePeer) {
+    try {
+      // remove all event listeners before destroying
+      peerConnection.peer.removeAllListeners();
+      peerConnection.peer.destroy();
+    } catch (error) {
+      console.error('Error destroying peer:', error);
+    }
+    peerConnection.peer = NullSimplePeer;
+  }
+  
+  // cleanup media stream
   if (peerConnection.localStream) {
     peerConnection.localStream.getTracks().forEach((track) => {
       track.stop();
     });
     peerConnection.localStream = null;
   }
+  
+  // cleanup socket
+  peerConnection.socket.removeAllListeners();
+  peerConnection.socket.disconnect();
+  
   window.electron.ipcRenderer.invoke(
     IpcEvents.DestroySharingSessionById,
     peerConnection.sharingSessionID,
   );
   peerConnection.onDeviceConnectedCallback = () => {};
   peerConnection.isCallStarted = false;
-  peerConnection.socket.disconnect();
 
   window.electron.ipcRenderer.invoke(IpcEvents.UnmarkRoomIDAsTaken, peerConnection.roomID);
 }

@@ -19,6 +19,7 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
     setPeer,
   } = params;
 
+  // return the effect function
   return () => {
     if (!peer) {
       if (connectionRoomId === '') {
@@ -58,5 +59,13 @@ export default (params: CreatePeerConnectionUseEffectParams) => {
         setIsShownTextPrompt(true);
       }, 100);
     }
+
+    // return cleanup function - cleanup when connectionRoomId changes or component unmounts
+    return () => {
+      if (peer) {
+        peer.destroy();
+        setPeer(undefined);
+      }
+    };
   };
 };

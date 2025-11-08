@@ -23,9 +23,15 @@ const loadDevelopmentText = (): void => {
 
 export function handleIpcRenderer(): void {
   window.electron.ipcRenderer.on('start-peer-connection', () => {
-    let peerConnection: PeerConnection;
+    let peerConnection: PeerConnection | undefined;
 
     window.electron.ipcRenderer.on('create-peer-connection-with-data', async (_, data) => {
+      // cleanup existing peer connection before creating new one
+      if (peerConnection) {
+        peerConnection.selfDestroy();
+        peerConnection = undefined;
+      }
+      
       const port = await window.electron.ipcRenderer.invoke(IpcEvents.GetPort);
       peerConnection = new PeerConnection(data.roomID, data.sharingSessionID, data.user, port);
 
@@ -35,27 +41,39 @@ export function handleIpcRenderer(): void {
     });
 
     window.electron.ipcRenderer.on('set-desktop-capturer-source-id', (_, id) => {
-      peerConnection.setDesktopCapturerSourceID(id);
+      if (peerConnection) {
+        peerConnection.setDesktopCapturerSourceID(id);
+      }
     });
 
     window.electron.ipcRenderer.on('call-peer', () => {
-      peerConnection.callPeer();
+      if (peerConnection) {
+        peerConnection.callPeer();
+      }
     });
 
     window.electron.ipcRenderer.on('disconnect-by-host-machine-user', (_, deviceId: string) => {
-      peerConnection.disconnectByHostMachineUser(deviceId);
+      if (peerConnection) {
+        peerConnection.disconnectByHostMachineUser(deviceId);
+      }
     });
 
     window.electron.ipcRenderer.on('deny-connection-for-partner', () => {
-      peerConnection.denyConnectionForPartner();
+      if (peerConnection) {
+        peerConnection.denyConnectionForPartner();
+      }
     });
 
     window.electron.ipcRenderer.on('send-user-allowed-to-connect', () => {
-      peerConnection.sendUserAllowedToConnect();
+      if (peerConnection) {
+        peerConnection.sendUserAllowedToConnect();
+      }
     });
 
     window.electron.ipcRenderer.on('app-language-changed', () => {
-      peerConnection.notifyClientWithNewLanguage();
+      if (peerConnection) {
+        peerConnection.notifyClientWithNewLanguage();
+      }
     });
   });
 }

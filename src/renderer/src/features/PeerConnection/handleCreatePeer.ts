@@ -1,11 +1,30 @@
 // import SimplePeer from 'simple-peer';
 import createDesktopCapturerStream from './createDesktopCapturerStream';
 import handlePeerOnData from './handlePeerOnData';
-// import NullSimplePeer from './NullSimplePeer';
+import NullSimplePeer from './NullSimplePeer';
 // import simplePeerHandleSdpTransform from './simplePeerHandleSdpTransform';
 
 export default function handleCreatePeer(peerConnection: PeerConnection): Promise<void> {
   return new Promise((resolve, reject) => {
+    // cleanup existing peer before creating new one
+    if (peerConnection.peer !== NullSimplePeer) {
+      try {
+        peerConnection.peer.removeAllListeners();
+        peerConnection.peer.destroy();
+      } catch (error) {
+        console.error('Error cleaning up existing peer:', error);
+      }
+      peerConnection.peer = NullSimplePeer;
+    }
+    
+    // cleanup existing stream before creating new one
+    if (peerConnection.localStream) {
+      peerConnection.localStream.getTracks().forEach((track) => {
+        track.stop();
+      });
+      peerConnection.localStream = null;
+    }
+    
     createDesktopCapturerStream(peerConnection, peerConnection.desktopCapturerSourceID)
       .then(() => {
         // if (peerConnection.peer === NullSimplePeer) {
