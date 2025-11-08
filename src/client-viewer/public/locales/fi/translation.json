@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Napsauta Hylkää-painiketta alla poistaaksesi seurannan käytöstä. (Kunnioitamme tätä valintaa, mutta saatat jäädä paitsi tulevista parannuksista, jotka perustuvat yhteiseen palautteeseen.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Tiedot lähetetään: Google Analytics. Tutustu heidän tietosuojakäytäntöönsä.",
 	"Accept": "Hyväksy",
+	"Allow": "Salli",
 	"Disagree": "Hylkää",
-	"re-initiate-connection": "Käynnistä yhteys uudelleen"
+	"re-initiate-connection": "Käynnistä yhteys uudelleen",
+	"Privacy Settings": "Tietosuoja-asetukset",
+	"Change your preference:": "Muuta mieltymystäsi:",
+	"Enable analytics:": "Ota analytiikka käyttöön:",
+	"Disable analytics:": "Poista analytiikka käytöstä:",
+	"Enable Analytics": "Ota analytiikka käyttöön",
+	"Disable Analytics": "Poista analytiikka käytöstä",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klikkaa alla olevaa Poista käytöstä -painiketta seurannan lopettamiseksi. (Kunnioitamme tätä valintaa, mutta saatat jäädä paitsi tulevista parannuksista, jotka perustuvat kollektiiviseen palautteeseen.)",
+	"their privacy policy": "heidän tietosuojakäytäntönsä"
 }

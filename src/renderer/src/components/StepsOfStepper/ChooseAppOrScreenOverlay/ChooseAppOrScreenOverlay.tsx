@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { H3, Dialog, Button } from '@blueprintjs/core';
+import { H3, Dialog, Button, Spinner } from '@blueprintjs/core';
 import { Row, Col } from 'react-flexbox-grid';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import CloseOverlayButton from '../../CloseOverlayButton';
@@ -53,6 +53,7 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
   const { t } = useTranslation();
 
   const [viewSharingIds, setViewSharingIds] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleRefreshSources = useCallback(async (): Promise<string[]> => {
     if (isWaylandSession) {
@@ -66,15 +67,20 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
     return ids;
   }, [isEntireScreenToShareChosen, isWaylandSession]);
 
-  useEffect(() => {
-    if (isWaylandSession) {
-      return;
+  const handleRefreshSourcesWithLoading = useCallback(async (): Promise<string[]> => {
+    setIsLoading(true);
+    try {
+      const ids = await handleRefreshSources();
+      return ids;
+    } finally {
+      setIsLoading(false);
     }
-    handleRefreshSources();
-  }, [handleRefreshSources, isEntireScreenToShareChosen, isWaylandSession]);
+  }, [handleRefreshSources]);
 
   useEffect(() => {
     if (!isChooseAppOrScreenOverlayOpen || isWaylandSession) {
+      setIsLoading(false);
+      setViewSharingIds([]);
       return;
     }
 
@@ -83,10 +89,15 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
     const maxAttempts = 8; // ~3.2s total if retryDelayMs = 400
     const retryDelayMs = 400;
 
+    setIsLoading(true);
+
     const attemptLoad = async () => {
       const ids = await handleRefreshSources();
       if (cancelled) return;
-      if (ids.length > 0 || attempts >= maxAttempts) return;
+      if (ids.length > 0 || attempts >= maxAttempts) {
+        setIsLoading(false);
+        return;
+      }
       attempts += 1;
       setTimeout(() => {
         if (!cancelled) {
@@ -99,8 +110,9 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
 
     return () => {
       cancelled = true;
+      setIsLoading(false);
     };
-  }, [isChooseAppOrScreenOverlayOpen, handleRefreshSources]);
+  }, [isChooseAppOrScreenOverlayOpen, handleRefreshSources, isWaylandSession]);
 
   return (
     <Dialog
@@ -163,7 +175,8 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
                 <Button
                   icon="refresh"
                   intent="warning"
-                  onClick={handleRefreshSources}
+                  onClick={handleRefreshSourcesWithLoading}
+                  disabled={isLoading}
                   style={{
                     borderRadius: '100px',
                     width: 'max-content',
@@ -191,32 +204,52 @@ export default function ChooseAppOrScreenOverlay(props: ChooseAppOrScreenOverlay
           style={{
             position: 'relative',
             zIndex: '1',
+            height: 'calc(87vh - 80px)',
+            minHeight: '400px',
           }}
         >
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              height: '100%',
-            }}
-          >
-            <Row>
-              <div className={classes.sharePreviewsContainer}>
-                <PreviewGridList
-                  viewSharingIds={viewSharingIds}
-                  isEntireScreen={isEntireScreenToShareChosen}
-                  handleNextEntireScreen={() => {
-                    handleNextEntireScreen();
-                    handleClose();
-                  }}
-                  handleNextApplicationWindow={() => {
-                    handleNextApplicationWindow();
-                    handleClose();
-                  }}
-                />
-              </div>
-            </Row>
-          </div>
+          {isLoading ? (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              <Spinner size={60} />
+            </div>
+          ) : (
+            <div
+              style={{
+                position: 'relative',
+                height: '100%',
+              }}
+            >
+              <Row>
+                <div className={classes.sharePreviewsContainer}>
+                  <PreviewGridList
+                    viewSharingIds={viewSharingIds}
+                    isEntireScreen={isEntireScreenToShareChosen}
+                    handleNextEntireScreen={() => {
+                      handleNextEntireScreen();
+                      handleClose();
+                    }}
+                    handleNextApplicationWindow={() => {
+                      handleNextApplicationWindow();
+                      handleClose();
+                    }}
+                  />
+                </div>
+              </Row>
+            </div>
+          )}
         </div>
       </div>
     </Dialog>

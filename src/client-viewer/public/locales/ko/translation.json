@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "아래의 동의하지 않음 버튼을 클릭하여 추적을 비활성화하세요. (이 선택을 존중하지만, 공동 피드백에 기반한 향후 개선 사항을 놓칠 수 있습니다.)",
   "Data goes to: Google Analytics. See their privacy policy.": "데이터가 전송되는 곳: Google Analytics. 개인정보 보호정책을 확인하세요.",
 	"Accept": "동의",
+	"Allow": "허용",
 	"Disagree": "동의하지 않음",
-	"re-initiate-connection": "연결 재시작"
+	"re-initiate-connection": "연결 재시작",
+	"Privacy Settings": "개인정보 설정",
+	"Change your preference:": "선호도 변경:",
+	"Enable analytics:": "분석 활성화:",
+	"Disable analytics:": "분석 비활성화:",
+	"Enable Analytics": "분석 활성화",
+	"Disable Analytics": "분석 비활성화",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "아래의 비활성화 버튼을 클릭하여 추적을 중지하세요. (이 선택을 존중하지만, 집단 피드백을 기반으로 한 향후 개선 사항을 놓칠 수 있습니다.)",
+	"their privacy policy": "개인정보 보호정책"
 }

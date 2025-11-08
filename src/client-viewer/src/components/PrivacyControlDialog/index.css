@@ -1,29 +1,29 @@
-.privacy-consent-dialog-backdrop {
+.privacy-control-dialog-backdrop {
 	backdrop-filter: blur(2px);
 }
 
-.privacy-consent-dialog {
+.privacy-control-dialog {
 	display: flex;
 	flex-direction: column;
 }
 
-.privacy-consent-buttons-container {
+.privacy-control-buttons-container {
 	flex-shrink: 0;
 	background: white;
 	border-top: 1px solid rgba(16, 22, 26, 0.15);
 }
 
-.bp4-dark .privacy-consent-buttons-container {
+.bp4-dark .privacy-control-buttons-container {
 	background: #30404d;
 	border-top-color: rgba(255, 255, 255, 0.2);
 }
 
-.privacy-consent-dialog a {
+.privacy-control-dialog a {
 	color: #137cbd;
 	text-decoration: none;
 }
 
-.privacy-consent-dialog a:hover {
+.privacy-control-dialog a:hover {
 	text-decoration: underline;
 	color: #106ba3;
 }

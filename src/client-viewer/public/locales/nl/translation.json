@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klik op de knop Weigeren hieronder om tracking uit te schakelen. (We respecteren die keuze, maar je kunt toekomstige verbeteringen missen die op collectieve feedback zijn gebaseerd.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Gegevens gaan naar: Google Analytics. Bekijk hun privacybeleid.",
 	"Accept": "Accepteren",
+	"Allow": "Toestaan",
 	"Disagree": "Weigeren",
-	"re-initiate-connection": "Verbinding opnieuw starten"
+	"re-initiate-connection": "Verbinding opnieuw starten",
+	"Privacy Settings": "Privacy-instellingen",
+	"Change your preference:": "Wijzig uw voorkeur:",
+	"Enable analytics:": "Analytics inschakelen:",
+	"Disable analytics:": "Analytics uitschakelen:",
+	"Enable Analytics": "Analytics inschakelen",
+	"Disable Analytics": "Analytics uitschakelen",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klik op de knop Uitschakelen hieronder om tracking te stoppen. (We respecteren deze keuze, maar u kunt toekomstige verbeteringen missen op basis van collectieve feedback.)",
+	"their privacy policy": "hun privacybeleid"
 }

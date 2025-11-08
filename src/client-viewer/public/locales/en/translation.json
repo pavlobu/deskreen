@@ -65,5 +65,14 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Data goes to: Google Analytics. See their privacy policy.",
   "Accept": "Accept",
-  "Disagree": "Disagree"
+  "Allow": "Allow",
+  "Disagree": "Disagree",
+  "Privacy Settings": "Privacy Settings",
+  "Change your preference:": "Change your preference:",
+  "Enable analytics:": "Enable analytics:",
+  "Disable analytics:": "Disable analytics:",
+  "Enable Analytics": "Enable Analytics",
+  "Disable Analytics": "Disable Analytics",
+  "Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)",
+  "their privacy policy": "their privacy policy"
 }

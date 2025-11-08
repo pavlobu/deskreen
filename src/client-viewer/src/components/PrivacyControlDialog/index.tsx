@@ -12,10 +12,12 @@ import {
 import { Col, Row } from 'react-flexbox-grid';
 import { useTranslation } from 'react-i18next';
 import i18nInstance from '../../config/i18n';
+import { getConsentStatus, type ConsentStatus } from '../../utils/analytics';
 import './index.css';
 
-interface PrivacyConsentDialogProps {
+interface PrivacyControlDialogProps {
 	isOpen: boolean;
+	onClose: () => void;
 	onAccept: () => void;
 	onOptOut: () => void;
 }
@@ -68,12 +70,12 @@ function TranslatedContent() {
 				{t('Your IP is automatically shortened, and no one can identify you personally from this data.')}
 			</p>
 
-			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('Your options:')}</H2>
+			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('Change your preference:')}</H2>
 			<p style={{ marginBottom: '16px' }}>
-				<strong>{t('Continue:')}</strong> {t('We\'ll track anonymized usage to help improve the app.')}
+				<strong>{t('Enable analytics:')}</strong> {t('We\'ll track anonymized usage to help improve the app.')}
 			</p>
 			<p style={{ marginBottom: '16px' }}>
-				<strong>{t('Opt out:')}</strong> {t('Click the Disagree button below to disable tracking. (We\'ll respect this choice, but you might miss out on future improvements based on collective feedback.)')}
+				<strong>{t('Disable analytics:')}</strong> {t('Click the Disable button below to stop tracking. (We\'ll respect this choice, but you might miss out on future improvements based on collective feedback.)')}
 			</p>
 
 			<p style={{ marginBottom: '24px', fontSize: '14px', color: '#5C7080' }}>
@@ -91,50 +93,67 @@ function TranslatedContent() {
 	);
 }
 
-function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOptOut: () => void }) {
+function TranslatedButtons({ 
+	onAccept, 
+	onOptOut, 
+	currentStatus 
+}: { 
+	onAccept: () => void; 
+	onOptOut: () => void;
+	currentStatus: ConsentStatus;
+}) {
 	const { t } = useTranslation();
 
 	return (
 		<Row center="xs" style={{ padding: '20px', gap: '16px' }}>
-			<Col xs={12} sm={7}>
+			<Col xs={12} sm={currentStatus === 'opted-out' ? 12 : 7}>
 				<Button
-					intent="success"
-					large
+					intent={currentStatus === 'opted-out' ? 'success' : 'none'}
+					large={currentStatus === 'opted-out'}
 					fill
-					className="allow-analytics-button"
+					className={currentStatus === 'opted-out' ? 'allow-analytics-button' : 'disagree-analytics-button'}
 					style={{ 
-						height: '60px', 
-						fontSize: '18px',
-						fontWeight: '600',
+						height: currentStatus === 'opted-out' ? '60px' : '45px', 
+						fontSize: currentStatus === 'opted-out' ? '18px' : '14px',
+						fontWeight: currentStatus === 'opted-out' ? '600' : 'normal',
 					}}
 					onClick={onAccept}
 				>
-					{t('Allow')}
+					{t('Enable Analytics')}
 				</Button>
 			</Col>
-			<Col xs={12} sm={5}>
-				<Button
-					intent="none"
-					fill
-					className="disagree-analytics-button"
-					style={{ 
-						height: '45px', 
-						fontSize: '14px',
-					}}
-					onClick={onOptOut}
-				>
-					{t('Disagree')}
-				</Button>
-			</Col>
+			{currentStatus === 'accepted' && (
+				<Col xs={12} sm={5}>
+					<Button
+						intent="none"
+						fill
+						className="disagree-analytics-button"
+						style={{ 
+							height: '45px', 
+							fontSize: '14px',
+						}}
+						onClick={onOptOut}
+					>
+						{t('Disable Analytics')}
+					</Button>
+				</Col>
+			)}
 		</Row>
 	);
 }
 
-function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
+function PrivacyControlDialog(props: PrivacyControlDialogProps) {
 	const { t, i18n } = useTranslation();
-	const { isOpen, onAccept, onOptOut } = props;
+	const { isOpen, onClose, onAccept, onOptOut } = props;
 	const [currentLanguage, setCurrentLanguage] = useState(i18n.language || 'en');
 	const [forceUpdate, setForceUpdate] = useState(0);
+	const [currentStatus, setCurrentStatus] = useState<ConsentStatus>(null);
+
+	useEffect(() => {
+		if (isOpen) {
+			setCurrentStatus(getConsentStatus());
+		}
+	}, [isOpen]);
 
 	useEffect(() => {
 		const updateLanguage = () => {
@@ -166,16 +185,27 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 		});
 	};
 
+	const handleAcceptClick = () => {
+		onAccept();
+		setCurrentStatus('accepted');
+	};
+
+	const handleOptOutClick = () => {
+		onOptOut();
+		setCurrentStatus('opted-out');
+	};
+
 	const langKey = `${currentLanguage}-${forceUpdate}`;
 
 	return (
 		<Dialog
-			className="privacy-consent-dialog"
+			className="privacy-control-dialog"
 			autoFocus
-			canEscapeKeyClose={false}
-			canOutsideClickClose={false}
+			canEscapeKeyClose={true}
+			canOutsideClickClose={true}
 			enforceFocus
 			isOpen={isOpen}
+			onClose={onClose}
 			style={{
 				width: '90%',
 				maxWidth: '800px',
@@ -183,7 +213,7 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 				flexDirection: 'column',
 				maxHeight: '90vh',
 			}}
-			backdropClassName="privacy-consent-dialog-backdrop"
+			backdropClassName="privacy-control-dialog-backdrop"
 		>
 			<Row style={{ padding: '20px 20px 16px 20px', flexShrink: 0, alignItems: 'center' }}>
 				<Col xs={6}>
@@ -203,7 +233,7 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 				</Col>
 				<Col xs={6}>
 					<H3 key={langKey} className={Classes.TEXT_MUTED} style={{ textAlign: 'right', margin: 0 }}>
-						{t('Privacy Notice: Analytics in This App')}
+						{t('Privacy Settings')}
 					</H3>
 				</Col>
 			</Row>
@@ -212,12 +242,17 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 				<TranslatedContent key={langKey} />
 			</div>
 			<Divider style={{ flexShrink: 0 }} />
-			<div className="privacy-consent-buttons-container">
-				<TranslatedButtons key={langKey} onAccept={onAccept} onOptOut={onOptOut} />
+			<div className="privacy-control-buttons-container">
+				<TranslatedButtons 
+					key={langKey} 
+					onAccept={handleAcceptClick} 
+					onOptOut={handleOptOutClick}
+					currentStatus={currentStatus}
+				/>
 			</div>
 		</Dialog>
 	);
 }
 
-export default PrivacyConsentDialog;
+export default PrivacyControlDialog;
 

@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "点击下面的"拒绝"按钮以关闭跟踪。（我们会尊重这个选择，但你可能会错过基于集体反馈的未来改进。）",
   "Data goes to: Google Analytics. See their privacy policy.": "数据将发送至：Google Analytics。查看其隐私政策。",
 	"Accept": "接受",
+	"Allow": "允许",
 	"Disagree": "拒绝",
-	"re-initiate-connection": "重新连接"
+	"re-initiate-connection": "重新连接",
+	"Privacy Settings": "隐私设置",
+	"Change your preference:": "更改您的偏好：",
+	"Enable analytics:": "启用分析：",
+	"Disable analytics:": "禁用分析：",
+	"Enable Analytics": "启用分析",
+	"Disable Analytics": "禁用分析",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "点击下面的禁用按钮以停止跟踪。（我们会尊重您的选择，但您可能会错过基于集体反馈的未来改进。）",
+	"their privacy policy": "其隐私政策"
 }

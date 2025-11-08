@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Haz clic en el botón Rechazar a continuación para desactivar el seguimiento. (Respetaremos esta elección, pero podrías perderte mejoras futuras basadas en comentarios colectivos).",
   "Data goes to: Google Analytics. See their privacy policy.": "Los datos van a: Google Analytics. Consulta su política de privacidad.",
 	"Accept": "Aceptar",
+	"Allow": "Permitir",
 	"Disagree": "Rechazar",
-	"re-initiate-connection": "Restablecer conexión"
+	"re-initiate-connection": "Restablecer conexión",
+	"Privacy Settings": "Configuración de privacidad",
+	"Change your preference:": "Cambiar tu preferencia:",
+	"Enable analytics:": "Habilitar analítica:",
+	"Disable analytics:": "Deshabilitar analítica:",
+	"Enable Analytics": "Habilitar Analítica",
+	"Disable Analytics": "Deshabilitar Analítica",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Haz clic en el botón Deshabilitar a continuación para detener el seguimiento. (Respetaremos esta elección, pero podrías perderte mejoras futuras basadas en comentarios colectivos).",
+	"their privacy policy": "su política de privacidad"
 }

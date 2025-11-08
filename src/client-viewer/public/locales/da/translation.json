@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klik på knappen Afslå nedenfor for at deaktivere sporing. (Vi respekterer dette valg, men du kan gå glip af fremtidige forbedringer baseret på samlet feedback.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Data sendes til: Google Analytics. Se deres privatlivspolitik.",
 	"Accept": "Accepter",
+	"Allow": "Tillad",
 	"Disagree": "Afslå",
-	"re-initiate-connection": "Genstart forbindelse"
+	"re-initiate-connection": "Genstart forbindelse",
+	"Privacy Settings": "Privatindstillinger",
+	"Change your preference:": "Ændre din præference:",
+	"Enable analytics:": "Aktivér analyse:",
+	"Disable analytics:": "Deaktivér analyse:",
+	"Enable Analytics": "Aktivér analyse",
+	"Disable Analytics": "Deaktivér analyse",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klik på knappen Deaktivér nedenfor for at stoppe sporing. (Vi respekterer dette valg, men du kan gå glip af fremtidige forbedringer baseret på kollektiv feedback.)",
+	"their privacy policy": "deres privatlivspolitik"
 }

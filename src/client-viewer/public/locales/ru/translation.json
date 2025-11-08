@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Нажмите кнопку Отклонить ниже, чтобы отключить отслеживание. (Мы уважим этот выбор, но вы можете пропустить будущие улучшения, основанные на коллективной обратной связи.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Данные отправляются в: Google Analytics. Ознакомьтесь с их политикой конфиденциальности.",
 	"Accept": "Принять",
+	"Allow": "Разрешить",
 	"Disagree": "Отклонить",
-	"re-initiate-connection": "Повторить подключение"
+	"re-initiate-connection": "Повторить подключение",
+	"Privacy Settings": "Настройки конфиденциальности",
+	"Change your preference:": "Изменить ваше предпочтение:",
+	"Enable analytics:": "Включить аналитику:",
+	"Disable analytics:": "Отключить аналитику:",
+	"Enable Analytics": "Включить аналитику",
+	"Disable Analytics": "Отключить аналитику",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Нажмите кнопку Отключить ниже, чтобы остановить отслеживание. (Мы уважаем этот выбор, но вы можете пропустить будущие улучшения, основанные на коллективной обратной связи.)",
+	"their privacy policy": "их политику конфиденциальности"
 }

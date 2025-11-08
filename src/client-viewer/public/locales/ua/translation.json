@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Натисніть кнопку Відхилити нижче, щоб вимкнути відстеження. (Ми поважаємо цей вибір, але ви можете пропустити майбутні покращення, що базуються на спільному зворотному зв'язку.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Дані надсилаються до: Google Analytics. Перегляньте їхню політику конфіденційності.",
 	"Accept": "Погодитися",
+	"Allow": "Дозволити",
 	"Disagree": "Відхилити",
-	"re-initiate-connection": "Повторно підключитися"
+	"re-initiate-connection": "Повторно підключитися",
+	"Privacy Settings": "Налаштування конфіденційності",
+	"Change your preference:": "Змінити вашу перевагу:",
+	"Enable analytics:": "Увімкнути аналітику:",
+	"Disable analytics:": "Вимкнути аналітику:",
+	"Enable Analytics": "Увімкнути аналітику",
+	"Disable Analytics": "Вимкнути аналітику",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Натисніть кнопку Вимкнути нижче, щоб зупинити відстеження. (Ми поважатимемо цей вибір, але ви можете пропустити майбутні покращення, засновані на колективному відгуку.)",
+	"their privacy policy": "їхню політику конфіденційності"
 }

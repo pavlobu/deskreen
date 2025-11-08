@@ -27,7 +27,8 @@ import {
 import { handlePlayerToggleFullscreen } from './handlePlayerToggleFullscreen';
 import initScreenfullOnChange from './initScreenfullOnChange';
 import { ScreenSharingSource } from '../../features/PeerConnection/ScreenSharingSourceEnum';
-import { trackAnalyticsEvent } from '../../utils/analytics';
+import { trackAnalyticsEvent, setConsentStatus, updateAnalyticsConsent } from '../../utils/analytics';
+import PrivacyControlDialog from '../PrivacyControlDialog';
 import './index.css';
 
 const videoQualityButtonStyle: React.CSSProperties = {
@@ -66,6 +67,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
   const isFullScreenAPIAvailable = screenfull.isEnabled;
 
   const [isFullScreenOn, setIsFullScreenOn] = useState(false);
+  const [isPrivacyDialogOpen, setIsPrivacyDialogOpen] = useState(false);
 
 	useEffect(() => {
 		const cleanup = initScreenfullOnChange(setIsFullScreenOn);
@@ -140,8 +142,34 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 		});
 	}, [handleClickFullscreen, handleClickFullscreenWhenDefaultPlayerIsOn, isDefaultPlayerTurnedOn]);
 
+	const handlePrivacyControlClick = useCallback(() => {
+		setIsPrivacyDialogOpen(true);
+	}, []);
+
+	const handlePrivacyDialogClose = useCallback(() => {
+		setIsPrivacyDialogOpen(false);
+	}, []);
+
+	const handlePrivacyAccept = useCallback(() => {
+		setConsentStatus('accepted');
+		updateAnalyticsConsent('accepted');
+		setIsPrivacyDialogOpen(false);
+	}, []);
+
+	const handlePrivacyOptOut = useCallback(() => {
+		setConsentStatus('opted-out');
+		updateAnalyticsConsent('opted-out');
+		setIsPrivacyDialogOpen(false);
+	}, []);
+
   return (
     <>
+      <PrivacyControlDialog
+        isOpen={isPrivacyDialogOpen}
+        onClose={handlePrivacyDialogClose}
+        onAccept={handlePrivacyAccept}
+        onOptOut={handlePrivacyOptOut}
+      />
       <Card elevation={4}>
         <Row between='xs' middle='xs'>
           <Col xs={12} md={3}>
@@ -372,9 +400,21 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
                   checked={isDefaultPlayerTurnedOn}
                   disabled={!isFullScreenAPIAvailable}
                   style={{
-                    marginBottom: '0px',
+                    marginBottom: '12px',
                   }}
                 />
+				<Button
+					minimal
+					icon="shield"
+					onClick={handlePrivacyControlClick}
+					style={{
+						width: 'fit-content',
+						marginLeft: 'auto',
+						color: '#5C7080',
+					}}
+				>
+					{t('Privacy Settings')}
+				</Button>
               </Col>
             </Row>
           </Col>

@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klicka på knappen Avböj nedan för att inaktivera spårning. (Vi respekterar detta val, men du kan gå miste om framtida förbättringar som bygger på samlad feedback.)",
   "Data goes to: Google Analytics. See their privacy policy.": "Data skickas till: Google Analytics. Se deras integritetspolicy.",
 	"Accept": "Acceptera",
+	"Allow": "Tillåt",
 	"Disagree": "Avböj",
-	"re-initiate-connection": "Återanslut"
+	"re-initiate-connection": "Återanslut",
+	"Privacy Settings": "Integritetsinställningar",
+	"Change your preference:": "Ändra din preferens:",
+	"Enable analytics:": "Aktivera analys:",
+	"Disable analytics:": "Inaktivera analys:",
+	"Enable Analytics": "Aktivera analys",
+	"Disable Analytics": "Inaktivera analys",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "Klicka på knappen Inaktivera nedan för att stoppa spårning. (Vi respekterar detta val, men du kan missa framtida förbättringar baserade på kollektiv feedback.)",
+	"their privacy policy": "deras integritetspolicy"
 }

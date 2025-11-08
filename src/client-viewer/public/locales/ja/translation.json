@@ -64,6 +64,15 @@
   "Click the Disagree button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "下の「同意しない」ボタンをクリックすると追跡を無効にできます。（この選択は尊重しますが、総合的なフィードバックに基づく将来の改善を逃す可能性があります。）",
   "Data goes to: Google Analytics. See their privacy policy.": "データ送信先：Google Analytics。プライバシーポリシーをご確認ください。",
 	"Accept": "同意する",
+	"Allow": "許可する",
 	"Disagree": "同意しない",
-	"re-initiate-connection": "再接続"
+	"re-initiate-connection": "再接続",
+	"Privacy Settings": "プライバシー設定",
+	"Change your preference:": "設定を変更：",
+	"Enable analytics:": "分析を有効にする：",
+	"Disable analytics:": "分析を無効にする：",
+	"Enable Analytics": "分析を有効にする",
+	"Disable Analytics": "分析を無効にする",
+	"Click the Disable button below to stop tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)": "下の無効ボタンをクリックして追跡を停止します。（この選択を尊重しますが、集団フィードバックに基づく将来の改善を見逃す可能性があります。）",
+	"their privacy policy": "プライバシーポリシー"
 }
