@@ -277,6 +277,26 @@ export default class DeskreenApp {
   }
 
   start(): void {
+    // ensure only one instance of the app can run
+    const gotTheLock = app.requestSingleInstanceLock();
+
+    if (!gotTheLock) {
+      // another instance is already running, quit this one
+      app.quit();
+      return;
+    }
+
+    // handle second instance attempts (e.g., clicking taskbar icon on windows)
+    app.on('second-instance', () => {
+      if (this.mainWindow) {
+        if (this.mainWindow.isMinimized()) {
+          this.mainWindow.restore();
+        }
+        this.mainWindow.focus();
+        this.mainWindow.show();
+      }
+    });
+
     const cliLocalIp = this.parseCliLocalIp();
     initGlobals(join(__dirname, '..'), cliLocalIp);
     signalingServer.start();
