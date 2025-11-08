@@ -1,3 +1,8 @@
+// override console early to catch all logs in helper renderer
+import { overrideGlobalConsole, startConsoleRateLimiting } from '../../common/rateLimitedConsole';
+overrideGlobalConsole();
+startConsoleRateLimiting();
+
 import { IpcEvents } from '../../common/IpcEvents.enum';
 import PeerConnection from './features/PeerConnection';
 

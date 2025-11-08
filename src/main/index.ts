@@ -1,3 +1,8 @@
+// override console early to catch all logs
+import { overrideGlobalConsole, startConsoleRateLimiting } from '../common/rateLimitedConsole';
+overrideGlobalConsole();
+startConsoleRateLimiting();
+
 import { app, shell, BrowserWindow, Notification } from 'electron';
 import { join } from 'path';
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
@@ -86,6 +91,7 @@ import { initIpcMainHandlers } from './helpers/ipcMainHandlers';
 import { initGlobals } from './helpers/initGlobals';
 import { ElectronStoreKeys } from '../common/ElectronStoreKeys.enum';
 import { getDeskreenGlobal } from './helpers/getDeskreenGlobal';
+import { startLogBufferCleanup } from './utils/LoggerWithFilePrefix';
 
 export default class DeskreenApp {
   mainWindow: BrowserWindow | null = null;
@@ -110,6 +116,9 @@ export default class DeskreenApp {
 
     app.whenReady().then(async () => {
       electronApp.setAppUserModelId('com.deskreen');
+
+      // start log buffer cleanup to prevent memory bloat
+      startLogBufferCleanup();
 
       await this.createWindow();
 
