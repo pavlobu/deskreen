@@ -73,7 +73,7 @@ function TranslatedContent() {
 				<strong>{t('Continue:')}</strong> {t('We\'ll track anonymized usage to help improve the app.')}
 			</p>
 			<p style={{ marginBottom: '16px' }}>
-				<strong>{t('Opt out:')}</strong> {t('Click the Disagree button below to disable tracking. (We\'ll respect this choice, but you might miss out on future improvements based on collective feedback.)')}
+				<strong>{t('Opt out:')}</strong> {t('Click the Deny button below to disable tracking. (We\'ll respect this choice, but you might miss out on future improvements based on collective feedback.)')}
 			</p>
 
 			<p style={{ marginBottom: '24px', fontSize: '14px', color: '#5C7080' }}>
@@ -96,7 +96,7 @@ function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOpt
 
 	return (
 		<Row center="xs" style={{ padding: '20px', gap: '16px' }}>
-			<Col xs={12} sm={7}>
+			<Col xs={12} sm={7} className="allow-button-col">
 				<Button
 					intent="success"
 					large
@@ -112,18 +112,16 @@ function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOpt
 					{t('Allow')}
 				</Button>
 			</Col>
-			<Col xs={12} sm={5}>
+			<Col xs={12} sm={5} className="disagree-button-col">
 				<Button
-					intent="none"
-					fill
+					minimal
 					className="disagree-analytics-button"
 					style={{ 
-						height: '45px', 
-						fontSize: '14px',
+						fontSize: '12px',
 					}}
 					onClick={onOptOut}
 				>
-					{t('Disagree')}
+					{t('Deny')}
 				</Button>
 			</Col>
 		</Row>
@@ -203,7 +201,7 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 				</Col>
 				<Col xs={6}>
 					<H3 key={langKey} className={Classes.TEXT_MUTED} style={{ textAlign: 'right', margin: 0 }}>
-						{t('Privacy Notice: Analytics in This App')}
+						{t('Privacy Notice: Analytics in Deskreen CE Viewer')}
 					</H3>
 				</Col>
 			</Row>

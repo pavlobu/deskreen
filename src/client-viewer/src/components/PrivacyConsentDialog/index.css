@@ -13,6 +13,10 @@
 	border-top: 1px solid rgba(16, 22, 26, 0.15);
 }
 
+.privacy-consent-buttons-container .row {
+	display: flex;
+}
+
 .bp4-dark .privacy-consent-buttons-container {
 	background: #30404d;
 	border-top-color: rgba(255, 255, 255, 0.2);
@@ -48,23 +52,38 @@
 }
 
 .disagree-analytics-button {
-	opacity: 0.7;
-	transition: opacity 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 	color: #5c7080 !important;
-	border-color: #ced9e0 !important;
+	background: none !important;
+	border: none !important;
+	padding: 8px 12px !important;
+	min-height: auto !important;
+	text-decoration: none !important;
 }
 
 .disagree-analytics-button:hover {
-	opacity: 0.9;
-	background-color: #f5f8fa !important;
+	color: #394b59 !important;
+	background: none !important;
+	text-decoration: underline !important;
 }
 
 .bp4-dark .disagree-analytics-button {
 	color: #8a9ba8 !important;
-	border-color: #5c7080 !important;
 }
 
 .bp4-dark .disagree-analytics-button:hover {
-	background-color: #394b59 !important;
+	color: #bfccd6 !important;
+	background: none !important;
+}
+
+/* reorder buttons on mobile: disagree first, allow second */
+@media (max-width: 575px) {
+	.disagree-button-col {
+		order: 1;
+	}
+	
+	.allow-button-col {
+		order: 2;
+	}
 }
 

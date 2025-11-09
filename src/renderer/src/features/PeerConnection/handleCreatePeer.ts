@@ -25,6 +25,10 @@ export default function handleCreatePeer(peerConnection: PeerConnection): Promis
       peerConnection.localStream = null;
     }
     
+    // clear old signals and reset call state when recreating peer
+    peerConnection.signalsDataToCallUser = [];
+    peerConnection.isCallStarted = false;
+    
     createDesktopCapturerStream(peerConnection, peerConnection.desktopCapturerSourceID)
       .then(() => {
         // if (peerConnection.peer === NullSimplePeer) {
