@@ -1,4 +1,3 @@
-import { powerSaveBlocker } from 'electron';
 import { Device } from '../../common/Device';
 
 export const nullDevice: Device = {
@@ -12,8 +11,6 @@ export const nullDevice: Device = {
 	deviceScreenHeight: -1,
 	deviceRoomId: '',
 };
-
-const NO_PREVENT_DISPLAY_SLEEP_ID = -1;
 
 const SLOT_VIOLATION_MESSAGE = 'single viewer slot is already occupied';
 
@@ -62,8 +59,6 @@ export class ConnectedDevicesService {
 
 	pendingConnectionDevice: Device = nullDevice;
 
-	preventDisplaySleepId: number = NO_PREVENT_DISPLAY_SLEEP_ID;
-
 	private readonly availabilityListeners = new Set<(state: ViewerConnectionAvailability) => void>();
 
 	resetPendingConnectionDevice(): void {
@@ -90,16 +85,12 @@ export class ConnectedDevicesService {
 
 	disconnectAllDevices(): void {
 		this.slot.release();
-		this.stopDisplaySleep();
 		this.notifyAvailabilityListeners();
 	}
 
 	disconnectDeviceByID(deviceIDToRemove: string): Promise<undefined> {
 		return new Promise<undefined>((resolve) => {
 			this.slot.releaseById(deviceIDToRemove);
-			if (this.slot.isAvailable()) {
-				this.stopDisplaySleep();
-			}
 			this.notifyAvailabilityListeners();
 			resolve(undefined);
 		});
@@ -114,21 +105,11 @@ export class ConnectedDevicesService {
 			}
 			throw error;
 		}
-		if (this.preventDisplaySleepId === NO_PREVENT_DISPLAY_SLEEP_ID) {
-			this.preventDisplaySleepId = powerSaveBlocker.start('prevent-display-sleep');
-		}
 		this.notifyAvailabilityListeners();
 	}
 
 	setPendingConnectionDevice(device: Device): void {
 		this.pendingConnectionDevice = device;
-	}
-
-	stopDisplaySleep(): void {
-		if (this.preventDisplaySleepId !== NO_PREVENT_DISPLAY_SLEEP_ID) {
-			powerSaveBlocker.stop(this.preventDisplaySleepId);
-			this.preventDisplaySleepId = NO_PREVENT_DISPLAY_SLEEP_ID;
-		}
 	}
 
 	private getAvailabilityState(): ViewerConnectionAvailability {
