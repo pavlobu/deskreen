@@ -10,6 +10,7 @@ import setDisplaySizeFromLocalStream from './handleSetDisplaySizeFromLocalStream
 import DesktopCapturerSourceType from '../../../../common/DesktopCapturerSourceType';
 import getAppLanguage from '../../../../common/getAppLanguage';
 import { IpcEvents } from '../../../../common/IpcEvents.enum';
+import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID';
 
 import { Device } from '../../../../common/Device';
 import { LocalPeerUser } from '../../../../common/LocalPeerUser';
@@ -86,13 +87,21 @@ export default class PeerConnection {
     this.desktopCapturerSourceID = id;
     if (process.env.RUN_MODE === 'test') return;
 
-    this.setDisplayIDByDesktopCapturerSourceID();
+		// clear old display size when switching sources to ensure new source uses correct dimensions
+		this.sourceDisplaySize = undefined;
+		this.displayID = '';
 
-    this.handleCreatePeerAfterDesktopCapturerSourceIDWasSet();
+    await this.setDisplayIDByDesktopCapturerSourceID();
+
+    await this.handleCreatePeerAfterDesktopCapturerSourceIDWasSet();
   }
 
   async setDisplayIDByDesktopCapturerSourceID(): Promise<void> {
-    if (!this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) return;
+    if (!this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) {
+			// clear display size for window sources
+			this.sourceDisplaySize = undefined;
+			return;
+		}
 
     this.displayID = await window.electron.ipcRenderer.invoke(
       IpcEvents.GetSourceDisplayIDByDesktopCapturerSourceID,
@@ -100,7 +109,8 @@ export default class PeerConnection {
     );
 
     if (this.displayID !== '') {
-      this.setDisplaySizeRetreivedFromMainProcess();
+			// await to ensure sourceDisplaySize is set before creating stream
+      await this.setDisplaySizeRetreivedFromMainProcess();
     }
   }
 
@@ -115,10 +125,79 @@ export default class PeerConnection {
   }
 
   async handleCreatePeerAfterDesktopCapturerSourceIDWasSet(): Promise<void> {
-    await this.createPeer();
-    if (!this.sourceDisplaySize) {
-      setDisplaySizeFromLocalStream(this);
-    }
+		// if peer already exists, replace the track instead of creating a new peer
+		if (this.peer !== NullSimplePeer && this.localStream) {
+			try {
+				const oldTrack = this.localStream.getVideoTracks()[0];
+				if (!oldTrack) {
+					await this.createPeer();
+					if (!this.sourceDisplaySize) {
+						setDisplaySizeFromLocalStream(this);
+					}
+					return;
+				}
+
+				const newStream = await getDesktopSourceStreamBySourceID(
+					this.desktopCapturerSourceID,
+					this.sourceDisplaySize?.width,
+					this.sourceDisplaySize?.height,
+					0.5,
+					1,
+				);
+				const newVideoTrack = newStream.getVideoTracks()[0];
+
+				if (!newVideoTrack) {
+					await this.createPeer();
+					if (!this.sourceDisplaySize) {
+						setDisplaySizeFromLocalStream(this);
+					}
+					return;
+				}
+
+				// store reference to old stream before replacement
+				const oldStream = this.localStream;
+
+				// replace the track in the existing peer
+				// replaceTrack will add the new track to the old stream
+				await this.peer.replaceTrack(oldTrack, newVideoTrack, oldStream);
+
+				// stop only the old track (it's already removed from the stream by replaceTrack)
+				oldTrack.stop();
+
+				// stop any remaining tracks in the old stream (should be none, but just in case)
+				// but don't stop the new track that was just added by replaceTrack
+				oldStream.getTracks().forEach((track) => {
+					if (track.id !== newVideoTrack.id) {
+						track.stop();
+					}
+				});
+
+				// update local stream reference to the new stream
+				// the new stream's track is now being used in the peer connection
+				this.localStream = newStream;
+
+				// update sourceDisplaySize from actual stream to ensure correct resolution
+				// this is critical when switching sources to get the actual stream dimensions
+				if (this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) {
+					setDisplaySizeFromLocalStream(this);
+				} else {
+					// clear for window sources
+					this.sourceDisplaySize = undefined;
+				}
+			} catch (error) {
+				console.error('Failed to replace stream track:', error);
+				// fallback to creating a new peer if replacement fails
+				await this.createPeer();
+				if (!this.sourceDisplaySize) {
+					setDisplaySizeFromLocalStream(this);
+				}
+			}
+		} else {
+			await this.createPeer();
+			if (!this.sourceDisplaySize) {
+				setDisplaySizeFromLocalStream(this);
+			}
+		}
   }
 
   setOnDeviceConnectedCallback(callback: (device: Device) => void): void {
