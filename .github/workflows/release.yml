@@ -74,7 +74,7 @@ jobs:
             build_name: macos-arm64
             build_command: pnpm build:mac:arm64
             artifact_name: 'dist/{*.dmg,*.blockmap,*.yml}'
-          - os: macos-13
+          - os: macos-15-intel
             platform: macos
             build_name: macos-intel
             build_command: pnpm build:mac:x64
