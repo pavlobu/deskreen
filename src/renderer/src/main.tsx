@@ -7,11 +7,7 @@ import './assets/main.css';
 import { createRoot } from 'react-dom/client';
 import { StrictMode, Suspense } from 'react';
 import Root from './containers/Root';
-// import i18n from './configs/i18next.config';
-import i18nClient from './configs/i18next.config.client';
-
-// i18n.init();
-i18nClient.init();
+import { i18nInitPromise } from './configs/i18next.config.client';
 
 document.addEventListener('DOMContentLoaded', () => {
   const windowTopBar = document.createElement('div');
@@ -27,14 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(windowTopBar);
 });
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Suspense fallback="loading">
-      <Root />
-    </Suspense>
-    ,
-  </StrictMode>,
-);
+i18nInitPromise.then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <Suspense fallback="loading">
+        <Root />
+      </Suspense>
+    </StrictMode>,
+  );
+});
 // });
 
 window.onbeforeunload = () => {

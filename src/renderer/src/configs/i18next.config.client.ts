@@ -141,7 +141,8 @@ async function initI18NextOptions(): Promise<void> {
     t = await i18n.init(i18nextOptions);
   }
 }
-initI18NextOptions();
+
+export const i18nInitPromise = initI18NextOptions();
 
 i18n.on('languageChanged', () => {
   window.electron.ipcRenderer.send('client-changed-language', i18n.language);
