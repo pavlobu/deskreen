@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import log from 'electron-log';
 
 log.transports.file.level = 'warn';
 
 if (process.env.NODE_ENV !== 'production') {
-  log.transports.console.level = 'silly';
+	log.transports.console.level = 'silly';
 } else {
-  log.transports.console.level = 'debug'; // TODO: make false when doing release
+	log.transports.console.level = 'debug'; // TODO: make false when doing release
 }
 
 // configure log file rotation and size limits to prevent memory bloat
@@ -25,9 +24,9 @@ function cleanupLogBuffers(): void {
 		// this function helps trigger memory cleanup
 
 		// force garbage collection hint if available (Node.js v12.17.0+)
-		if (global.gc && typeof global.gc === "function") {
+		if (global.gc && typeof global.gc === 'function') {
 			// only run GC in production to avoid performance impact in dev
-			if (process.env.NODE_ENV === "production") {
+			if (process.env.NODE_ENV === 'production') {
 				global.gc();
 			}
 		}
@@ -42,50 +41,53 @@ export function startLogBufferCleanup(): void {
 		return; // already started
 	}
 
-	logCleanupInterval = setInterval(() => {
-		cleanupLogBuffers();
-	}, 5 * 60 * 1000); // every 5 minutes
+	logCleanupInterval = setInterval(
+		() => {
+			cleanupLogBuffers();
+		},
+		5 * 60 * 1000,
+	); // every 5 minutes
 }
 
 // stop periodic cleanup (useful for testing or shutdown)
 export function stopLogBufferCleanup(): void {
-  if (logCleanupInterval) {
-    clearInterval(logCleanupInterval);
-    logCleanupInterval = null;
-  }
+	if (logCleanupInterval) {
+		clearInterval(logCleanupInterval);
+		logCleanupInterval = null;
+	}
 }
 
 export default class LoggerWithFilePrefix {
-  filenamePath: string;
+	filenamePath: string;
 
-  electronLog: typeof log;
+	electronLog: typeof log;
 
-  constructor(_filenamePath: string) {
-    this.filenamePath = _filenamePath;
-    this.electronLog = log;
-  }
-
-	error(...args: any[]): void {
-		this.electronLog.error(this.filenamePath, ":", ...args);
+	constructor(_filenamePath: string) {
+		this.filenamePath = _filenamePath;
+		this.electronLog = log;
 	}
 
-	warn(...args: any[]): void {
-		this.electronLog.warn(this.filenamePath, ":", ...args);
+	error(...args: unknown[]): void {
+		this.electronLog.error(this.filenamePath, ':', ...args);
 	}
 
-	info(...args: any[]): void {
-		this.electronLog.info(this.filenamePath, ":", ...args);
+	warn(...args: unknown[]): void {
+		this.electronLog.warn(this.filenamePath, ':', ...args);
 	}
 
-	verbose(...args: any[]): void {
-		this.electronLog.verbose(this.filenamePath, ":", ...args);
+	info(...args: unknown[]): void {
+		this.electronLog.info(this.filenamePath, ':', ...args);
 	}
 
-	debug(...args: any[]): void {
-		this.electronLog.debug(this.filenamePath, ":", ...args);
+	verbose(...args: unknown[]): void {
+		this.electronLog.verbose(this.filenamePath, ':', ...args);
 	}
 
-	silly(...args: any[]): void {
-		this.electronLog.silly(this.filenamePath, ":", ...args);
+	debug(...args: unknown[]): void {
+		this.electronLog.debug(this.filenamePath, ':', ...args);
+	}
+
+	silly(...args: unknown[]): void {
+		this.electronLog.silly(this.filenamePath, ':', ...args);
 	}
 }

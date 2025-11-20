@@ -1,4 +1,4 @@
 export interface LocalPeerUser {
-  username: string;
-  id: string;
+	username: string;
+	id: string;
 }

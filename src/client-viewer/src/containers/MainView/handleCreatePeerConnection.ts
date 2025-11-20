@@ -5,67 +5,67 @@ import changeLanguage from './changeLanguage';
 import ConnectionIcon from './ConnectionIconEnum';
 
 export default (params: CreatePeerConnectionUseEffectParams) => {
-  const {
-    peer,
-    connectionRoomId,
-    setMyDeviceDetails,
-    setConnectionIconType,
-    setIsShownTextPrompt,
-    setPromptStep,
-    setScreenSharingSourceType,
-    setDialogErrorMessage,
-    setIsErrorDialogOpen,
-    setUrl,
-    setPeer,
-  } = params;
+	const {
+		peer,
+		connectionRoomId,
+		setMyDeviceDetails,
+		setConnectionIconType,
+		setIsShownTextPrompt,
+		setPromptStep,
+		setScreenSharingSourceType,
+		setDialogErrorMessage,
+		setIsErrorDialogOpen,
+		setUrl,
+		setPeer,
+	} = params;
 
-  // return the effect function
-  return () => {
-    if (!peer) {
-      if (connectionRoomId === '') {
-        return;
-      }
-      const UIHandler = new PeerConnectionUIHandler(
-        setMyDeviceDetails,
-        () => {
-          setConnectionIconType(ConnectionIcon.FEED_SUBSCRIBED);
+	// return the effect function
+	return () => {
+		if (!peer) {
+			if (connectionRoomId === '') {
+				return;
+			}
+			const UIHandler = new PeerConnectionUIHandler(
+				setMyDeviceDetails,
+				() => {
+					setConnectionIconType(ConnectionIcon.FEED_SUBSCRIBED);
 
-          setIsShownTextPrompt(false);
-          setIsShownTextPrompt(true);
-          setPromptStep(2);
+					setIsShownTextPrompt(false);
+					setIsShownTextPrompt(true);
+					setPromptStep(2);
 
-          setTimeout(() => {
-            setIsShownTextPrompt(false);
-            setIsShownTextPrompt(true);
-            setPromptStep(3);
-          }, 2000);
-        },
-        setScreenSharingSourceType,
-        changeLanguage,
-        setDialogErrorMessage,
-        setIsErrorDialogOpen
-      );
+					setTimeout(() => {
+						setIsShownTextPrompt(false);
+						setIsShownTextPrompt(true);
+						setPromptStep(3);
+					}, 2000);
+				},
+				setScreenSharingSourceType,
+				changeLanguage,
+				setDialogErrorMessage,
+				setIsErrorDialogOpen,
+			);
 
-      const _peer = new PeerConnection(
-        connectionRoomId,
-        setUrl,
-        new VideoAutoQualityOptimizer(),
-        UIHandler
-      );
+			const _peer = new PeerConnection(
+				connectionRoomId,
+				setUrl,
+				new VideoAutoQualityOptimizer(),
+				UIHandler,
+			);
 
-      setPeer(_peer);
+			setPeer(_peer);
 
-      setTimeout(() => {
-        setIsShownTextPrompt(true);
-      }, 100);
-    }
+			setTimeout(() => {
+				setIsShownTextPrompt(true);
+			}, 100);
+		}
 
-    // return cleanup function - cleanup when connectionRoomId changes or component unmounts
-    return () => {
-      if (peer) {
-        peer.destroy();
-        setPeer(undefined);
-      }
-    };
-  };
+		// return cleanup function - cleanup when connectionRoomId changes or component unmounts
+		return () => {
+			if (peer) {
+				peer.destroy();
+				setPeer(undefined);
+			}
+		};
+	};
 };

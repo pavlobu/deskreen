@@ -3,17 +3,22 @@
 
 const fs = require('node:fs/promises');
 const path = require('node:path');
-const {execSync, spawnSync} = require('node:child_process');
+const { execSync, spawnSync } = require('node:child_process');
 
 const rootDir = path.resolve(__dirname, '..');
 const rootPackagePath = path.join(rootDir, 'package.json');
-const clientPackagePath = path.join(rootDir, 'src', 'client-viewer', 'package.json');
+const clientPackagePath = path.join(
+	rootDir,
+	'src',
+	'client-viewer',
+	'package.json',
+);
 const envPath = path.join(rootDir, 'src', 'client-viewer', '.env');
 
 const bumpFlags = new Map([
 	['--major', 'major'],
 	['--minor', 'minor'],
-	['--patch', 'patch']
+	['--patch', 'patch'],
 ]);
 
 const parsedArgs = parseArgs(process.argv.slice(2));
@@ -30,17 +35,19 @@ void main(parsedArgs).catch((error) => {
 function parseArgs(argv) {
 	const matchedFlags = argv.filter((arg) => bumpFlags.has(arg));
 	if (matchedFlags.length === 0) {
-		throw new Error('Missing bump flag. Use one of --major, --minor, or --patch.');
+		throw new Error(
+			'Missing bump flag. Use one of --major, --minor, or --patch.',
+		);
 	}
 	if (matchedFlags.length > 1) {
 		throw new Error('Multiple bump flags provided. Please supply only one.');
 	}
 	return {
-		type: bumpFlags.get(matchedFlags[0])
+		type: bumpFlags.get(matchedFlags[0]),
 	};
 }
 
-async function main({type}) {
+async function main({ type }) {
 	process.chdir(rootDir);
 	await ensureCleanGit();
 	const currentVersion = await readVersion();
@@ -48,7 +55,7 @@ async function main({type}) {
 	await Promise.all([
 		writeRootPackage(nextVersion),
 		writeClientPackage(nextVersion),
-		writeEnv(nextVersion)
+		writeEnv(nextVersion),
 	]);
 	await stageFiles();
 	await commit(nextVersion);
@@ -57,9 +64,13 @@ async function main({type}) {
 }
 
 async function ensureCleanGit() {
-	const output = execSync('git status --porcelain', {encoding: 'utf8'}).trim();
+	const output = execSync('git status --porcelain', {
+		encoding: 'utf8',
+	}).trim();
 	if (output.length > 0) {
-		throw new Error('Working tree is not clean. Please commit or stash changes before bumping the version.');
+		throw new Error(
+			'Working tree is not clean. Please commit or stash changes before bumping the version.',
+		);
 	}
 }
 
@@ -110,7 +121,9 @@ async function writeEnv(version) {
 function bumpVersion(current, type) {
 	const [major, minor, patch] = current.split('.').map(Number);
 	if ([major, minor, patch].some((part) => Number.isNaN(part))) {
-		throw new Error(`Unable to bump version. Invalid semantic version: ${current}`);
+		throw new Error(
+			`Unable to bump version. Invalid semantic version: ${current}`,
+		);
 	}
 	if (type === 'major') {
 		return `${major + 1}.0.0`;
@@ -129,30 +142,36 @@ function assertValidSemver(value) {
 }
 
 async function stageFiles() {
-	execSync(
-		`git add ${quote(rootPackagePath)} ${quote(clientPackagePath)}`,
-		{stdio: 'inherit'}
-	);
+	execSync(`git add ${quote(rootPackagePath)} ${quote(clientPackagePath)}`, {
+		stdio: 'inherit',
+	});
 }
 
 async function commit(version) {
 	const message = version;
-	execSync(`git commit -m ${quote(message)}`, {stdio: 'inherit'});
+	execSync(`git commit -m ${quote(message)}`, { stdio: 'inherit' });
 }
 
 async function tag(version) {
 	const tagName = `v${version}`;
-	const result = spawnSync('git', ['show-ref', '--tags', '--quiet', `refs/tags/${tagName}`]);
+	const result = spawnSync('git', [
+		'show-ref',
+		'--tags',
+		'--quiet',
+		`refs/tags/${tagName}`,
+	]);
 	if (result.status === 0) {
 		throw new Error(`Tag ${tagName} already exists.`);
 	}
 	if (result.status !== 1) {
-		throw result.error ?? new Error(`git show-ref failed with status ${result.status ?? 'unknown'}`);
+		throw (
+			result.error ??
+			new Error(`git show-ref failed with status ${result.status ?? 'unknown'}`)
+		);
 	}
-	execSync(`git tag ${quote(tagName)}`, {stdio: 'inherit'});
+	execSync(`git tag ${quote(tagName)}`, { stdio: 'inherit' });
 }
 
 function quote(value) {
 	return `'${value.replace(/'/g, "'\\''")}'`;
 }
-

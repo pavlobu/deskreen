@@ -23,129 +23,135 @@ import { IpcEvents } from '../../../common/IpcEvents.enum';
 const i18n = i18next.createInstance(); // Create a new instance
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
-  const res = new Map<string, string>();
+	const res = new Map<string, string>();
 
-  for (const [key, value] of Object.entries(config.langISOKeyToLangFullNameMap)) {
-    res.set(value, key);
-  }
-  return res;
+	for (const [key, value] of Object.entries(
+		config.langISOKeyToLangFullNameMap,
+	)) {
+		res.set(value, key);
+	}
+	return res;
 };
 
 export const getLangISOKeyToLangFullNameMap = (): Map<string, string> => {
-  const res = new Map<string, string>();
+	const res = new Map<string, string>();
 
-  for (const [key, value] of Object.entries(config.langISOKeyToLangFullNameMap)) {
-    res.set(key, value);
-  }
-  return res;
+	for (const [key, value] of Object.entries(
+		config.langISOKeyToLangFullNameMap,
+	)) {
+		res.set(key, value);
+	}
+	return res;
 };
 
 function shuffleArray(array: unknown[]): void {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
 }
 
 export let t: TFunction;
 
 export const getShuffledArrayOfHello = (): string[] => {
-  const res: string[] = [];
+	const res: string[] = [];
 
-  res.push(translationES.hello);
-  res.push(translationUA.hello);
-  res.push(translationKO.hello);
-  res.push(translationRU.hello);
-  res.push(translationZH_CN.hello);
-  res.push(translationZH_TW.hello);
-  res.push(translationDA.hello);
-  res.push(translationDE.hello);
-  res.push(translationFI.hello);
-  res.push(translationIT.hello);
-  res.push(translationJA.hello);
-  res.push(translationNL.hello);
-  res.push(translationFR.hello);
-  res.push(translationSV.hello);
+	res.push(translationES.hello);
+	res.push(translationUA.hello);
+	res.push(translationKO.hello);
+	res.push(translationRU.hello);
+	res.push(translationZH_CN.hello);
+	res.push(translationZH_TW.hello);
+	res.push(translationDA.hello);
+	res.push(translationDE.hello);
+	res.push(translationFI.hello);
+	res.push(translationIT.hello);
+	res.push(translationJA.hello);
+	res.push(translationNL.hello);
+	res.push(translationFR.hello);
+	res.push(translationSV.hello);
 
-  shuffleArray(res);
+	shuffleArray(res);
 
-  res.unshift(translationEN.hello);
+	res.unshift(translationEN.hello);
 
-  return res;
+	return res;
 };
 
 async function initI18NextOptions(): Promise<void> {
-  const appLanguage = await window.electron.ipcRenderer.invoke(IpcEvents.GetAppLanguage);
+	const appLanguage = await window.electron.ipcRenderer.invoke(
+		IpcEvents.GetAppLanguage,
+	);
 
-  i18n.use(initReactI18next);
-  const i18nextOptions = {
-    debug: true,
-    interpolation: {
-      escapeValue: false,
-    },
-    saveMissing: true,
-    lng: config.languages.includes(appLanguage) ? appLanguage : 'en',
-    fallbackLng: config.fallbackLng,
-    whitelist: config.languages,
-    react: {},
-    resources: {
-      en: {
-        translation: translationEN,
-      },
-      es: {
-        translation: translationES,
-      },
-      ko: {
-        translation: translationKO,
-      },
-      ua: {
-        translation: translationUA,
-      },
-      ru: {
-        translation: translationRU,
-      },
-      zh_CN: {
-        translation: translationZH_CN,
-      },
-      zh_TW: {
-        translation: translationZH_TW,
-      },
-      da: {
-        translation: translationDA,
-      },
-      de: {
-        translation: translationDE,
-      },
-      fi: {
-        translation: translationFI,
-      },
-      it: {
-        translation: translationIT,
-      },
-      ja: {
-        translation: translationJA,
-      },
-      nl: {
-        translation: translationNL,
-      },
-      fr: {
-        translation: translationFR,
-      },
-      sv: {
-        translation: translationSV,
-      },
-    },
-  };
+	i18n.use(initReactI18next);
+	const i18nextOptions = {
+		debug: true,
+		interpolation: {
+			escapeValue: false,
+		},
+		saveMissing: true,
+		lng: config.languages.includes(appLanguage) ? appLanguage : 'en',
+		fallbackLng: config.fallbackLng,
+		whitelist: config.languages,
+		react: {},
+		resources: {
+			en: {
+				translation: translationEN,
+			},
+			es: {
+				translation: translationES,
+			},
+			ko: {
+				translation: translationKO,
+			},
+			ua: {
+				translation: translationUA,
+			},
+			ru: {
+				translation: translationRU,
+			},
+			zh_CN: {
+				translation: translationZH_CN,
+			},
+			zh_TW: {
+				translation: translationZH_TW,
+			},
+			da: {
+				translation: translationDA,
+			},
+			de: {
+				translation: translationDE,
+			},
+			fi: {
+				translation: translationFI,
+			},
+			it: {
+				translation: translationIT,
+			},
+			ja: {
+				translation: translationJA,
+			},
+			nl: {
+				translation: translationNL,
+			},
+			fr: {
+				translation: translationFR,
+			},
+			sv: {
+				translation: translationSV,
+			},
+		},
+	};
 
-  if (!i18n.isInitialized) {
-    t = await i18n.init(i18nextOptions);
-  }
+	if (!i18n.isInitialized) {
+		t = await i18n.init(i18nextOptions);
+	}
 }
 
 export const i18nInitPromise = initI18NextOptions();
 
 i18n.on('languageChanged', () => {
-  window.electron.ipcRenderer.send('client-changed-language', i18n.language);
+	window.electron.ipcRenderer.send('client-changed-language', i18n.language);
 });
 
 export default i18n;

@@ -1,4 +1,4 @@
 export enum ElectronStoreKeys {
-  AppLanguage = 'appLanguage',
-  IsNotFirstTimeAppStart = 'isNotFirstTimeAppStart',
+	AppLanguage = 'appLanguage',
+	IsNotFirstTimeAppStart = 'isNotFirstTimeAppStart',
 }

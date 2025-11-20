@@ -99,7 +99,10 @@ export const enterPlayerFullscreen = (): boolean => {
 	const video = getPlayerVideo();
 	if (requestStandardFullscreen(video)) return true;
 	if (video && typeof video.webkitEnterFullscreen === 'function') {
-		if (typeof video.webkitSupportsFullscreen === 'boolean' && !video.webkitSupportsFullscreen) {
+		if (
+			typeof video.webkitSupportsFullscreen === 'boolean' &&
+			!video.webkitSupportsFullscreen
+		) {
 			return false;
 		}
 		video.webkitEnterFullscreen();
@@ -116,7 +119,10 @@ export const exitPlayerFullscreen = (): boolean => {
 	if (exitStandardFullscreen()) return true;
 	const video = getPlayerVideo();
 	if (video && typeof video.webkitExitFullscreen === 'function') {
-		if (typeof video.webkitDisplayingFullscreen === 'boolean' && !video.webkitDisplayingFullscreen) {
+		if (
+			typeof video.webkitDisplayingFullscreen === 'boolean' &&
+			!video.webkitDisplayingFullscreen
+		) {
 			return false;
 		}
 		video.webkitExitFullscreen();
@@ -133,7 +139,7 @@ export const togglePlayerFullscreen = (): 'entered' | 'exited' | 'failed' => {
 };
 
 export const subscribeToPlayerFullscreenChange = (
-	listener: (isFullscreen: boolean) => void
+	listener: (isFullscreen: boolean) => void,
 ): Unsubscribe => {
 	const handleChange = () => listener(isPlayerFullscreen());
 	const handleVideoBegin = () => listener(true);
@@ -152,7 +158,10 @@ export const subscribeToPlayerFullscreenChange = (
 	const attachVideoListeners = (video: IOSVideoElement | null) => {
 		if (currentVideo === video) return;
 		if (currentVideo) {
-			currentVideo.removeEventListener('webkitbeginfullscreen', handleVideoBegin);
+			currentVideo.removeEventListener(
+				'webkitbeginfullscreen',
+				handleVideoBegin,
+			);
 			currentVideo.removeEventListener('webkitendfullscreen', handleVideoEnd);
 		}
 		currentVideo = video;
@@ -184,7 +193,10 @@ export const subscribeToPlayerFullscreenChange = (
 			document.removeEventListener(eventName, handleChange);
 		});
 		if (currentVideo) {
-			currentVideo.removeEventListener('webkitbeginfullscreen', handleVideoBegin);
+			currentVideo.removeEventListener(
+				'webkitbeginfullscreen',
+				handleVideoBegin,
+			);
 			currentVideo.removeEventListener('webkitendfullscreen', handleVideoEnd);
 		}
 		if (observer) {
@@ -192,4 +204,3 @@ export const subscribeToPlayerFullscreenChange = (
 		}
 	};
 };
-

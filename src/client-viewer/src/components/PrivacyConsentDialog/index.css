@@ -33,7 +33,9 @@
 }
 
 .allow-analytics-button {
-	box-shadow: 0 4px 16px rgba(15, 153, 96, 0.5), 0 0 20px rgba(15, 153, 96, 0.3) !important;
+	box-shadow:
+		0 4px 16px rgba(15, 153, 96, 0.5),
+		0 0 20px rgba(15, 153, 96, 0.3) !important;
 	transition: all 0.2s ease-in-out !important;
 	background: linear-gradient(135deg, #0f9960 0%, #0a7a4a 100%) !important;
 	border: none !important;
@@ -41,7 +43,9 @@
 }
 
 .allow-analytics-button:hover {
-	box-shadow: 0 6px 24px rgba(15, 153, 96, 0.6), 0 0 30px rgba(15, 153, 96, 0.4) !important;
+	box-shadow:
+		0 6px 24px rgba(15, 153, 96, 0.6),
+		0 0 30px rgba(15, 153, 96, 0.4) !important;
 	transform: translateY(-2px);
 	background: linear-gradient(135deg, #15b371 0%, #0f9960 100%) !important;
 }
@@ -81,9 +85,8 @@
 	.disagree-button-col {
 		order: 1;
 	}
-	
+
 	.allow-button-col {
 		order: 2;
 	}
 }
-

@@ -2,24 +2,36 @@ import React, { useEffect, useState } from 'react';
 import MainView from './containers/MainView';
 import PrivacyConsentDialog from './components/PrivacyConsentDialog';
 import LoadingScreen from './components/LoadingScreen';
-import { getConsentStatus, setConsentStatus, loadGoogleAnalytics, getGaTagIdFromMeta, updateAnalyticsConsent } from './utils/analytics';
+import {
+	getConsentStatus,
+	setConsentStatus,
+	loadGoogleAnalytics,
+	getGaTagIdFromMeta,
+	updateAnalyticsConsent,
+} from './utils/analytics';
 
 const App: React.FC = () => {
 	// Helper function to check for prerendering safely
 	const isCurrentlyPrerendering = () => {
 		// Check if 'document' and 'prerendering' property exist
-		return typeof document !== 'undefined' && typeof document.prerendering === 'boolean'
+		return typeof document !== 'undefined' &&
+			typeof document.prerendering === 'boolean'
 			? document.prerendering
 			: false; // Default to false if the property doesn't exist
 	};
 
-	const [isTrulyVisible, setIsTrulyVisible] = useState(!isCurrentlyPrerendering());
+	const [isTrulyVisible, setIsTrulyVisible] = useState(
+		!isCurrentlyPrerendering(),
+	);
 	const [showConsentDialog, setShowConsentDialog] = useState(false);
 	const [hasConsent, setHasConsent] = useState(false);
 
 	useEffect(() => {
 		// Only set up listeners if document.prerendering is supported
-		if (typeof document !== 'undefined' && typeof document.prerendering === 'boolean') {
+		if (
+			typeof document !== 'undefined' &&
+			typeof document.prerendering === 'boolean'
+		) {
 			const handlePrerenderChange = () => {
 				// When the prerendering state changes, update isTrulyVisible
 				// It becomes true when document.prerendering is false (i.e., page is activated)
@@ -32,12 +44,17 @@ const App: React.FC = () => {
 			// you might remove { once: true } but then also need more complex logic.
 			// For the typical "prerender then activate" flow, { once: true } is fine.
 			if (document.prerendering) {
-				document.addEventListener('prerenderingchange', handlePrerenderChange, { once: true });
+				document.addEventListener('prerenderingchange', handlePrerenderChange, {
+					once: true,
+				});
 			}
 
 			return () => {
 				// Cleanup the event listener
-				document.removeEventListener('prerenderingchange', handlePrerenderChange);
+				document.removeEventListener(
+					'prerenderingchange',
+					handlePrerenderChange,
+				);
 			};
 		}
 		// If document.prerendering is not supported, isTrulyVisible is already true
@@ -118,9 +135,7 @@ const App: React.FC = () => {
 		);
 	}
 
-	return (
-		<MainView />
-	);
+	return <MainView />;
 };
 
 export default App;

@@ -1,26 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { LocalPeerUser } from '../../../common/LocalPeerUser';
+import type { SendEncryptedMessagePayload } from '../../../common/SendEncryptedMessagePayload';
 
-interface LocalPeerUser {
-	username: string;
-	id: string;
-}
-
-interface ProcessedPayload {
+export interface ProcessedPayload {
 	toSend: ProcessedMessage;
-	original: any;
+	original: ProcessedMessage;
 }
 
-export const process = (payload: ReceiveEncryptedMessagePayload): Promise<ProcessedMessage> =>
-	Promise.resolve(payload as ProcessedMessage);
+export const process = (
+	payload: ReceiveEncryptedMessagePayload,
+): Promise<ProcessedMessage> => Promise.resolve(payload as ProcessedMessage);
 
-export const prepare = (payload: any, user: LocalPeerUser) =>
+export const prepare = (
+	payload: SendEncryptedMessagePayload,
+	user: LocalPeerUser,
+): Promise<ProcessedPayload> =>
 	new Promise<ProcessedPayload>((resolve) => {
 		const myUsername = user.username;
 		const myId = user.id;
 		const innerPayload = { ...payload.payload } as Record<string, unknown>;
 		if (typeof (innerPayload as { text?: unknown }).text === 'string') {
 			(innerPayload as { text?: string }).text = encodeURI(
-				(innerPayload as { text?: string }).text as string
+				(innerPayload as { text?: string }).text as string,
 			);
 		}
 		const jsonToSend = {
@@ -30,10 +30,10 @@ export const prepare = (payload: any, user: LocalPeerUser) =>
 				sender: myId,
 				username: myUsername,
 			},
-		};
+		} as ProcessedMessage;
 
 		resolve({
-			toSend: jsonToSend as ProcessedMessage,
+			toSend: jsonToSend,
 			original: jsonToSend,
 		});
 	});

@@ -14,117 +14,128 @@ import getDesktopSourceStreamBySourceID from './getDesktopSourceStreamBySourceID
 
 import { Device } from '../../../../common/Device';
 import { LocalPeerUser } from '../../../../common/LocalPeerUser';
+import type { SendEncryptedMessagePayload } from '../../../../common/SendEncryptedMessagePayload';
 import { Socket } from 'socket.io-client';
 
 type DisplaySize = { width: number; height: number };
 
 export interface PartnerPeerUser {
-  username: string;
+	username: string;
 }
 
 export default class PeerConnection {
-  sharingSessionID: string;
-  roomID: string;
-  socket: Socket;
-  user: LocalPeerUser;
-  partner: PartnerPeerUser;
-  peer = NullSimplePeer;
-  desktopCapturerSourceID: string;
-  localStream: MediaStream | null;
-  isSocketRoomLocked: boolean;
-  partnerDeviceDetails = {
-    id: '',
-    sharingSessionID: '',
-    deviceOS: '',
-    deviceType: '',
-    deviceIP: '',
-    deviceBrowser: '',
-    deviceScreenWidth: 0,
-    deviceScreenHeight: 0,
-  } as Device;
-  signalsDataToCallUser: string[];
-  isCallStarted: boolean;
-  onDeviceConnectedCallback: (device: Device) => void;
-  displayID: string;
-  sourceDisplaySize: DisplaySize | undefined;
-  beforeunloadHandler: (() => void) | null = null;
+	sharingSessionID: string;
+	roomID: string;
+	socket: Socket;
+	user: LocalPeerUser;
+	partner: PartnerPeerUser;
+	peer = NullSimplePeer;
+	desktopCapturerSourceID: string;
+	localStream: MediaStream | null;
+	isSocketRoomLocked: boolean;
+	partnerDeviceDetails = {
+		id: '',
+		sharingSessionID: '',
+		deviceOS: '',
+		deviceType: '',
+		deviceIP: '',
+		deviceBrowser: '',
+		deviceScreenWidth: 0,
+		deviceScreenHeight: 0,
+	} as Device;
+	signalsDataToCallUser: string[];
+	isCallStarted: boolean;
+	onDeviceConnectedCallback: (device: Device) => void;
+	displayID: string;
+	sourceDisplaySize: DisplaySize | undefined;
+	beforeunloadHandler: (() => void) | null = null;
 
-  constructor(roomID: string, sharingSessionID: string, user: LocalPeerUser, port: string) {
-    this.sharingSessionID = sharingSessionID;
-    this.isSocketRoomLocked = false;
-    this.roomID = encodeURI(roomID);
-    this.socket = connectSocket(port, this.roomID);
-    this.user = user;
-    this.partner = NullUser;
-    this.desktopCapturerSourceID = '';
-    this.signalsDataToCallUser = [];
-    this.isCallStarted = false;
-    this.localStream = null;
-    this.displayID = '';
-    this.sourceDisplaySize = undefined;
-    this.onDeviceConnectedCallback = () => {};
+	constructor(
+		roomID: string,
+		sharingSessionID: string,
+		user: LocalPeerUser,
+		port: string,
+	) {
+		this.sharingSessionID = sharingSessionID;
+		this.isSocketRoomLocked = false;
+		this.roomID = encodeURI(roomID);
+		this.socket = connectSocket(port, this.roomID);
+		this.user = user;
+		this.partner = NullUser;
+		this.desktopCapturerSourceID = '';
+		this.signalsDataToCallUser = [];
+		this.isCallStarted = false;
+		this.localStream = null;
+		this.displayID = '';
+		this.sourceDisplaySize = undefined;
+		this.onDeviceConnectedCallback = () => {
+			// noop until UI layer registers callback
+		};
 
-    handleSocket(this);
+		handleSocket(this);
 
-    this.beforeunloadHandler = () => {
-      this.socket.emit('USER_DISCONNECT');
-    };
-    window.addEventListener('beforeunload', this.beforeunloadHandler);
-  }
+		this.beforeunloadHandler = () => {
+			this.socket.emit('USER_DISCONNECT');
+		};
+		window.addEventListener('beforeunload', this.beforeunloadHandler);
+	}
 
-  notifyClientWithNewLanguage(): void {
-    setTimeout(async () => {
-      this.sendEncryptedMessage({
-        type: 'APP_LANGUAGE',
-        payload: {
-          value: await getAppLanguage(),
-        },
-      });
-    }, 1000);
-  }
+	notifyClientWithNewLanguage(): void {
+		setTimeout(async () => {
+			this.sendEncryptedMessage({
+				type: 'APP_LANGUAGE',
+				payload: {
+					value: await getAppLanguage(),
+				},
+			});
+		}, 1000);
+	}
 
-  async setDesktopCapturerSourceID(id: string): Promise<void> {
-    this.desktopCapturerSourceID = id;
-    if (process.env.RUN_MODE === 'test') return;
+	async setDesktopCapturerSourceID(id: string): Promise<void> {
+		this.desktopCapturerSourceID = id;
+		if (process.env.RUN_MODE === 'test') return;
 
 		// clear old display size when switching sources to ensure new source uses correct dimensions
 		this.sourceDisplaySize = undefined;
 		this.displayID = '';
 
-    await this.setDisplayIDByDesktopCapturerSourceID();
+		await this.setDisplayIDByDesktopCapturerSourceID();
 
-    await this.handleCreatePeerAfterDesktopCapturerSourceIDWasSet();
-  }
+		await this.handleCreatePeerAfterDesktopCapturerSourceIDWasSet();
+	}
 
-  async setDisplayIDByDesktopCapturerSourceID(): Promise<void> {
-    if (!this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) {
+	async setDisplayIDByDesktopCapturerSourceID(): Promise<void> {
+		if (
+			!this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)
+		) {
 			// clear display size for window sources
 			this.sourceDisplaySize = undefined;
 			return;
 		}
 
-    this.displayID = await window.electron.ipcRenderer.invoke(
-      IpcEvents.GetSourceDisplayIDByDesktopCapturerSourceID,
-      this.desktopCapturerSourceID,
-    );
+		this.displayID = await window.electron.ipcRenderer.invoke(
+			IpcEvents.GetSourceDisplayIDByDesktopCapturerSourceID,
+			this.desktopCapturerSourceID,
+		);
 
-    if (this.displayID !== '') {
+		if (this.displayID !== '') {
 			// await to ensure sourceDisplaySize is set before creating stream
-      await this.setDisplaySizeRetreivedFromMainProcess();
-    }
-  }
+			await this.setDisplaySizeRetreivedFromMainProcess();
+		}
+	}
 
-  async setDisplaySizeRetreivedFromMainProcess(): Promise<void> {
-    const size: DisplaySize | 'undefined' = await window.electron.ipcRenderer.invoke(
-      'get-display-size-by-display-id',
-      this.displayID,
-    );
-    if (size !== 'undefined') {
-      this.sourceDisplaySize = size;
-    }
-  }
+	async setDisplaySizeRetreivedFromMainProcess(): Promise<void> {
+		const size: DisplaySize | 'undefined' =
+			await window.electron.ipcRenderer.invoke(
+				'get-display-size-by-display-id',
+				this.displayID,
+			);
+		if (size !== 'undefined') {
+			this.sourceDisplaySize = size;
+		}
+	}
 
-  async handleCreatePeerAfterDesktopCapturerSourceIDWasSet(): Promise<void> {
+	async handleCreatePeerAfterDesktopCapturerSourceIDWasSet(): Promise<void> {
 		// if peer already exists, replace the track instead of creating a new peer
 		if (this.peer !== NullSimplePeer && this.localStream) {
 			try {
@@ -178,7 +189,11 @@ export default class PeerConnection {
 
 				// update sourceDisplaySize from actual stream to ensure correct resolution
 				// this is critical when switching sources to get the actual stream dimensions
-				if (this.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) {
+				if (
+					this.desktopCapturerSourceID.includes(
+						DesktopCapturerSourceType.SCREEN,
+					)
+				) {
 					setDisplaySizeFromLocalStream(this);
 				} else {
 					// clear for window sources
@@ -198,92 +213,94 @@ export default class PeerConnection {
 				setDisplaySizeFromLocalStream(this);
 			}
 		}
-  }
+	}
 
-  setOnDeviceConnectedCallback(callback: (device: Device) => void): void {
-    this.onDeviceConnectedCallback = callback;
-  }
+	setOnDeviceConnectedCallback(callback: (device: Device) => void): void {
+		this.onDeviceConnectedCallback = callback;
+	}
 
-  async denyConnectionForPartner(): Promise<void> {
-    await this.sendEncryptedMessage({
-      type: 'DENY_TO_CONNECT',
-      payload: {},
-    });
-    this.disconnectPartner();
-  }
+	async denyConnectionForPartner(): Promise<void> {
+		await this.sendEncryptedMessage({
+			type: 'DENY_TO_CONNECT',
+			payload: {},
+		});
+		this.disconnectPartner();
+	}
 
-  sendUserAllowedToConnect(): void {
-    this.sendEncryptedMessage({
-      type: 'ALLOWED_TO_CONNECT',
-      payload: {},
-    });
-  }
+	sendUserAllowedToConnect(): void {
+		this.sendEncryptedMessage({
+			type: 'ALLOWED_TO_CONNECT',
+			payload: {},
+		});
+	}
 
-  async disconnectByHostMachineUser(deviceId: string): Promise<void> {
-    if (this.partnerDeviceDetails.id !== deviceId) {
-      return;
-    }
-    await this.sendEncryptedMessage({
-      type: 'DISCONNECT_BY_HOST_MACHINE_USER',
-      payload: {},
-    });
-    this.disconnectPartner();
-    this.selfDestroy();
-  }
+	async disconnectByHostMachineUser(deviceId: string): Promise<void> {
+		if (this.partnerDeviceDetails.id !== deviceId) {
+			return;
+		}
+		await this.sendEncryptedMessage({
+			type: 'DISCONNECT_BY_HOST_MACHINE_USER',
+			payload: {},
+		});
+		this.disconnectPartner();
+		this.selfDestroy();
+	}
 
-  disconnectPartner(): void {
-    this.socket.emit('DISCONNECT_SOCKET_BY_DEVICE_IP', {
-      ip: this.partnerDeviceDetails.deviceIP,
-    });
+	disconnectPartner(): void {
+		this.socket.emit('DISCONNECT_SOCKET_BY_DEVICE_IP', {
+			ip: this.partnerDeviceDetails.deviceIP,
+		});
 
-    this.partnerDeviceDetails = {} as Device;
-  }
+		this.partnerDeviceDetails = {} as Device;
+	}
 
-  selfDestroy(): void {
-    handleSelfDestroy(this);
-  }
+	selfDestroy(): void {
+		handleSelfDestroy(this);
+	}
 
-  emitUserEnter(): void {
-    this.socket.emit('USER_ENTER', {
-      username: this.user.username,
-    });
-  }
+	emitUserEnter(): void {
+		this.socket.emit('USER_ENTER', {
+			username: this.user.username,
+		});
+	}
 
-  async sendEncryptedMessage(payload: SendEncryptedMessagePayload): Promise<void> {
-    if (!this.socket) return;
-    if (!this.user) return;
-    if (!this.partner) return;
-    if (!this.partner.username) return;
-    const msg = await prepareMessage(payload, this.user);
-    this.socket.emit('MESSAGE', msg.toSend);
-  }
+	async sendEncryptedMessage(
+		payload: SendEncryptedMessagePayload,
+	): Promise<void> {
+		if (!this.socket) return;
+		if (!this.user) return;
+		if (!this.partner) return;
+		if (!this.partner.username) return;
+		const msg = await prepareMessage(payload, this.user);
+		this.socket.emit('MESSAGE', msg.toSend);
+	}
 
-  receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload): void {
-    if (!this.user) return;
-    handleRecieveEncryptedMessage(this, payload);
-  }
+	receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload): void {
+		if (!this.user) return;
+		handleRecieveEncryptedMessage(this, payload);
+	}
 
-  callPeer(): void {
-    if (process.env.RUN_MODE === 'test') return;
-    if (this.isCallStarted) return;
-    this.isCallStarted = true;
+	callPeer(): void {
+		if (process.env.RUN_MODE === 'test') return;
+		if (this.isCallStarted) return;
+		this.isCallStarted = true;
 
-    this.signalsDataToCallUser.forEach((data: string) => {
-      this.sendEncryptedMessage({
-        type: 'CALL_USER',
-        payload: {
-          signalData: data,
-        },
-      });
-    });
-  }
+		this.signalsDataToCallUser.forEach((data: string) => {
+			this.sendEncryptedMessage({
+				type: 'CALL_USER',
+				payload: {
+					signalData: data,
+				},
+			});
+		});
+	}
 
-  createPeer(): Promise<void> {
-    return handleCreatePeer(this);
-  }
+	createPeer(): Promise<void> {
+		return handleCreatePeer(this);
+	}
 
-  toggleLockRoom(isConnected: boolean): void {
-    this.socket.emit('TOGGLE_LOCK_ROOM');
-    this.isSocketRoomLocked = isConnected;
-  }
+	toggleLockRoom(isConnected: boolean): void {
+		this.socket.emit('TOGGLE_LOCK_ROOM');
+		this.isSocketRoomLocked = isConnected;
+	}
 }

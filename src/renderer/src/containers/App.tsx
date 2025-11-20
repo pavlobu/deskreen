@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 
 type Props = {
-  children: ReactNode;
+	children: ReactNode;
 };
 
 const App: React.FC<Props> = (props: Props) => {
-  const { children } = props;
-  return <>{children}</>;
+	const { children } = props;
+	return <>{children}</>;
 };
 
 export default App;

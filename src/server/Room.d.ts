@@ -1,6 +1,6 @@
 interface Room {
-  id: string;
-  users: User[];
-  isLocked: boolean;
-  createdAt: number;
+	id: string;
+	users: User[];
+	isLocked: boolean;
+	createdAt: number;
 }

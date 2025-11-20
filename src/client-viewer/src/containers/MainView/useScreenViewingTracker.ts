@@ -3,7 +3,7 @@ import { trackAnalyticsEvent } from '../../utils/analytics';
 import { type ErrorMessageType } from '../../components/ErrorDialog/ErrorMessageEnum';
 
 interface UseScreenViewingTrackerParams {
-	streamUrl: undefined | MediaStream;
+	streamUrl: MediaStream | null;
 	isPlaying: boolean;
 	isErrorDialogOpen: boolean;
 	dialogErrorMessage: ErrorMessageType;
@@ -18,8 +18,11 @@ function formatErrorMessageForEvent(errorMessage: ErrorMessageType): string {
 		.replace(/\s+/g, '_');
 }
 
-export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): void {
-	const { streamUrl, isPlaying, isErrorDialogOpen, dialogErrorMessage } = params;
+export function useScreenViewingTracker(
+	params: UseScreenViewingTrackerParams,
+): void {
+	const { streamUrl, isPlaying, isErrorDialogOpen, dialogErrorMessage } =
+		params;
 
 	const startTimeRef = useRef<number | null>(null);
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -29,7 +32,7 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 	const isErrorDialogOpenRef = useRef<boolean>(false);
 
 	// determine if stream is currently visible (without error dialog check)
-	const isStreamVisible = streamUrl !== undefined && isPlaying;
+	const isStreamVisible = streamUrl !== null && isPlaying;
 
 	// update error dialog ref
 	isErrorDialogOpenRef.current = isErrorDialogOpen;
@@ -37,7 +40,12 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 	// handle error dialog appearance
 	useEffect(() => {
 		// if error dialog just appeared and we were tracking
-		if (isErrorDialogOpen && !previousErrorDialogOpenRef.current && startTimeRef.current !== null && !errorEventSentRef.current) {
+		if (
+			isErrorDialogOpen &&
+			!previousErrorDialogOpenRef.current &&
+			startTimeRef.current !== null &&
+			!errorEventSentRef.current
+		) {
 			// clear interval
 			if (intervalRef.current !== null) {
 				clearInterval(intervalRef.current);
@@ -52,7 +60,7 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 			// send error event
 			trackAnalyticsEvent(
 				`error_dialog_reason_${errorReason}_spent_screen_viewing_${elapsedMinutes}_minutes`,
-				{}
+				{},
 			);
 
 			errorEventSentRef.current = true;
@@ -64,7 +72,11 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 	// handle stream visibility tracking
 	useEffect(() => {
 		// if stream becomes visible and no error dialog, start tracking
-		if (isStreamVisible && !isErrorDialogOpen && startTimeRef.current === null) {
+		if (
+			isStreamVisible &&
+			!isErrorDialogOpen &&
+			startTimeRef.current === null
+		) {
 			startTimeRef.current = Date.now();
 			lastMinuteTrackedRef.current = 0;
 			errorEventSentRef.current = false;
@@ -87,7 +99,10 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 		}
 
 		// if stream is not visible (and no error dialog), stop tracking and reset
-		if ((!isStreamVisible || isErrorDialogOpen) && intervalRef.current !== null) {
+		if (
+			(!isStreamVisible || isErrorDialogOpen) &&
+			intervalRef.current !== null
+		) {
 			clearInterval(intervalRef.current);
 			intervalRef.current = null;
 		}
@@ -100,7 +115,12 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 		}
 
 		// if error dialog closes and stream is still visible, restart tracking
-		if (!isErrorDialogOpen && previousErrorDialogOpenRef.current && isStreamVisible && errorEventSentRef.current) {
+		if (
+			!isErrorDialogOpen &&
+			previousErrorDialogOpenRef.current &&
+			isStreamVisible &&
+			errorEventSentRef.current
+		) {
 			// reset error event flag and restart tracking
 			errorEventSentRef.current = false;
 			startTimeRef.current = Date.now();
@@ -134,4 +154,3 @@ export function useScreenViewingTracker(params: UseScreenViewingTrackerParams): 
 		};
 	}, [isStreamVisible, isErrorDialogOpen]);
 }
-

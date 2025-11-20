@@ -43,21 +43,28 @@ export function clearConsentStatus(): void {
 }
 
 export function loadGoogleAnalytics(gaTagId: string): void {
-	if (typeof window === 'undefined' || !gaTagId || gaTagId === GA_TAG_PLACEHOLDER) {
+	if (
+		typeof window === 'undefined' ||
+		!gaTagId ||
+		gaTagId === GA_TAG_PLACEHOLDER
+	) {
 		return;
 	}
 
 	// check if GA script is already loaded in DOM (from HTML)
-	const existingScript = document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
+	const existingScript = document.querySelector(
+		'script[src*="googletagmanager.com/gtag/js"]',
+	);
 	if (existingScript && window.dataLayer && typeof window.gtag === 'function') {
 		// GA is already loaded from HTML, just update consent and send page_view
 		const consentStatus = getConsentStatus();
-		const analyticsConsent = consentStatus === 'accepted' ? 'granted' : 'denied';
+		const analyticsConsent =
+			consentStatus === 'accepted' ? 'granted' : 'denied';
 
 		// update consent mode
 		window.gtag('consent', 'update', {
 			analytics_storage: analyticsConsent,
-			ad_storage: 'denied'
+			ad_storage: 'denied',
 		});
 
 		// if user has consent, wait for GA to be ready and send page_view
@@ -82,7 +89,7 @@ export function loadGoogleAnalytics(gaTagId: string): void {
 	// set default consent mode to denied (will be updated when user accepts)
 	gtag('consent', 'default', {
 		analytics_storage: 'denied',
-		ad_storage: 'denied'
+		ad_storage: 'denied',
 	});
 
 	// load gtag.js script
@@ -93,17 +100,18 @@ export function loadGoogleAnalytics(gaTagId: string): void {
 	script.onload = () => {
 		// configure GA after script loads
 		const consentStatus = getConsentStatus();
-		const analyticsConsent = consentStatus === 'accepted' ? 'granted' : 'denied';
+		const analyticsConsent =
+			consentStatus === 'accepted' ? 'granted' : 'denied';
 
 		window.gtag('config', gaTagId, {
 			send_page_view: true,
-			anonymize_ip: true
+			anonymize_ip: true,
 		});
 
 		// update consent mode based on current status
 		window.gtag('consent', 'update', {
 			analytics_storage: analyticsConsent,
-			ad_storage: 'denied'
+			ad_storage: 'denied',
 		});
 
 		// send page_view event after script is ready
@@ -126,7 +134,7 @@ function sendPageView(): void {
 	trackAnalyticsEvent('page_view', {
 		page_title: document.title,
 		page_location: window.location.href,
-		page_path: window.location.pathname
+		page_path: window.location.pathname,
 	});
 
 	sendClientViewerVersionEvent();
@@ -138,7 +146,9 @@ function waitForGAReady(callback: () => void): void {
 	}
 
 	// check if GA script exists
-	const script = document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
+	const script = document.querySelector(
+		'script[src*="googletagmanager.com/gtag/js"]',
+	);
 
 	if (!script || typeof window.gtag !== 'function' || !window.dataLayer) {
 		// if script not loaded yet, wait for window load event
@@ -180,7 +190,7 @@ export function updateAnalyticsConsent(consentStatus: ConsentStatus): void {
 	if (window.gtag) {
 		window.gtag('consent', 'update', {
 			analytics_storage: analyticsConsent,
-			ad_storage: 'denied'
+			ad_storage: 'denied',
 		});
 
 		// if consent granted, send page_view event after GA is ready
@@ -191,10 +201,14 @@ export function updateAnalyticsConsent(consentStatus: ConsentStatus): void {
 		}
 	} else {
 		// queue consent update if gtag not ready yet
-		window.dataLayer.push(['consent', 'update', {
-			analytics_storage: analyticsConsent,
-			ad_storage: 'denied'
-		}]);
+		window.dataLayer.push([
+			'consent',
+			'update',
+			{
+				analytics_storage: analyticsConsent,
+				ad_storage: 'denied',
+			},
+		]);
 
 		// if consent granted, queue page_view for when GA loads
 		if (analyticsConsent === 'granted') {
@@ -212,7 +226,9 @@ export function getGaTagIdFromMeta(): string | null {
 	}
 
 	// fallback: try to extract from any existing script tags
-	const scripts = document.querySelectorAll('script[src*="googletagmanager.com/gtag/js"]');
+	const scripts = document.querySelectorAll(
+		'script[src*="googletagmanager.com/gtag/js"]',
+	);
 	for (const script of scripts) {
 		const src = script.getAttribute('src');
 		if (src) {
@@ -256,11 +272,14 @@ function sendClientViewerVersionEvent(): void {
 
 	versionEventSent = true;
 	trackAnalyticsEvent('client_viewer_version', {
-		client_viewer_version: version
+		client_viewer_version: version,
 	});
 }
 
-export function trackAnalyticsEvent(eventName: string, params: AnalyticsEventParams = {}): void {
+export function trackAnalyticsEvent(
+	eventName: string,
+	params: AnalyticsEventParams = {},
+): void {
 	if (typeof window === 'undefined') {
 		return;
 	}
@@ -270,8 +289,10 @@ export function trackAnalyticsEvent(eventName: string, params: AnalyticsEventPar
 		return;
 	}
 
-	if (window.dataLayer && typeof (window.dataLayer as unknown[]).push === 'function') {
+	if (
+		window.dataLayer &&
+		typeof (window.dataLayer as unknown[]).push === 'function'
+	) {
 		(window.dataLayer as unknown[]).push(['event', eventName, params]);
 	}
 }
-

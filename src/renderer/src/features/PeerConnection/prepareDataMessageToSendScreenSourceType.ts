@@ -1,5 +1,5 @@
 export default (s: string): string => {
-  return `
+	return `
     {
       "type": "screen_sharing_source_type",
       "payload": {

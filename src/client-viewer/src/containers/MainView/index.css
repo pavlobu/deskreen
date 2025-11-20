@@ -1,19 +1,19 @@
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 
-  #pulsing-circle-1 {
-    animation: pulse1 infinite 6s linear;
-  }
+	#pulsing-circle-1 {
+		animation: pulse1 infinite 6s linear;
+	}
 
-  #pulsing-circle-2 {
-    animation: pulse2 infinite 6s linear;
-  }
+	#pulsing-circle-2 {
+		animation: pulse2 infinite 6s linear;
+	}
 
-  .pulse-3-once {
-    animation: pulse3twice 2 750ms linear;
-  }
+	.pulse-3-once {
+		animation: pulse3twice 2 750ms linear;
+	}
 }
 
 @keyframes pulse1 {
@@ -51,20 +51,19 @@
 }
 
 @keyframes pulse3twice {
-  0% {
+	0% {
 		box-shadow: 0 0 0 0 rgba(21, 179, 113, 0.7);
-  }
+	}
 
-  50% {
-    box-shadow: 0 0 0 30px rgba(21, 179, 113, 0.3);
-  }
+	50% {
+		box-shadow: 0 0 0 30px rgba(21, 179, 113, 0.3);
+	}
 
-  100% {
-    box-shadow: 0 0 0 0 rgba(21, 179, 113, 0);
-  }
+	100% {
+		box-shadow: 0 0 0 0 rgba(21, 179, 113, 0);
+	}
 }
 
-
 .container > .react-reveal {
-  overflow: hidden;
+	overflow: hidden;
 }

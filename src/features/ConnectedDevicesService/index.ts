@@ -59,7 +59,9 @@ export class ConnectedDevicesService {
 
 	pendingConnectionDevice: Device = nullDevice;
 
-	private readonly availabilityListeners = new Set<(state: ViewerConnectionAvailability) => void>();
+	private readonly availabilityListeners = new Set<
+		(state: ViewerConnectionAvailability) => void
+	>();
 
 	resetPendingConnectionDevice(): void {
 		this.pendingConnectionDevice = nullDevice;

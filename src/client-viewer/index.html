@@ -155,7 +155,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_CLIENT_VIEWER_GA_TAG%"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag(){window.dataLayer.push(arguments);}
       gtag('js', new Date());
       // set default consent to denied (will be updated when user accepts)
       gtag('consent', 'default', {

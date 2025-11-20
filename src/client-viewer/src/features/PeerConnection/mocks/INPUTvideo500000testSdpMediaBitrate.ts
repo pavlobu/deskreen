@@ -1,5 +1,4 @@
-export const INPUTtestSdpMediaBitrate =
-`
+export const INPUTtestSdpMediaBitrate = `
 v=0
 o=- 5730467698688819135 2 IN IP4 127.0.0.1
 s=-

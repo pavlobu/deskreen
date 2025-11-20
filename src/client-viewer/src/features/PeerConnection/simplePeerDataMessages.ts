@@ -1,5 +1,5 @@
 export function prepareDataMessageToChangeQuality(q: number) {
-  return `
+	return `
     {
       "type": "set_video_quality",
       "payload": {
@@ -9,8 +9,8 @@ export function prepareDataMessageToChangeQuality(q: number) {
   `;
 }
 
-export function prepareDataMessageToGetSharingSourceType(){
-  return `
+export function prepareDataMessageToGetSharingSourceType() {
+	return `
     {
       "type": "get_sharing_source_type",
       "payload": {

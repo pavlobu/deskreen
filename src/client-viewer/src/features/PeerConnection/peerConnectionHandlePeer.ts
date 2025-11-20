@@ -1,6 +1,6 @@
 import {
-  prepareDataMessageToChangeQuality,
-  prepareDataMessageToGetSharingSourceType,
+	prepareDataMessageToChangeQuality,
+	prepareDataMessageToGetSharingSourceType,
 } from './simplePeerDataMessages';
 import { VideoQuality } from '../VideoAutoQualityOptimizer/VideoQualityEnum';
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
@@ -8,80 +8,80 @@ import PeerConnectionPeerIsNullError from './errors/PeerConnectionPeerIsNullErro
 import { ScreenSharingSource } from './ScreenSharingSourceEnum';
 
 export function getSharingShourceType(peerConnection: PeerConnection) {
-  try {
-    peerConnection.peer?.send(prepareDataMessageToGetSharingSourceType());
-  } catch (e) {
-    console.log(e);
-  }
+	try {
+		peerConnection.peer?.send(prepareDataMessageToGetSharingSourceType());
+	} catch (e) {
+		console.log(e);
+	}
 }
 
 export default (peerConnection: PeerConnection) => {
-  if (peerConnection.peer === null) {
-    throw new PeerConnectionPeerIsNullError();
-  }
-  peerConnection.peer.on('stream', (stream) => {
-    peerConnection.setUrlCallback(stream);
+	if (peerConnection.peer === null) {
+		throw new PeerConnectionPeerIsNullError();
+	}
+	peerConnection.peer.on('stream', (stream) => {
+		peerConnection.setUrlCallback(stream);
 
-    setTimeout(() => {
-      peerConnection.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
-        if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
-          try {
-            peerConnection.peer?.send(prepareDataMessageToChangeQuality(1));
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
+		setTimeout(() => {
+			peerConnection.videoAutoQualityOptimizer.setGoodQualityCallback(() => {
+				if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
+					try {
+						peerConnection.peer?.send(prepareDataMessageToChangeQuality(1));
+					} catch (e) {
+						console.log(e);
+					}
+				}
+			});
 
-      peerConnection.videoAutoQualityOptimizer.setHalfQualityCallbak(() => {
-        if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
-          try {
-            peerConnection.peer?.send(prepareDataMessageToChangeQuality(0.5));
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      });
-    }, 1000);
+			peerConnection.videoAutoQualityOptimizer.setHalfQualityCallbak(() => {
+				if (peerConnection.videoQuality === VideoQuality.Q_AUTO) {
+					try {
+						peerConnection.peer?.send(prepareDataMessageToChangeQuality(0.5));
+					} catch (e) {
+						console.log(e);
+					}
+				}
+			});
+		}, 1000);
 
-    peerConnection.videoAutoQualityOptimizer.startOptimizationLoop();
+		peerConnection.videoAutoQualityOptimizer.startOptimizationLoop();
 
-    setTimeout(getSharingShourceType, 1000, peerConnection);
+		setTimeout(getSharingShourceType, 1000, peerConnection);
 
-    peerConnection.isStreamStarted = true;
+		peerConnection.isStreamStarted = true;
 
-    // if any transient error dialog was shown earlier, close it now
-    try {
-      peerConnection.UIHandler.setIsErrorDialogOpen(false);
-      peerConnection.UIHandler.errorDialogMessage = ErrorMessage.UNKNOWN_ERROR;
-    } catch (_) {
-      // ignore
-    }
-  });
+		// if any transient error dialog was shown earlier, close it now
+		try {
+			peerConnection.UIHandler.setIsErrorDialogOpen(false);
+			peerConnection.UIHandler.errorDialogMessage = ErrorMessage.UNKNOWN_ERROR;
+		} catch (_) {
+			// ignore
+		}
+	});
 
-  peerConnection.peer.on('signal', (data) => {
-    // fired when webrtc done preparation to start call on peerConnection machine
-    peerConnection.sendEncryptedMessage({
-      type: 'CALL_ACCEPTED',
-      payload: {
-        signalData: data,
-      },
-    });
-  });
+	peerConnection.peer.on('signal', (data) => {
+		// fired when webrtc done preparation to start call on peerConnection machine
+		peerConnection.sendEncryptedMessage({
+			type: 'CALL_ACCEPTED',
+			payload: {
+				signalData: data,
+			},
+		});
+	});
 
-  peerConnection.peer.on('data', (data) => {
-    const dataJSON = JSON.parse(data);
+	peerConnection.peer.on('data', (data) => {
+		const dataJSON = JSON.parse(data);
 
-    if (dataJSON.type === 'screen_sharing_source_type') {
-      peerConnection.screenSharingSourceType = dataJSON.payload.value;
-      if (
-        peerConnection.screenSharingSourceType === ScreenSharingSource.SCREEN ||
-        peerConnection.screenSharingSourceType === ScreenSharingSource.WINDOW
-      ) {
-        peerConnection.UIHandler.setScreenSharingSourceTypeCallback(
-          peerConnection.screenSharingSourceType
-        );
-      }
-    }
-  });
+		if (dataJSON.type === 'screen_sharing_source_type') {
+			peerConnection.screenSharingSourceType = dataJSON.payload.value;
+			if (
+				peerConnection.screenSharingSourceType === ScreenSharingSource.SCREEN ||
+				peerConnection.screenSharingSourceType === ScreenSharingSource.WINDOW
+			) {
+				peerConnection.UIHandler.setScreenSharingSourceTypeCallback(
+					peerConnection.screenSharingSourceType,
+				);
+			}
+		}
+	});
 };

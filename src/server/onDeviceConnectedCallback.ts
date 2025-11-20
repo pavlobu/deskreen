@@ -8,7 +8,8 @@ export function onDeviceConnectedCallback(device: Device): void {
 	const deskreenGlobal = getDeskreenGlobal();
 	const { connectedDevicesService, sharingSessionService } = deskreenGlobal;
 	if (!connectedDevicesService.isSlotAvailable()) {
-		const waitingSession = sharingSessionService.waitingForConnectionSharingSession;
+		const waitingSession =
+			sharingSessionService.waitingForConnectionSharingSession;
 		waitingSession?.denyConnectionForPartner();
 		waitingSession?.setStatus(SharingSessionStatusEnum.NOT_CONNECTED);
 		sharingSessionService.waitingForConnectionSharingSession = null;
@@ -16,5 +17,8 @@ export function onDeviceConnectedCallback(device: Device): void {
 		return;
 	}
 	connectedDevicesService.setPendingConnectionDevice(device);
-	deskreenApp.mainWindow?.webContents.send(IpcEvents.SetPendingConnectionDevice, device);
+	deskreenApp.mainWindow?.webContents.send(
+		IpcEvents.SetPendingConnectionDevice,
+		device,
+	);
 }

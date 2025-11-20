@@ -45,35 +45,53 @@ function TranslatedContent() {
 		<>
 			<H2 style={{ marginBottom: '16px' }}>{t('Analytics Reference')}</H2>
 			<p style={{ marginBottom: '16px' }}>
-				{t('This app uses Google Analytics (a free service by Google) to anonymously track basic usage data. This helps us understand how people use the app so we can improve it for everyone.')}
+				{t(
+					'This app uses Google Analytics (a free service by Google) to anonymously track basic usage data. This helps us understand how people use the app so we can improve it for everyone.',
+				)}
 			</p>
 
-			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('What we collect:')}</H2>
+			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>
+				{t('What we collect:')}
+			</H2>
 			<ul style={{ marginBottom: '16px', paddingLeft: '20px' }}>
 				<li>{t('Page views (which screens you visit)')}</li>
 				<li>{t('Time spent on pages')}</li>
 				<li>{t('Basic device info (browser type, screen size)')}</li>
-				<li>{t('Your IP address (anonymized — last part removed for privacy)')}</li>
+				<li>
+					{t('Your IP address (anonymized — last part removed for privacy)')}
+				</li>
 			</ul>
 
-			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('What we DON\'T collect:')}</H2>
+			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>
+				{t("What we DON'T collect:")}
+			</H2>
 			<ul style={{ marginBottom: '16px', paddingLeft: '20px' }}>
 				<li>{t('Personal info (names, emails, passwords)')}</li>
 				<li>{t('Exact location')}</li>
 				<li>{t('Any files or content you interact with')}</li>
 			</ul>
 
-			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('Why anonymous?')}</H2>
+			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>
+				{t('Why anonymous?')}
+			</H2>
 			<p style={{ marginBottom: '16px' }}>
-				{t('Your IP is automatically shortened, and no one can identify you personally from this data.')}
+				{t(
+					'Your IP is automatically shortened, and no one can identify you personally from this data.',
+				)}
 			</p>
 
-			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('Your options:')}</H2>
+			<H2 style={{ marginBottom: '16px', marginTop: '24px' }}>
+				{t('Your options:')}
+			</H2>
 			<p style={{ marginBottom: '16px' }}>
-				<strong>{t('Continue:')}</strong> {t('We\'ll track anonymized usage to help improve the app.')}
+				<strong>{t('Continue:')}</strong>{' '}
+				{t("We'll track anonymized usage to help improve the app.")}
 			</p>
 			<p style={{ marginBottom: '16px' }}>
-				<strong>{t('Opt out:')}</strong> {t('Click the Deny button below to disable tracking. (We\'ll respect this choice, but you might miss out on future improvements based on collective feedback.)')}
+				<strong>{t('Opt out:')}</strong>{' '}
+				{t(
+					"Click the Deny button below to disable tracking. (We'll respect this choice, but you might miss out on future improvements based on collective feedback.)",
+				)}
 			</p>
 
 			<p style={{ marginBottom: '24px', fontSize: '14px', color: '#5C7080' }}>
@@ -91,7 +109,13 @@ function TranslatedContent() {
 	);
 }
 
-function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOptOut: () => void }) {
+function TranslatedButtons({
+	onAccept,
+	onOptOut,
+}: {
+	onAccept: () => void;
+	onOptOut: () => void;
+}) {
 	const { t } = useTranslation();
 
 	return (
@@ -102,8 +126,8 @@ function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOpt
 					large
 					fill
 					className="allow-analytics-button"
-					style={{ 
-						height: '60px', 
+					style={{
+						height: '60px',
 						fontSize: '18px',
 						fontWeight: '600',
 					}}
@@ -116,7 +140,7 @@ function TranslatedButtons({ onAccept, onOptOut }: { onAccept: () => void; onOpt
 				<Button
 					minimal
 					className="disagree-analytics-button"
-					style={{ 
+					style={{
 						fontSize: '12px',
 					}}
 					onClick={onOptOut}
@@ -138,7 +162,7 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 		const updateLanguage = () => {
 			const newLang = i18nInstance.language || 'en';
 			setCurrentLanguage(newLang);
-			setForceUpdate(prev => prev + 1);
+			setForceUpdate((prev) => prev + 1);
 		};
 
 		const handleLanguageChanged = () => {
@@ -154,14 +178,19 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 		};
 	}, []);
 
-	const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleLanguageChange = (
+		event: React.ChangeEvent<HTMLSelectElement>,
+	) => {
 		const newLang = event.target.value;
-		i18nInstance.changeLanguage(newLang).then(() => {
-			setCurrentLanguage(newLang);
-			setForceUpdate(prev => prev + 1);
-		}).catch((err) => {
-			console.error('Error changing language:', err);
-		});
+		i18nInstance
+			.changeLanguage(newLang)
+			.then(() => {
+				setCurrentLanguage(newLang);
+				setForceUpdate((prev) => prev + 1);
+			})
+			.catch((err) => {
+				console.error('Error changing language:', err);
+			});
 	};
 
 	const langKey = `${currentLanguage}-${forceUpdate}`;
@@ -183,14 +212,20 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 			}}
 			backdropClassName="privacy-consent-dialog-backdrop"
 		>
-			<Row style={{ padding: '20px 20px 16px 20px', flexShrink: 0, alignItems: 'center' }}>
+			<Row
+				style={{
+					padding: '20px 20px 16px 20px',
+					flexShrink: 0,
+					alignItems: 'center',
+				}}
+			>
 				<Col xs={6}>
 					<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
 						<Icon icon="translate" style={{ color: '#5C7080' }} />
 						<HTMLSelect
 							value={currentLanguage}
 							onChange={handleLanguageChange}
-							options={AVAILABLE_LANGUAGES.map(lang => ({
+							options={AVAILABLE_LANGUAGES.map((lang) => ({
 								value: lang.code,
 								label: lang.name,
 							}))}
@@ -200,22 +235,32 @@ function PrivacyConsentDialog(props: PrivacyConsentDialogProps) {
 					</div>
 				</Col>
 				<Col xs={6}>
-					<H3 key={langKey} className={Classes.TEXT_MUTED} style={{ textAlign: 'right', margin: 0 }}>
+					<H3
+						key={langKey}
+						className={Classes.TEXT_MUTED}
+						style={{ textAlign: 'right', margin: 0 }}
+					>
 						{t('Privacy Notice: Analytics in Deskreen CE Viewer')}
 					</H3>
 				</Col>
 			</Row>
 			<Divider style={{ flexShrink: 0 }} />
-			<div className={Classes.DIALOG_BODY} style={{ padding: '20px', overflowY: 'auto', flex: '1 1 auto' }}>
+			<div
+				className={Classes.DIALOG_BODY}
+				style={{ padding: '20px', overflowY: 'auto', flex: '1 1 auto' }}
+			>
 				<TranslatedContent key={langKey} />
 			</div>
 			<Divider style={{ flexShrink: 0 }} />
 			<div className="privacy-consent-buttons-container">
-				<TranslatedButtons key={langKey} onAccept={onAccept} onOptOut={onOptOut} />
+				<TranslatedButtons
+					key={langKey}
+					onAccept={onAccept}
+					onOptOut={onOptOut}
+				/>
 			</div>
 		</Dialog>
 	);
 }
 
 export default PrivacyConsentDialog;
-

@@ -4,13 +4,13 @@ import { generateUrl } from '../api/generator';
 let socket: Socket;
 
 export const connect = (roomId: string) => {
-  socket = socketIO(generateUrl(), {
-    query: {
-      roomId,
-    },
-    forceNew: true,
-  });
-  return socket;
+	socket = socketIO(generateUrl(), {
+		query: {
+			roomId,
+		},
+		forceNew: true,
+	});
+	return socket;
 };
 
 export const getSocket = () => socket;

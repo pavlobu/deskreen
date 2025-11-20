@@ -22,72 +22,72 @@ import { store } from '../../common/deskreen-electron-store';
 import { ElectronStoreKeys } from '../../common/ElectronStoreKeys.enum';
 
 const i18nextOptions = {
-  fallbackLng: config.fallbackLng,
-  lng: store.has(ElectronStoreKeys.AppLanguage)
-    ? String(store.get(ElectronStoreKeys.AppLanguage))
-    : 'en',
-  // lng: 'ua',
-  ns: 'translation',
-  defaultNS: 'translation',
-  interpolation: {
-    escapeValue: false,
-  },
-  saveMissing: true,
-  whitelist: config.languages,
-  react: {
-    // wait: false,
-  },
-  resources: {
-    en: {
-      translation: translationEN,
-    },
-    es: {
-      translation: translationES,
-    },
-    ko: {
-      translation: translationKO,
-    },
-    ua: {
-      translation: translationUA,
-    },
-    ru: {
-      translation: translationRU,
-    },
-    zh_CN: {
-      translation: translationZH_CN,
-    },
-    zh_TW: {
-      translation: translationZH_TW,
-    },
-    da: {
-      translation: translationDA,
-    },
-    de: {
-      translation: translationDE,
-    },
-    fi: {
-      translation: translationFI,
-    },
-    it: {
-      translation: translationIT,
-    },
-    ja: {
-      translation: translationJA,
-    },
-    nl: {
-      translation: translationNL,
-    },
-    fr: {
-      translation: translationFR,
-    },
-    sv: {
-      translation: translationSV,
-    },
-  },
+	fallbackLng: config.fallbackLng,
+	lng: store.has(ElectronStoreKeys.AppLanguage)
+		? String(store.get(ElectronStoreKeys.AppLanguage))
+		: 'en',
+	// lng: 'ua',
+	ns: 'translation',
+	defaultNS: 'translation',
+	interpolation: {
+		escapeValue: false,
+	},
+	saveMissing: true,
+	whitelist: config.languages,
+	react: {
+		// wait: false,
+	},
+	resources: {
+		en: {
+			translation: translationEN,
+		},
+		es: {
+			translation: translationES,
+		},
+		ko: {
+			translation: translationKO,
+		},
+		ua: {
+			translation: translationUA,
+		},
+		ru: {
+			translation: translationRU,
+		},
+		zh_CN: {
+			translation: translationZH_CN,
+		},
+		zh_TW: {
+			translation: translationZH_TW,
+		},
+		da: {
+			translation: translationDA,
+		},
+		de: {
+			translation: translationDE,
+		},
+		fi: {
+			translation: translationFI,
+		},
+		it: {
+			translation: translationIT,
+		},
+		ja: {
+			translation: translationJA,
+		},
+		nl: {
+			translation: translationNL,
+		},
+		fr: {
+			translation: translationFR,
+		},
+		sv: {
+			translation: translationSV,
+		},
+	},
 };
 
 if (!i18n.isInitialized) {
-  i18n.init(i18nextOptions);
+	i18n.init(i18nextOptions);
 }
 
 export default i18n;

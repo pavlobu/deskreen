@@ -14,7 +14,12 @@ export default async function handlePeerOnData(
 		const minVideoQualityMultiplier =
 			maxVideoQualityMultiplier === 1 ? 0.5 : maxVideoQualityMultiplier;
 
-		if (!peerConnection.desktopCapturerSourceID.includes(DesktopCapturerSourceType.SCREEN)) return;
+		if (
+			!peerConnection.desktopCapturerSourceID.includes(
+				DesktopCapturerSourceType.SCREEN,
+			)
+		)
+			return;
 
 		const newStream = await getDesktopSourceStreamBySourceID(
 			peerConnection.desktopCapturerSourceID,
@@ -30,7 +35,11 @@ export default async function handlePeerOnData(
 		const oldTrack = oldStream?.getVideoTracks()[0];
 
 		if (oldTrack && oldStream && peerConnection.peer !== NullSimplePeer) {
-			await peerConnection.peer.replaceTrack(oldTrack, newVideoTrack, oldStream);
+			await peerConnection.peer.replaceTrack(
+				oldTrack,
+				newVideoTrack,
+				oldStream,
+			);
 			// stop only the old track (it's already removed from the stream by replaceTrack)
 			oldTrack.stop();
 			// stop any remaining tracks in the old stream, but don't stop the new track
@@ -52,6 +61,8 @@ export default async function handlePeerOnData(
 			? DesktopCapturerSourceType.SCREEN
 			: DesktopCapturerSourceType.WINDOW;
 
-		peerConnection.peer.send(prepareDataMessageToSendScreenSourceType(sourceType));
+		peerConnection.peer.send(
+			prepareDataMessageToSendScreenSourceType(sourceType),
+		);
 	}
 }

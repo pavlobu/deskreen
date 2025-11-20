@@ -31,7 +31,9 @@ function isGoogleAnalyticsUrl(url: string): boolean {
 	try {
 		const urlObj = new URL(url, window.location.href);
 		const hostname = urlObj.hostname.toLowerCase();
-		return GA_DOMAINS.some(domain => hostname === domain || hostname.endsWith('.' + domain));
+		return GA_DOMAINS.some(
+			(domain) => hostname === domain || hostname.endsWith('.' + domain),
+		);
 	} catch {
 		return false;
 	}
@@ -74,7 +76,7 @@ function isLocalIP(ip: string): boolean {
 function sanitizeGAUrl(url: string): string {
 	try {
 		const urlObj = new URL(url);
-		
+
 		// only sanitize /g/collect requests
 		if (!urlObj.pathname.includes('/g/collect')) {
 			return url;
@@ -116,12 +118,21 @@ function interceptFetch(): void {
 
 	originalFetch = window.fetch;
 
-	window.fetch = function(input: RequestInfo | URL, init?: RequestInit) {
-		let url = typeof input === 'string' ? input : (input instanceof Request ? input.url : '');
+	window.fetch = function (input: RequestInfo | URL, init?: RequestInit) {
+		let url =
+			typeof input === 'string'
+				? input
+				: input instanceof Request
+					? input.url
+					: '';
 
 		if (isGoogleAnalyticsUrl(url)) {
 			if (shouldBlockRequest()) {
-				return Promise.reject(new Error('Google Analytics request blocked: user consent not granted'));
+				return Promise.reject(
+					new Error(
+						'Google Analytics request blocked: user consent not granted',
+					),
+				);
 			}
 			// sanitize URL before making request
 			url = sanitizeGAUrl(url);
@@ -150,13 +161,15 @@ function interceptXMLHttpRequest(): void {
 	originalXHROpen = XHR.prototype.open;
 	originalXHRSend = XHR.prototype.send;
 
-	XHR.prototype.open = function(...args: unknown[]) {
+	XHR.prototype.open = function (...args: unknown[]) {
 		let url = args[1] as string | URL;
 		let urlString = typeof url === 'string' ? url : url.toString();
 
 		if (isGoogleAnalyticsUrl(urlString)) {
 			if (shouldBlockRequest()) {
-				throw new Error('Google Analytics request blocked: user consent not granted');
+				throw new Error(
+					'Google Analytics request blocked: user consent not granted',
+				);
 			}
 			// sanitize URL before making request
 			urlString = sanitizeGAUrl(urlString);
@@ -164,13 +177,16 @@ function interceptXMLHttpRequest(): void {
 			args[1] = url;
 		}
 
-		(this as XMLHttpRequest & { _interceptedUrl?: string })._interceptedUrl = urlString;
+		(this as XMLHttpRequest & { _interceptedUrl?: string })._interceptedUrl =
+			urlString;
 
 		return (originalXHROpen as (...args: unknown[]) => void).apply(this, args);
 	};
 
-	XHR.prototype.send = function(...args) {
-		const url = (this as XMLHttpRequest & { _interceptedUrl?: string })._interceptedUrl || '';
+	XHR.prototype.send = function (...args) {
+		const url =
+			(this as XMLHttpRequest & { _interceptedUrl?: string })._interceptedUrl ||
+			'';
 
 		if (isGoogleAnalyticsUrl(url) && shouldBlockRequest()) {
 			return;
@@ -181,13 +197,20 @@ function interceptXMLHttpRequest(): void {
 }
 
 function interceptSendBeacon(): void {
-	if (typeof window === 'undefined' || !navigator.sendBeacon || navigator.sendBeacon === originalSendBeacon) {
+	if (
+		typeof window === 'undefined' ||
+		!navigator.sendBeacon ||
+		navigator.sendBeacon === originalSendBeacon
+	) {
 		return;
 	}
 
 	originalSendBeacon = navigator.sendBeacon;
 
-	navigator.sendBeacon = function(url: string | URL, data?: BodyInit | null): boolean {
+	navigator.sendBeacon = function (
+		url: string | URL,
+		data?: BodyInit | null,
+	): boolean {
 		let urlString = typeof url === 'string' ? url : url.toString();
 
 		if (isGoogleAnalyticsUrl(urlString)) {
@@ -212,4 +235,3 @@ export function initializeGARequestInterceptor(): void {
 	interceptXMLHttpRequest();
 	interceptSendBeacon();
 }
-

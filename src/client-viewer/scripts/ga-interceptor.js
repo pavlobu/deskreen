@@ -1,11 +1,16 @@
-(function() {
+(function () {
 	const CONSENT_KEY = 'deskreen_ga_consent';
-	const GA_DOMAINS = ['google-analytics.com', 'googletagmanager.com', 'google-analytics.co', 'analytics.google.com'];
-	
+	const GA_DOMAINS = [
+		'google-analytics.com',
+		'googletagmanager.com',
+		'google-analytics.co',
+		'analytics.google.com',
+	];
+
 	for (let i = 1; i <= 20; i++) {
 		GA_DOMAINS.push('region' + i + '.google-analytics.com');
 	}
-	
+
 	function getConsentStatus() {
 		try {
 			const stored = localStorage.getItem(CONSENT_KEY);
@@ -14,23 +19,23 @@
 			return null;
 		}
 	}
-	
+
 	function isGoogleAnalyticsUrl(url) {
 		try {
 			const urlObj = new URL(url, window.location.href);
 			const hostname = urlObj.hostname.toLowerCase();
-			return GA_DOMAINS.some(function(domain) {
+			return GA_DOMAINS.some(function (domain) {
 				return hostname === domain || hostname.endsWith('.' + domain);
 			});
 		} catch {
 			return false;
 		}
 	}
-	
+
 	function shouldBlockRequest() {
 		return getConsentStatus() !== 'accepted';
 	}
-	
+
 	function isLocalIP(ip) {
 		const parts = ip.split('.').map(Number);
 		if (parts.length !== 4 || parts.some(isNaN)) {
@@ -46,7 +51,7 @@
 		if (parts[0] === 192 && parts[1] === 168) return true;
 		return false;
 	}
-	
+
 	function sanitizeGAUrl(url) {
 		try {
 			const urlObj = new URL(url);
@@ -73,15 +78,24 @@
 			return url;
 		}
 	}
-	
+
 	// intercept fetch
 	if (window.fetch) {
 		const originalFetch = window.fetch;
-		window.fetch = function(input, init) {
-			let url = typeof input === 'string' ? input : (input instanceof Request ? input.url : '');
+		window.fetch = function (input, init) {
+			let url =
+				typeof input === 'string'
+					? input
+					: input instanceof Request
+						? input.url
+						: '';
 			if (isGoogleAnalyticsUrl(url)) {
 				if (shouldBlockRequest()) {
-					return Promise.reject(new Error('Google Analytics request blocked: user consent not granted'));
+					return Promise.reject(
+						new Error(
+							'Google Analytics request blocked: user consent not granted',
+						),
+					);
 				}
 				url = sanitizeGAUrl(url);
 				if (input instanceof Request) {
@@ -93,18 +107,20 @@
 			return originalFetch.apply(this, arguments);
 		};
 	}
-	
+
 	// intercept XMLHttpRequest
 	if (window.XMLHttpRequest) {
 		const XHR = window.XMLHttpRequest;
 		const originalOpen = XHR.prototype.open;
 		const originalSend = XHR.prototype.send;
-		
-		XHR.prototype.open = function(method, url, async, username, password) {
+
+		XHR.prototype.open = function (method, url, async, username, password) {
 			let urlString = typeof url === 'string' ? url : url.toString();
 			if (isGoogleAnalyticsUrl(urlString)) {
 				if (shouldBlockRequest()) {
-					throw new Error('Google Analytics request blocked: user consent not granted');
+					throw new Error(
+						'Google Analytics request blocked: user consent not granted',
+					);
 				}
 				urlString = sanitizeGAUrl(urlString);
 				url = urlString;
@@ -112,8 +128,8 @@
 			this._interceptedUrl = urlString;
 			return originalOpen.apply(this, arguments);
 		};
-		
-		XHR.prototype.send = function() {
+
+		XHR.prototype.send = function () {
 			const url = this._interceptedUrl || '';
 			if (isGoogleAnalyticsUrl(url) && shouldBlockRequest()) {
 				return;
@@ -121,11 +137,11 @@
 			return originalSend.apply(this, arguments);
 		};
 	}
-	
+
 	// intercept sendBeacon
 	if (navigator.sendBeacon) {
 		const originalSendBeacon = navigator.sendBeacon;
-		navigator.sendBeacon = function(url, data) {
+		navigator.sendBeacon = function (url, data) {
 			let urlString = typeof url === 'string' ? url : url.toString();
 			if (isGoogleAnalyticsUrl(urlString)) {
 				if (shouldBlockRequest()) {
@@ -138,4 +154,3 @@
 		};
 	}
 })();
-

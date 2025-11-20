@@ -1,11 +1,20 @@
 import shortId from 'shortid';
 import SimplePeer from 'simple-peer';
 import { UAParser } from 'ua-parser-js';
+import type { Socket } from 'socket.io-client';
+import type { LocalPeerUser } from '../../../../common/LocalPeerUser';
+import type { SendEncryptedMessagePayload } from '../../../../common/SendEncryptedMessagePayload';
 import { connect as connectSocket } from '../../utils/socket';
-import { prepare as prepareMessage } from '../../utils/message';
+import {
+	prepare as prepareMessage,
+	type ProcessedPayload,
+} from '../../utils/message';
 import setSdpMediaBitrate from './setSdpMediaBitrate';
 import VideoAutoQualityOptimizer from '../VideoAutoQualityOptimizer';
-import { VideoQuality, type VideoQualityType } from '../VideoAutoQualityOptimizer/VideoQualityEnum';
+import {
+	VideoQuality,
+	type VideoQualityType,
+} from '../VideoAutoQualityOptimizer/VideoQualityEnum';
 import { prepareDataMessageToChangeQuality } from './simplePeerDataMessages';
 import { VIDEO_QUALITY_TO_DECIMAL } from './../../constants/appConstants';
 import { ErrorMessage } from '../../components/ErrorDialog/ErrorMessageEnum';
@@ -20,260 +29,256 @@ import PeerConnectionSocketNotDefined from './errors/PeerConnectionSocketNotDefi
 import PeerConnectionUserIsNotDefinedError from './errors/PeerConnectionUserIsNotDefinedError';
 import PeerConnectionPartnerIsNotDefinedError from './errors/PeerConnectionPartnerIsNotDefinedError';
 
-interface LocalPeerUser {
-  username: string;
-  id: string;
-}
-
-interface SendEncryptedMessagePayload {
-  type: string;
-  payload: Record<string, unknown>;
-}
-
 export default class PeerConnection {
-  roomId: string;
+	roomId: string;
 
-  socket: any;
+	socket: Socket | null = null;
 
-  user: LocalPeerUser = NullUser;
+	user: LocalPeerUser = NullUser;
 
-  partner: PartnerPeerUser = NullUser;
+	partner: PartnerPeerUser = NullUser;
 
-  peer: null | SimplePeer.Instance = null;
+	peer: null | SimplePeer.Instance = null;
 
-  myDeviceDetails: DeviceDetails = {
-    myIP: '',
-    myOS: '',
-    myDeviceType: '',
-    myBrowser: '',
-    myRoomId: '',
-  };
+	myDeviceDetails: DeviceDetails = {
+		myIP: '',
+		myOS: '',
+		myDeviceType: '',
+		myBrowser: '',
+		myRoomId: '',
+	};
 
-  setUrlCallback: (url: any) => void;
+	setUrlCallback: (url: MediaStream | null) => void;
 
-  uaParser: UAParser;
+	uaParser: UAParser;
 
-  screenSharingSourceType: string | undefined = undefined;
+	screenSharingSourceType: string | undefined = undefined;
 
-  videoQuality: VideoQualityType = VideoQuality.Q_100_PERCENT;
+	videoQuality: VideoQualityType = VideoQuality.Q_100_PERCENT;
 
-  videoAutoQualityOptimizer: VideoAutoQualityOptimizer;
+	videoAutoQualityOptimizer: VideoAutoQualityOptimizer;
 
-  isStreamStarted: boolean = false;
+	isStreamStarted: boolean = false;
 
-  UIHandler: PeerConnectionUIHandler;
+	UIHandler: PeerConnectionUIHandler;
 
-  beforeunloadHandler: (() => void) | null = null;
+	beforeunloadHandler: (() => void) | null = null;
 
-  connectionCheckInterval: NodeJS.Timeout | null = null;
+	connectionCheckInterval: NodeJS.Timeout | null = null;
 
-  reconnectTimeout: NodeJS.Timeout | null = null;
+	reconnectTimeout: NodeJS.Timeout | null = null;
 
-  getMyIPTimeout: NodeJS.Timeout | null = null;
+	getMyIPTimeout: NodeJS.Timeout | null = null;
 
-  setMyDeviceDetailsTimeout: NodeJS.Timeout | null = null;
+	setMyDeviceDetailsTimeout: NodeJS.Timeout | null = null;
 
-  constructor(
-    roomId: string,
-    setUrlCallback: (url: any) => void,
-    videoAutoQualityOptimizer: VideoAutoQualityOptimizer,
-    UIHandler: PeerConnectionUIHandler,
-  ) {
-    this.setUrlCallback = setUrlCallback;
-    this.videoAutoQualityOptimizer = videoAutoQualityOptimizer;
-    this.UIHandler = UIHandler;
-    this.roomId = roomId;
-    this.socket = connectSocket(this.roomId);
-    this.uaParser = new UAParser();
-    this.createUserAndInitSocket();
-    this.createPeer();
+	constructor(
+		roomId: string,
+		setUrlCallback: (url: MediaStream | null) => void,
+		videoAutoQualityOptimizer: VideoAutoQualityOptimizer,
+		UIHandler: PeerConnectionUIHandler,
+	) {
+		this.setUrlCallback = setUrlCallback;
+		this.videoAutoQualityOptimizer = videoAutoQualityOptimizer;
+		this.UIHandler = UIHandler;
+		this.roomId = roomId;
+		this.socket = connectSocket(this.roomId);
+		this.uaParser = new UAParser();
+		this.createUserAndInitSocket();
+		this.createPeer();
 
-    if (!this.roomId || this.roomId === '') {
-      setAndShowErrorDialogMessage(this, ErrorMessage.NOT_ALLOWED);
-    }
+		if (!this.roomId || this.roomId === '') {
+			setAndShowErrorDialogMessage(this, ErrorMessage.NOT_ALLOWED);
+		}
 
-    this.connectionCheckInterval = startSocketConnectedCheckingLoop(this);
-  }
+		this.connectionCheckInterval = startSocketConnectedCheckingLoop(this);
+	}
 
-  setVideoQuality(videoQuality: VideoQualityType) {
-    this.videoQuality = videoQuality;
-    this.videoQualityChangedCallback();
-  }
+	setVideoQuality(videoQuality: VideoQualityType) {
+		this.videoQuality = videoQuality;
+		this.videoQualityChangedCallback();
+	}
 
-  videoQualityChangedCallback() {
-    if (!this.peer) return;
-    if (this.videoQuality === VideoQuality.Q_AUTO) {
-      this.peer.send(prepareDataMessageToChangeQuality(1));
-    } else {
-      this.peer.send(
-        prepareDataMessageToChangeQuality(VIDEO_QUALITY_TO_DECIMAL[this.videoQuality]),
-      );
-    }
-  }
+	videoQualityChangedCallback() {
+		if (!this.peer) return;
+		if (this.videoQuality === VideoQuality.Q_AUTO) {
+			this.peer.send(prepareDataMessageToChangeQuality(1));
+		} else {
+			this.peer.send(
+				prepareDataMessageToChangeQuality(
+					VIDEO_QUALITY_TO_DECIMAL[this.videoQuality],
+				),
+			);
+		}
+	}
 
-  stopStream() {
-    // stop the video stream by clearing the stream URL
-    this.setUrlCallback(null);
-    this.isStreamStarted = false;
-    
-    // destroy the peer connection
-    if (this.peer) {
-      try {
-        this.peer.removeAllListeners();
-        this.peer.destroy();
-      } catch (error) {
-        console.error('Error destroying peer connection:', error);
-      }
-      this.peer = null;
-    }
-  }
+	stopStream() {
+		// stop the video stream by clearing the stream URL
+		this.setUrlCallback(null);
+		this.isStreamStarted = false;
 
-  destroy() {
-    // remove window event listener
-    if (this.beforeunloadHandler) {
-      window.removeEventListener('beforeunload', this.beforeunloadHandler);
-      this.beforeunloadHandler = null;
-    }
+		// destroy the peer connection
+		if (this.peer) {
+			try {
+				this.peer.removeAllListeners();
+				this.peer.destroy();
+			} catch (error) {
+				console.error('Error destroying peer connection:', error);
+			}
+			this.peer = null;
+		}
+	}
 
-    // clear connection check interval
-    if (this.connectionCheckInterval) {
-      clearInterval(this.connectionCheckInterval);
-      this.connectionCheckInterval = null;
-    }
+	destroy() {
+		// remove window event listener
+		if (this.beforeunloadHandler) {
+			window.removeEventListener('beforeunload', this.beforeunloadHandler);
+			this.beforeunloadHandler = null;
+		}
 
-    // clear all timeouts
-    if (this.reconnectTimeout) {
-      clearTimeout(this.reconnectTimeout);
-      this.reconnectTimeout = null;
-    }
-    if (this.getMyIPTimeout) {
-      clearTimeout(this.getMyIPTimeout);
-      this.getMyIPTimeout = null;
-    }
-    if (this.setMyDeviceDetailsTimeout) {
-      clearTimeout(this.setMyDeviceDetailsTimeout);
-      this.setMyDeviceDetailsTimeout = null;
-    }
+		// clear connection check interval
+		if (this.connectionCheckInterval) {
+			clearInterval(this.connectionCheckInterval);
+			this.connectionCheckInterval = null;
+		}
 
-    // stop stream if started
-    if (this.isStreamStarted) {
-      this.stopStream();
-    }
+		// clear all timeouts
+		if (this.reconnectTimeout) {
+			clearTimeout(this.reconnectTimeout);
+			this.reconnectTimeout = null;
+		}
+		if (this.getMyIPTimeout) {
+			clearTimeout(this.getMyIPTimeout);
+			this.getMyIPTimeout = null;
+		}
+		if (this.setMyDeviceDetailsTimeout) {
+			clearTimeout(this.setMyDeviceDetailsTimeout);
+			this.setMyDeviceDetailsTimeout = null;
+		}
 
-    // cleanup peer connection
-    if (this.peer) {
-      try {
-        this.peer.removeAllListeners();
-        this.peer.destroy();
-      } catch (error) {
-        console.error('Error destroying peer:', error);
-      }
-      this.peer = null;
-    }
+		// stop stream if started
+		if (this.isStreamStarted) {
+			this.stopStream();
+		}
 
-    // cleanup socket
-    if (this.socket) {
-      this.socket.removeAllListeners();
-      this.socket.disconnect();
-    }
-  }
+		// cleanup peer connection
+		if (this.peer) {
+			try {
+				this.peer.removeAllListeners();
+				this.peer.destroy();
+			} catch (error) {
+				console.error('Error destroying peer:', error);
+			}
+			this.peer = null;
+		}
 
-  createPeer() {
-    // cleanup existing peer before creating new one
-    if (this.peer) {
-      try {
-        this.peer.removeAllListeners();
-        this.peer.destroy();
-      } catch (error) {
-        console.error('Error cleaning up existing peer:', error);
-      }
-      this.peer = null;
-    }
+		// cleanup socket
+		if (this.socket) {
+			this.socket.removeAllListeners();
+			this.socket.disconnect();
+		}
+	}
 
-    // When we are testing with jest, SimplePeer() can not be created, so we just return
-    const peer = new SimplePeer({
-      initiator: false,
-      config: { iceServers: [] },
-      sdpTransform: (sdp) => {
-        let newSDP = sdp;
-        newSDP = setSdpMediaBitrate(
-          newSDP as unknown as string,
-          'video',
-          500000,
-        ) as unknown as typeof sdp;
-        return newSDP;
-      },
-    });
+	createPeer() {
+		// cleanup existing peer before creating new one
+		if (this.peer) {
+			try {
+				this.peer.removeAllListeners();
+				this.peer.destroy();
+			} catch (error) {
+				console.error('Error cleaning up existing peer:', error);
+			}
+			this.peer = null;
+		}
 
-    this.peer = peer;
-    this.peer.on('error', (e) => {
-      console.error('error in simple peer happened!');
-      console.error(e);
-      setAndShowErrorDialogMessage(this, ErrorMessage.WEBRTC_ERROR);
-    });
-    peerConnectionHandlePeer(this);
-  }
+		// When we are testing with jest, SimplePeer() can not be created, so we just return
+		const peer = new SimplePeer({
+			initiator: false,
+			config: { iceServers: [] },
+			sdpTransform: (sdp) => {
+				let newSDP = sdp;
+				newSDP = setSdpMediaBitrate(
+					newSDP as unknown as string,
+					'video',
+					500000,
+				) as unknown as typeof sdp;
+				return newSDP;
+			},
+		});
 
-  initApp(user: LocalPeerUser, myIP: string) {
-    if (!this.socket) {
-      throw new PeerConnectionSocketNotDefined();
-    }
-    this.socket.emit('USER_ENTER', {
-      username: user.username,
-      ip: myIP, // TODO: remove as it is not used
-    });
-  }
+		this.peer = peer;
+		this.peer.on('error', (e) => {
+			console.error('error in simple peer happened!');
+			console.error(e);
+			setAndShowErrorDialogMessage(this, ErrorMessage.WEBRTC_ERROR);
+		});
+		peerConnectionHandlePeer(this);
+	}
 
-  createUser() {
-    return new Promise<LocalPeerUser>((resolve) => {
-      const username = shortId.generate();
-      const id = shortId.generate();
+	initApp(user: LocalPeerUser, myIP: string) {
+		if (!this.socket) {
+			throw new PeerConnectionSocketNotDefined();
+		}
+		this.socket.emit('USER_ENTER', {
+			username: user.username,
+			ip: myIP, // TODO: remove as it is not used
+		});
+	}
 
-      resolve({
-        username,
-        id,
-      });
-    });
-  }
+	createUser() {
+		return new Promise<LocalPeerUser>((resolve) => {
+			const username = shortId.generate();
+			const id = shortId.generate();
 
-  sendEncryptedMessage(payload: SendEncryptedMessagePayload) {
-    if (!this.socket) {
-      throw new PeerConnectionSocketNotDefined();
-    }
-    if (!this.user || this.user === NullUser) {
-      throw new PeerConnectionUserIsNotDefinedError();
-    }
-    if (!this.partner || this.partner === NullUser) {
-      throw new PeerConnectionPartnerIsNotDefinedError();
-    }
-    if (!this.partner.username) return;
-    prepareMessage(payload, this.user).then((msg: any) => {
-      this.socket.emit('MESSAGE', msg.toSend);
-    });
-  }
+			resolve({
+				username,
+				id,
+			});
+		});
+	}
 
-  receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload) {
-    peerConnectionReceiveEncryptedMessage(this, payload);
-  }
+	sendEncryptedMessage(payload: SendEncryptedMessagePayload) {
+		const socket = this.socket;
+		if (!socket) {
+			throw new PeerConnectionSocketNotDefined();
+		}
+		if (!this.user || this.user === NullUser) {
+			throw new PeerConnectionUserIsNotDefinedError();
+		}
+		if (!this.partner || this.partner === NullUser) {
+			throw new PeerConnectionPartnerIsNotDefinedError();
+		}
+		if (!this.partner.username) return;
+		prepareMessage(payload, this.user).then((msg: ProcessedPayload) => {
+			socket.emit('MESSAGE', msg.toSend);
+		});
+	}
 
-  createUserAndInitSocket() {
-    if (!this.socket) {
-      throw new PeerConnectionSocketNotDefined();
-    }
+	receiveEncryptedMessage(payload: ReceiveEncryptedMessagePayload) {
+		peerConnectionReceiveEncryptedMessage(this, payload);
+	}
 
-    this.socket.removeAllListeners();
+	createUserAndInitSocket() {
+		const socket = this.socket;
+		if (!socket) {
+			throw new PeerConnectionSocketNotDefined();
+		}
 
-    const userCreatedCallback = (createdUser: LocalPeerUser) => {
-      this.user = createdUser;
+		socket.removeAllListeners();
 
-      peerConnectionHandleSocket(this);
+		const userCreatedCallback = (createdUser: LocalPeerUser) => {
+			this.user = createdUser;
 
-      this.beforeunloadHandler = () => {
-        this.socket.emit('USER_DISCONNECT');
-      };
-      window.addEventListener('beforeunload', this.beforeunloadHandler);
-    };
+			peerConnectionHandleSocket(this);
 
-    this.createUser().then((newUser: LocalPeerUser) => userCreatedCallback(newUser));
-  }
+			this.beforeunloadHandler = () => {
+				socket.emit('USER_DISCONNECT');
+			};
+			window.addEventListener('beforeunload', this.beforeunloadHandler);
+		};
+
+		this.createUser().then((newUser: LocalPeerUser) =>
+			userCreatedCallback(newUser),
+		);
+	}
 }

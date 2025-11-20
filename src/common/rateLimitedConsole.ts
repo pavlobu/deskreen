@@ -21,21 +21,23 @@ const originalConsole = {
 	debug: console.debug.bind(console),
 };
 
-function getLogKey(...args: any[]): string {
+function getLogKey(...args: unknown[]): string {
 	// create a key from the log message (first 100 chars to avoid huge keys)
-	const message = args.map((arg) => {
-		if (typeof arg === 'string') {
-			return arg.substring(0, 100);
-		}
-		if (typeof arg === 'object') {
-			try {
-				return JSON.stringify(arg).substring(0, 100);
-			} catch {
-				return String(arg).substring(0, 100);
+	const message = args
+		.map((arg) => {
+			if (typeof arg === 'string') {
+				return arg.substring(0, 100);
 			}
-		}
-		return String(arg).substring(0, 100);
-	}).join(' ');
+			if (typeof arg === 'object') {
+				try {
+					return JSON.stringify(arg).substring(0, 100);
+				} catch {
+					return String(arg).substring(0, 100);
+				}
+			}
+			return String(arg).substring(0, 100);
+		})
+		.join(' ');
 	return message;
 }
 
@@ -87,28 +89,28 @@ function cleanupCache(): void {
 
 // rate-limited console methods
 const rateLimitedConsole = {
-	log: (...args: any[]) => {
+	log: (...args: unknown[]) => {
 		const key = getLogKey(...args);
 		if (shouldLog(key)) {
 			// use original console.log to avoid recursion
 			originalConsole.log(...args);
 		}
 	},
-	error: (...args: any[]) => {
+	error: (...args: unknown[]) => {
 		// errors are never rate-limited
 		originalConsole.error(...args);
 	},
-	warn: (...args: any[]) => {
+	warn: (...args: unknown[]) => {
 		// warnings are never rate-limited
 		originalConsole.warn(...args);
 	},
-	info: (...args: any[]) => {
+	info: (...args: unknown[]) => {
 		const key = getLogKey(...args);
 		if (shouldLog(key)) {
 			originalConsole.info(...args);
 		}
 	},
-	debug: (...args: any[]) => {
+	debug: (...args: unknown[]) => {
 		const key = getLogKey(...args);
 		if (shouldLog(key)) {
 			originalConsole.debug(...args);
@@ -149,4 +151,3 @@ export function overrideGlobalConsole(): void {
 	console.error = originalConsole.error;
 	console.warn = originalConsole.warn;
 }
-

@@ -22,92 +22,88 @@ export type DataStore = Record<string, string>;
  * A simple file-based key-value store for Electron applications.
  * Data is persisted to a JSON file in the user's data directory.
  */
+const readDataFromDisk = (filePath: string): DataStore => {
+	try {
+		// Read the file synchronously to ensure data is loaded before any operations.
+		const fileContent = fs.readFileSync(filePath, 'utf-8');
+		return JSON.parse(fileContent) as DataStore;
+	} catch (_error) {
+		// If the file doesn't exist or is invalid JSON, return an empty object.
+		return {};
+	}
+};
+
 export class PersistentStorage {
-  private filePath: string;
-  private data: DataStore;
+	private filePath: string;
+	private data: DataStore;
 
-  /**
-   * @param fileName The name of the file to save the data to. Defaults to 'deskreen-ce-storage.json'.
-   */
-  constructor(fileName = 'deskreen-ce-storage.json') {
-    const userDataPath = app.getPath('userData');
-    this.filePath = path.join(userDataPath, fileName);
-    this.data = this.readData();
-  }
+	/**
+	 * @param fileName The name of the file to save the data to. Defaults to 'deskreen-ce-storage.json'.
+	 */
+	constructor(fileName = 'deskreen-ce-storage.json') {
+		const userDataPath = app.getPath('userData');
+		this.filePath = path.join(userDataPath, fileName);
+		this.data = readDataFromDisk(this.filePath);
+	}
 
-  /**
-   * Reads the data from the JSON file on disk.
-   * @returns The parsed data object or an empty object if the file doesn't exist.
-   */
-  private readData(): DataStore {
-    try {
-      // Read the file synchronously to ensure data is loaded before any operations.
-      const fileContent = fs.readFileSync(this.filePath, 'utf-8');
-      return JSON.parse(fileContent) as DataStore;
-    } catch (error) {
-      // If the file doesn't exist or is invalid JSON, return an empty object.
-      return {};
-    }
-  }
+	/**
+	 * Writes the current data object to the JSON file.
+	 */
+	private writeData(): void {
+		try {
+			// Use writeFileSync for synchronous writing. This is generally safe for app settings
+			// and ensures the data is saved before the app exits.
+			const jsonContent = JSON.stringify(this.data, null, 2);
+			fs.writeFileSync(this.filePath, jsonContent, 'utf-8');
+		} catch (error) {
+			console.error('Failed to write data to file:', error);
+		}
+	}
 
-  /**
-   * Writes the current data object to the JSON file.
-   */
-  private writeData(): void {
-    try {
-      // Use writeFileSync for synchronous writing. This is generally safe for app settings
-      // and ensures the data is saved before the app exits.
-      const jsonContent = JSON.stringify(this.data, null, 2);
-      fs.writeFileSync(this.filePath, jsonContent, 'utf-8');
-    } catch (error) {
-      console.error('Failed to write data to file:', error);
-    }
-  }
+	/**
+	 * Checks if a key exists in the store.
+	 * @param key The key to check for.
+	 * @returns `true` if the key exists, `false` otherwise.
+	 */
+	public has(key: string): boolean {
+		return Object.hasOwn(this.data, key);
+	}
 
-  /**
-   * Checks if a key exists in the store.
-   * @param key The key to check for.
-   * @returns `true` if the key exists, `false` otherwise.
-   */
-  public has(key: string): boolean {
-    return Object.prototype.hasOwnProperty.call(this.data, key);
-  }
+	/**
+	 * Gets a value from the store by its key.
+	 * @param key The key to retrieve.
+	 * @returns The value associated with the key, or `undefined` if not found.
+	 */
+	public get(key: string): string | undefined {
+		return this.data[key];
+	}
 
-  /**
-   * Gets a value from the store by its key.
-   * @param key The key to retrieve.
-   * @returns The value associated with the key, or `undefined` if not found.
-   */
-  public get(key: string): string | undefined {
-    return this.data[key];
-  }
+	/**
+	 * Sets a value in the store.
+	 * @param key The key to set.
+	 * @param value The string value to store.
+	 */
+	public set(key: string, value: string): void {
+		this.data[key] = value;
+		this.writeData(); // Persist the change immediately.
+	}
 
-  /**
-   * Sets a value in the store.
-   * @param key The key to set.
-   * @param value The string value to store.
-   */
-  public set(key: string, value: string): void {
-    this.data[key] = value;
-    this.writeData(); // Persist the change immediately.
-  }
+	/**
+	 * Deletes a key-value pair from the store.
+	 * @param key The key to delete.
+	 */
+	public delete(key: string): void {
+		delete this.data[key];
+		this.writeData(); // Persist the change immediately.
+	}
 
-  /**
-   * Deletes a key-value pair from the store.
-   * @param key The key to delete.
-   */
-  public delete(key: string): void {
-    delete this.data[key];
-    this.writeData(); // Persist the change immediately.
-  }
-
-  /**
-   * Clears all data from the store.
-   */
-  public clear(): void {
-    this.data = {};
-    this.writeData();
-  }
+	/**
+	 * Clears all data from the store.
+	 */
+	public clear(): void {
+		this.data = {};
+		this.writeData();
+	}
 }
 
 export const store = new PersistentStorage();
