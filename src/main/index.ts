@@ -8,7 +8,7 @@ startConsoleRateLimiting();
 
 import { app, shell, BrowserWindow, Notification } from 'electron';
 import { join } from 'path';
-import { electronApp, is, optimizer } from '@electron-toolkit/utils';
+import { is, optimizer } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 
 // function createWindow(): void {
@@ -118,7 +118,8 @@ export default class DeskreenApp {
 		});
 
 		app.whenReady().then(async () => {
-			electronApp.setAppUserModelId('com.deskreen');
+			app.setAppUserModelId('com.deskreen-ce.app');
+			app.setActivationPolicy('regular');
 
 			// start log buffer cleanup to prevent memory bloat
 			startLogBufferCleanup();
