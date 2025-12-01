@@ -1,7 +1,7 @@
 {
   "name": "deskreen-ce-client-viewer",
   "private": true,
-  "version": "3.1.14",
+  "version": "3.1.15",
   "type": "module",
   "scripts": {
     "dev": "vite",
