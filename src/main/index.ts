@@ -117,7 +117,8 @@ export default class DeskreenApp {
 			}
 		});
 
-		app.whenReady().then(async () => {
+		// ensure window creation happens even if app.whenReady() has already fired
+		const initializeApp = async (): Promise<void> => {
 			app.setAppUserModelId('com.deskreen-ce.app');
 			app.setActivationPolicy('regular');
 
@@ -127,7 +128,17 @@ export default class DeskreenApp {
 			await this.createWindow();
 
 			void this.checkForLatestVersionAndNotify();
-		});
+		};
+
+		if (app.isReady()) {
+			// app is already ready, initialize immediately
+			void initializeApp();
+		} else {
+			// app is not ready yet, wait for it
+			app.whenReady().then(initializeApp).catch((error) => {
+				console.error('Failed to initialize app:', error);
+			});
+		}
 
 		app.on('browser-window-created', (_, window) => {
 			optimizer.watchWindowShortcuts(window);
@@ -193,8 +204,11 @@ export default class DeskreenApp {
 			await installExtensions();
 		}
 
+		// on windows, show window immediately to prevent it from staying hidden
+		const shouldShowImmediately = process.platform === 'win32';
+		
 		this.mainWindow = new BrowserWindow({
-			show: false,
+			show: shouldShowImmediately,
 			width: 940,
 			height: 640,
 			minHeight: 460,
@@ -211,18 +225,83 @@ export default class DeskreenApp {
 			},
 		});
 
-		// @TODO: Use 'ready-to-show' event
-		//        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-		this.mainWindow.on('ready-to-show', () => {
-			if (!this.mainWindow) {
-				throw new Error('"mainWindow" is not defined');
+		// track if window has been properly shown and focused
+		let windowShown = shouldShowImmediately;
+		// fallback method: timeout to ensure window shows even if events don't fire
+		const showTimeout = setTimeout(() => {
+			console.warn('Window show timeout reached, forcing window to show');
+			if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+				if (process.env.START_MINIMIZED === 'true') {
+					this.mainWindow.minimize();
+				} else {
+					this.mainWindow.show();
+					this.mainWindow.focus();
+					// on windows, ensure window is brought to front
+					if (process.platform === 'win32') {
+						this.mainWindow.setAlwaysOnTop(true);
+						this.mainWindow.setAlwaysOnTop(false);
+					}
+				}
+				windowShown = true;
 			}
+		}, process.platform === 'win32' ? 2000 : 3000);
+
+		const showWindow = (): void => {
+			if (!this.mainWindow || windowShown) {
+				return;
+			}
+			windowShown = true;
+			clearTimeout(showTimeout);
 			if (process.env.START_MINIMIZED === 'true') {
 				this.mainWindow.minimize();
 			} else {
 				this.mainWindow.show();
 				this.mainWindow.focus();
+				// on windows, ensure window is brought to front
+				if (process.platform === 'win32') {
+					this.mainWindow.setAlwaysOnTop(true);
+					this.mainWindow.setAlwaysOnTop(false);
+				}
 			}
+		};
+
+		// primary method: ready-to-show event
+		this.mainWindow.on('ready-to-show', () => {
+			if (shouldShowImmediately) {
+				// window is already shown, just ensure it's focused
+				if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+					this.mainWindow.focus();
+					if (process.platform === 'win32') {
+						this.mainWindow.setAlwaysOnTop(true);
+						this.mainWindow.setAlwaysOnTop(false);
+					}
+				}
+			} else {
+				// window was hidden, show it now
+				showWindow();
+			}
+		});
+
+		// fallback method: did-finish-load event
+		this.mainWindow.webContents.on('did-finish-load', () => {
+			// delay slightly to ensure renderer is ready
+			setTimeout(() => {
+				showWindow();
+			}, 100);
+		});
+
+		// handle renderer crashes
+		this.mainWindow.webContents.on('render-process-gone', (_, details) => {
+			console.error('Renderer process crashed:', details);
+			// try to reload the window
+			if (this.mainWindow && !this.mainWindow.isDestroyed()) {
+				this.mainWindow.reload();
+			}
+		});
+
+		// handle unresponsive renderer
+		this.mainWindow.on('unresponsive', () => {
+			console.warn('Window became unresponsive');
 		});
 
 		this.mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -299,12 +378,25 @@ export default class DeskreenApp {
 				}
 				this.mainWindow.focus();
 				this.mainWindow.show();
+			} else {
+				// window was never created or was closed, create it now
+				if (app.isReady()) {
+					void this.createWindow();
+				} else {
+					app.whenReady().then(() => {
+						void this.createWindow();
+					});
+				}
 			}
 		});
 
 		const cliLocalIp = this.parseCliLocalIp();
 		initGlobals(join(__dirname, '..'), cliLocalIp);
-		signalingServer.start();
+		
+		// start signaling server with error handling to prevent unhandled promise rejections
+		void signalingServer.start().catch((error) => {
+			console.error('Failed to start signaling server:', error);
+		});
 
 		this.initElectronAppObject();
 	}
