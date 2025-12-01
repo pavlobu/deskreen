@@ -119,7 +119,6 @@ export default class DeskreenApp {
 
 		app.whenReady().then(async () => {
 			app.setAppUserModelId('com.deskreen-ce.app');
-			app.setActivationPolicy('regular');
 
 			// start log buffer cleanup to prevent memory bloat
 			startLogBufferCleanup();
