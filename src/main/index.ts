@@ -117,7 +117,8 @@ export default class DeskreenApp {
 			}
 		});
 
-		app.whenReady().then(async () => {
+		// ensure window creation happens even if app.whenReady() has already fired
+		const initializeApp = async (): Promise<void> => {
 			app.setAppUserModelId('com.deskreen-ce.app');
 			app.setActivationPolicy('regular');
 
@@ -127,7 +128,17 @@ export default class DeskreenApp {
 			await this.createWindow();
 
 			void this.checkForLatestVersionAndNotify();
-		});
+		};
+
+		if (app.isReady()) {
+			// app is already ready, initialize immediately
+			void initializeApp();
+		} else {
+			// app is not ready yet, wait for it
+			app.whenReady().then(initializeApp).catch((error) => {
+				console.error('Failed to initialize app:', error);
+			});
+		}
 
 		app.on('browser-window-created', (_, window) => {
 			optimizer.watchWindowShortcuts(window);
@@ -304,12 +315,25 @@ export default class DeskreenApp {
 				}
 				this.mainWindow.focus();
 				this.mainWindow.show();
+			} else {
+				// window was never created or was closed, create it now
+				if (app.isReady()) {
+					void this.createWindow();
+				} else {
+					app.whenReady().then(() => {
+						void this.createWindow();
+					});
+				}
 			}
 		});
 
 		const cliLocalIp = this.parseCliLocalIp();
 		initGlobals(join(__dirname, '..'), cliLocalIp);
-		signalingServer.start();
+		
+		// start signaling server with error handling to prevent unhandled promise rejections
+		void signalingServer.start().catch((error) => {
+			console.error('Failed to start signaling server:', error);
+		});
 
 		this.initElectronAppObject();
 	}
