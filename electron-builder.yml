@@ -9,10 +9,6 @@ files:
   - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md,AGENTS.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-  - '!CODE_OF_CONDUCT.md'
-  - '!biome.json'
-  - '!scripts/**'
-  - '!wiki/**'
 extraResources:
   - from: out/client-viewer
     to: client-viewer

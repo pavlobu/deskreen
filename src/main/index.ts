@@ -204,11 +204,8 @@ export default class DeskreenApp {
 			await installExtensions();
 		}
 
-		// on windows, show window immediately to prevent it from staying hidden
-		const shouldShowImmediately = process.platform === 'win32';
-		
 		this.mainWindow = new BrowserWindow({
-			show: shouldShowImmediately,
+			show: false,
 			width: 940,
 			height: 640,
 			minHeight: 460,
@@ -217,6 +214,7 @@ export default class DeskreenApp {
 			frame: process.platform === 'darwin' ? false : true,
 			useContentSize: true,
 			title: 'Deskreen CE',
+			// useContentSize: true,
 			autoHideMenuBar: true,
 			...(process.platform === 'linux' ? { icon } : {}),
 			webPreferences: {
@@ -225,83 +223,22 @@ export default class DeskreenApp {
 			},
 		});
 
-		// track if window has been properly shown and focused
-		let windowShown = shouldShowImmediately;
-		// fallback method: timeout to ensure window shows even if events don't fire
-		const showTimeout = setTimeout(() => {
-			console.warn('Window show timeout reached, forcing window to show');
-			if (this.mainWindow && !this.mainWindow.isDestroyed()) {
-				if (process.env.START_MINIMIZED === 'true') {
-					this.mainWindow.minimize();
-				} else {
-					this.mainWindow.show();
-					this.mainWindow.focus();
-					// on windows, ensure window is brought to front
-					if (process.platform === 'win32') {
-						this.mainWindow.setAlwaysOnTop(true);
-						this.mainWindow.setAlwaysOnTop(false);
-					}
-				}
-				windowShown = true;
-			}
-		}, process.platform === 'win32' ? 2000 : 3000);
+		// this.mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-		const showWindow = (): void => {
-			if (!this.mainWindow || windowShown) {
-				return;
+		// @TODO: Use 'ready-to-show' event
+		//        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+		this.mainWindow.on('ready-to-show', () => {
+			// this.mainWindow.webContents.on('did-finish-load', () => {
+			if (!this.mainWindow) {
+				throw new Error('"mainWindow" is not defined');
 			}
-			windowShown = true;
-			clearTimeout(showTimeout);
 			if (process.env.START_MINIMIZED === 'true') {
 				this.mainWindow.minimize();
 			} else {
 				this.mainWindow.show();
 				this.mainWindow.focus();
-				// on windows, ensure window is brought to front
-				if (process.platform === 'win32') {
-					this.mainWindow.setAlwaysOnTop(true);
-					this.mainWindow.setAlwaysOnTop(false);
-				}
 			}
-		};
-
-		// primary method: ready-to-show event
-		this.mainWindow.on('ready-to-show', () => {
-			if (shouldShowImmediately) {
-				// window is already shown, just ensure it's focused
-				if (this.mainWindow && !this.mainWindow.isDestroyed()) {
-					this.mainWindow.focus();
-					if (process.platform === 'win32') {
-						this.mainWindow.setAlwaysOnTop(true);
-						this.mainWindow.setAlwaysOnTop(false);
-					}
-				}
-			} else {
-				// window was hidden, show it now
-				showWindow();
-			}
-		});
-
-		// fallback method: did-finish-load event
-		this.mainWindow.webContents.on('did-finish-load', () => {
-			// delay slightly to ensure renderer is ready
-			setTimeout(() => {
-				showWindow();
-			}, 100);
-		});
-
-		// handle renderer crashes
-		this.mainWindow.webContents.on('render-process-gone', (_, details) => {
-			console.error('Renderer process crashed:', details);
-			// try to reload the window
-			if (this.mainWindow && !this.mainWindow.isDestroyed()) {
-				this.mainWindow.reload();
-			}
-		});
-
-		// handle unresponsive renderer
-		this.mainWindow.on('unresponsive', () => {
-			console.warn('Window became unresponsive');
+			// });
 		});
 
 		this.mainWindow.webContents.setWindowOpenHandler((details) => {
