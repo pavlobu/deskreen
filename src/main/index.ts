@@ -119,6 +119,9 @@ export default class DeskreenApp {
 
 		app.whenReady().then(async () => {
 			app.setAppUserModelId('com.deskreen-ce.app');
+			if (process.platform === 'darwin') {
+				app.setActivationPolicy('regular');
+			}
 
 			// start log buffer cleanup to prevent memory bloat
 			startLogBufferCleanup();

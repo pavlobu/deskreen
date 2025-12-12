@@ -8,9 +8,10 @@ const windowsWifiInterfaces = [
   "Wireless LAN adapter Wi-Fi",
   "Wireless LAN adapter",
   "Wireless Network Connection",
+  "WLAN",
 ]; // Windows Wi-Fi interface patterns
 
-const interfacesToCheck = [
+export const interfacesToCheck = [
   ...macosWifiInterfaces, // macOS Wi-Fi or Ethernet
   "awdl0", // macOS peer-to-peer (AirDrop)
   "eth0", // macOS or Linux Ethernet (older setups)
@@ -27,7 +28,7 @@ const interfacesToCheck = [
   "usb0", // Android/Chrome OS USB Ethernet adapters
 ];
 
-const interfacesStartsWithCheck = [
+export const interfacesStartsWithCheck = [
   "usb", // Android/Chrome OS USB Ethernet adapters
   "en", // macOS Ethernet interfaces
   "eth", // Linux Ethernet interfaces
