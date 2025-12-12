@@ -24,6 +24,7 @@ export const interfacesToCheck = [
   "enxXXXXXX", // Linux Ethernet (based on MAC address)
   ...windowsWifiInterfaces, // Windows Wi-Fi
   "Ethernet", // Windows Ethernet
+  "vEthernet", // Windows Ethernet Hyper-V
   "Local Area Connection", // Windows Ethernet (older versions)
   "usb0", // Android/Chrome OS USB Ethernet adapters
 ];
@@ -36,6 +37,7 @@ export const interfacesStartsWithCheck = [
   "enx", // Linux Ethernet based on MAC address
   ...windowsWifiInterfaces, // Windows Wi-Fi
   "Ethernet", // Windows Ethernet
+  "vEthernet", // Windows Ethernet Hyper-V
   "Local Area Connection", // Windows Ethernet (older versions)
 ];
 
