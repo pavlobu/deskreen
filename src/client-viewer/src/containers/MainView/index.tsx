@@ -134,6 +134,7 @@ function MainView() {
 				isWithControls={isWithControls}
 				handlePlayPause={handlePlayPause}
 				isPlaying={playing}
+				setPlaying={setPlaying}
 				setVideoQuality={setVideoQuality}
 				videoQuality={videoQuality}
 			/>

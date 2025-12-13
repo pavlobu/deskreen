@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
 	Alignment,
 	Button,
+	ButtonGroup,
 	Card,
 	H5,
 	Switch,
@@ -273,151 +274,157 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 					</Col>
 					<Col xs={12} md={5}>
 						<Row center="xs" style={{ height: '42px' }}>
-							<Row
-								center="xs"
-								middle="xs"
+							<ButtonGroup
 								style={{
 									borderRadius: '20px',
 									backgroundColor: '#137CBD',
-									width: '190px',
-									height: '100%',
+									height: '42px',
 								}}
 							>
-								<Row style={{ width: '100%' }} middle="xs" center="xs">
+								<Tooltip content={isPlaying ? t('Click to Pause Video') : t('Click to Play Video')} position={Position.BOTTOM}>
 									<Button
 										minimal
 										onClick={handlePlayPauseClick}
 										style={{
-											width: '85px',
-											minWidth: '70px',
 											color: 'white',
+											backgroundColor: !isPlaying ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+											boxShadow: !isPlaying ? '0 0 20px rgba(19, 124, 189, 0.8), 0 0 40px rgba(19, 124, 189, 0.6)' : 'none',
+											transition: 'all 0.3s ease-in-out',
+											border: 'none',
+											outline: 'none',
+											boxSizing: 'border-box',
+											padding: '0 20px',
+											borderRadius: '20px 0 0 20px',
+											width: '120px',
+											minWidth: '120px',
+											maxWidth: '120px',
 										}}
+										className={!isPlaying ? 'play-pause-button play-pause-button-glow' : 'play-pause-button'}
 									>
-										<Row>
-											<Col xs>
-												<Icon
-													icon={isPlaying ? 'pause' : 'play'}
-													color="white"
-												/>
-											</Col>
-											<Col xs>
-												<Text className="bp3-text-large play-pause-text">
-													{isPlaying ? t('Pause') : t('Play')}
-												</Text>
-											</Col>
-										</Row>
+										<span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+											<Icon icon={isPlaying ? 'pause' : 'play'} color="white" />
+											<Text className="bp3-text-large play-pause-text" style={{ color: 'white' }}>
+												{isPlaying ? t('Pause') : t('Play')}
+											</Text>
+										</span>
 									</Button>
-									<Divider
-										style={{
-											height: '20px',
-											borderRight: '1px solid #ffffffa8',
-											borderBottom: '1px solid #ffffffa8',
-										}}
-									/>
-									<Popover
-										content={
-											<>
-												<H5>{`${t('Video Settings')}:`}</H5>
-												<Divider />
-												<Row
-													style={{
-														justifyContent: 'center',
-													}}
-												>
-													<Tooltip
-														content={t('flip-the-screen-is-pro-version-only')}
-														position={Position.TOP}
-													>
-														<span
-															style={{
-																display: 'block',
-																width: '100%',
-																textAlign: 'center',
-															}}
-														>
-															<Button
-																icon="key-tab"
-																minimal
-																style={videoQualityButtonStyle}
-																disabled={true}
-															>
-																{t('Flip')}
-															</Button>
-														</span>
-													</Tooltip>
-												</Row>
-												<Divider />
-												{Object.values(VideoQuality).map(
-													(q: VideoQualityType) => {
-														return (
-															<Row key={q}>
-																<Button
-																	minimal
-																	active={selectedVideoQuality === q}
-																	style={videoQualityButtonStyle}
-																	disabled={
-																		screenSharingSourceType ===
-																		ScreenSharingSource.WINDOW
-																	}
-																	onClick={() => {
-																		handleVideoQualitySelect(q);
-																		// toaster?.show({
-																		//   icon: 'clean',
-																		//   intent: Intent.PRIMARY,
-																		//   message: `${t(
-																		//     'Video quality has been changed to'
-																		//   )} ${q}`,
-																		// });
-																	}}
-																>
-																	{q}
-																</Button>
-															</Row>
-														);
-													},
-												)}
-											</>
-										}
-										position={Position.BOTTOM}
-										popoverClassName={Classes.POPOVER_CONTENT_SIZING}
-									>
-										<Tooltip
-											content={t('Click to Open Video Settings')}
-											position={Position.BOTTOM}
-										>
-											<Button minimal>
-												<Icon icon="cog" color="white" />
-											</Button>
-										</Tooltip>
-									</Popover>
-
-									<Divider
-										style={{
-											height: '20px',
-											borderRight: '1px solid #ffffffa8',
-											borderBottom: '1px solid #ffffffa8',
-										}}
-									/>
-									<Tooltip
-										content={t('Click to Enter Full Screen Mode')}
-										position={Position.BOTTOM}
-									>
-										<Button minimal onClick={handleFullscreenClick}>
-											<img
-												src={isFullScreenOn ? FullScreenExit : FullScreenEnter}
-												width={16}
-												height={16}
+								</Tooltip>
+								<Popover
+									content={
+										<>
+											<H5>{`${t('Video Settings')}:`}</H5>
+											<Divider />
+											<Row
 												style={{
-													transform: 'scale(1.5) translateY(1px)',
-													filter:
-														'invert(100%) sepia(100%) saturate(0%) hue-rotate(127deg) brightness(107%) contrast(102%)',
+													justifyContent: 'center',
 												}}
-												alt="fullscreen-toggle"
-											/>
+											>
+												<Tooltip
+													content={t('flip-the-screen-is-pro-version-only')}
+													position={Position.TOP}
+												>
+													<span
+														style={{
+															display: 'block',
+															width: '100%',
+															textAlign: 'center',
+														}}
+													>
+														<Button
+															icon="key-tab"
+															minimal
+															style={videoQualityButtonStyle}
+															disabled={true}
+														>
+															{t('Flip')}
+														</Button>
+													</span>
+												</Tooltip>
+											</Row>
+											<Divider />
+											{Object.values(VideoQuality).map(
+												(q: VideoQualityType) => {
+													return (
+														<Row key={q}>
+															<Button
+																minimal
+																active={selectedVideoQuality === q}
+																style={videoQualityButtonStyle}
+																disabled={
+																	screenSharingSourceType ===
+																	ScreenSharingSource.WINDOW
+																}
+																onClick={() => {
+																	handleVideoQualitySelect(q);
+																	// toaster?.show({
+																	//   icon: 'clean',
+																	//   intent: Intent.PRIMARY,
+																	//   message: `${t(
+																	//     'Video quality has been changed to'
+																	//   )} ${q}`,
+																	// });
+																}}
+															>
+																{q}
+															</Button>
+														</Row>
+													);
+												},
+											)}
+										</>
+									}
+									position={Position.BOTTOM}
+									popoverClassName={Classes.POPOVER_CONTENT_SIZING}
+								>
+									<Tooltip
+										content={t('Click to Open Video Settings')}
+										position={Position.BOTTOM}
+									>
+										<Button
+											minimal
+											style={{
+												color: 'white',
+												outline: 'none',
+												boxShadow: 'none',
+												borderRadius: '0',
+												padding: '0 20px',
+											}}
+											className="settings-button-separator"
+										>
+											<Icon icon="cog" color="white" />
 										</Button>
 									</Tooltip>
-								</Row>
-							</Row>
+								</Popover>
+								<Tooltip
+									content={t('Click to Enter Full Screen Mode')}
+									position={Position.BOTTOM}
+								>
+									<Button
+										minimal
+										onClick={handleFullscreenClick}
+										style={{
+											color: 'white',
+											border: 'none',
+											outline: 'none',
+											boxShadow: 'none',
+											borderRadius: '0 20px 20px 0',
+											padding: '0 20px',
+										}}
+									>
+										<img
+											src={isFullScreenOn ? FullScreenExit : FullScreenEnter}
+											width={16}
+											height={16}
+											style={{
+												transform: 'scale(1.5) translateY(1px)',
+												filter:
+													'invert(100%) sepia(100%) saturate(0%) hue-rotate(127deg) brightness(107%) contrast(102%)',
+											}}
+											alt="fullscreen-toggle"
+										/>
+									</Button>
+								</Tooltip>
+							</ButtonGroup>
 						</Row>
 					</Col>
 					<Col xs={12} md={3}>

@@ -1,3 +1,126 @@
 .play-pause-text {
 	width: max-content;
 }
+
+.play-pause-button,
+.play-pause-button:focus,
+.play-pause-button:active {
+	border: none !important;
+	outline: none !important;
+	overflow: hidden !important;
+}
+
+.play-pause-button:hover {
+	border: none !important;
+	outline: none !important;
+	background: rgba(255, 255, 255, 0.1) !important;
+	overflow: hidden !important;
+}
+
+.play-pause-button::before,
+.play-pause-button::after {
+	display: none !important;
+}
+
+.play-pause-button {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 120px !important;
+	min-width: 120px !important;
+	max-width: 120px !important;
+}
+
+.play-pause-button-glow {
+	box-shadow: 0 0 20px rgba(19, 124, 189, 0.8), 0 0 40px rgba(19, 124, 189, 0.6) !important;
+}
+
+.play-pause-button .bp3-button-text {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: none !important;
+	outline: none !important;
+	margin: 0 !important;
+}
+
+.bp3-button-group {
+	border: none !important;
+	overflow: visible !important;
+}
+
+.bp3-button-group .bp3-button {
+	position: relative !important;
+}
+
+.settings-button-separator {
+	border: none !important;
+	position: relative !important;
+}
+
+.settings-button-separator::before {
+	content: '' !important;
+	position: absolute !important;
+	left: 0 !important;
+	top: 25% !important;
+	bottom: 25% !important;
+	width: 1px !important;
+	background-color: rgba(255, 255, 255, 0.5) !important;
+	z-index: 10 !important;
+	pointer-events: none !important;
+}
+
+.settings-button-separator::after {
+	content: '' !important;
+	position: absolute !important;
+	right: 0 !important;
+	top: 25% !important;
+	bottom: 25% !important;
+	width: 1px !important;
+	background-color: rgba(255, 255, 255, 0.5) !important;
+	z-index: 10 !important;
+	pointer-events: none !important;
+}
+
+.bp3-button-group .bp3-button:not(.play-pause-button) {
+	box-shadow: none !important;
+}
+
+.bp3-button-group .bp3-button:not(.play-pause-button):hover {
+	box-shadow: none !important;
+}
+
+.bp3-button-group .bp3-button:first-child {
+	border-left: none !important;
+	border-top-left-radius: 20px !important;
+	border-bottom-left-radius: 20px !important;
+	padding-left: 20px !important;
+}
+
+.bp3-button-group .bp3-button:last-child {
+	border-top-right-radius: 20px !important;
+	border-bottom-right-radius: 20px !important;
+	padding-right: 20px !important;
+}
+
+.bp3-button-group .bp3-button:hover,
+.bp3-button-group .bp3-button:focus,
+.bp3-button-group .bp3-button:active {
+	overflow: hidden !important;
+}
+
+.bp3-button-group .bp3-button:first-child:hover,
+.bp3-button-group .bp3-button:first-child:focus,
+.bp3-button-group .bp3-button:first-child:active {
+	border-top-left-radius: 20px !important;
+	border-bottom-left-radius: 20px !important;
+}
+
+.bp3-button-group .bp3-button:last-child:hover,
+.bp3-button-group .bp3-button:last-child:focus,
+.bp3-button-group .bp3-button:last-child:active {
+	border-top-right-radius: 20px !important;
+	border-bottom-right-radius: 20px !important;
+}

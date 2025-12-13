@@ -1,4 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
+import { OverlayToaster, Position } from '@blueprintjs/core';
+import { useTranslation } from 'react-i18next';
 import VideoJSPlayer from '../../components/VideoJSPlayer';
 import PlayerControlPanel from '../../components/PlayerControlPanel';
 import {
@@ -13,19 +15,29 @@ interface PlayerViewProps {
 	setIsWithControls: (_: boolean) => void;
 	handlePlayPause: () => void;
 	isPlaying: boolean;
+	setPlaying: (playing: boolean) => void;
 	setVideoQuality: (_: VideoQualityType) => void;
 	videoQuality: VideoQualityType;
 	screenSharingSourceType: ScreenSharingSourceType;
 	streamUrl: MediaStream | null;
 }
 
+type IOSVideoElement = HTMLVideoElement & {
+	webkitEnterFullscreen?: () => void;
+	webkitExitFullscreen?: () => void;
+	webkitSupportsFullscreen?: boolean;
+	webkitDisplayingFullscreen?: boolean;
+};
+
 function PlayerView(props: PlayerViewProps) {
+	const { t } = useTranslation();
 	const {
 		screenSharingSourceType,
 		setIsWithControls,
 		isWithControls,
 		handlePlayPause,
 		isPlaying,
+		setPlaying,
 		setVideoQuality,
 		videoQuality,
 		streamUrl,
@@ -34,6 +46,7 @@ function PlayerView(props: PlayerViewProps) {
 	// const player = useRef(null);
 
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const toasterRef = useRef<Awaited<ReturnType<typeof OverlayToaster.create>> | null>(null);
 	// no external player ref needed for video.js variant
 
 	useEffect(() => {
@@ -69,6 +82,117 @@ function PlayerView(props: PlayerViewProps) {
 		// react-player play/pause is handled via its `playing` prop
 	}, [isPlaying, isWithControls]);
 
+	// initialize toaster
+	useEffect(() => {
+		const initToaster = async () => {
+			if (!toasterRef.current) {
+				toasterRef.current = await OverlayToaster.create({
+					position: Position.BOTTOM,
+				});
+			}
+		};
+		initToaster();
+	}, []);
+
+	// wrap handlePlayPause to show toaster notifications
+	const handlePlayPauseWithNotification = useCallback(() => {
+		const nextPlaying = !isPlaying;
+		handlePlayPause();
+		
+		// show notification after a small delay to ensure state is updated
+		setTimeout(() => {
+			if (toasterRef.current) {
+				toasterRef.current.show({
+					message: nextPlaying ? t('Video stream is playing') : t('Video stream is paused'),
+					intent: nextPlaying ? 'success' : 'warning',
+					timeout: 2000,
+				});
+			}
+		}, 50);
+	}, [handlePlayPause, isPlaying, t]);
+
+	// handle iPhone fullscreen exit - detect when video stops and auto-resume
+	useEffect(() => {
+		if (!streamUrl) return;
+
+		const getVideoElement = (): IOSVideoElement | null => {
+			if (isWithControls && videoRef.current) {
+				return videoRef.current as IOSVideoElement;
+			}
+			const container = document.getElementById(PLAYER_WRAPPER_ID);
+			if (!container) return null;
+			const maybeVideo = container.querySelector('video');
+			if (!(maybeVideo instanceof HTMLVideoElement)) return null;
+			return maybeVideo as IOSVideoElement;
+		};
+
+		const handleFullscreenEnd = () => {
+			// small delay to ensure video state is updated after fullscreen exit
+			setTimeout(() => {
+				const video = getVideoElement();
+				if (!video) return;
+
+				// check if video is paused after exiting fullscreen
+				if (video.paused) {
+					// sync play state - ensure button shows "Play" instead of "Pause"
+					setPlaying(false);
+
+					// show warning notification that video stopped and user needs to click play
+					if (toasterRef.current) {
+						toasterRef.current.show({
+							message: t('Video stream paused after exiting fullscreen. Please click Play to continue.'),
+							intent: 'warning',
+							timeout: 5000,
+						});
+					}
+				} else {
+					// video is playing, but state might be wrong - sync it
+					if (!isPlaying) {
+						setPlaying(true);
+					}
+				}
+			}, 150);
+		};
+
+		const attachListener = (video: IOSVideoElement | null) => {
+			if (video) {
+				video.addEventListener('webkitendfullscreen', handleFullscreenEnd);
+			}
+		};
+
+		const detachListener = (video: IOSVideoElement | null) => {
+			if (video) {
+				video.removeEventListener('webkitendfullscreen', handleFullscreenEnd);
+			}
+		};
+
+		let currentVideo: IOSVideoElement | null = getVideoElement();
+		attachListener(currentVideo);
+
+		// watch for video element changes (especially for VideoJSPlayer)
+		const container = document.getElementById(PLAYER_WRAPPER_ID);
+		let observer: MutationObserver | null = null;
+
+		if (container) {
+			observer = new MutationObserver(() => {
+				const newVideo = getVideoElement();
+				if (newVideo !== currentVideo) {
+					detachListener(currentVideo);
+					currentVideo = newVideo;
+					attachListener(currentVideo);
+				}
+			});
+			observer.observe(container, { childList: true, subtree: true });
+		}
+
+		return () => {
+			detachListener(currentVideo);
+			if (observer) {
+				observer.disconnect();
+			}
+		};
+	}, [streamUrl, isWithControls, isPlaying, setPlaying, t]);
+
 	// @ts-ignore
 	return (
 		<div
@@ -94,7 +218,7 @@ function PlayerView(props: PlayerViewProps) {
 					}
 					return result;
 				}}
-				handleClickPlayPause={handlePlayPause}
+				handleClickPlayPause={handlePlayPauseWithNotification}
 				isPlaying={isPlaying}
 				setVideoQuality={setVideoQuality}
 				selectedVideoQuality={videoQuality}
