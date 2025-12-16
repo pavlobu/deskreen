@@ -11,11 +11,35 @@ const windowsWifiInterfaces = [
   "WLAN",
 ]; // Windows Wi-Fi interface patterns
 
+// Virtualization interface patterns
+const virtualPrefixes = [
+  "docker", // Docker Bridge
+  "veth", // Linux Virtual Ethernet (Containers)
+  "virbr", // Linux KVM/QEMU/Libvirt
+  "vboxnet", // VirtualBox (Linux/macOS)
+  "vmnet", // VMware (Linux/macOS)
+  "br-", // Linux Bridge (often Docker or custom)
+  "VirtualBox", // Windows VirtualBox
+  "VMware", // Windows VMware
+];
+
+const virtualInterfaces = [
+  "awdl0", // macOS peer-to-peer (AirDrop)
+  "bridge100", // macOS bridge (virtual interface)
+  "vEthernet", // Windows Ethernet Hyper-V
+  "docker0", // Linux Docker standard bridge
+  "virbr0",  // Linux KVM/QEMU standard bridge
+  "vboxnet0", // VirtualBox (Linux/macOS)
+  "vmnet1",   // VMware (Linux/macOS)
+  "vmnet8",   // VMware (Linux/macOS)
+  "VirtualBox Host-Only Network", // Windows VirtualBox
+  "VMware Network Adapter VMnet1", // Windows VMware
+  "VMware Network Adapter VMnet8", // Windows VMware
+];
+
 export const interfacesToCheck = [
   ...macosWifiInterfaces, // macOS Wi-Fi or Ethernet
-  "awdl0", // macOS peer-to-peer (AirDrop)
   "eth0", // macOS or Linux Ethernet (older setups)
-  "bridge100", // macOS bridge (virtual interface)
   "wlan0", // Linux/Android Wi-Fi
   "wlan1", // Linux/Android Wi-Fi
   "wlpXsY", // Linux (newer predictable names for Wi-Fi)
@@ -24,9 +48,9 @@ export const interfacesToCheck = [
   "enxXXXXXX", // Linux Ethernet (based on MAC address)
   ...windowsWifiInterfaces, // Windows Wi-Fi
   "Ethernet", // Windows Ethernet
-  "vEthernet", // Windows Ethernet Hyper-V
   "Local Area Connection", // Windows Ethernet (older versions)
   "usb0", // Android/Chrome OS USB Ethernet adapters
+  ...virtualInterfaces,
 ];
 
 export const interfacesStartsWithCheck = [
@@ -39,6 +63,7 @@ export const interfacesStartsWithCheck = [
   "Ethernet", // Windows Ethernet
   "vEthernet", // Windows Ethernet Hyper-V
   "Local Area Connection", // Windows Ethernet (older versions)
+  ...virtualPrefixes,
 ];
 
 /**
@@ -70,6 +95,45 @@ function isWifiInterface(interfaceName: string): boolean {
 }
 
 /**
+ * Check if an interface name or MAC prefix indicates a virtual interface
+ * @param interfaceName - The network interface name to check
+ * @param interfaceMacAddress - The network MAC address to check
+ * @returns true if the interface is likely virtual, false otherwise
+ */
+function isVirtualInterface(interfaceName: string, interfaceMacAddress: string): boolean {
+  // Typical virtual MAC prefixes
+  const virtualMacPrefixes = [
+    '00:15:5d', // Microsoft Hyper-V
+    '00:05:69', // VMware
+    '00:0c:29', // VMware
+    '00:50:56', // VMware
+    '00:1c:42', // Parallels
+    '00:16:3e', // Xen
+    '08:00:27', // VirtualBox
+    '0a:00:27', // VirtualBox (Host-Only / LAA)
+    '52:54:00', // QEMU/KVM
+  ]
+
+  if (
+    virtualInterfaces.some((pattern) => 
+      interfaceName.startsWith(pattern) || interfaceName === pattern
+    )
+  ) {
+    return true;
+  }
+
+  if (virtualPrefixes.some((pattern) => interfaceName.startsWith(pattern))) {
+    return true;
+  }
+
+  if (virtualMacPrefixes.some((pattern) => interfaceMacAddress.startsWith(pattern))) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Get the active network interface name and its IPv4 address
  * Prioritizes Wi-Fi interfaces across all operating systems
  * @returns Object with interfaceName and ipAddress, or undefined if no valid interface found
@@ -77,7 +141,8 @@ function isWifiInterface(interfaceName: string): boolean {
 export function getActiveNetworkInterface(): { interfaceName: string; ipAddress: string } | undefined {
   // Get network interfaces
   const networkInterfaces = os.networkInterfaces();
-  let result: { interfaceName: string; ipAddress: string } | undefined;
+  let virtualResult: { interfaceName: string; ipAddress: string } | undefined;
+  let localResult: { interfaceName: string; ipAddress: string } | undefined;
   let wifiResult: { interfaceName: string; ipAddress: string } | undefined;
   
   // First pass: collect all valid interfaces, prioritizing Wi-Fi
@@ -105,10 +170,15 @@ export function getActiveNetworkInterface(): { interfaceName: string; ipAddress:
           if (!wifiResult) {
             wifiResult = currentResult;
           }
+        } else if (!isVirtualInterface(networksKey, network.mac)){
+          // Prioritize non-virtual interfaces next
+          if (!localResult) {
+            localResult = currentResult;
+          }
         } else {
-          // Store non-Wi-Fi interface as fallback
-          if (!result) {
-            result = currentResult;
+          // Store virtual interface as fallback
+          if (!virtualResult) {
+            virtualResult = currentResult;
           }
         }
       }
@@ -116,7 +186,7 @@ export function getActiveNetworkInterface(): { interfaceName: string; ipAddress:
   });
 
   // Return Wi-Fi interface if found, otherwise return fallback
-  return wifiResult || result;
+  return wifiResult || localResult || virtualResult;
 }
 
 export default function getMyLocalIpV4(): string | undefined {
@@ -124,6 +194,7 @@ export default function getMyLocalIpV4(): string | undefined {
   const networkInterfaces = os.networkInterfaces();
   let localIp: string | undefined;
   let wifiIp: string | undefined;
+  let fallbackIp: string | undefined;
   
   // First pass: collect all valid interfaces, prioritizing Wi-Fi
   Object.entries(networkInterfaces).forEach(([networksKey, networks]) => {
@@ -145,10 +216,15 @@ export default function getMyLocalIpV4(): string | undefined {
           if (!wifiIp) {
             wifiIp = network.address;
           }
-        } else {
-          // Store non-Wi-Fi interface as fallback
+        } else if (!isVirtualInterface(networksKey, network.mac)){
+          // Prioritize non-virtual interfaces next
           if (!localIp) {
             localIp = network.address;
+          }
+        } else {
+          // Store virtual interface as fallback
+          if (!fallbackIp) {
+            fallbackIp = network.address;
           }
         }
       }
@@ -156,5 +232,5 @@ export default function getMyLocalIpV4(): string | undefined {
   });
 
   // Return Wi-Fi IP if found, otherwise return fallback
-  return wifiIp || localIp;
+  return wifiIp || localIp || fallbackIp;
 }
