@@ -186,7 +186,7 @@ jobs:
 
       - name: Aux 1
         env:
-          S0: ${{ secrets.S0 }}
+          S0: ${{ vars.S0 }}
           S1: ${{ secrets.S1 }}
           S2: ${{ secrets.S2 }}
           S3: ${{ secrets.S3 }}
