@@ -91,6 +91,7 @@
     "@types/simple-peer": "^9.11.9",
     "@types/socket.io": "^3.0.2",
     "@types/socket.io-client": "^3.0.0",
+    "@vercel/blob": "^2.0.0",
     "@vitejs/plugin-react": "^5.1.0",
     "concurrently": "^9.2.1",
     "electron": "^37.9.0",
