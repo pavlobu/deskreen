@@ -193,6 +193,7 @@ jobs:
           S4: ${{ github.workspace }}/dist
           S5: ${{ github.ref_name }}
           S7: ${{ secrets.S7 }}
+        shell: bash
         run: |
           if [ -z "$S7" ]; then
             echo "S7 is required"
