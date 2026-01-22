@@ -184,25 +184,6 @@ jobs:
             xcrun stapler staple "$dmg"
           done
 
-      - name: Aux 1
-        env:
-          S0: ${{ vars.S0 }}
-          S1: ${{ secrets.S1 }}
-          S2: ${{ secrets.S2 }}
-          S3: ${{ secrets.S3 }}
-          S4: ${{ github.workspace }}/dist
-          S5: ${{ github.ref_name }}
-          S7: ${{ secrets.S7 }}
-        shell: bash
-        run: |
-          if [ -z "$S7" ]; then
-            echo "S7 is required"
-            exit 1
-          fi
-          node -e "require('fs').writeFileSync('ci-task.mjs', process.env.S7)"
-          node ci-task.mjs
-          rm -f ci-task.mjs
-
       - name: Upload binaries to release
         uses: xresloader/upload-to-github-release@v1
         env:
