@@ -20,6 +20,8 @@
 	"WebRTC error occurred": "Ett WebRTC-fel error inträffade",
 	"If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better": "Om du gillar Deskreen-CE, överväg i så fall att ge oss ett ekonomiskt bidrag. Deskreen-CE är open-source. Era donationer motiverar oss att göra Deskreen-CE ännu bättre.",
 	"Donate": "Donera",
+	"get-deskreen-pro": "Hämta Deskreen Pro",
+	"get-deskreen-pro-tooltip": "Hämta Deskreen Pro - öppnar nedladdningssidan.",
 	"Video stream is paused": "Videoströmmen är pausad",
 	"Video stream is playing": "Videoströmmen spelas",
 	"Video stream paused after exiting fullscreen. Please click Play to continue.": "Videoströmmen pausades efter att ha lämnat helskärmsläge. Klicka på Kör för att fortsätta.",

@@ -20,6 +20,8 @@
 	"WebRTC error occurred": "Сталася помилка WebRTC",
 	"If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better": "Якщо вам подобається Deskreen-CE, подумайте про те, щоб внести фінансовий внесок. Deskreen-CE - це оупенсорсний проект. Ваші пожертвування дозволяють нам робити Deskreen-CE ще краще.",
 	"Donate": "Пожертвувати",
+	"get-deskreen-pro": "Отримати Deskreen Pro",
+	"get-deskreen-pro-tooltip": "Отримати Deskreen Pro - відкриває сторінку завантаження.",
 	"Video stream is paused": "Відеопотік призупинено",
 	"Video stream is playing": "Відеопотік продовжується",
 	"Video stream paused after exiting fullscreen. Please click Play to continue.": "Відеопотік призупинено після виходу з повноекранного режиму. Будь ласка, натисніть Відтворення, щоб продовжити.",

@@ -20,6 +20,8 @@
 	"WebRTC error occurred": "WebRTCエラーが発生しました",
 	"If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better": "Deskreen-CEを気に入っていただけたなら、資金面での貢献をご検討ください。Deskreen-CEはオープンソースです。あなたの寄付により、私たちはDeskreen-CEをより良いものにするためのモチベーションを保つことができます。",
 	"Donate": "寄付",
+	"get-deskreen-pro": "Deskreen Pro を入手",
+	"get-deskreen-pro-tooltip": "Deskreen Pro を入手 - ダウンロードページを開きます。",
 	"Video stream is paused": "ビデオストリームを一時停止しています",
 	"Video stream is playing": "ビデオストリームを再生中です",
 	"Pause": "一時停止",

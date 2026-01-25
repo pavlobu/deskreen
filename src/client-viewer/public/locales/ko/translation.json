@@ -20,6 +20,8 @@
 	"WebRTC error occurred": "WebRTC 오류가 발생했습니다",
 	"If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better": "오픈소스 프로젝트에 재정적으로 기여하는 것은 더 좋은 프로그램 개발 동기를 부여합니다.",
 	"Donate": "기부하기",
+	"get-deskreen-pro": "Deskreen Pro 받기",
+	"get-deskreen-pro-tooltip": "Deskreen Pro 받기 - 다운로드 페이지를 엽니다.",
 	"Video stream is paused": "비디오 스트림이 일시 중지됩니다",
 	"Video stream is playing": "비디오 스트림이 재생 중입니다",
 	"Video stream paused after exiting fullscreen. Please click Play to continue.": "전체 화면 종료 후 비디오 스트림이 일시 중지되었습니다. 계속하려면 재생을 클릭하세요.",

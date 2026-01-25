@@ -20,6 +20,8 @@
 	"WebRTC error occurred": "Ilmeni WebRTC-virhe",
 	"If you like Deskreen-CE consider contributing financially Deskreen-CE is open-source Your donations keep us motivated to make Deskreen-CE even better": "Mikäli pidät Deskreen-CE:istä, harkitsethan rahallista lahjoitusta. Deskreen-CE on avoimen lähdekoodin ohjelma. Lahjoituksesi auttavat motivaatiomme säilymisen kannalta tehdäksemme Deskreen-CE:istä vieläkin paremman.",
 	"Donate": "Lahjoita",
+	"get-deskreen-pro": "Hanki Deskreen Pro",
+	"get-deskreen-pro-tooltip": "Hanki Deskreen Pro - avaa lataussivun.",
 	"Video stream is paused": "Videolähetys on tauolla",
 	"Video stream is playing": "Videolähetys on käynnissä",
 	"Video stream paused after exiting fullscreen. Please click Play to continue.": "Videolähetys pausattiin kokoruututilasta poistumisen jälkeen. Napsauta Toista jatkaaksesi.",

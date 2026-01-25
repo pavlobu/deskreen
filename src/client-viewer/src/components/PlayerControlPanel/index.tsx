@@ -19,7 +19,6 @@ import screenfull from 'screenfull';
 import { useTranslation } from 'react-i18next';
 import FullScreenEnter from '../../images/fullscreen_24px.svg';
 import FullScreenExit from '../../images/fullscreen_exit-24px.svg';
-import RedHeartTwemojiPNG from '../../images/red_heart_2764_twemoji_120x120.png';
 import { Col, Row } from 'react-flexbox-grid';
 import {
 	VideoQuality,
@@ -98,9 +97,9 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 
 	const handleContributeClick = useCallback(() => {
 		trackAnalyticsEvent('contribute_clicked', {
-			destination: 'https://deskreen.com/#contribute',
+			destination: 'https://deskreen.com/download',
 		});
-		window.open('https://deskreen.com/#contribute', '_blank');
+		window.open('https://deskreen.com/download', '_blank');
 	}, []);
 
 	const handlePlayPauseClick = useCallback(() => {
@@ -205,9 +204,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 							</Col>
 							<Col xs>
 								<Tooltip
-									content={t(
-										'If you like Deskreen CE consider contributing financially Deskreen CE is open-source Your donations keep us motivated to make Deskreen CE even better',
-									)}
+									content={t('get-deskreen-pro-tooltip')}
 									position={Position.BOTTOM}
 								>
 									<Button
@@ -242,17 +239,15 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 												gap: '8px',
 											}}
 										>
-											<img
-												src={RedHeartTwemojiPNG}
-												width={20}
-												height={20}
+											<Icon
+												icon="clean"
+												size={20}
+												color="#D4AF37"
 												style={{
-													display: 'block',
 													flexShrink: 0,
 													filter:
 														'brightness(1.1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))',
 												}}
-												alt="heart"
 											/>
 											<Text
 												style={{
@@ -264,7 +259,7 @@ function PlayerControlPanel(props: PlayerControlPanelProps) {
 													textShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
 												}}
 											>
-												{t('Donate')}
+												{t('get-deskreen-pro')}
 											</Text>
 										</div>
 									</Button>

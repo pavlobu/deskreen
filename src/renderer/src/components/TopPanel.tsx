@@ -6,7 +6,6 @@ import SettingsOverlay from './SettingsOverlay/SettingsOverlay';
 import ConnectedDevicesListDrawer from './ConnectedDevicesListDrawer';
 import { useTranslation } from 'react-i18next';
 import { IpcEvents } from '../../../common/IpcEvents.enum';
-import RedHeartTwemojiPNG from '../assets/red_heart_2764_twemoji_120x120.png';
 
 const useStyles = makeStyles(() =>
 	createStyles({
@@ -156,14 +155,12 @@ export default function TopPanel({ handleReset }: Props): React.ReactElement {
 		setIsConnectedDevicesDrawerOpen(!isConnectedDevicesDrawerOpen);
 	}, [isConnectedDevicesDrawerOpen]);
 
-	const donateTooltipContent = t(
-		'if-you-like-deskreen-ce-consider-contributing-financially-deskreen-ce-is-open-source-your-donations-keep-us-motivated-to-make-deskreen-ce-even-better',
-	);
+	const donateTooltipContent = t('get-deskreen-pro-tooltip');
 
 	const handleDonateButtonClick = React.useCallback(() => {
 		window.electron.ipcRenderer.invoke(
 			IpcEvents.OpenExternalLink,
-			'https://deskreen.com/#contribute',
+			'https://deskreen.com/download',
 		);
 	}, []);
 
@@ -237,12 +234,15 @@ export default function TopPanel({ handleReset }: Props): React.ReactElement {
 				onClick={handleDonateButtonClick}
 			>
 				<div className={classes.donateButtonContent}>
-					<img
-						src={RedHeartTwemojiPNG}
+					<Icon
 						className={classes.donateButtonIcon}
-						alt="heart"
+						icon="clean"
+						size={20}
+						color="#D4AF37"
 					/>
-					<span className={classes.donateButtonLabel}>{t('donate')}</span>
+					<span className={classes.donateButtonLabel}>
+						{t('get-deskreen-pro')}
+					</span>
 				</div>
 			</Button>
 		</Tooltip>
