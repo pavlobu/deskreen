@@ -1,6 +1,6 @@
 {
   "name": "deskreen-ce",
-  "version": "3.2.11",
+  "version": "3.2.12",
   "description": "Screen sharing and present screen: Turn any device into a secondary screen for your computer",
   "main": "./out/main/index.js",
   "author": "deskreen.com",
