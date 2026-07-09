@@ -103,7 +103,7 @@ export default function IntermediateStep(
 						// connectedDevicesService.setPendingConnectionDevice(DEVICES[Math.floor(Math.random() * DEVICES.length)]);
 					}}
 				>
-					Connect Test Device
+					{t('connect-test-device')}
 				</Button>
 			) : (
 				<></>

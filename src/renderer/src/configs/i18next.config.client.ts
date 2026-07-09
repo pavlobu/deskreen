@@ -1,8 +1,10 @@
+import { Classes } from '@blueprintjs/core';
 import i18next, { TFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import config from '../../../common/app.lang.config';
 import translationEN from '../../../common/locales/en/translation.json';
 import translationES from '../../../common/locales/es/translation.json';
+import translationAR from '../../../common/locales/ar/translation.json';
 import translationKO from '../../../common/locales/ko/translation.json';
 import translationUA from '../../../common/locales/ua/translation.json';
 import translationRU from '../../../common/locales/ru/translation.json';
@@ -21,6 +23,29 @@ import { IpcEvents } from '../../../common/IpcEvents.enum';
 // import { ElectronStoreKeys } from '../../../common/ElectronStoreKeys.enum';
 
 const i18n = i18next.createInstance(); // Create a new instance
+
+const RTL_LANGUAGES = new Set(['ar']);
+
+const applyDocumentDirection = (language: string): void => {
+	if (typeof document === 'undefined') {
+		return;
+	}
+	const isRtl = RTL_LANGUAGES.has(language);
+	const direction = isRtl ? 'rtl' : 'ltr';
+	document.documentElement.setAttribute('dir', direction);
+	document.documentElement.setAttribute('lang', language);
+	if (document.body) {
+		document.body.classList.toggle(Classes.RTL, isRtl);
+		return;
+	}
+	document.addEventListener(
+		'DOMContentLoaded',
+		() => {
+			document.body?.classList.toggle(Classes.RTL, isRtl);
+		},
+		{ once: true },
+	);
+};
 
 export const getLangFullNameToLangISOKeyMap = (): Map<string, string> => {
 	const res = new Map<string, string>();
@@ -57,6 +82,7 @@ export const getShuffledArrayOfHello = (): string[] => {
 	const res: string[] = [];
 
 	res.push(translationES.hello);
+	res.push(translationAR.hello);
 	res.push(translationUA.hello);
 	res.push(translationKO.hello);
 	res.push(translationRU.hello);
@@ -100,6 +126,9 @@ async function initI18NextOptions(): Promise<void> {
 			},
 			es: {
 				translation: translationES,
+			},
+			ar: {
+				translation: translationAR,
 			},
 			ko: {
 				translation: translationKO,
@@ -145,12 +174,16 @@ async function initI18NextOptions(): Promise<void> {
 
 	if (!i18n.isInitialized) {
 		t = await i18n.init(i18nextOptions);
+		applyDocumentDirection(i18n.language);
+	} else {
+		applyDocumentDirection(i18n.language);
 	}
 }
 
 export const i18nInitPromise = initI18NextOptions();
 
 i18n.on('languageChanged', () => {
+	applyDocumentDirection(i18n.language);
 	window.electron.ipcRenderer.send('client-changed-language', i18n.language);
 });
 

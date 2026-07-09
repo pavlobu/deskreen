@@ -5,6 +5,7 @@ import config from '../../common/app.lang.config';
 
 import translationEN from '../../common/locales/en/translation.json';
 import translationES from '../../common/locales/es/translation.json';
+import translationAR from '../../common/locales/ar/translation.json';
 import translationKO from '../../common/locales/ko/translation.json';
 import translationUA from '../../common/locales/ua/translation.json';
 import translationRU from '../../common/locales/ru/translation.json';
@@ -43,6 +44,9 @@ const i18nextOptions = {
 		},
 		es: {
 			translation: translationES,
+		},
+		ar: {
+			translation: translationAR,
 		},
 		ko: {
 			translation: translationKO,

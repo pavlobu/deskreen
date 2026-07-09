@@ -87,6 +87,11 @@ const useStyles = makeStyles(() =>
 			flexDirection: 'column',
 			alignItems: 'flex-end',
 			gap: '6px',
+			'.bp3-rtl &': {
+				right: 'auto',
+				left: '15px',
+				alignItems: 'flex-start',
+			},
 		},
 		topPanelControlButton: {
 			width: '40px',
@@ -124,6 +129,10 @@ const useStyles = makeStyles(() =>
 			boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
 			zIndex: 10,
 			lineHeight: '1',
+			'.bp3-rtl &': {
+				right: 'auto',
+				left: '-4px',
+			},
 		},
 	}),
 );

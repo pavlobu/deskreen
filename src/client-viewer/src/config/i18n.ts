@@ -1,14 +1,38 @@
 /* istanbul ignore file */
 
+import { Classes } from '@blueprintjs/core';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-http-backend';
+
+const RTL_LANGUAGES = new Set(['ar']);
+
+const applyDocumentDirection = (language: string): void => {
+	if (typeof document === 'undefined') {
+		return;
+	}
+	const isRtl = RTL_LANGUAGES.has(language);
+	const direction = isRtl ? 'rtl' : 'ltr';
+	document.documentElement.setAttribute('dir', direction);
+	document.documentElement.setAttribute('lang', language);
+	if (document.body) {
+		document.body.classList.toggle(Classes.RTL, isRtl);
+		return;
+	}
+	document.addEventListener(
+		'DOMContentLoaded',
+		() => {
+			document.body?.classList.toggle(Classes.RTL, isRtl);
+		},
+		{ once: true },
+	);
+};
 
 // don't want to use this?
 // have a look at the Quick start guide
 // for passing in lng and translations on init
 
-i18n
+const initPromise = i18n
 	// load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
 	// learn more: https://github.com/i18next/i18next-http-backend
 	.use(Backend)
@@ -39,5 +63,13 @@ i18n
 			escapeValue: false, // react already safes from xss
 		},
 	});
+
+initPromise.then(() => {
+	applyDocumentDirection(i18n.language);
+});
+
+i18n.on('languageChanged', (language) => {
+	applyDocumentDirection(language);
+});
 
 export default i18n;

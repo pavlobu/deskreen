@@ -5,6 +5,7 @@ export default {
 		'ua',
 		'en',
 		'es',
+		'ar',
 		'zh_CN',
 		'zh_TW',
 		'da',
@@ -21,6 +22,7 @@ export default {
 	langISOKeyToLangFullNameMap: {
 		en: 'English',
 		es: 'Español',
+		ar: 'العربية',
 		ru: 'Русский',
 		ua: 'Українська',
 		da: 'Dansk',

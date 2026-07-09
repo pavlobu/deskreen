@@ -45,13 +45,26 @@ const useStyles = makeStyles(() =>
 			height: '90vh',
 			backgroundColor: LIGHT_UI_BACKGROUND,
 		},
-		absoluteCloseButton: { position: 'absolute', left: 'calc(100% - 65px)' },
+		absoluteCloseButton: {
+			position: 'absolute',
+			left: 'calc(100% - 65px)',
+			'.bp3-rtl &': {
+				left: 'auto',
+				right: 'calc(100% - 65px)',
+			},
+		},
 		tabNavigationRowButton: {
 			fontWeight: 700,
 			padding: '6px 10px',
 			borderRadius: '100px',
 		},
-		iconInTablLeftButton: { marginRight: '5px' },
+		iconInTablLeftButton: {
+			marginRight: '5px',
+			'.bp3-rtl &': {
+				marginRight: '0',
+				marginLeft: '5px',
+			},
+		},
 		updateCalloutWrapper: {
 			display: 'flex',
 			justifyContent: 'center',

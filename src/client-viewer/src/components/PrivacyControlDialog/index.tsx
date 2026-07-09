@@ -25,6 +25,7 @@ interface PrivacyControlDialogProps {
 const AVAILABLE_LANGUAGES = [
 	{ code: 'en', name: 'English' },
 	{ code: 'es', name: 'Español' },
+	{ code: 'ar', name: 'العربية' },
 	{ code: 'de', name: 'Deutsch' },
 	{ code: 'fr', name: 'Français' },
 	{ code: 'ko', name: '한국어' },
